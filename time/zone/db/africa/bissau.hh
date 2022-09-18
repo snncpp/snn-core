@@ -1,0 +1,46 @@
+// Copyright (c) 2022 Mikael Simonsson <https://mikaelsimonsson.com>.
+// SPDX-License-Identifier: BSL-1.0
+
+// This file is generated, DO NOT EDIT MANUALLY.
+
+// IANA Time Zone Database (public domain).
+
+#pragma once
+
+#include "snn-core/array.hh"
+#include "snn-core/country/code.hh"
+#include "snn-core/time/zone/offset.hh"
+#include "snn-core/time/zone/transition.hh"
+#include "snn-core/time/zone/db/entry.hh"
+
+namespace snn::time::zone::db::africa
+{
+    // clang-format off
+
+    namespace detail::bissau
+    {
+        inline constexpr array<country::code, 1> country_codes{
+            "GW",
+        };
+
+        inline constexpr array<zone::offset, 3> offsets{{
+            {"LMT", -3740, false},
+            {"-01", -3600, false},
+            {"GMT", 0, false},
+        }};
+
+        inline constexpr array<zone::transition, 2> transitions{{
+            {1, -1830380400},
+            {2, 157770000},
+        }};
+    }
+
+    inline constexpr db::entry bissau{"Africa/Bissau",
+                                      "",
+                                      "+1151-01535",
+                                      detail::bissau::country_codes,
+                                      detail::bissau::offsets,
+                                      detail::bissau::transitions};
+
+    // clang-format on
+}

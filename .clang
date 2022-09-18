@@ -1,0 +1,19 @@
+-std=c++20
+-march=x86-64
+
+-isystem /usr/local/include/
+
+-ferror-limit=1
+-Werror=zero-length-array
+
+-Weverything
+-Wno-c++20-compat
+-Wno-c++98-compat
+-Wno-c++98-compat-pedantic
+-Wno-ctad-maybe-unsupported
+-Wno-padded
+-Wno-switch-enum
+-Wno-weak-vtables
+
+# Temporary (to silence spaceship operator warning).
+-Wno-zero-as-null-pointer-constant

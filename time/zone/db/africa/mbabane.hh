@@ -1,0 +1,36 @@
+// Copyright (c) 2022 Mikael Simonsson <https://mikaelsimonsson.com>.
+// SPDX-License-Identifier: BSL-1.0
+
+// This file is generated, DO NOT EDIT MANUALLY.
+
+// IANA Time Zone Database (public domain).
+
+#pragma once
+
+#include "snn-core/array.hh"
+#include "snn-core/country/code.hh"
+#include "snn-core/time/zone/offset.hh"
+#include "snn-core/time/zone/transition.hh"
+#include "snn-core/time/zone/db/entry.hh"
+#include "snn-core/time/zone/db/africa/johannesburg.hh"
+
+namespace snn::time::zone::db::africa
+{
+    // clang-format off
+
+    namespace detail::mbabane
+    {
+        inline constexpr array<country::code, 1> country_codes{
+            "SZ",
+        };
+    }
+
+    inline constexpr db::entry mbabane{"Africa/Mbabane",
+                                       "",
+                                       "-2618+03106",
+                                       detail::mbabane::country_codes,
+                                       africa::detail::johannesburg::offsets,
+                                       africa::detail::johannesburg::transitions};
+
+    // clang-format on
+}

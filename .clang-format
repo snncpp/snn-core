@@ -1,0 +1,49 @@
+---
+Language: Cpp
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveMacros: Consecutive
+AlignOperands: AlignAfterOperator
+AllowShortFunctionsOnASingleLine: None
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AlwaysBreakTemplateDeclarations: Yes
+BasedOnStyle: ''
+BraceWrapping:
+  AfterCaseLabel: true
+  AfterClass: true
+  AfterControlStatement: Always
+  AfterEnum: true
+  AfterFunction: true
+  AfterNamespace: true
+  AfterObjCDeclaration: true
+  AfterStruct: true
+  AfterUnion: true
+  AfterExternBlock: true
+  BeforeCatch: true
+  BeforeElse: true
+  BeforeLambdaBody: false
+  BeforeWhile: false
+  IndentBraces: false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+BreakBeforeBraces: Custom
+ColumnLimit: 100
+DeriveLineEnding: false
+FixNamespaceComments: false
+IndentCaseLabels: true
+IndentRequires: true
+IndentWidth: 4
+KeepEmptyLinesAtTheStartOfBlocks: false
+NamespaceIndentation: All
+PackConstructorInitializers: Never
+PenaltyBreakOpenParenthesis: 45
+PenaltyReturnTypeOnItsOwnLine: 140
+PointerAlignment: Left
+SortIncludes: Never
+SortUsingDeclarations: false
+StatementAttributeLikeMacros:
+  - SNN_CONSTEXPR_MAYBE
+TabWidth: 4
+UseCRLF: false
+UseTab: Never
+...
