@@ -2,7 +2,7 @@
 
 An alternative C++ framework.
 
-_The author of this framework (@msimonsson) is available for remote work._
+_The author of this framework ([@msimonsson](https://github.com/msimonsson)) is available for remote work._
 
 
 ## Goals
@@ -141,7 +141,7 @@ clang++ --config ./.clang -o pair/core.test pair/core.test.o -L/usr/local/lib/
 
 ## Getting started
 
-The [Getting started][https://github.com/snncpp/build-tool#getting-started] guide for the [build-tool][buildtool]
+The [Getting started](https://github.com/snncpp/build-tool#getting-started) guide for the [build-tool][buildtool]
 shows how to use [snn-core][snncore].
 
 
