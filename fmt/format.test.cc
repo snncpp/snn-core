@@ -13,16 +13,44 @@ namespace snn::app
     {
         constexpr bool example()
         {
+            // Positional arguments.
             snn_require(fmt::format("{}", "Hello") == "Hello");
-
             snn_require(fmt::format("{} {}", "Hello", "world!") == "Hello world!");
+
+            // Indexed arguments.
             snn_require(fmt::format("{1} {0}", "Hello", "world!") == "world! Hello");
 
-            snn_require(fmt::format("{,10>}", "Hello") == "     Hello");
-            snn_require(fmt::format("{,{}^-~}", "Hello", 15) == "-~-~-Hello-~-~-");
+            // Width, left aligned (the default), with and without index.
+            snn_require(fmt::format("{0,10}", "Hello") == "Hello     ");
+            snn_require(fmt::format("{,10}", "Hello") == "Hello     ");
+            snn_require(fmt::format("{0,10<}", "Hello") == "Hello     ");
+            snn_require(fmt::format("{,10<}", "Hello") == "Hello     ");
 
-            snn_require(fmt::format("{:b}", 123) == "1111011");
+            // Width as an argument.
+            snn_require(fmt::format("{,{}}", "Hello", 10) == "Hello     ");
+            snn_require(fmt::format("{,{}<}", "Hello", 10) == "Hello     ");
+
+            // Width, right aligned, with and without index.
+            snn_require(fmt::format("{0,10>}", "Hello") == "     Hello");
+            snn_require(fmt::format("{,10>}", "Hello") == "     Hello");
+
+            // Width, center aligned, with and without index.
+            snn_require(fmt::format("{0,10^}", "Hello") == "  Hello   ");
+            snn_require(fmt::format("{,10^}", "Hello") == "  Hello   ");
+
+            // Width, with a fill string (the string must not contain ':' or '}').
+            snn_require(fmt::format("{,15<-~}", "Hello") == "Hello-~-~-~-~-~");
+            snn_require(fmt::format("{,15^-~}", "Hello") == "-~-~-Hello-~-~-");
+
+            // Width and fill string as arguments (now the fill string can contain all characters).
+            snn_require(fmt::format("{,{}^{}}", "Hello", 13, "~::~") == "~::~Hello~::~");
+
+            // Type specific format string (everything after ':'), here `formatter<i64>` in
+            // `fmt/integral.hh` is selected and passed the string `+#8b'4`.
             snn_require(fmt::format("{:+#8b'4}", 123) == "+0b0111'1011");
+
+            // Width and type specific format string combined.
+            snn_require(fmt::format("{0,20^-~:+#8b'4}", 123) == "-~-~+0b0111'1011-~-~");
 
             return true;
         }
