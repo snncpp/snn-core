@@ -20,6 +20,11 @@ namespace snn::app
             // Indexed arguments.
             snn_require(fmt::format("{1} {0}", "Hello", "world!") == "world! Hello");
 
+            // Escaped curly brackets.
+            snn_require(fmt::format("Escaped {{") == "Escaped {");
+            snn_require(fmt::format("Escaped }}") == "Escaped }");
+            snn_require(fmt::format("Escaped {{0}}") == "Escaped {0}");
+
             // Width, left aligned (the default), with and without index.
             snn_require(fmt::format("{0,10}", "Hello") == "Hello     ");
             snn_require(fmt::format("{,10}", "Hello") == "Hello     ");
@@ -167,7 +172,12 @@ namespace snn::app
                                                                "│    Hello world!    │\n"
                                                                "└────────────────────┘\n");
 
-            // Type format string.
+            return true;
+        }
+
+        constexpr bool test_integral_format_string()
+        {
+            // Indirectly test the default `formatter<Int>`.
 
             // Empty
 
@@ -361,13 +371,13 @@ namespace snn::app
 
             // Minimum digits is currently limited to 4 digits.
             snn_require_throws_code(fmt::format("{:99999}", 123),
-                                    error::invalid_minimum_digits_in_format_string);
+                                    fmt::error::invalid_minimum_digits_in_format_string);
             // Digits per group is currently limited to 2 digits.
             snn_require_throws_code(fmt::format("{:d 999}", 123),
-                                    error::invalid_digits_per_group_in_format_string);
+                                    fmt::error::invalid_digits_per_group_in_format_string);
             // Trailing character.
             snn_require_throws_code(fmt::format("{:d 3x}", 123),
-                                    error::unexpected_character_in_format_string);
+                                    fmt::error::unexpected_character_in_format_string);
 
             return true;
         }
@@ -393,6 +403,7 @@ namespace snn
     {
         snn_static_require(app::example());
         snn_static_require(app::test_format());
+        snn_static_require(app::test_integral_format_string());
         snn_static_require(app::test_format_append());
     }
 }
