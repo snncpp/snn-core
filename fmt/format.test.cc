@@ -175,6 +175,19 @@ namespace snn::app
             return true;
         }
 
+        constexpr bool test_format_append()
+        {
+            str append_to;
+
+            fmt::format_append("{}", append_to, promise::no_overlap, "Hello");
+            snn_require(append_to == "Hello");
+
+            fmt::format_append(", the answer is {} or {}.", append_to, promise::no_overlap, 42, 41);
+            snn_require(append_to == "Hello, the answer is 42 or 41.");
+
+            return true;
+        }
+
         constexpr bool test_integral_format_string()
         {
             // Indirectly test the default `formatter<Int>`.
@@ -381,19 +394,6 @@ namespace snn::app
 
             return true;
         }
-
-        constexpr bool test_format_append()
-        {
-            str append_to;
-
-            fmt::format_append("{}", append_to, promise::no_overlap, "Hello");
-            snn_require(append_to == "Hello");
-
-            fmt::format_append(", the answer is {} or {}.", append_to, promise::no_overlap, 42, 41);
-            snn_require(append_to == "Hello, the answer is 42 or 41.");
-
-            return true;
-        }
     }
 }
 
@@ -403,7 +403,7 @@ namespace snn
     {
         snn_static_require(app::example());
         snn_static_require(app::test_format());
-        snn_static_require(app::test_integral_format_string());
         snn_static_require(app::test_format_append());
+        snn_static_require(app::test_integral_format_string());
     }
 }
