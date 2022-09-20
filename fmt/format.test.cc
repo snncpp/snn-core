@@ -57,6 +57,8 @@ namespace snn::app
             // Width and type specific format string combined.
             snn_require(fmt::format("{0,20^-~:+#8b'4}", 123) == "-~-~+0b0111'1011-~-~");
 
+            // See `test_integral_format_string()` below for integral formatting.
+
             return true;
         }
 
