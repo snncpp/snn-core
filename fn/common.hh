@@ -982,7 +982,7 @@ namespace snn::fn
         template <typename V>
         constexpr auto conv_(const V& v) const
         {
-            if constexpr (has_to<To, V>)
+            if constexpr (has_to<V, To>)
                 return v.template to<To>();
             else
                 return To{v};

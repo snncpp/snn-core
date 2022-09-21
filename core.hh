@@ -646,7 +646,7 @@ namespace snn
 
     // ### has_to
 
-    template <typename To, typename From>
+    template <typename From, typename To>
     concept has_to = requires(const From& v) { v.template to<To>(); };
 
     // clang-format on

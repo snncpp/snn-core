@@ -772,26 +772,26 @@ namespace snn::app
 
         constexpr bool test_has_to()
         {
-            static_assert(has_to<int, cstrview>);
-            static_assert(has_to<int, cstrview&>);
-            static_assert(has_to<int, const cstrview&>);
-            static_assert(has_to<int, cstrview&&>);
-            static_assert(has_to<int, const cstrview&&>);
+            static_assert(has_to<cstrview, int>);
+            static_assert(has_to<cstrview&, int>);
+            static_assert(has_to<const cstrview&, int>);
+            static_assert(has_to<cstrview&&, int>);
+            static_assert(has_to<const cstrview&&, int>);
 
-            static_assert(!has_to<std::list<i32>, cstrview>);
-            static_assert(!has_to<std::list<i32>, cstrview>);
-            static_assert(!has_to<std::list<i32>, cstrview&>);
-            static_assert(!has_to<std::list<i32>, const cstrview&>);
-            static_assert(!has_to<std::list<i32>, cstrview&&>);
-            static_assert(!has_to<std::list<i32>, const cstrview&&>);
+            static_assert(!has_to<cstrview, std::list<i32>>);
+            static_assert(!has_to<cstrview, std::list<i32>>);
+            static_assert(!has_to<cstrview&, std::list<i32>>);
+            static_assert(!has_to<const cstrview&, std::list<i32>>);
+            static_assert(!has_to<cstrview&&, std::list<i32>>);
+            static_assert(!has_to<const cstrview&&, std::list<i32>>);
 
             static_assert(!has_to<int, int>);
 
-            static_assert(!has_to<int, vec<i32>>);
-            static_assert(!has_to<int, vec<i32>&>);
-            static_assert(!has_to<int, const vec<i32>&>);
-            static_assert(!has_to<int, vec<i32>&&>);
-            static_assert(!has_to<int, const vec<i32>&&>);
+            static_assert(!has_to<vec<i32>, int>);
+            static_assert(!has_to<vec<i32>&, int>);
+            static_assert(!has_to<const vec<i32>&, int>);
+            static_assert(!has_to<vec<i32>&&, int>);
+            static_assert(!has_to<const vec<i32>&&, int>);
 
             return true;
         }

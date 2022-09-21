@@ -53,7 +53,7 @@ namespace snn::range::view
 
         [[nodiscard]] constexpr auto front(promise::not_empty_t)
         {
-            if constexpr (has_to<To, decltype(rng_.front(promise::not_empty))>)
+            if constexpr (has_to<decltype(rng_.front(promise::not_empty)), To>)
             {
                 return rng_.front(promise::not_empty).template to<To>();
             }
