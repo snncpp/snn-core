@@ -17,50 +17,183 @@ namespace snn::app
     {
         constexpr bool example()
         {
+            // Macro "functions".
+
+            snn_should(true); // Removed in optimized builds.
+            snn_should_if_not_fuzzing(true);
+            snn_assert(true);
+
+            // Macro constants.
+
+            static_assert(std::is_same_v<decltype(SNN_ADDRESS_SANITIZER_BOOL), bool>);
+            static_assert(std::is_same_v<decltype(SNN_ASSERT_BOOL), bool>);
+            static_assert(std::is_same_v<decltype(SNN_SHOULD_BOOL), bool>);
+            static_assert(std::is_same_v<decltype(SNN_INT128_BOOL), bool>);
+
             // Types
 
-            static_assert(std::is_same_v<i32, std::int32_t>);
-            static_assert(std::is_same_v<u64, std::uint64_t>);
-            static_assert(std::is_same_v<byte, std::uint8_t>);
             static_assert(std::is_same_v<usize, std::size_t>);
+            static_assert(std::is_same_v<isize, std::int64_t>);
 
-            // Type traits
+            static_assert(std::is_same_v<uptr, std::uintptr_t>);
+            static_assert(std::is_same_v<iptr, std::intptr_t>);
 
-            static_assert(std::is_same_v<front_value_t<str>, char>);
-            static_assert(is_trivially_relocatable_v<str>);
+            static_assert(std::is_same_v<iptrdiff, std::ptrdiff_t>);
+
+            static_assert(std::is_same_v<u64, std::uint64_t>);
+            static_assert(std::is_same_v<u32, std::uint32_t>);
+            static_assert(std::is_same_v<u16, std::uint16_t>);
+            static_assert(std::is_same_v<u8, std::uint8_t>);
+
+            static_assert(std::is_same_v<u32fast, std::uint_fast32_t>);
+            static_assert(std::is_same_v<u16fast, std::uint_fast16_t>);
+            static_assert(std::is_same_v<u8fast, std::uint_fast8_t>);
+
+            static_assert(std::is_same_v<i64, std::int64_t>);
+            static_assert(std::is_same_v<i32, std::int32_t>);
+            static_assert(std::is_same_v<i16, std::int16_t>);
+            static_assert(std::is_same_v<i8, std::int8_t>);
+
+            static_assert(std::is_same_v<i32fast, std::int_fast32_t>);
+            static_assert(std::is_same_v<i16fast, std::int_fast16_t>);
+            static_assert(std::is_same_v<i8fast, std::int_fast8_t>);
+
+            static_assert(std::is_same_v<byte, std::uint8_t>);
+
+#if SNN_INT128_BOOL
+            static_assert(std::is_same_v<u128, __uint128_t>);
+            static_assert(std::is_same_v<i128, __int128_t>);
+#endif
 
             // Concepts
 
-            static_assert(strict_integral<i32>);
-            static_assert(!strict_integral<bool>);
+            static_assert(arithmetic<int>);
+            static_assert(brace_constructible_from<i64, int>);
+            static_assert(!brace_constructible_from<int, i64>); // Would narrow.
+            static_assert(callable<fn::less_than, int, int>);
+            static_assert(constructible_from<int, i64>);
+            static_assert(constructible_from_iterators<str>);
+            static_assert(convertible_to<int, i64>);
+            static_assert(explicitly_default_constructible<promise::has_value_t>);
+            static_assert(floating_point<float>);
+            static_assert(implicitly_default_constructible<str>);
+            static_assert(legacy_iterable<str>);
+            static_assert(pointer<char*>);
+            static_assert(power_of_two<8>);
+            static_assert(predicate<fn::is_zero, int>);
+            static_assert(sane<str>);
+            static_assert(value_type_or<int, int&>);
 
+            // Has concepts.
+
+            static_assert(has_append_inplace<vec<int>>);
             static_assert(has_at<cstrview>);
+            static_assert(has_contiguous_iterator<cstrview>);
+            static_assert(has_count<cstrview>);
+            static_assert(has_drop_back<cstrrng>);
+            static_assert(has_drop_front<cstrrng>);
+            static_assert(has_to<cstrview, int>);
 
+            // Integral concepts.
+
+            static_assert(character<char>);
+            static_assert(integral<bool>);
+            static_assert(same_signedness_as<int, i64>);
+            static_assert(signed_integral<int>);
+            static_assert(!strict_integral<bool>);
+            static_assert(strict_integral_min<u64, 32>);
+            static_assert(!strict_integral_min<u16, 32>);
+            static_assert(strict_signed_integral<int>);
+            static_assert(strict_unsigned_integral<u32>);
+            static_assert(unsigned_integral<u32>);
+
+            // Range concepts.
+
+            static_assert(input_range<cstrrng>);
+            static_assert(forward_range<cstrrng>);
+            static_assert(bidirectional_range<cstrrng>);
+            static_assert(random_access_range<cstrrng>);
             static_assert(contiguous_range<cstrrng>);
+
+            // Type traits
+
+            static_assert(is_trivially_relocatable_v<str>);
+            static_assert(std::is_same_v<deep_const_t<int*>, const int*>);
+            static_assert(std::is_same_v<front_value_t<str>, char>);
+            static_assert(std::is_same_v<not_deduced_t<str>, str>);
+            static_assert(std::is_same_v<promote_integral_t<u16, 32>, u32>);
+            static_assert(std::is_same_v<remove_cv_rvalue_ref_t<int&>, int&>);
+            static_assert(std::is_same_v<trivially_relocatable_if_t<i32, str>, i32>);
 
             // Constants
 
             static_assert(constant::bits_per_byte == 8);
-            static_assert(constant::dynamic_count == constant::limit<usize>::max);
-            static_assert(constant::npos == constant::limit<usize>::max);
+            static_assert(constant::dynamic_count == std::numeric_limits<usize>::max());
+            static_assert(constant::npos == std::numeric_limits<usize>::max());
             static_assert(constant::value_initialized<int> == 0);
 
+            static_assert(constant::exit::failure == 1);
+            static_assert(constant::exit::success == 0);
+
+            static_assert(constant::limit<usize>::min == std::numeric_limits<usize>::min());
+            static_assert(constant::limit<usize>::max == std::numeric_limits<usize>::max());
+
+            static_assert(constant::fp::limit<double>::min_negative < 0);
+            static_assert(constant::fp::limit<double>::min_positive > 0);
+            static_assert(constant::fp::limit<double>::max > 0);
+            static_assert(constant::fp::limit<double>::infinity > 0);
+            static_assert(constant::fp::limit<double>::nan != constant::fp::limit<double>::nan);
+
+            static_assert(constant::size::kilobyte<i16> == 1'000);
             static_assert(constant::size::megabyte<i32> == 1'000'000);
+            static_assert(constant::size::gigabyte<i32> == 1'000'000'000);
+            static_assert(constant::size::terabyte<i64> == 1'000'000'000'000);
+            static_assert(constant::size::petabyte<i64> == 1'000'000'000'000'000);
+            static_assert(constant::size::exabyte<i64> == 1'000'000'000'000'000'000);
+
+            static_assert(constant::size::kibibyte<i16> == 1'024);
             static_assert(constant::size::mebibyte<i32> == 1'048'576);
+            static_assert(constant::size::gibibyte<i32> == 1'073'741'824);
+            static_assert(constant::size::tebibyte<i64> == 1'099'511'627'776);
+            static_assert(constant::size::pebibyte<i64> == 1'125'899'906'842'624);
+            static_assert(constant::size::exbibyte<i64> == 1'152'921'504'606'846'976);
 
             // Functions
 
-            snn_require(force_unsigned(i32{-1}) == constant::limit<u32>::max);
-
-            snn_require(to_i32(constant::limit<u32>::max) == -1);
-
+            static_assert(promote(123) == 123);    // Promote to min 32-bit (with the same sign).
+            static_assert(promote<64>(true) == 1); // Promote to min 64-bit (with the same sign).
             static_assert(string_size("One Two") == 7);
             static_assert(string_size("One\0Two") == 7);
+            static_assert(to_underlying(generic::error::no_error) == 0);
 
-            // Wrappers
+            // Integral conversion functions (non-destructive bit casts).
+
+            static_assert(force_signed(-1) == -1);
+            static_assert(force_signed(123) == 123);
+            static_assert(force_signed(123u) == 123);
+            static_assert(force_unsigned(-1) == constant::limit<u32>::max);
+            static_assert(force_unsigned(123) == 123u);
+            static_assert(force_unsigned(123u) == 123u);
+            static_assert(to_char(123u) == 123);
+            static_assert(to_byte(123) == 123u);
+            static_assert(to_i8(123u) == 123);
+            static_assert(to_u8(123) == 123u);
+            static_assert(to_i16(123u) == 123);
+            static_assert(to_u16(123) == 123u);
+            static_assert(to_i32(123u) == 123);
+            static_assert(to_u32(123) == 123u);
+            static_assert(to_i64(123u) == 123);
+            static_assert(to_u64(123) == 123u);
+            static_assert(to_isize(123u) == 123);
+            static_assert(to_usize(123) == 123u);
+
+            // Wrappers (and helper functions).
 
             byte_size bs{123};
             snn_require(bs.get() == 123);
+
+            not_null nn{&bs};
+            snn_require(nn.get() != nullptr);
 
             not_zero nz{456};
             snn_require(nz.get() == 456);
@@ -68,6 +201,12 @@ namespace snn::app
             auto num = as_num(789);
             static_assert(std::is_same_v<decltype(num), numeric<int>>);
             snn_require(num.get() == 789);
+
+            semi_const<int> i = 123;
+            snn_require(i.get() == 123);
+
+            transient<cstrview> s = "abc";
+            snn_require(s.get() == "abc");
 
             return true;
         }
