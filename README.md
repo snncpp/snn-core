@@ -214,7 +214,8 @@ Never checked:
  * Iterator invalidation.
  * `array_view<T, ...>` invalidation.
 
-Using sanitizers in development helps to catch bugs that the framework can't protect against.
+Using sanitizers in development help to catch bugs that the framework can't protect against. The
+[build-tool][buildtool] has a `--sanitize` option that enables sanitizers.
 
 ### Internal audits
 
