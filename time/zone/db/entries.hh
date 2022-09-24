@@ -13,7 +13,7 @@
 
 namespace snn::time::zone::db
 {
-    inline constexpr array<const entry*, 426> entries{
+    inline constexpr array<const entry*, 424> entries{
         &africa::abidjan,
         &africa::accra,
         &africa::addis_ababa,
@@ -381,7 +381,6 @@ namespace snn::time::zone::db
         &europe::tallinn,
         &europe::tirane,
         &europe::ulyanovsk,
-        &europe::uzhgorod,
         &europe::vaduz,
         &europe::vatican,
         &europe::vienna,
@@ -389,7 +388,6 @@ namespace snn::time::zone::db
         &europe::volgograd,
         &europe::warsaw,
         &europe::zagreb,
-        &europe::zaporozhye,
         &europe::zurich,
         &indian::antananarivo,
         &indian::chagos,

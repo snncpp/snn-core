@@ -12,7 +12,7 @@
 
 namespace snn::time::zone::db
 {
-    inline constexpr array<size_prefixed_string_literal, 426> locations{
+    inline constexpr array<size_prefixed_string_literal, 424> locations{
         "\016Africa/Abidjan",
         "\014Africa/Accra",
         "\022Africa/Addis_Ababa",
@@ -380,7 +380,6 @@ namespace snn::time::zone::db
         "\016Europe/Tallinn",
         "\015Europe/Tirane",
         "\020Europe/Ulyanovsk",
-        "\017Europe/Uzhgorod",
         "\014Europe/Vaduz",
         "\016Europe/Vatican",
         "\015Europe/Vienna",
@@ -388,7 +387,6 @@ namespace snn::time::zone::db
         "\020Europe/Volgograd",
         "\015Europe/Warsaw",
         "\015Europe/Zagreb",
-        "\021Europe/Zaporozhye",
         "\015Europe/Zurich",
         "\023Indian/Antananarivo",
         "\015Indian/Chagos",
