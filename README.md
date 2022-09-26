@@ -91,7 +91,7 @@ This library currently targets [POSIX][posix] and is developed and tested on:
 | [array\_view.fwd.hh](array_view.fwd.hh)                               | Array view (forward declare) and `[c]strview` aliases     |                                                       |
 | [array\_view.hh](array_view.hh)                                       | Array view with `[c]strview` specializations              | [Example/Tests](array_view.test.cc)                   |
 | [contiguous\_interface.hh](contiguous_interface.hh)                   | Contiguous interface                                      | [Example/Tests](contiguous_interface.test.cc)         |
-| [core.hh](core.hh)                                                    | Framework core functionality                              | [Example/Tests](core.test.cc)                         |
+| [core.hh](core.hh)                                                    | Core functionality                                        | [Example/Tests](core.test.cc)                         |
 | [debug.hh](debug.hh)                                                  | Debug functions and macros                                | [Example/Tests](debug.test.cc)                        |
 | [defer.hh](defer.hh)                                                  | Call a function on destruction                            | [Example/Tests](defer.test.cc)                        |
 | [error\_code.hh](error_code.hh)                                       | Error category and error code                             | [Example/Tests](error_code.test.cc)                   |
