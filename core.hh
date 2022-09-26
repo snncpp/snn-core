@@ -1,7 +1,7 @@
 // Copyright (c) 2022 Mikael Simonsson <https://mikaelsimonsson.com>.
 // SPDX-License-Identifier: BSL-1.0
 
-// # Framework core functionality
+// # Core functionality
 
 #pragma once
 
@@ -472,7 +472,7 @@ namespace snn
 
     // ### sane
 
-    // This framework assumes that all types are "sane":
+    // This library assumes that all types are "sane":
     // * If a type is copy constructible it must also be move constructible.
     // * If a type is copy assignable it must also be move assignable.
     // * If a type is move constructible it must also be nothrow move constructible.

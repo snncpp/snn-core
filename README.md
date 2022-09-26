@@ -1,27 +1,33 @@
 # snncpp
 
-An alternative C++ framework.
+A modern, safer _C++ Standard Library_ (for Linux/BSD).
 
-_The author of this framework ([@msimonsson](https://github.com/msimonsson)) is available for remote work._
+_The author of this library ([@msimonsson](https://github.com/msimonsson)) is available for remote work._
 
 
 ## Goals
 
- * Safe by default or _even harder to shoot yourself in the foot_.
+ * Safe by default or _even harder to shoot yourself in the foot_ (see [Safety](#safety)).
  * Readable and well tested code.
  * High performance without sacrificing on the points above.
+
+
+## Non-goals
+
+ * Replacing the entire Standard Library. This library depends on and uses the Standard Library
+   internally where appropriate, e.g. type traits, concepts, `std::move/forward` and wraps some
+   containers like `std::map/set`.
 
 
 ## Requirements
 
  * C++20
  * 64-bit
- * Little-endian
 
 
 ## Officially supported platforms
 
-This framework currently targets [POSIX][posix] and is developed and tested on:
+This library currently targets [POSIX][posix] and is developed and tested on:
 
 | Operating system     | Compiler             |
 | -------------------- | -------------------- |
@@ -32,8 +38,11 @@ This framework currently targets [POSIX][posix] and is developed and tested on:
 ## Limitations
 
  * No wide character support (by design).
- * No grapheme support.
- * No Windows support.
+ * No Windows support[^contribwelcome].
+ * No grapheme support[^contribwelcome].
+ * No big-endian support[^contribwelcome].
+
+[^contribwelcome]: Contributions welcome.
 
 
 ## Overview
@@ -214,7 +223,7 @@ Never checked:
  * Iterator invalidation.
  * `array_view<T, ...>` invalidation.
 
-Using sanitizers in development help to catch bugs that the framework can't protect against. The
+Using sanitizers in development help to catch bugs that this library can't protect against. The
 [build-tool][buildtool] has a `--sanitize` option that enables sanitizers.
 
 ### Internal audits
@@ -282,7 +291,7 @@ All identifiers should be in `snake_case` with the following exceptions:
 ## Documentation
 
 Generated API documentation is planned. Until then the code itself (which is pretty readable outside
-of the `detail` namespace) and examples/unit tests should hopefully be enough to use this framework.
+of the `detail` namespace) and examples/unit tests should hopefully be enough to use this library.
 
 
 ## License
