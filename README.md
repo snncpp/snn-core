@@ -115,7 +115,7 @@ This library currently targets [POSIX][posix] and is developed and tested on:
 
 ## Build tool
 
-The snncpp [build-tool][buildtool] can build C++ projects that follow the same naming convention and
+The snncpp Go-like [build-tool][buildtool] can build C++ projects that follow the same naming convention and
 directory structure as [snn-core][snncore]. It understands simple preprocessing directives ([example](crypto/hash/sha256.hh))
 and will link with libraries listed in `#include` comments ([example](crypto/hash/impl/sha256.openssl.hh)).
 
