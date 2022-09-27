@@ -38,7 +38,7 @@ This library currently targets [POSIX][posix] and is developed and tested on:
 ## Limitations
 
  * No wide character support (by design).
- * No Windows support[^contribwelcome].
+ * No Windows support (most code outside of `file::`, `random::` and `process::` should work)[^contribwelcome].
  * No grapheme support[^contribwelcome].
  * No big-endian support[^contribwelcome].
 
