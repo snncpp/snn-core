@@ -14,9 +14,9 @@ _The author of this library ([@msimonsson](https://github.com/msimonsson)) is av
 
 ## Non-goals
 
- * Replacing the entire Standard Library. This library depends on and uses the Standard Library
-   internally where appropriate, e.g. type traits, concepts, `std::move/forward` and wraps some
-   containers like `std::map/set`.
+ * Replacing the entire _C++ Standard Library_. This library uses the _C++ Standard Library_
+   throughout where appropriate, e.g. type traits, concepts, algorithms and utility functions
+   like `std::move`.
 
 
 ## Requirements
