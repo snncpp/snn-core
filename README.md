@@ -5,6 +5,24 @@ A modern, safer alternative to the _C++ Standard Library_ (for Linux/BSD).
 _The author of this library ([@msimonsson](https://github.com/msimonsson)) is available for remote work._
 
 
+## Features
+
+ * Immutable and mutable `array_view`, including `[c]strview`.
+ * Safe and efficient string parsing with ranges ([example](json/is_number.hh)).
+ * Strings with and without _Small String Optimization_ (`str/strbuf`).
+ * Vector with optional small capacity and trivially relocatable optimization (`vec`).
+ * Date and time library with IANA time zone database ([time/](time/)).
+ * `result/optional` with reference support.
+ * `.range()`/`.view(...)` member functions to discourage the use of iterators.
+ * Validation member functions like `.all(...)` and `.any(...)` on iterable containers.
+ * Safe integral class and a decimal class with a static/dynamic scale ([num/](num/)).
+ * Command line options parsing ([env/](env/)).
+ * Filesystem library ([file/](file/)).
+ * Fast JSON parsing ([json/](json/)).
+ * Go-like [build-tool][buildtool] with fuzzing support.
+ * And much more...
+
+
 ## Goals
 
  * Safe by default or _even harder to shoot yourself in the foot_ (see [Safety](#safety)).
