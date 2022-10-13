@@ -23,16 +23,17 @@ namespace snn::time::zone::db::america
             "US",
         };
 
-        inline constexpr array<zone::offset, 5> offsets{{
+        inline constexpr array<zone::offset, 6> offsets{{
             {"LMT", -25196, false},
             {"MDT", -21600, true},
+            {"MST", -25200, false},
             {"MST", -25200, false},
             {"MWT", -21600, true},
             {"MPT", -21600, true},
         }};
 
         inline constexpr array<zone::transition, 158> transitions{{
-            {2, -2717643600},
+            {3, -2717643600},
             {1, -1633273200},
             {2, -1615132800},
             {1, -1601823600},
@@ -41,8 +42,8 @@ namespace snn::time::zone::db::america
             {2, -1551628800},
             {1, -1538924400},
             {2, -1534089600},
-            {3, -880210800},
-            {4, -769395600},
+            {4, -880210800},
+            {5, -769395600},
             {2, -765388800},
             {1, -147884400},
             {2, -131558400},

@@ -23,16 +23,17 @@ namespace snn::time::zone::db::america
             "US",
         };
 
-        inline constexpr array<zone::offset, 5> offsets{{
+        inline constexpr array<zone::offset, 6> offsets{{
             {"LMT", -28378, false},
             {"PDT", -25200, true},
             {"PST", -28800, false},
             {"PWT", -25200, true},
             {"PPT", -25200, true},
+            {"PST", -28800, false},
         }};
 
         inline constexpr array<zone::transition, 186> transitions{{
-            {2, -2717640000},
+            {5, -2717640000},
             {1, -1633269600},
             {2, -1615129200},
             {1, -1601820000},

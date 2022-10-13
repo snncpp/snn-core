@@ -24,15 +24,16 @@ namespace snn::time::zone::db::america
             "CA",
         };
 
-        inline constexpr array<zone::offset, 4> offsets{{
+        inline constexpr array<zone::offset, 5> offsets{{
             {"LMT", -26898, false},
             {"MDT", -21600, true},
             {"MST", -25200, false},
             {"MWT", -21600, true},
+            {"MST", -25200, false},
         }};
 
         inline constexpr array<zone::transition, 11> transitions{{
-            {2, -2717643600},
+            {4, -2717643600},
             {1, -1633273200},
             {2, -1615132800},
             {1, -1601823600},

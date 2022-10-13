@@ -23,18 +23,19 @@ namespace snn::time::zone::db::america::indiana
             "US",
         };
 
-        inline constexpr array<zone::offset, 7> offsets{{
+        inline constexpr array<zone::offset, 8> offsets{{
             {"LMT", -20790, false},
             {"CDT", -18000, true},
             {"CST", -21600, false},
             {"CWT", -18000, true},
             {"CPT", -18000, true},
+            {"CST", -21600, false},
             {"EST", -18000, false},
             {"CST", -21600, false},
         }};
 
         inline constexpr array<zone::transition, 154> transitions{{
-            {2, -2717647200},
+            {5, -2717647200},
             {1, -1633276800},
             {2, -1615136400},
             {1, -1601827200},
@@ -72,7 +73,7 @@ namespace snn::time::zone::db::america::indiana
             {2, -289414800},
             {1, -273686400},
             {2, -257965200},
-            {5, -242236800},
+            {6, -242236800},
             {2, -195066000},
             {1, -84384000},
             {2, -68662800},
@@ -123,7 +124,7 @@ namespace snn::time::zone::db::america::indiana
             {1, 638956800},
             {2, 657097200},
             {1, 671011200},
-            {5, 688546800},
+            {6, 688546800},
             {1, 1143961200},
             {2, 1162105200},
             {1, 1173600000},
