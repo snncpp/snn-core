@@ -13,16 +13,15 @@ Don't use a path with spaces or special characters in it.
     x tzdb-2022a/...
 
     % cd tzdb-2022a
+    % cp -i Makefile Makefile.bak
     % vi Makefile
 
 Replace:
 
-    BACKWARD= backward
     CFLAGS=
 
 With:
 
-    BACKWARD=
     CFLAGS= -DZIC_BLOAT_DEFAULT=\"fat\"
 
 Use GNU Awk (FreeBSD only, gawk must be installed), replace:
