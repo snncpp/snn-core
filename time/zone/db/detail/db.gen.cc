@@ -19,6 +19,7 @@
 #include "snn-core/range/view/drop_last.hh"
 #include "snn-core/range/view/enumerate.hh"
 #include "snn-core/set/sorted.hh"
+#include "snn-core/set/unsorted.hh"
 #include "snn-core/string/normalize_line_endings.hh"
 #include "snn-core/string/range/split.hh"
 #include "snn-core/time/zone/location.hh"
@@ -37,9 +38,122 @@ namespace snn::app
 
     namespace
     {
-        bool ignore_name(const cstrview s) noexcept
+        bool ignore_link(const cstrview name)
         {
-            return s.has_front("Etc/") || !s.contains('/');
+            [[clang::no_destroy]] static const set::unsorted<cstrview> ignore{
+                // From backward file: "Alternate names for the same location"
+                "Africa/Asmera",
+                "America/Godthab",
+                "Asia/Ashkhabad",
+                "Asia/Calcutta",
+                "Asia/Chungking",
+                "Asia/Dacca",
+                "Asia/Istanbul",
+                "Asia/Katmandu",
+                "Asia/Macao",
+                "Asia/Rangoon",
+                "Asia/Saigon",
+                "Asia/Thimbu",
+                "Asia/Ujung_Pandang",
+                "Asia/Ulan_Bator",
+                "Atlantic/Faeroe",
+                "Europe/Kiev",
+                "Europe/Nicosia",
+                "Pacific/Ponape",
+                "Pacific/Truk",
+
+                // From backward file: "Two-part names that were renamed mostly to three-part names
+                // in 1995"
+                "America/Buenos_Aires",
+                "America/Catamarca",
+                "America/Cordoba",
+                "America/Indianapolis",
+                "America/Jujuy",
+                "America/Knox_IN",
+                "America/Louisville",
+                "America/Mendoza",
+                "America/Virgin",
+                "Pacific/Samoa",
+
+                // From backward file: "Pre-1993 naming conventions"
+                "Australia/ACT",
+                "Australia/LHI",
+                "Australia/NSW",
+                "Australia/North",
+                "Australia/Queensland",
+                "Australia/South",
+                "Australia/Tasmania",
+                "Australia/Victoria",
+                "Australia/West",
+                "Australia/Yancowinna",
+                "Brazil/Acre",
+                "Brazil/DeNoronha",
+                "Brazil/East",
+                "Brazil/West",
+                "Canada/Atlantic",
+                "Canada/Central",
+                "Canada/Eastern",
+                "Canada/Mountain",
+                "Canada/Newfoundland",
+                "Canada/Pacific",
+                "Canada/Saskatchewan",
+                "Canada/Yukon",
+                "Chile/Continental",
+                "Chile/EasterIsland",
+                "Mexico/BajaNorte",
+                "Mexico/BajaSur",
+                "Mexico/General",
+                "US/Alaska",
+                "US/Aleutian",
+                "US/Arizona",
+                "US/Central",
+                "US/East-Indiana",
+                "US/Eastern",
+                "US/Hawaii",
+                "US/Indiana-Starke",
+                "US/Michigan",
+                "US/Mountain",
+                "US/Pacific",
+                "US/Samoa",
+
+                // From backward file: "Non-zone.tab locations with timestamps since 1970 that
+                // duplicate those of an existing location"
+                "Africa/Timbuktu",
+                "America/Argentina/ComodRivadavia",
+                "America/Atka",
+                "America/Coral_Harbour",
+                "America/Ensenada",
+                "America/Fort_Wayne",
+                "America/Montreal",
+                "America/Nipigon",
+                "America/Porto_Acre",
+                "America/Rainy_River",
+                "America/Rosario",
+                "America/Santa_Isabel",
+                "America/Shiprock",
+                "America/Thunder_Bay",
+                "Antarctica/South_Pole",
+                "Asia/Chongqing",
+                "Asia/Harbin",
+                "Asia/Kashgar",
+                "Asia/Tel_Aviv",
+                "Atlantic/Jan_Mayen",
+                "Australia/Canberra",
+                "Australia/Currie",
+                "Europe/Belfast",
+                "Europe/Tiraspol",
+                "Europe/Uzhgorod",
+                "Europe/Zaporozhye",
+                "Pacific/Enderbury",
+                "Pacific/Johnston",
+                "Pacific/Yap",
+            };
+            return ignore.contains(name);
+        }
+
+        bool ignore_name(const cstrview name)
+        {
+            return name.has_front("Etc/") || !name.contains('/');
         }
 
         bool is_valid_identifier(const cstrview s) noexcept
@@ -510,6 +624,13 @@ namespace snn
             if (auto opt = links.get(name))
             {
                 links_to = opt.value();
+
+                if (app::ignore_link(name))
+                {
+                    fmt::print_line("Ignoring link: {}", name);
+                    continue;
+                }
+
                 fmt::print_line("Link: {} -> {}", name, links_to);
 
                 if (!files.contains(links_to))
