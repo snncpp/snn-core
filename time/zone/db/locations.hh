@@ -12,7 +12,7 @@
 
 namespace snn::time::zone::db
 {
-    inline constexpr array<size_prefixed_string_literal, 424> locations{
+    inline constexpr array<size_prefixed_string_literal, 419> locations{
         "\016Africa/Abidjan",
         "\014Africa/Accra",
         "\022Africa/Addis_Ababa",
@@ -165,7 +165,6 @@ namespace snn::time::zone::db
         "\022America/Montserrat",
         "\016America/Nassau",
         "\020America/New_York",
-        "\017America/Nipigon",
         "\014America/Nome",
         "\017America/Noronha",
         "\033America/North_Dakota/Beulah",
@@ -182,7 +181,6 @@ namespace snn::time::zone::db
         "\023America/Porto_Velho",
         "\023America/Puerto_Rico",
         "\024America/Punta_Arenas",
-        "\023America/Rainy_River",
         "\024America/Rankin_Inlet",
         "\016America/Recife",
         "\016America/Regina",
@@ -203,7 +201,6 @@ namespace snn::time::zone::db
         "\025America/Swift_Current",
         "\023America/Tegucigalpa",
         "\015America/Thule",
-        "\023America/Thunder_Bay",
         "\017America/Tijuana",
         "\017America/Toronto",
         "\017America/Tortola",
@@ -255,7 +252,6 @@ namespace snn::time::zone::db
         "\016Asia/Hong_Kong",
         "\011Asia/Hovd",
         "\014Asia/Irkutsk",
-        "\015Asia/Istanbul",
         "\014Asia/Jakarta",
         "\015Asia/Jayapura",
         "\016Asia/Jerusalem",
@@ -362,7 +358,6 @@ namespace snn::time::zone::db
         "\014Europe/Minsk",
         "\015Europe/Monaco",
         "\015Europe/Moscow",
-        "\016Europe/Nicosia",
         "\013Europe/Oslo",
         "\014Europe/Paris",
         "\020Europe/Podgorica",

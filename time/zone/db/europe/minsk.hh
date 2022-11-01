@@ -39,7 +39,7 @@ namespace snn::time::zone::db::europe
             {"+03", 10800, false},
         }};
 
-        inline constexpr array<zone::transition, 69> transitions{{
+        inline constexpr array<zone::transition, 68> transitions{{
             {1, -2840147416},
             {2, -1441158600},
             {3, -1247536800},
@@ -108,7 +108,6 @@ namespace snn::time::zone::db::europe
             {10, 1269734400},
             {11, 1288483200},
             {12, 1301184000},
-            {12, 2147483647},
         }};
     }
 

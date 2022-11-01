@@ -31,7 +31,7 @@ namespace snn::time::zone::db::australia
             {"+11", 39600, true},
         }};
 
-        inline constexpr array<zone::transition, 116> transitions{{
+        inline constexpr array<zone::transition, 115> transitions{{
             {1, -2364114980},
             {3, 352216800},
             {2, 372785400},
@@ -147,7 +147,6 @@ namespace snn::time::zone::db::australia
             {4, 2106747000},
             {3, 2122470000},
             {4, 2138196600},
-            {4, 2147483647},
         }};
     }
 

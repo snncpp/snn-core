@@ -30,7 +30,7 @@ namespace snn::time::zone::db::australia
             {"+0845", 31500, false},
         }};
 
-        inline constexpr array<zone::transition, 20> transitions{{
+        inline constexpr array<zone::transition, 19> transitions{{
             {3, -2337928528},
             {1, -1672555500},
             {2, -1665384300},
@@ -50,7 +50,6 @@ namespace snn::time::zone::db::australia
             {2, 1206810900},
             {1, 1224954900},
             {2, 1238260500},
-            {2, 2147483647},
         }};
     }
 

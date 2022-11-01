@@ -29,10 +29,9 @@ namespace snn::time::zone::db::indian
             {"+06", 21600, false},
         }};
 
-        inline constexpr array<zone::transition, 3> transitions{{
+        inline constexpr array<zone::transition, 2> transitions{{
             {1, -1988167780},
             {2, 820436400},
-            {2, 2147483647},
         }};
     }
 

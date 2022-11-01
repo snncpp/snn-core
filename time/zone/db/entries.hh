@@ -13,7 +13,7 @@
 
 namespace snn::time::zone::db
 {
-    inline constexpr array<const entry*, 424> entries{
+    inline constexpr array<const entry*, 419> entries{
         &africa::abidjan,
         &africa::accra,
         &africa::addis_ababa,
@@ -166,7 +166,6 @@ namespace snn::time::zone::db
         &america::montserrat,
         &america::nassau,
         &america::new_york,
-        &america::nipigon,
         &america::nome,
         &america::noronha,
         &america::north_dakota::beulah,
@@ -183,7 +182,6 @@ namespace snn::time::zone::db
         &america::porto_velho,
         &america::puerto_rico,
         &america::punta_arenas,
-        &america::rainy_river,
         &america::rankin_inlet,
         &america::recife,
         &america::regina,
@@ -204,7 +202,6 @@ namespace snn::time::zone::db
         &america::swift_current,
         &america::tegucigalpa,
         &america::thule,
-        &america::thunder_bay,
         &america::tijuana,
         &america::toronto,
         &america::tortola,
@@ -256,7 +253,6 @@ namespace snn::time::zone::db
         &asia::hong_kong,
         &asia::hovd,
         &asia::irkutsk,
-        &asia::istanbul,
         &asia::jakarta,
         &asia::jayapura,
         &asia::jerusalem,
@@ -363,7 +359,6 @@ namespace snn::time::zone::db
         &europe::minsk,
         &europe::monaco,
         &europe::moscow,
-        &europe::nicosia,
         &europe::oslo,
         &europe::paris,
         &europe::podgorica,

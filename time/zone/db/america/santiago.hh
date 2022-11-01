@@ -34,7 +34,7 @@ namespace snn::time::zone::db::america
             {"-04", -14400, false},
         }};
 
-        inline constexpr array<zone::transition, 160> transitions{{
+        inline constexpr array<zone::transition, 159> transitions{{
             {1, -2524504635},
             {2, -1892661435},
             {1, -1688410800},
@@ -194,7 +194,6 @@ namespace snn::time::zone::db::america
             {6, 2104372800},
             {7, 2122513200},
             {6, 2135822400},
-            {6, 2147483647},
         }};
     }
 

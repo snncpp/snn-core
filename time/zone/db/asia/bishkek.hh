@@ -34,7 +34,7 @@ namespace snn::time::zone::db::asia
             {"+06", 21600, true},
         }};
 
-        inline constexpr array<zone::transition, 53> transitions{{
+        inline constexpr array<zone::transition, 52> transitions{{
             {1, -1441169904},
             {3, -1247547600},
             {2, 354909600},
@@ -87,7 +87,6 @@ namespace snn::time::zone::db::asia
             {1, 1099168200},
             {7, 1111872600},
             {3, 1123783200},
-            {3, 2147483647},
         }};
     }
 

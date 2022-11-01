@@ -31,7 +31,7 @@ namespace snn::time::zone::db::antarctica
             {"+11", 39600, false},
         }};
 
-        inline constexpr array<zone::transition, 13> transitions{{
+        inline constexpr array<zone::transition, 12> transitions{{
             {1, -31536000},
             {2, 1255802400},
             {1, 1267714800},
@@ -44,7 +44,6 @@ namespace snn::time::zone::db::antarctica
             {2, 1570129200},
             {1, 1583596800},
             {2, 1601740860},
-            {2, 2147483647},
         }};
     }
 
