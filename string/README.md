@@ -7,8 +7,8 @@ Generic string functions/ranges that work with both single and multi-byte encodi
 
 | Path                                                     | Description             |                                                 |
 | -------------------------------------------------------- | ----------------------- | ----------------------------------------------- |
-| [constant\_time/](constant_time)                         | Constant time functions | [Readme](constant_time/#readme)                 |
-| [range/](range)                                          | Ranges                  | [Readme](range/#readme)                         |
+| [constant\_time/](constant_time)                         | Constant time functions | [Readme](constant_time/README.md)               |
+| [range/](range)                                          | Ranges                  | [Readme](range/README.md)                       |
 | [append\_iterator.hh](append_iterator.hh)                | Append iterator         |                                                 |
 | [normalize\_line\_endings.hh](normalize_line_endings.hh) | Normalize line endings  | [Example/Tests](normalize_line_endings.test.cc) |
 | [repeat.hh](repeat.hh)                                   | Repeat string N times   | [Example/Tests](repeat.test.cc)                 |

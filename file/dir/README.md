@@ -4,7 +4,7 @@
 
 | Path                                        | Description                                   |                                   |
 | ------------------------------------------- | --------------------------------------------- | --------------------------------- |
-| [fn/](fn)                                   | Function objects                              | [Readme](fn/#readme)              |
+| [fn/](fn)                                   | Function objects                              | [Readme](fn/README.md)            |
 | [change.hh](change.hh)                      | Change working directory                      | [Tests](change.test.cc)           |
 | [create.hh](create.hh)                      | Create directory                              | [Tests](create.test.cc)           |
 | [create\_recursive.hh](create_recursive.hh) | Create directory including all intermediaries | [Tests](create_recursive.test.cc) |

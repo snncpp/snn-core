@@ -4,7 +4,7 @@
 
 | Path                                          | Description                                                           |                                    |
 | --------------------------------------------- | --------------------------------------------------------------------- | ---------------------------------- |
-| [raw/](raw)                                   | Raw memory functions                                                  | [Readme](raw/#readme)              |
+| [raw/](raw)                                   | Raw memory functions                                                  | [Readme](raw/README.md)            |
 | [allocator.hh](allocator.hh)                  | Allocator without state                                               | [Tests](allocator.test.cc)         |
 | [construct.hh](construct.hh)                  | Construct a single object at a given address                          |                                    |
 | [copy\_construct.hh](copy_construct.hh)       | Copy objects to an uninitialized address                              |                                    |

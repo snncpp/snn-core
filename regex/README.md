@@ -7,7 +7,7 @@ Wrappers around `std::regex` and related classes/functions.
 
 | Path                                | Description                     |                                  |
 | ----------------------------------- | ------------------------------- | -------------------------------- |
-| [range/](range)                     | Ranges                          | [Readme](range/#readme)          |
+| [range/](range)                     | Ranges                          | [Readme](range/README.md)        |
 | [match\_view.hh](match_view.hh)     | Match view                      |                                  |
 | [matches.hh](matches.hh)            | Matches (`std::cmatch` wrapper) |                                  |
 | [matches\_view.hh](matches_view.hh) | Matches view                    |                                  |

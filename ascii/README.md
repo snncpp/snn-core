@@ -4,7 +4,7 @@
 
 | Path                                             | Description                             |                                             |
 | ------------------------------------------------ | --------------------------------------- | ------------------------------------------- |
-| [fn/](fn)                                        | Function objects                        | [Readme](fn/#readme)                        |
+| [fn/](fn)                                        | Function objects                        | [Readme](fn/README.md)                      |
 | [contains\_icase.hh](contains_icase.hh)          | Contains ignoring case                  | [Example/Tests](contains_icase.test.cc)     |
 | [error.hh](error.hh)                             | Error (enum etc)                        |                                             |
 | [is\_equal\_icase.hh](is_equal_icase.hh)         | Is equal ignoring case                  | [Example/Tests](is_equal_icase.test.cc)     |
