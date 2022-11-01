@@ -4,13 +4,13 @@
 
 | Path                                  | Description                                                |                                |
 | ------------------------------------- | ---------------------------------------------------------- | ------------------------------ |
-| [dir/](dir)                           | Directories                                                | [Readme](dir#readme)           |
-| [io/](io)                             | I/O                                                        | [Readme](io#readme)            |
-| [path/](path)                         | Paths                                                      | [Readme](path#readme)          |
-| [permission/](permission)             | Permissions                                                | [Readme](permission#readme)    |
-| [standard/](standard)                 | Standard streams                                           | [Readme](standard#readme)      |
-| [symlink/](symlink)                   | Symbolic links                                             | [Readme](symlink#readme)       |
-| [tty/](tty)                           | TTYs (terminals)                                           | [Readme](tty#readme)           |
+| [dir/](dir)                           | Directories                                                | [Readme](dir/#readme)          |
+| [io/](io)                             | I/O                                                        | [Readme](io/#readme)           |
+| [path/](path)                         | Paths                                                      | [Readme](path/#readme)         |
+| [permission/](permission)             | Permissions                                                | [Readme](permission/#readme)   |
+| [standard/](standard)                 | Standard streams                                           | [Readme](standard/#readme)     |
+| [symlink/](symlink)                   | Symbolic links                                             | [Readme](symlink/#readme)      |
+| [tty/](tty)                           | TTYs (terminals)                                           | [Readme](tty/#readme)          |
 | [append.hh](append.hh)                | Append to file                                             | [Tests](append.test.cc)        |
 | [config.hh](config.hh)                | Config file parser                                         | [Tests](config.test.cc)        |
 | [copy.hh](copy.hh)                    | Copy a file                                                | [Tests](copy.test.cc)          |

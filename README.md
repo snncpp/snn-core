@@ -67,44 +67,44 @@ This library currently targets [POSIX][posix] and is developed and tested on:
 
 | Path                                                                  | Description                                               |                                                       |
 | --------------------------------------------------------------------- | --------------------------------------------------------- | ----------------------------------------------------- |
-| [algo/](algo)                                                         | Range algorithms                                          | [Readme](algo#readme)                                 |
-| [app/](app)                                                           | Reserved namespace for applications                       | [Readme](app#readme)                                  |
-| [ascii/](ascii)                                                       | ASCII string functions                                    | [Readme](ascii#readme)                                |
-| [base64/](base64)                                                     | Base64 encoding and decoding                              | [Readme](base64#readme)                               |
-| [chr/](chr)                                                           | Character (`char`) functions                              | [Readme](chr#readme)                                  |
-| [cmp/](cmp)                                                           | Comparison functions                                      | [Readme](cmp#readme)                                  |
-| [country/](country)                                                   | Country codes and names                                   | [Readme](country#readme)                              |
-| [crypto/](crypto)                                                     | Cryptographic hashes and derivation functions             | [Readme](crypto#readme)                               |
-| [encoding/](encoding)                                                 | Encoding schemes                                          | [Readme](encoding#readme)                             |
-| [env/](env)                                                           | Environment variables and command line options            | [Readme](env#readme)                                  |
-| [file/](file)                                                         | File system                                               | [Readme](file#readme)                                 |
-| [fmt/](fmt)                                                           | Formatting                                                | [Readme](fmt#readme)                                  |
-| [fn/](fn)                                                             | Function objects                                          | [Readme](fn#readme)                                   |
-| [generic/](generic)                                                   | Generic errors                                            | [Readme](generic#readme)                              |
-| [hex/](hex)                                                           | Hex encoding and decoding                                 | [Readme](hex#readme)                                  |
-| [html/](html)                                                         | HTML encoding                                             | [Readme](html#readme)                                 |
-| [io/](io)                                                             | I/O concepts                                              | [Readme](io#readme)                                   |
-| [json/](json)                                                         | JSON encoding and decoding                                | [Readme](json#readme)                                 |
-| [map/](map)                                                           | Sorted and unsorted maps                                  | [Readme](map#readme)                                  |
-| [math/](math)                                                         | Math functions                                            | [Readme](math#readme)                                 |
-| [mem/](mem)                                                           | Allocators and memory functions                           | [Readme](mem#readme)                                  |
-| [num/](num)                                                           | Numerical classes                                         | [Readme](num#readme)                                  |
-| [pair/](pair)                                                         | Pair functions and classes                                | [Readme](pair#readme)                                 |
-| [pcre/](pcre)                                                         | Perl Compatible Regular Expressions                       | [Readme](pcre#readme)                                 |
-| [pool/](pool)                                                         | Pool containers                                           | [Readme](pool#readme)                                 |
-| [process/](process)                                                   | Shell commands and process spawning                       | [Readme](process#readme)                              |
-| [random/](random)                                                     | High-quality random data                                  | [Readme](random#readme)                               |
-| [range/](range)                                                       | Ranges and range views (including `[c]strrng` aliases)    | [Readme](range#readme)                                |
-| [regex/](regex)                                                       | Regular expressions                                       | [Readme](regex#readme)                                |
-| [set/](set)                                                           | Sorted and unsorted sets                                  | [Readme](set#readme)                                  |
-| [stream/](stream)                                                     | Stream classes and concepts                               | [Readme](stream#readme)                               |
-| [string/](string)                                                     | String functions and ranges                               | [Readme](string#readme)                               |
-| [system/](system)                                                     | System error category and system functions                | [Readme](system#readme)                               |
-| [thread/](thread)                                                     | Thread functions                                          | [Readme](thread#readme)                               |
-| [time/](time)                                                         | Date and time (including IANA Time Zone Database)         | [Readme](time#readme)                                 |
-| [unicode/](unicode)                                                   | Unicode constants and functions                           | [Readme](unicode#readme)                              |
-| [url/](url)                                                           | URL encoding                                              | [Readme](url#readme)                                  |
-| [utf8/](utf8)                                                         | UTF-8 functions and ranges                                | [Readme](utf8#readme)                                 |
+| [algo/](algo)                                                         | Range algorithms                                          | [Readme](algo/#readme)                                |
+| [app/](app)                                                           | Reserved namespace for applications                       | [Readme](app/#readme)                                 |
+| [ascii/](ascii)                                                       | ASCII string functions                                    | [Readme](ascii/#readme)                               |
+| [base64/](base64)                                                     | Base64 encoding and decoding                              | [Readme](base64/#readme)                              |
+| [chr/](chr)                                                           | Character (`char`) functions                              | [Readme](chr/#readme)                                 |
+| [cmp/](cmp)                                                           | Comparison functions                                      | [Readme](cmp/#readme)                                 |
+| [country/](country)                                                   | Country codes and names                                   | [Readme](country/#readme)                             |
+| [crypto/](crypto)                                                     | Cryptographic hashes and derivation functions             | [Readme](crypto/#readme)                              |
+| [encoding/](encoding)                                                 | Encoding schemes                                          | [Readme](encoding/#readme)                            |
+| [env/](env)                                                           | Environment variables and command line options            | [Readme](env/#readme)                                 |
+| [file/](file)                                                         | File system                                               | [Readme](file/#readme)                                |
+| [fmt/](fmt)                                                           | Formatting                                                | [Readme](fmt/#readme)                                 |
+| [fn/](fn)                                                             | Function objects                                          | [Readme](fn/#readme)                                  |
+| [generic/](generic)                                                   | Generic errors                                            | [Readme](generic/#readme)                             |
+| [hex/](hex)                                                           | Hex encoding and decoding                                 | [Readme](hex/#readme)                                 |
+| [html/](html)                                                         | HTML encoding                                             | [Readme](html/#readme)                                |
+| [io/](io)                                                             | I/O concepts                                              | [Readme](io/#readme)                                  |
+| [json/](json)                                                         | JSON encoding and decoding                                | [Readme](json/#readme)                                |
+| [map/](map)                                                           | Sorted and unsorted maps                                  | [Readme](map/#readme)                                 |
+| [math/](math)                                                         | Math functions                                            | [Readme](math/#readme)                                |
+| [mem/](mem)                                                           | Allocators and memory functions                           | [Readme](mem/#readme)                                 |
+| [num/](num)                                                           | Numerical classes                                         | [Readme](num/#readme)                                 |
+| [pair/](pair)                                                         | Pair functions and classes                                | [Readme](pair/#readme)                                |
+| [pcre/](pcre)                                                         | Perl Compatible Regular Expressions                       | [Readme](pcre/#readme)                                |
+| [pool/](pool)                                                         | Pool containers                                           | [Readme](pool/#readme)                                |
+| [process/](process)                                                   | Shell commands and process spawning                       | [Readme](process/#readme)                             |
+| [random/](random)                                                     | High-quality random data                                  | [Readme](random/#readme)                              |
+| [range/](range)                                                       | Ranges and range views (including `[c]strrng` aliases)    | [Readme](range/#readme)                               |
+| [regex/](regex)                                                       | Regular expressions                                       | [Readme](regex/#readme)                               |
+| [set/](set)                                                           | Sorted and unsorted sets                                  | [Readme](set/#readme)                                 |
+| [stream/](stream)                                                     | Stream classes and concepts                               | [Readme](stream/#readme)                              |
+| [string/](string)                                                     | String functions and ranges                               | [Readme](string/#readme)                              |
+| [system/](system)                                                     | System error category and system functions                | [Readme](system/#readme)                              |
+| [thread/](thread)                                                     | Thread functions                                          | [Readme](thread/#readme)                              |
+| [time/](time)                                                         | Date and time (including IANA Time Zone Database)         | [Readme](time/#readme)                                |
+| [unicode/](unicode)                                                   | Unicode constants and functions                           | [Readme](unicode/#readme)                             |
+| [url/](url)                                                           | URL encoding                                              | [Readme](url/#readme)                                 |
+| [utf8/](utf8)                                                         | UTF-8 functions and ranges                                | [Readme](utf8/#readme)                                |
 | [array.hh](array.hh)                                                  | Aggregate array (always initialized)                      | [Example/Tests](array.test.cc)                        |
 | [array\_view.fwd.hh](array_view.fwd.hh)                               | Array view (forward declare) and `[c]strview` aliases     |                                                       |
 | [array\_view.hh](array_view.hh)                                       | Array view with `[c]strview` specializations              | [Example/Tests](array_view.test.cc)                   |

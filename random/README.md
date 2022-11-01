@@ -7,7 +7,7 @@ Sources data from `getentropy()` or `arc4random()`.
 
 | Path                     | Description                       |                                  |
 | ------------------------ | --------------------------------- | -------------------------------- |
-| [fn/](fn)                | Function objects                  | [Readme](fn#readme)              |
+| [fn/](fn)                | Function objects                  | [Readme](fn/#readme)             |
 | [boolean.hh](boolean.hh) | Random boolean                    | [Example/Tests](boolean.test.cc) |
 | [element.hh](element.hh) | Random element from container     | [Example/Tests](element.test.cc) |
 | [fill.hh](fill.hh)       | Fill string view with random data | [Example/Tests](fill.test.cc)    |

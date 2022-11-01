@@ -4,9 +4,9 @@
 
 | Path                                           | Description                                  |                                             |
 | ---------------------------------------------- | -------------------------------------------- | ------------------------------------------- |
-| [steady/](steady)                              | Steady (monotonic) time                      | [Readme](steady#readme)                     |
-| [wall/](wall)                                  | Wall time                                    | [Readme](wall#readme)                       |
-| [zone/](zone)                                  | Time zone classes and IANA database          | [Readme](zone#readme)                       |
+| [steady/](steady)                              | Steady (monotonic) time                      | [Readme](steady/#readme)                    |
+| [wall/](wall)                                  | Wall time                                    | [Readme](wall/#readme)                      |
+| [zone/](zone)                                  | Time zone classes and IANA database          | [Readme](zone/#readme)                      |
 | [core.hh](core.hh)                             | Core constants, functions and structures     | [Example/Tests](core.test.cc)               |
 | [duration.formatter.hh](duration.formatter.hh) | Duration formatter                           | [Example/Tests](duration.formatter.test.cc) |
 | [duration.hh](duration.hh)                     | Duration                                     | [Example/Tests](duration.test.cc)           |

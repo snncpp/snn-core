@@ -4,9 +4,9 @@
 
 | Path                                      | Description                        |                                          |
 | ----------------------------------------- | ---------------------------------- | ---------------------------------------- |
-| [range/](range)                           | Ranges                             | [Readme](range#readme)                   |
-| [test.data/](test.data)                   | Test data                          | [Readme](test.data#readme)               |
-| [unchecked/](unchecked)                   | Unchecked functions                | [Readme](unchecked#readme)               |
+| [range/](range)                           | Ranges                             | [Readme](range/#readme)                  |
+| [test.data/](test.data)                   | Test data                          | [Readme](test.data/#readme)              |
+| [unchecked/](unchecked)                   | Unchecked functions                | [Readme](unchecked/#readme)              |
 | [core.hh](core.hh)                        | Core constants and functions       | [Example/Tests](core.test.cc)            |
 | [count.hh](count.hh)                      | Count code points                  | [Example/Tests](count.test.cc)           |
 | [encode.hh](encode.hh)                    | Encode single code point           | [Example/Tests](encode.test.cc)          |

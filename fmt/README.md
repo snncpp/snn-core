@@ -4,7 +4,7 @@
 
 | Path                                    | Description                                  |                                         |
 | --------------------------------------- | -------------------------------------------- | --------------------------------------- |
-| [fn/](fn)                               | Function objects                             | [Readme](fn#readme)                     |
+| [fn/](fn)                               | Function objects                             | [Readme](fn/#readme)                    |
 | [byte\_size.hh](byte_size.hh)           | Format `byte_size`                           | [Example/Tests](byte_size.test.cc)      |
 | [context.hh](context.hh)                | Format context (currently unused)            |                                         |
 | [error.hh](error.hh)                    | Error (enum etc)                             |                                         |

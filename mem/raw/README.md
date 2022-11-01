@@ -4,7 +4,7 @@
 
 | Path                                    | Description                         |                                 |
 | --------------------------------------- | ----------------------------------- | ------------------------------- |
-| [constant\_time/](constant_time)        | Constant time functions             | [Readme](constant_time#readme)  |
+| [constant\_time/](constant_time)        | Constant time functions             | [Readme](constant_time/#readme) |
 | [compare.hh](compare.hh)                | Compare (memcmp)                    | [Tests](compare.test.cc)        |
 | [copy.hh](copy.hh)                      | Copy (memcpy)                       |                                 |
 | [fill.hh](fill.hh)                      | Fill (memset)                       |                                 |

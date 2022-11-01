@@ -4,9 +4,9 @@
 
 | Path                                           | Description                  |                                            |
 | ---------------------------------------------- | ---------------------------- | ------------------------------------------ |
-| [chr/](chr)                                    | Character (`char`) functions | [Readme](chr#readme)                       |
-| [decoder.test.data/](decoder.test.data)        | Parsing Test Suite           | [Readme](decoder.test.data#readme)         |
-| [stream/](stream)                              | Stream encoder               | [Readme](stream#readme)                    |
+| [chr/](chr)                                    | Character (`char`) functions | [Readme](chr/#readme)                      |
+| [decoder.test.data/](decoder.test.data)        | Parsing Test Suite           | [Readme](decoder.test.data/#readme)        |
+| [stream/](stream)                              | Stream encoder               | [Readme](stream/#readme)                   |
 | [decoder.hh](decoder.hh)                       | Decoder                      | [Example/Tests](decoder.test.cc)           |
 | [document.hh](document.hh)                     | Document (pool of nodes)     |                                            |
 | [encode.hh](encode.hh)                         | Encode string                | [Example/Tests](encode.test.cc)            |

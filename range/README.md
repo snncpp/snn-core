@@ -15,9 +15,9 @@ For range algorithms see [snn-core/algo/](../algo/).
 
 | Path                                   | Description                                                |                                        |
 | -------------------------------------- | ---------------------------------------------------------- | -------------------------------------- |
-| [iter/](iter)                          | Iterators                                                  | [Readme](iter#readme)                  |
-| [unchecked/](unchecked)                | Unchecked (unsafe) ranges                                  | [Readme](unchecked#readme)             |
-| [view/](view)                          | Range views                                                | [Readme](view#readme)                  |
+| [iter/](iter)                          | Iterators                                                  | [Readme](iter/#readme)                 |
+| [unchecked/](unchecked)                | Unchecked (unsafe) ranges                                  | [Readme](unchecked/#readme)            |
+| [view/](view)                          | Range views                                                | [Readme](view/#readme)                 |
 | [bidirectional.hh](bidirectional.hh)   | Bidirectional range                                        | [Example/Tests](bidirectional.test.cc) |
 | [contiguous.fwd.hh](contiguous.fwd.hh) | Contiguous range (forward declare) and `[c]strrng` aliases |                                        |
 | [contiguous.hh](contiguous.hh)         | Contiguous range                                           | [Example/Tests](contiguous.test.cc)    |
