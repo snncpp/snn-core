@@ -232,6 +232,26 @@ namespace snn::math
         }
     }
 
+    // ### clamp
+
+    // Clamp an integral value of type `FromInt` within the min-max bounds of `ToInt` (inclusive).
+
+    template <strict_integral ToInt, strict_integral FromInt>
+    [[nodiscard]] constexpr ToInt clamp(const FromInt i) noexcept
+    {
+        if (math::fn::less_than{}(i, constant::limit<ToInt>::min))
+        {
+            return constant::limit<ToInt>::min;
+        }
+
+        if (math::fn::less_than{}(constant::limit<ToInt>::max, i))
+        {
+            return constant::limit<ToInt>::max;
+        }
+
+        return static_cast<ToInt>(i);
+    }
+
     // ### count_digits
 
     template <base Base, strict_unsigned_integral UInt>

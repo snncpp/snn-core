@@ -223,6 +223,69 @@ namespace snn
         static_assert(math::clamp(124, 1, 123) == 123);
         static_assert(math::clamp(999, 1, 123) == 123);
 
+        static_assert(math::clamp<u8>(-1) == 0); // Clamped to min.
+        static_assert(math::clamp<u8>(0) == 0);
+        static_assert(math::clamp<u8>(123) == 123);
+        static_assert(math::clamp<u8>(255) == 255);
+        static_assert(math::clamp<u8>(256) == 255); // Clamped to max.
+        static_assert(std::is_same_v<decltype(math::clamp<u8>(123)), u8>);
+
+        static_assert(math::clamp<usize>(123) == 123);
+        static_assert(math::clamp<usize>(-123) == 0);
+        static_assert(std::is_same_v<decltype(math::clamp<usize>(-123)), usize>);
+
+        static_assert(math::clamp<usize>(constant::limit<i32>::min) == constant::limit<usize>::min);
+        static_assert(math::clamp<usize>(constant::limit<i32>::max) == constant::limit<i32>::max);
+        static_assert(math::clamp<usize>(constant::limit<u32>::min) == constant::limit<u32>::min);
+        static_assert(math::clamp<usize>(constant::limit<u32>::max) == constant::limit<u32>::max);
+
+        static_assert(math::clamp<usize>(constant::limit<i64>::min) == constant::limit<usize>::min);
+        static_assert(math::clamp<usize>(constant::limit<i64>::max) == constant::limit<i64>::max);
+        static_assert(math::clamp<usize>(constant::limit<u64>::min) == constant::limit<u64>::min);
+        static_assert(math::clamp<usize>(constant::limit<u64>::max) == constant::limit<u64>::max);
+
+        static_assert(math::clamp<isize>(constant::limit<i32>::min) == constant::limit<i32>::min);
+        static_assert(math::clamp<isize>(constant::limit<i32>::max) == constant::limit<i32>::max);
+        static_assert(math::clamp<isize>(constant::limit<u32>::min) == constant::limit<u32>::min);
+        static_assert(math::clamp<isize>(constant::limit<u32>::max) == constant::limit<u32>::max);
+
+        static_assert(math::clamp<isize>(constant::limit<i64>::min) == constant::limit<i64>::min);
+        static_assert(math::clamp<isize>(constant::limit<i64>::max) == constant::limit<i64>::max);
+        static_assert(math::clamp<isize>(constant::limit<u64>::min) == constant::limit<u64>::min);
+        static_assert(math::clamp<isize>(constant::limit<u64>::max) == constant::limit<isize>::max);
+
+        static_assert(math::clamp<u32>(constant::limit<i32>::min) == constant::limit<u32>::min);
+        static_assert(math::clamp<u32>(constant::limit<i32>::max) == constant::limit<i32>::max);
+        static_assert(math::clamp<u32>(constant::limit<u32>::min) == constant::limit<u32>::min);
+        static_assert(math::clamp<u32>(constant::limit<u32>::max) == constant::limit<u32>::max);
+
+        static_assert(math::clamp<u32>(constant::limit<i64>::min) == constant::limit<u32>::min);
+        static_assert(math::clamp<u32>(constant::limit<i64>::max) == constant::limit<u32>::max);
+        static_assert(math::clamp<u32>(constant::limit<u64>::min) == constant::limit<u64>::min);
+        static_assert(math::clamp<u32>(constant::limit<u64>::max) == constant::limit<u32>::max);
+
+        static_assert(math::clamp<i32>(constant::limit<i32>::min) == constant::limit<i32>::min);
+        static_assert(math::clamp<i32>(constant::limit<i32>::max) == constant::limit<i32>::max);
+        static_assert(math::clamp<i32>(constant::limit<u32>::min) == constant::limit<u32>::min);
+        static_assert(math::clamp<i32>(constant::limit<u32>::max) == constant::limit<i32>::max);
+
+        static_assert(math::clamp<i32>(constant::limit<i64>::min) == constant::limit<i32>::min);
+        static_assert(math::clamp<i32>(constant::limit<i64>::max) == constant::limit<i32>::max);
+        static_assert(math::clamp<i32>(constant::limit<u64>::min) == constant::limit<u64>::min);
+        static_assert(math::clamp<i32>(constant::limit<u64>::max) == constant::limit<i32>::max);
+
+#if SNN_INT128_BOOL
+        static_assert(math::clamp<u32>(constant::limit<i128>::min) == constant::limit<u32>::min);
+        static_assert(math::clamp<u32>(constant::limit<i128>::max) == constant::limit<u32>::max);
+        static_assert(math::clamp<u32>(constant::limit<u128>::min) == constant::limit<u128>::min);
+        static_assert(math::clamp<u32>(constant::limit<u128>::max) == constant::limit<u32>::max);
+
+        static_assert(math::clamp<i32>(constant::limit<i128>::min) == constant::limit<i32>::min);
+        static_assert(math::clamp<i32>(constant::limit<i128>::max) == constant::limit<i32>::max);
+        static_assert(math::clamp<i32>(constant::limit<u128>::min) == constant::limit<u128>::min);
+        static_assert(math::clamp<i32>(constant::limit<u128>::max) == constant::limit<i32>::max);
+#endif
+
         using math::base;
 
         static_assert(math::count_digits<base::decimal, u8>(0).get() == 1);
