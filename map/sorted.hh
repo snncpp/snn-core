@@ -16,5 +16,5 @@ namespace snn::map
     // ### sorted
 
     template <typename Key, typename Value, typename Compare = fn::less_than>
-    using sorted = core<std::map<Key, Value, Compare>>;
+    using sorted = facade<std::map<Key, Value, Compare>>;
 }

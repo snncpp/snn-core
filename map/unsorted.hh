@@ -17,5 +17,5 @@ namespace snn::map
 
     template <typename Key, typename Value, typename Hash = std::hash<Key>,
               typename KeyEqual = fn::equal_to>
-    using unsorted = core<std::unordered_map<Key, Value, Hash, KeyEqual>>;
+    using unsorted = facade<std::unordered_map<Key, Value, Hash, KeyEqual>>;
 }

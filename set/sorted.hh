@@ -16,5 +16,5 @@ namespace snn::set
     // ### sorted
 
     template <typename Key, typename Compare = fn::less_than>
-    using sorted = core<std::set<Key, Compare>>;
+    using sorted = facade<std::set<Key, Compare>>;
 }

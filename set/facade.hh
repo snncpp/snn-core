@@ -1,7 +1,7 @@
 // Copyright (c) 2022 Mikael Simonsson <https://mikaelsimonsson.com>.
 // SPDX-License-Identifier: BSL-1.0
 
-// # Core wrapper
+// # Facade (`std::` container wrapper)
 
 // Wrapper around `std::set` or `std::unordered_set`, see [set/sorted.hh](sorted.hh) and
 // [set/unsorted.hh](unsorted.hh).
@@ -16,10 +16,10 @@ namespace snn::set
 {
     // ## Classes
 
-    // ### core
+    // ### facade
 
     template <typename Set>
-    class core final
+    class facade final
     {
       public:
         // #### Types
@@ -36,7 +36,7 @@ namespace snn::set
         class insert_result final
         {
           public:
-            using pair_type = std::pair<core::iterator, bool>;
+            using pair_type = std::pair<facade::iterator, bool>;
 
             explicit insert_result(pair_type&& p)
                 : p_{std::move(p)}
@@ -70,7 +70,7 @@ namespace snn::set
       public:
         // #### Default constructor
 
-        core()
+        facade()
         {
         }
 
@@ -78,14 +78,14 @@ namespace snn::set
 
         // Generic container interface.
 
-        explicit core(container::reserve_t, const usize capacity)
+        explicit facade(container::reserve_t, const usize capacity)
         {
             reserve_if_supported_(capacity);
         }
 
         // #### Converting constructors
 
-        core(init_list<value_type> init)
+        facade(init_list<value_type> init)
             : set_{init}
         {
         }
@@ -208,7 +208,7 @@ namespace snn::set
             return false;
         }
 
-        void swap(core& other) noexcept
+        void swap(facade& other) noexcept
         {
             if (this != &other)
             {
@@ -250,7 +250,7 @@ namespace snn::set
     // ### swap
 
     template <typename Set>
-    void swap(core<Set>& a, core<Set>& b) noexcept
+    void swap(facade<Set>& a, facade<Set>& b) noexcept
     {
         a.swap(b);
     }

@@ -16,5 +16,5 @@ namespace snn::set
     // ### unsorted
 
     template <typename Key, typename Hash = std::hash<Key>, typename KeyEqual = fn::equal_to>
-    using unsorted = core<std::unordered_set<Key, Hash, KeyEqual>>;
+    using unsorted = facade<std::unordered_set<Key, Hash, KeyEqual>>;
 }

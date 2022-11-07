@@ -1,7 +1,7 @@
 // Copyright (c) 2022 Mikael Simonsson <https://mikaelsimonsson.com>.
 // SPDX-License-Identifier: BSL-1.0
 
-// # Core wrapper
+// # Facade (`std::` container wrapper)
 
 // Wrapper around `std::map` or `std::unordered_map`, see [map/sorted.hh](sorted.hh) and
 // [map/unsorted.hh](unsorted.hh).
@@ -17,10 +17,10 @@ namespace snn::map
 {
     // ## Classes
 
-    // ### core
+    // ### facade
 
     template <typename Map>
-    class core final
+    class facade final
     {
       public:
         // #### Types
@@ -41,7 +41,7 @@ namespace snn::map
         class insert_result final
         {
           public:
-            using pair_type = std::pair<core::iterator, bool>;
+            using pair_type = std::pair<facade::iterator, bool>;
 
             explicit insert_result(pair_type&& p)
                 : p_{std::move(p)}
@@ -85,7 +85,7 @@ namespace snn::map
         class insert_or_assign_result final
         {
           public:
-            using pair_type = std::pair<core::iterator, bool>;
+            using pair_type = std::pair<facade::iterator, bool>;
 
             explicit insert_or_assign_result(pair_type&& p)
                 : p_{std::move(p)}
@@ -129,7 +129,7 @@ namespace snn::map
       public:
         // #### Default constructor
 
-        core()
+        facade()
         {
         }
 
@@ -137,14 +137,14 @@ namespace snn::map
 
         // Generic container interface.
 
-        explicit core(container::reserve_t, const usize capacity)
+        explicit facade(container::reserve_t, const usize capacity)
         {
             reserve_if_supported_(capacity);
         }
 
         // #### Converting constructors
 
-        core(init_list<value_type> init)
+        facade(init_list<value_type> init)
             : map_{init}
         {
         }
@@ -323,7 +323,7 @@ namespace snn::map
             return size_before - map_.size();
         }
 
-        void swap(core& other) noexcept
+        void swap(facade& other) noexcept
         {
             if (this != &other)
             {
@@ -380,7 +380,7 @@ namespace snn::map
     // ### swap
 
     template <typename Map>
-    void swap(core<Map>& a, core<Map>& b) noexcept
+    void swap(facade<Map>& a, facade<Map>& b) noexcept
     {
         a.swap(b);
     }
