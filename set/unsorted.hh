@@ -6,7 +6,7 @@
 #pragma once
 
 #include "snn-core/fn/common.hh"
-#include "snn-core/set/core.hh"
+#include "snn-core/set/facade.hh"
 #include <unordered_set> // unordered_set
 
 namespace snn::set

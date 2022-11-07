@@ -6,7 +6,7 @@
 #pragma once
 
 #include "snn-core/fn/common.hh"
-#include "snn-core/map/core.hh"
+#include "snn-core/map/facade.hh"
 #include <map> // map
 
 namespace snn::map
