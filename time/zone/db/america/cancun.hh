@@ -80,7 +80,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry cancun{"America/Cancun",
-                                      "Eastern Standard Time - Quintana Roo",
+                                      "Quintana Roo",
                                       "+2105-08646",
                                       detail::cancun::country_codes,
                                       detail::cancun::offsets,

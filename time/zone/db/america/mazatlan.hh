@@ -101,7 +101,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry mazatlan{"America/Mazatlan",
-                                        "Mountain Time - Baja California Sur, Nayarit, Sinaloa",
+                                        "Baja California Sur, Nayarit (most areas), Sinaloa",
                                         "+2313-10625",
                                         detail::mazatlan::country_codes,
                                         detail::mazatlan::offsets,

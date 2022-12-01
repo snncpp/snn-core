@@ -107,7 +107,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry mexico_city{"America/Mexico_City",
-                                           "Central Time",
+                                           "Central Mexico",
                                            "+1924-09909",
                                            detail::mexico_city::country_codes,
                                            detail::mexico_city::offsets,

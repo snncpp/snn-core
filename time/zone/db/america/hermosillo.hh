@@ -53,7 +53,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry hermosillo{"America/Hermosillo",
-                                          "Mountain Standard Time - Sonora",
+                                          "Sonora",
                                           "+2904-11058",
                                           detail::hermosillo::country_codes,
                                           detail::hermosillo::offsets,

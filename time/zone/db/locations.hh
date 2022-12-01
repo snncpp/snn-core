@@ -12,7 +12,7 @@
 
 namespace snn::time::zone::db
 {
-    inline constexpr array<size_prefixed_string_literal, 419> locations{
+    inline constexpr array<size_prefixed_string_literal, 420> locations{
         "\016Africa/Abidjan",
         "\014Africa/Accra",
         "\022Africa/Addis_Ababa",
@@ -102,6 +102,7 @@ namespace snn::time::zone::db
         "\016America/Cayman",
         "\017America/Chicago",
         "\021America/Chihuahua",
+        "\025America/Ciudad_Juarez",
         "\022America/Costa_Rica",
         "\017America/Creston",
         "\016America/Cuiaba",

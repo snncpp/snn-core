@@ -92,7 +92,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry monterrey{"America/Monterrey",
-                                         "Central Time - Durango; Coahuila, Nuevo León, Tamaulipas (most areas)",
+                                         "Durango; Coahuila, Nuevo León, Tamaulipas (most areas)",
                                          "+2540-10019",
                                          detail::monterrey::country_codes,
                                          detail::monterrey::offsets,

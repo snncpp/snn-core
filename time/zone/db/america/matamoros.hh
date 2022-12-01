@@ -122,7 +122,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry matamoros{"America/Matamoros",
-                                         "Central Time US - Coahuila, Nuevo León, Tamaulipas (US border)",
+                                         "Coahuila, Nuevo León, Tamaulipas (US border)",
                                          "+2550-09730",
                                          detail::matamoros::country_codes,
                                          detail::matamoros::offsets,

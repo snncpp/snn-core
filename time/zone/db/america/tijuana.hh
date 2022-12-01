@@ -188,7 +188,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry tijuana{"America/Tijuana",
-                                       "Pacific Time US - Baja California",
+                                       "Baja California",
                                        "+3232-11701",
                                        detail::tijuana::country_codes,
                                        detail::tijuana::offsets,

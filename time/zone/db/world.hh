@@ -96,6 +96,7 @@
 #include "snn-core/time/zone/db/america/cayman.hh"
 #include "snn-core/time/zone/db/america/chicago.hh"
 #include "snn-core/time/zone/db/america/chihuahua.hh"
+#include "snn-core/time/zone/db/america/ciudad_juarez.hh"
 #include "snn-core/time/zone/db/america/costa_rica.hh"
 #include "snn-core/time/zone/db/america/creston.hh"
 #include "snn-core/time/zone/db/america/cuiaba.hh"

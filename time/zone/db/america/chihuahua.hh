@@ -99,7 +99,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry chihuahua{"America/Chihuahua",
-                                         "Mountain Time - Chihuahua (most areas)",
+                                         "Chihuahua (most areas)",
                                          "+2838-10605",
                                          detail::chihuahua::country_codes,
                                          detail::chihuahua::offsets,

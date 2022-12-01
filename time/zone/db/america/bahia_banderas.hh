@@ -102,7 +102,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry bahia_banderas{"America/Bahia_Banderas",
-                                              "Central Time - Bahía de Banderas",
+                                              "Bahía de Banderas",
                                               "+2048-10515",
                                               detail::bahia_banderas::country_codes,
                                               detail::bahia_banderas::offsets,

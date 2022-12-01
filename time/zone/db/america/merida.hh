@@ -93,7 +93,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry merida{"America/Merida",
-                                      "Central Time - Campeche, Yucatán",
+                                      "Campeche, Yucatán",
                                       "+2058-08937",
                                       detail::merida::country_codes,
                                       detail::merida::offsets,

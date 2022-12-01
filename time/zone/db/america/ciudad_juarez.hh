@@ -17,23 +17,23 @@ namespace snn::time::zone::db::america
 {
     // clang-format off
 
-    namespace detail::ojinaga
+    namespace detail::ciudad_juarez
     {
         inline constexpr array<country::code, 1> country_codes{
             "MX",
         };
 
         inline constexpr array<zone::offset, 7> offsets{{
-            {"LMT", -25060, false},
+            {"LMT", -25556, false},
             {"MST", -25200, false},
             {"CST", -21600, false},
             {"MDT", -21600, true},
             {"MST", -25200, false},
             {"CDT", -18000, true},
-            {"CST", -21600, false},
+            {"MDT", -21600, true},
         }};
 
-        inline constexpr array<zone::transition, 90> transitions{{
+        inline constexpr array<zone::transition, 91> transitions{{
             {1, -1514739600},
             {2, -1343066400},
             {4, -1234807200},
@@ -94,45 +94,46 @@ namespace snn::time::zone::db::america
             {4, 1636272000},
             {3, 1647162000},
             {2, 1667116800},
-            {5, 1678608000},
-            {2, 1699167600},
-            {5, 1710057600},
-            {2, 1730617200},
-            {5, 1741507200},
-            {2, 1762066800},
-            {5, 1772956800},
-            {2, 1793516400},
-            {5, 1805011200},
-            {2, 1825570800},
-            {5, 1836460800},
-            {2, 1857020400},
-            {5, 1867910400},
-            {2, 1888470000},
-            {5, 1899360000},
-            {2, 1919919600},
-            {5, 1930809600},
-            {2, 1951369200},
-            {5, 1962864000},
-            {2, 1983423600},
-            {5, 1994313600},
-            {2, 2014873200},
-            {5, 2025763200},
-            {2, 2046322800},
-            {5, 2057212800},
-            {2, 2077772400},
-            {5, 2088662400},
-            {2, 2109222000},
-            {5, 2120112000},
-            {2, 2140671600},
+            {4, 1669788000},
+            {3, 1678611600},
+            {4, 1699171200},
+            {3, 1710061200},
+            {4, 1730620800},
+            {3, 1741510800},
+            {4, 1762070400},
+            {3, 1772960400},
+            {4, 1793520000},
+            {3, 1805014800},
+            {4, 1825574400},
+            {3, 1836464400},
+            {4, 1857024000},
+            {3, 1867914000},
+            {4, 1888473600},
+            {3, 1899363600},
+            {4, 1919923200},
+            {3, 1930813200},
+            {4, 1951372800},
+            {3, 1962867600},
+            {4, 1983427200},
+            {3, 1994317200},
+            {4, 2014876800},
+            {3, 2025766800},
+            {4, 2046326400},
+            {3, 2057216400},
+            {4, 2077776000},
+            {3, 2088666000},
+            {4, 2109225600},
+            {3, 2120115600},
+            {4, 2140675200},
         }};
     }
 
-    inline constexpr db::entry ojinaga{"America/Ojinaga",
-                                       "Chihuahua (US border - east)",
-                                       "+2934-10425",
-                                       detail::ojinaga::country_codes,
-                                       detail::ojinaga::offsets,
-                                       detail::ojinaga::transitions};
+    inline constexpr db::entry ciudad_juarez{"America/Ciudad_Juarez",
+                                             "Chihuahua (US border - west)",
+                                             "+3144-10629",
+                                             detail::ciudad_juarez::country_codes,
+                                             detail::ciudad_juarez::offsets,
+                                             detail::ciudad_juarez::transitions};
 
     // clang-format on
 }

@@ -13,7 +13,7 @@
 
 namespace snn::time::zone::db
 {
-    inline constexpr array<const entry*, 419> entries{
+    inline constexpr array<const entry*, 420> entries{
         &africa::abidjan,
         &africa::accra,
         &africa::addis_ababa,
@@ -103,6 +103,7 @@ namespace snn::time::zone::db
         &america::cayman,
         &america::chicago,
         &america::chihuahua,
+        &america::ciudad_juarez,
         &america::costa_rica,
         &america::creston,
         &america::cuiaba,
