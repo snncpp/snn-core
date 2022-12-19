@@ -53,6 +53,13 @@ namespace snn::time
             return static_cast<usize>(count_);
         }
 
+        template <strict_integral_min<64> Int>
+        [[nodiscard]] constexpr Int count() const noexcept
+        {
+            // `count_` is never negative.
+            return static_cast<Int>(count_);
+        }
+
         [[nodiscard]] static constexpr i64 max() noexcept
         {
             return Max;

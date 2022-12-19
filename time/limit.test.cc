@@ -36,6 +36,7 @@ namespace snn
         {
             constexpr time::limit<time::milliseconds, 1, 10'000> l{time::seconds{2}};
             static_assert(l.count() == 2'000);
+            static_assert(l.count<i64>() == 2'000);
             static_assert(l.min() == 1);
             static_assert(l.max() == 10'000);
 
@@ -61,6 +62,7 @@ namespace snn
         {
             constexpr time::limit<time::milliseconds, 1, 10'000> l{time::hours{2}};
             static_assert(l.count() == 10'000);
+            static_assert(l.count<i64>() == 10'000);
             static_assert(l.unit() == time::milliseconds{10'000});
             static_assert(l.unit() != time::milliseconds{10'001});
         }
