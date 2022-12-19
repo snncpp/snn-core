@@ -385,8 +385,8 @@ namespace snn::range
 
         template <contiguous_range Rng>
             requires(std::is_same_v<typename Rng::iterator, iterator>)
-        [[nodiscard]] constexpr contiguous
-            without_suffix(Rng suffix, promise::is_valid_t) const noexcept
+        [[nodiscard]] constexpr contiguous without_suffix(Rng suffix,
+                                                          promise::is_valid_t) const noexcept
         {
             snn_should(suffix.end() == last_ && suffix.begin() >= first_);
             return contiguous{meta::iterators, first_, suffix.begin()};
@@ -904,8 +904,8 @@ namespace snn::range
 
         template <contiguous_range Rng>
             requires(std::is_same_v<typename Rng::iterator, iterator>)
-        [[nodiscard]] constexpr contiguous
-            without_suffix(Rng suffix, promise::is_valid_t) const noexcept
+        [[nodiscard]] constexpr contiguous without_suffix(Rng suffix,
+                                                          promise::is_valid_t) const noexcept
         {
             snn_should(suffix.end() == last_ && suffix.begin() >= first_);
             return contiguous{meta::internal, first_, suffix.begin()};
@@ -1468,8 +1468,8 @@ namespace snn::range
 
         template <contiguous_range Rng>
             requires(std::is_same_v<typename Rng::iterator, iterator>)
-        [[nodiscard]] constexpr contiguous
-            without_suffix(Rng suffix, promise::is_valid_t) const noexcept
+        [[nodiscard]] constexpr contiguous without_suffix(Rng suffix,
+                                                          promise::is_valid_t) const noexcept
         {
             snn_should(suffix.end() == last_ && suffix.begin() >= first_);
             return contiguous{meta::internal, first_, suffix.begin()};
