@@ -45,11 +45,12 @@ namespace snn::time
         {
         }
 
-        // #### Value
+        // #### Count
 
-        [[nodiscard]] constexpr i64 count() const noexcept
+        [[nodiscard]] constexpr usize count() const noexcept
         {
-            return count_;
+            // `count_` is never negative.
+            return static_cast<usize>(count_);
         }
 
         [[nodiscard]] static constexpr i64 max() noexcept
