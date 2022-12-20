@@ -65,6 +65,12 @@ namespace snn::env
             return count_;
         }
 
+        template <strict_integral_min<64> Int>
+        [[nodiscard]] constexpr Int count() const noexcept
+        {
+            return static_cast<Int>(count_); // `u32` to `i64` is safe.
+        }
+
         [[nodiscard]] constexpr cstrview long_flag() const noexcept
         {
             return long_flag_;
