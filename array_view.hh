@@ -167,6 +167,13 @@ namespace snn
             return Count;
         }
 
+        template <strict_integral Int>
+            requires(constant::limit<Int>::max >= Count)
+        [[nodiscard]] static constexpr Int count() noexcept
+        {
+            return static_cast<Int>(Count);
+        }
+
         [[nodiscard]] static constexpr bool is_dynamic() noexcept
         {
             return false;
@@ -974,6 +981,13 @@ namespace snn
             return count_;
         }
 
+        template <strict_integral_min<64> Int>
+        [[nodiscard]] constexpr Int count() const noexcept
+        {
+            // This can't overflow `i64` (57-bit-virtual-address-space).
+            return static_cast<Int>(count_);
+        }
+
         [[nodiscard]] static constexpr bool is_dynamic() noexcept
         {
             return true;
@@ -1479,6 +1493,13 @@ namespace snn
             return count_;
         }
 
+        template <strict_integral_min<64> Int>
+        [[nodiscard]] constexpr Int count() const noexcept
+        {
+            // This can't overflow `i64` (57-bit-virtual-address-space).
+            return static_cast<Int>(count_);
+        }
+
         [[nodiscard]] static constexpr bool is_dynamic() noexcept
         {
             return true;
@@ -1938,6 +1959,13 @@ namespace snn
         [[nodiscard]] constexpr usize count() const noexcept
         {
             return count_;
+        }
+
+        template <strict_integral_min<64> Int>
+        [[nodiscard]] constexpr Int count() const noexcept
+        {
+            // This can't overflow `i64` (57-bit-virtual-address-space).
+            return static_cast<Int>(count_);
         }
 
         [[nodiscard]] static constexpr bool is_dynamic() noexcept

@@ -149,6 +149,7 @@ namespace snn::app
                 static_assert(std::is_same_v<decltype(v), array_view<int, 3>>);
                 snn_require(v);
                 snn_require(v.count() == 3);
+                snn_require(v.count<i32>() == 3);
                 snn_require(v.begin() == arr.begin());
             }
             {
@@ -157,12 +158,14 @@ namespace snn::app
                 static_assert(std::is_same_v<decltype(v), array_view<const int, 3>>);
                 snn_require(v);
                 snn_require(v.count() == 3);
+                snn_require(v.count<i32>() == 3);
                 snn_require(v.begin() == arr.begin());
 
                 // Static to dynamic.
                 array_view<const int> dyn{v};
                 snn_require(dyn);
                 snn_require(dyn.count() == 3);
+                snn_require(dyn.count<i64>() == 3);
                 snn_require(dyn.begin() == arr.begin());
             }
 
@@ -484,6 +487,7 @@ namespace snn::app
                 cstrview s{"Hello"};
                 snn_require(s.data().get() != nullptr);
                 snn_require(s.count() == 5);
+                snn_require(s.count<i64>() == 5);
                 snn_require(s.size() == 5);
                 snn_require(s.byte_size().get() == 5);
                 snn_require(!s.is_empty());
@@ -511,6 +515,8 @@ namespace snn::app
             {
                 array<char, 3> arr{'a', 'b', 'c'};
                 strview s = arr;
+                snn_require(s.count() == 3);
+                snn_require(s.count<i64>() == 3);
                 snn_require(s.size() == 3);
                 snn_require(s.begin() == arr.begin());
                 snn_require(s == "abc");
