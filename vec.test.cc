@@ -30,6 +30,7 @@ namespace snn::app
             snn_require(!v.is_empty());
             snn_require(v.capacity() >= 2);
             snn_require(v.count() == 2);
+            snn_require(v.count<i64>() == 2);
             snn_require(v.byte_size().get() == 48);
 
             snn_require(v.at(0).value() == "Hello");
