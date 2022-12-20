@@ -98,7 +98,7 @@ namespace snn::pcre
 
         // #### Count
 
-        [[nodiscard]] usize count() const noexcept
+        [[nodiscard]] u32 count() const noexcept
         {
             return count_;
         }
@@ -130,7 +130,7 @@ namespace snn::pcre
 
         // #### Setters
 
-        void set_count(const usize c) noexcept
+        void set_count(const u32 c) noexcept
         {
             if (is_valid())
             {
@@ -146,7 +146,7 @@ namespace snn::pcre
       private:
         pcre2_match_data_8* match_data_;
         cstrview subject_;
-        usize count_;
+        u32 count_;
         int error_number_;
     };
 }

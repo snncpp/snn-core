@@ -87,6 +87,7 @@ namespace snn
 
         static_assert(is_trivially_relocatable_v<pcre::pattern>);
         static_assert(sizeof(pcre::pattern) == 16);
+        static_assert(sizeof(pcre::matches) == 32);
 
         {
             pcre::pattern p{"[a-z]+", "i"};

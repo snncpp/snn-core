@@ -125,7 +125,7 @@ namespace snn::pcre
 
                     if (ret > 0)
                     {
-                        ma.set_count(to_usize(ret));
+                        ma.set_count(to_u32(ret));
                     }
                     else if (ret != PCRE2_ERROR_NOMATCH)
                     {
