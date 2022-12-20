@@ -33,11 +33,14 @@ namespace snn::app
                 snn_require(s); // Not empty.
                 snn_require(!s.is_empty());
                 snn_require(s.count() == 3);
+                snn_require(s.count<i64>() == 3);
                 snn_require(s.size() == 3);
                 snn_require(s.byte_size().get() == 3);
 
                 s << "Two" << as_num(333);
                 snn_require(s == "OneTwo333");
+                snn_require(s.count() == 9);
+                snn_require(s.count<i64>() == 9);
 
                 snn_require(s.at(0).value() == 'O');
                 snn_require(s.at(1).value() == 'n');
