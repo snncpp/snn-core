@@ -21,15 +21,15 @@ namespace snn::time
         // #### Converting constructors
 
         constexpr limit(const Unit u) noexcept
-            : count_{u.value_or(0)}
+            : value_{u.value_or(0)}
         {
-            if (count_ < Min)
+            if (value_ < Min)
             {
-                count_ = Min;
+                value_ = Min;
             }
-            else if (count_ > Max)
+            else if (value_ > Max)
             {
-                count_ = Max;
+                value_ = Max;
             }
         }
 
@@ -49,7 +49,7 @@ namespace snn::time
 
         [[nodiscard]] constexpr i64 get() const noexcept
         {
-            return count_;
+            return value_;
         }
 
         // #### Min/Max
@@ -68,10 +68,10 @@ namespace snn::time
 
         [[nodiscard]] constexpr Unit unit() const noexcept
         {
-            return Unit{count_};
+            return Unit{value_};
         }
 
       private:
-        i64 count_;
+        i64 value_;
     };
 }
