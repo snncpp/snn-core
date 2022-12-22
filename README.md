@@ -2,8 +2,6 @@
 
 A modern, safer alternative to the _C++ Standard Library_ (for Linux/BSD).
 
-_The author of this library ([@msimonsson](https://github.com/msimonsson)) is available for remote work._
-
 
 ## Features
 
