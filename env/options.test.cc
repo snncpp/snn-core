@@ -88,7 +88,6 @@ namespace snn::app
                 snn_require(o.is_boolean());
                 snn_require(!o.is_set());
                 snn_require(o.count() == 0);
-                snn_require(o.count<i64>() == 0);
             }
 
             {
@@ -234,7 +233,6 @@ namespace snn::app
                 snn_require(!opts.option('t').is_set());
 
                 snn_require(opts.option('v').count() == 2);
-                snn_require(opts.option('v').count<i64>() == 2);
 
                 const auto& args = opts.arguments();
                 snn_require(args.count() == 0);

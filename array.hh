@@ -97,13 +97,6 @@ namespace snn
             return Count;
         }
 
-        template <strict_integral Int>
-            requires(constant::limit<Int>::max >= Count)
-        [[nodiscard]] static constexpr Int count() noexcept
-        {
-            return static_cast<Int>(Count);
-        }
-
         [[nodiscard]] static constexpr bool is_empty() noexcept
         {
             return Count == 0;

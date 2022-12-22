@@ -24,7 +24,6 @@ namespace snn::app
             snn_require(!a.is_empty());
             snn_require(a.capacity() == 3);
             snn_require(a.count() == 3);
-            snn_require(a.count<i64>() == 3);
             snn_require(a.size() == 3);
             snn_require(a.byte_size().get() == 3);
 
@@ -116,31 +115,6 @@ namespace snn::app
             }
 
             {
-                constexpr array<char, 127> a;
-                static_assert(a.count() == 127);
-                static_assert(a.count<u64>() == 127);
-                static_assert(a.count<u32>() == 127);
-                static_assert(a.count<u16>() == 127);
-                static_assert(a.count<u8>() == 127);
-                static_assert(a.count<i64>() == 127);
-                static_assert(a.count<i32>() == 127);
-                static_assert(a.count<i16>() == 127);
-                static_assert(a.count<i8>() == 127);
-            }
-            {
-                constexpr array<char, 128> a;
-                static_assert(a.count() == 128);
-                static_assert(a.count<u64>() == 128);
-                static_assert(a.count<u32>() == 128);
-                static_assert(a.count<u16>() == 128);
-                static_assert(a.count<u8>() == 128);
-                static_assert(a.count<i64>() == 128);
-                static_assert(a.count<i32>() == 128);
-                static_assert(a.count<i16>() == 128);
-                // static_assert(a.count<i8>() == 128); // Will not compile (type max is too small).
-            }
-
-            {
                 array<int, 3> a;
                 static_assert(std::is_aggregate_v<decltype(a)>);
                 snn_require(a);
@@ -200,7 +174,6 @@ namespace snn::app
                 static_assert(a.is_empty());
                 static_assert(a.capacity() == 0);
                 static_assert(a.count() == 0);
-                static_assert(a.count<i64>() == 0);
                 static_assert(a.byte_size().get() == 0);
                 static_assert(!a.at(0).has_value());
                 static_assert(!a.front().has_value());

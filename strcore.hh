@@ -460,13 +460,6 @@ namespace snn
             return buf_.size();
         }
 
-        template <strict_integral_min<64> Int>
-        [[nodiscard]] constexpr Int count() const noexcept
-        {
-            // This can't overflow `i64` (57-bit-virtual-address-space).
-            return static_cast<Int>(buf_.size());
-        }
-
         [[nodiscard]] constexpr bool is_empty() const noexcept
         {
             return buf_.size() == 0;
