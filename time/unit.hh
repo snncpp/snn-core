@@ -28,10 +28,7 @@ namespace snn::time
 
         // #### Default constructor
 
-        constexpr unit() noexcept
-            : safe_{0}
-        {
-        }
+        constexpr unit() noexcept = default;
 
         // #### Explicit constructors
 
@@ -41,7 +38,6 @@ namespace snn::time
         }
 
         constexpr explicit unit(const time::duration d) noexcept
-            : safe_{}
         {
             i64 sec  = d.seconds();
             i64 nano = d.nanoseconds();

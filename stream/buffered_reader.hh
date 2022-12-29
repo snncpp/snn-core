@@ -33,8 +33,6 @@ namespace snn::stream
             Stream stream, const u32 buffer_size = 8192,
             const u32 buffer_max_size = constant::limit<u32>::max) noexcept
             : stream_{std::move(stream)},
-              buffer_{},
-              offset_{0},
               read_size_{math::round_up_to_multiple<512, u32>(buffer_size).get()},
               buffer_max_size_{buffer_max_size}
         {
@@ -144,7 +142,7 @@ namespace snn::stream
       private:
         Stream stream_;
         strbuf buffer_;
-        usize offset_;
+        usize offset_{0};
         u32 read_size_;
         u32 buffer_max_size_;
 

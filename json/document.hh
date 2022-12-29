@@ -29,6 +29,8 @@ namespace snn::json
         // Move assignment operator.
         document& operator=(document&&) = delete;
 
+        ~document() = default; // "Rule of five".
+
         [[nodiscard]] constexpr usize node_count() const noexcept
         {
             return pool_.count();

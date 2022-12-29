@@ -23,8 +23,7 @@ namespace snn::regex::range
     {
       public:
         explicit match(const cstrview subject, const pattern& pat)
-            : first_{subject.cbegin(), subject.cend(), pat.internal()},
-              last_{}
+            : first_{subject.cbegin(), subject.cend(), pat.internal()}
         {
         }
 
@@ -37,6 +36,8 @@ namespace snn::regex::range
         // Movable
         match(match&&)            = default;
         match& operator=(match&&) = default;
+
+        ~match() = default; // "Rule of five".
 
         explicit operator bool() const
         {
@@ -74,6 +75,6 @@ namespace snn::regex::range
 
       private:
         std::cregex_iterator first_;
-        std::cregex_iterator last_;
+        std::cregex_iterator last_{};
     };
 }

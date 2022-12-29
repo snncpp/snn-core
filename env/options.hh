@@ -41,9 +41,7 @@ namespace snn::env
 
         constexpr option(const cstrview long_flag, const optional<char> short_flag = nullopt,
                          const type t = boolean)
-            : values_{},
-              long_flag_{long_flag},
-              count_{0},
+            : long_flag_{long_flag},
               short_flag_{short_flag},
               type_{t}
         {
@@ -133,7 +131,7 @@ namespace snn::env
       private:
         vec<cstrview> values_;
         cstrview long_flag_;
-        u32 count_;
+        u32 count_{0};
         optional<char> short_flag_;
         type type_;
 
@@ -161,9 +159,7 @@ namespace snn::env
         constexpr options(const array_view<const env::argument> arguments,
                           const init_list<env::option> options)
             : options_{options},
-              error_message_{},
-              args_{arguments},
-              program_name_{}
+              args_{arguments}
         {
             options_.sort();
             parse_or_clear_();
@@ -172,9 +168,7 @@ namespace snn::env
         constexpr options(const array_view<const env::argument> arguments,
                           const init_list<env::option> options, promise::is_sorted_t)
             : options_{options},
-              error_message_{},
-              args_{arguments},
-              program_name_{}
+              args_{arguments}
         {
             snn_should(options_.is_sorted());
             parse_or_clear_();
@@ -189,6 +183,10 @@ namespace snn::env
 
         options(options&&)            = delete;
         options& operator=(options&&) = delete;
+
+        // #### Destructor
+
+        ~options() = default; // "Rule of five".
 
         // #### Explicit conversion operators
 

@@ -220,6 +220,10 @@ namespace snn::process
         spawner(spawner&&)            = delete;
         spawner& operator=(spawner&&) = delete;
 
+        // #### Destructor
+
+        ~spawner() = default; // "Rule of five".
+
         // #### Arguments
 
         [[nodiscard]] vec<str>& arguments() noexcept

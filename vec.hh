@@ -122,6 +122,10 @@ namespace snn
             return *this;
         }
 
+        // #### Destructor
+
+        ~vec() = default; // "Rule of five".
+
         // #### Explicit conversion operators
 
         constexpr explicit operator bool() const noexcept

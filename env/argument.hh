@@ -16,10 +16,7 @@ namespace snn::env
     class argument final
     {
       public:
-        constexpr argument() noexcept
-            : arg_{""}
-        {
-        }
+        constexpr argument() noexcept = default;
 
         template <same_as<const char> ConstChar, usize N>
         constexpr argument(ConstChar (&s)[N]) noexcept
@@ -45,6 +42,6 @@ namespace snn::env
         }
 
       private:
-        const char* arg_;
+        const char* arg_{""};
     };
 }

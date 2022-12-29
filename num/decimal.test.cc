@@ -1071,12 +1071,12 @@ namespace snn::app
                 snn_require(num::decimal<2>{num::imprecise{-389238299.98598}}.value() ==
                             -38923829999);
 
-                constexpr double max = static_cast<double>(constant::limit<i64>::max);
+                constexpr auto max = static_cast<double>(constant::limit<i64>::max);
                 snn_require_throws_code(num::decimal<4>{num::imprecise{max}},
                                         num::error::precision_loss);
                 snn_require_throws_code(num::decimal<0>{num::imprecise{max}},
                                         num::error::precision_loss);
-                constexpr double min = static_cast<double>(constant::limit<i64>::min);
+                constexpr auto min = static_cast<double>(constant::limit<i64>::min);
                 snn_require_throws_code(num::decimal<4>{num::imprecise{min}},
                                         num::error::precision_loss);
                 snn_require_throws_code(num::decimal<0>{num::imprecise{min}},

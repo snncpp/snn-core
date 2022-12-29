@@ -43,7 +43,7 @@ namespace snn::hex
                     return error::invalid_character;
                 }
 
-                *(dest++) = static_cast<char>((val1 << 4) | val2); // High bits + low bits.
+                *(dest++) = static_cast<char>((val1 << 4u) | val2); // High bits + low bits.
             }
             snn_should(cur == last);
             snn_should(dest == buffer.end());

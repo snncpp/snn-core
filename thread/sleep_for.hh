@@ -8,8 +8,8 @@
 #include "snn-core/result.hh"
 #include "snn-core/system/error.hh"
 #include "snn-core/time/duration.hh"
-#include <errno.h> // EINTR
-#include <time.h>  // clock_nanosleep, timespec, CLOCK_MONOTONIC
+#include <cerrno> // EINTR
+#include <time.h> // clock_nanosleep, timespec, CLOCK_MONOTONIC
 
 namespace snn::thread
 {
@@ -19,9 +19,7 @@ namespace snn::thread
 
     [[nodiscard]] inline result<void> sleep_for(const time::duration d) noexcept
     {
-        struct timespec ts;
-        ts.tv_sec  = d.seconds();
-        ts.tv_nsec = to_i32(d.nanoseconds());
+        ::timespec ts{.tv_sec = d.seconds(), .tv_nsec = to_i32(d.nanoseconds())};
         while (true)
         {
             // `clock_nanosleep()` does not use errno, it returns the error (if any) directly.

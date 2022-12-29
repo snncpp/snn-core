@@ -40,8 +40,7 @@ namespace snn::file
         // #### Constructors
 
         explicit reader_writer(Io io = Io{}) noexcept
-            : io_{std::move(io)},
-              fd_{}
+            : io_{std::move(io)}
         {
         }
 
@@ -53,8 +52,7 @@ namespace snn::file
 
         explicit reader_writer(const transient<null_term<const char*>> path, const option options,
                                const perm permissions = perm::regular_default, Io io = Io{})
-            : io_{std::move(io)},
-              fd_{}
+            : io_{std::move(io)}
         {
             open(path, options, permissions).or_throw();
         }

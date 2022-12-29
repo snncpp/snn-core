@@ -59,7 +59,7 @@ namespace snn::app
             throw std::runtime_error{"Case mismatch."};
         }
 
-        bool is_equal(const str datetime, const i64 unixtime)
+        bool is_equal(const str& datetime, const i64 unixtime)
         {
             try
             {

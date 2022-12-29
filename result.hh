@@ -913,10 +913,7 @@ namespace snn
         class result_void_storage final
         {
           public:
-            constexpr result_void_storage() noexcept
-                : error_storage_{}
-            {
-            }
+            constexpr result_void_storage() noexcept = default;
 
             constexpr result_void_storage(snn::error_code ec) noexcept
                 : error_storage_{ec}
@@ -935,7 +932,7 @@ namespace snn
             }
 
           private:
-            ErrorStorage error_storage_;
+            ErrorStorage error_storage_{};
         };
 
         // Specialization for `error_code` (this specialization is a friend of `error_code`).
@@ -943,12 +940,7 @@ namespace snn
         class result_void_storage<error_code> final
         {
           public:
-            constexpr result_void_storage() noexcept
-                : error_category_{nullptr},
-                  error_value_{0},
-                  has_error_{false}
-            {
-            }
+            constexpr result_void_storage() noexcept = default;
 
             constexpr result_void_storage(snn::error_code ec) noexcept
                 : error_category_{ec.category_},
@@ -970,9 +962,9 @@ namespace snn
 
           private:
             // These are all zero on success (for better machine code).
-            const error_category* error_category_;
-            i32 error_value_;
-            u32 has_error_;
+            const error_category* error_category_{nullptr};
+            i32 error_value_{0};
+            u32 has_error_{false};
         };
     }
 
@@ -984,10 +976,7 @@ namespace snn
 
         // #### Constructors
 
-        constexpr result() noexcept
-            : storage_{}
-        {
-        }
+        constexpr result() noexcept = default;
 
         template <same_as<snn::error_code> ErrorCode>
         constexpr result(const ErrorCode ec) noexcept

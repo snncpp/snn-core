@@ -17,5 +17,5 @@ namespace snn::time::zone::db
 
     // ### load
 
-    [[nodiscard]] optional<const db::entry&> load(const transient<cstrview> name) noexcept;
+    [[nodiscard]] optional<const db::entry&> load(transient<cstrview> /* name */) noexcept;
 }

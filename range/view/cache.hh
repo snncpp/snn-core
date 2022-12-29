@@ -39,6 +39,8 @@ namespace snn::range::view
         cache(cache&&) noexcept            = default;
         cache& operator=(cache&&) noexcept = default;
 
+        ~cache() = default; // "Rule of five".
+
         constexpr explicit operator bool() const
         {
             return !is_empty();

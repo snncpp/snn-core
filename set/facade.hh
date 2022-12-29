@@ -70,9 +70,7 @@ namespace snn::set
       public:
         // #### Default constructor
 
-        facade()
-        {
-        }
+        facade() = default;
 
         // #### Explicit constructors
 

@@ -29,17 +29,12 @@ namespace snn::time
       public:
         // #### Default constructor
 
-        constexpr duration() noexcept
-            : sec_{0},
-              nano_{0}
-        {
-        }
+        constexpr duration() noexcept = default;
 
         // #### Explicit constructors
 
         constexpr explicit duration(const i64 seconds) noexcept
-            : sec_{seconds},
-              nano_{0}
+            : sec_{seconds}
         {
         }
 
@@ -139,7 +134,7 @@ namespace snn::time
         constexpr auto operator<=>(const duration&) const noexcept = default;
 
       private:
-        i64 sec_;  // Seconds
-        u32 nano_; // Nanoseconds, 0-999'999'999.
+        i64 sec_{0};  // Seconds
+        u32 nano_{0}; // Nanoseconds, 0-999'999'999.
     };
 }

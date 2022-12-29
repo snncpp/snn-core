@@ -98,6 +98,8 @@ namespace snn
         error_category(error_category&&)            = delete;
         error_category& operator=(error_category&&) = delete;
 
+        ~error_category() = default; // "Rule of five".
+
         template <typename String>
         [[nodiscard]] constexpr String id() const
         {
@@ -182,7 +184,7 @@ namespace snn
 
     // Forward declare.
     template <error_code_enum Enum>
-    constexpr error_code make_error_code(const Enum) noexcept;
+    constexpr error_code make_error_code(Enum) noexcept;
 
     namespace detail
     {

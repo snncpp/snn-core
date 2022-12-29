@@ -1246,24 +1246,30 @@ namespace snn
     class semi_const final
     {
       public:
-        // #### Constructors & assignment operators
-
-        // Converting constructor.
+        // #### Converting constructor
 
         constexpr semi_const(T value) noexcept
             : value_{std::move(value)}
         {
         }
 
+        // #### Copy constructor
+
         // Copy-constructible but not copy-assignable.
 
         semi_const(const semi_const&)            = default;
         semi_const& operator=(const semi_const&) = delete;
 
+        // #### Move constructor
+
         // Move-constructible but not move-assignable.
 
-        semi_const(semi_const&&)            = default;
+        semi_const(semi_const&&) noexcept   = default;
         semi_const& operator=(semi_const&&) = delete;
+
+        // #### Destructor
+
+        ~semi_const() = default; // "Rule of five".
 
         // #### Get
 

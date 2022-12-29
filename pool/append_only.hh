@@ -37,12 +37,7 @@ namespace snn::pool
 
         constexpr explicit append_only(const num::bounded<usize, 1, max_elements_per_block>
                                            min_elements_per_block = 100) noexcept
-            : blocks_{},
-              next_{nullptr},
-              end_{nullptr},
-              back_{nullptr},
-              count_{0},
-              elements_per_block_{optimal_elements_per_block_(min_elements_per_block.not_zero())}
+            : elements_per_block_{optimal_elements_per_block_(min_elements_per_block.not_zero())}
         {
             snn_should(elements_per_block_.get() >= min_elements_per_block.get());
         }
@@ -152,10 +147,10 @@ namespace snn::pool
 
       private:
         vec<T*> blocks_;
-        T* next_;
-        T* end_;
-        T* back_;
-        usize count_;
+        T* next_{nullptr};
+        T* end_{nullptr};
+        T* back_{nullptr};
+        usize count_{0};
         not_zero<usize> elements_per_block_;
 
         constexpr void destruct_deallocate_() noexcept

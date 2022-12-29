@@ -32,8 +32,6 @@ namespace snn::crypto::mac
         // #### Explicit constructor
 
         explicit hmac(const transient<cstrview> secret_key) noexcept
-            : inner_{},
-              outer_{}
         {
             const cstrview sec_key = secret_key.get();
 
@@ -112,8 +110,8 @@ namespace snn::crypto::mac
         }
 
       private:
-        Hash inner_;
-        Hash outer_;
+        Hash inner_{};
+        Hash outer_{};
 
         template <typename T>
         void final_(T&& mac) noexcept(noexcept(outer_.final(std::forward<T>(mac))))

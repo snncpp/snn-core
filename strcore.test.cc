@@ -2943,9 +2943,9 @@ namespace snn::app
 
                 const char needle = random::number<char>();
 
-                usize start_pos = random::number<usize>(0, 100);
-                usize pos1      = haystack.find(needle, start_pos).value_or_npos();
-                usize pos2      = alt_haystack.find(needle, start_pos);
+                auto start_pos = random::number<usize>(0, 100);
+                usize pos1     = haystack.find(needle, start_pos).value_or_npos();
+                usize pos2     = alt_haystack.find(needle, start_pos);
                 snn_require(pos1 == pos2);
 
                 start_pos = random::number<usize>(0, size);

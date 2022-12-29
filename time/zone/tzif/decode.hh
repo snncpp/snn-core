@@ -108,14 +108,14 @@ namespace snn::time::zone::tzif
 
             [[nodiscard]] constexpr detail::counts counts() const noexcept
             {
-                detail::counts c;
-                c.isutc_count      = isutc_count.view<>().load_swap<u32>();
-                c.isstd_count      = isstd_count.view<>().load_swap<u32>();
-                c.leap_count       = leap_count.view<>().load_swap<u32>();
-                c.transition_count = transition_count.view<>().load_swap<u32>();
-                c.offset_count     = offset_count.view<>().load_swap<u32>();
-                c.abbr_block_size  = abbr_block_size.view<>().load_swap<u32>();
-                return c;
+                return detail::counts{
+                    .isutc_count      = isutc_count.view<>().load_swap<u32>(),
+                    .isstd_count      = isstd_count.view<>().load_swap<u32>(),
+                    .leap_count       = leap_count.view<>().load_swap<u32>(),
+                    .transition_count = transition_count.view<>().load_swap<u32>(),
+                    .offset_count     = offset_count.view<>().load_swap<u32>(),
+                    .abbr_block_size  = abbr_block_size.view<>().load_swap<u32>(),
+                };
             }
 
             [[nodiscard]] constexpr bool is_valid() const noexcept

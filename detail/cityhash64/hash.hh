@@ -97,8 +97,8 @@ namespace snn::detail::cityhash64
         a += loadword<usize>(s + 8);
         c += rotate(a, 7);
         a += loadword<usize>(s + 16);
-        usize vf = a + z;
-        usize vs = b + rotate(a, 31) + c;
+        const usize vf = a + z;
+        const usize vs = b + rotate(a, 31) + c;
         a        = loadword<usize>(s + 16) + loadword<usize>(s + len - 32);
         z += loadword<usize>(s + len - 8);
         b = rotate(a + z, 52);
@@ -106,9 +106,9 @@ namespace snn::detail::cityhash64
         a += loadword<usize>(s + len - 24);
         c += rotate(a, 7);
         a += loadword<usize>(s + len - 16);
-        usize wf = a + z;
-        usize ws = b + rotate(a, 31) + c;
-        usize r  = shift_mix((vf + ws) * k2 + (wf + vs) * k0);
+        const usize wf = a + z;
+        const usize ws = b + rotate(a, 31) + c;
+        const usize r  = shift_mix((vf + ws) * k2 + (wf + vs) * k0);
         return shift_mix(r * k0 + vs) * k2;
     }
 

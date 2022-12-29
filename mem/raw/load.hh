@@ -28,7 +28,7 @@ namespace snn::mem::raw
         if (std::is_constant_evaluated())
         {
             i = to_byte(data[1]);
-            i <<= 8;
+            i <<= 8u;
             i |= u16{to_byte(data[0])};
         }
         else
@@ -46,9 +46,9 @@ namespace snn::mem::raw
         if (std::is_constant_evaluated())
         {
             i = to_byte(data[0]);
-            i |= u32{to_byte(data[1])} << 8;
-            i |= u32{to_byte(data[2])} << 16;
-            i |= u32{to_byte(data[3])} << 24;
+            i |= u32{to_byte(data[1])} << 8u;
+            i |= u32{to_byte(data[2])} << 16u;
+            i |= u32{to_byte(data[3])} << 24u;
         }
         else
         {
@@ -65,13 +65,13 @@ namespace snn::mem::raw
         if (std::is_constant_evaluated())
         {
             i = to_byte(data[0]);
-            i |= u64{to_byte(data[1])} << 8;
-            i |= u64{to_byte(data[2])} << 16;
-            i |= u64{to_byte(data[3])} << 24;
-            i |= u64{to_byte(data[4])} << 32;
-            i |= u64{to_byte(data[5])} << 40;
-            i |= u64{to_byte(data[6])} << 48;
-            i |= u64{to_byte(data[7])} << 56;
+            i |= u64{to_byte(data[1])} << 8u;
+            i |= u64{to_byte(data[2])} << 16u;
+            i |= u64{to_byte(data[3])} << 24u;
+            i |= u64{to_byte(data[4])} << 32u;
+            i |= u64{to_byte(data[5])} << 40u;
+            i |= u64{to_byte(data[6])} << 48u;
+            i |= u64{to_byte(data[7])} << 56u;
         }
         else
         {

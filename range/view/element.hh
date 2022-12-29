@@ -85,9 +85,7 @@ namespace snn::range::v
     class element final
     {
       public:
-        constexpr explicit element() noexcept
-        {
-        }
+        explicit element() = default;
 
         constexpr explicit element(meta::index_t<Index>) noexcept
         {

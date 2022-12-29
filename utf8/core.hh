@@ -57,7 +57,7 @@ namespace snn::utf8
 
     [[nodiscard]] constexpr bool is_continuation(const char c) noexcept
     {
-        return (to_byte(c) & 0b1100'0000) == 0b1000'0000;
+        return (to_byte(c) & 0b1100'0000u) == 0b1000'0000;
     }
 
     // ### is_valid
@@ -91,9 +91,9 @@ namespace snn::utf8
             // Binary code point:   00000aaa aabbbbbb
 
             // First byte, keep the last 5 bits, shifted 6 steps to the left.
-            u32 cp = static_cast<u32>(to_byte(data[0]) & 0b0001'1111) << 6;
+            u32 cp = static_cast<u32>(to_byte(data[0]) & 0b0001'1111u) << 6u;
             // Second byte, add the last 6 bits.
-            cp += static_cast<u32>(to_byte(data[1]) & 0b0011'1111);
+            cp += static_cast<u32>(to_byte(data[1]) & 0b0011'1111u);
 
             if (cp >= codepoint::first_in_2_byte_sequence)
             {
@@ -107,18 +107,18 @@ namespace snn::utf8
         const char* const data) noexcept
     {
         const auto i = mem::raw::load<u16>(data + 1);
-        if ((i & 0xc0c0) == 0x8080) // 0xc0 == 0b1100'0000, 0x80 == 0b1000'0000
+        if ((i & 0xC0C0u) == 0x8080) // 0xC0 == 0b1100'0000, 0x80 == 0b1000'0000
         {
             // 3-byte sequence.
             // Binary UTF-8:        1110aaaa 10bbbbbb 10cccccc
             // Binary code point:            aaaabbbb bbcccccc
 
             // First byte, keep the last 4 bits, shifted 12 steps to the left.
-            u32 cp = static_cast<u32>(to_byte(data[0]) & 0b0000'1111) << 12;
+            u32 cp = static_cast<u32>(to_byte(data[0]) & 0b0000'1111u) << 12u;
             // Second byte, add the last 6 bits, shifted 6 steps to the left.
-            cp += static_cast<u32>(to_byte(data[1]) & 0b0011'1111) << 6;
+            cp += static_cast<u32>(to_byte(data[1]) & 0b0011'1111u) << 6u;
             // Third byte, add the last 6 bits.
-            cp += static_cast<u32>(to_byte(data[2]) & 0b0011'1111);
+            cp += static_cast<u32>(to_byte(data[2]) & 0b0011'1111u);
 
             if (cp >= codepoint::first_in_3_byte_sequence)
             {
@@ -136,20 +136,20 @@ namespace snn::utf8
         const char* const data) noexcept
     {
         const auto i = mem::raw::load<u32>(data);
-        if ((i & 0xc0c0c000) == 0x80808000) // 0xc0 == 0b1100'0000, 0x80 == 0b1000'0000
+        if ((i & 0xC0C0C000u) == 0x80808000) // 0xC0 == 0b1100'0000, 0x80 == 0b1000'0000
         {
             // 4-byte sequence.
             // Binary UTF-8:        11110aaa 10bbbbbb 10cccccc 10dddddd
             // Binary code point:            000aaabb bbbbcccc ccdddddd
 
             // First byte, keep the last 3 bits, shifted 18 steps to the left.
-            u32 cp = static_cast<u32>(to_byte(data[0]) & 0b0000'0111) << 18;
+            u32 cp = static_cast<u32>(to_byte(data[0]) & 0b0000'0111u) << 18u;
             // Second byte, add the last 6 bits, shifted 12 steps to the left.
-            cp += static_cast<u32>(to_byte(data[1]) & 0b0011'1111) << 12;
+            cp += static_cast<u32>(to_byte(data[1]) & 0b0011'1111u) << 12u;
             // Third byte, add the last 6 bits, shifted 6 steps to the left.
-            cp += static_cast<u32>(to_byte(data[2]) & 0b0011'1111) << 6;
+            cp += static_cast<u32>(to_byte(data[2]) & 0b0011'1111u) << 6u;
             // Fourth byte, add the last 6 bits.
-            cp += static_cast<u32>(to_byte(data[3]) & 0b0011'1111);
+            cp += static_cast<u32>(to_byte(data[3]) & 0b0011'1111u);
 
             if (cp >= codepoint::first_in_4_byte_sequence && cp <= unicode::codepoint::max)
             {
@@ -209,8 +209,8 @@ namespace snn::utf8
                    cp < codepoint::first_in_3_byte_sequence);
         // Binary UTF-8:        110aaaaa 10bbbbbb
         // Binary code point:   00000aaa aabbbbbb
-        *(dest++) = static_cast<char>((cp >> 6) | 0b1100'0000);
-        *(dest++) = static_cast<char>((cp & 0b0011'1111) | 0b1000'0000);
+        *(dest++) = static_cast<char>((cp >> 6u) | 0b1100'0000u);
+        *(dest++) = static_cast<char>((cp & 0b0011'1111u) | 0b1000'0000u);
         return dest;
     }
 
@@ -222,9 +222,9 @@ namespace snn::utf8
                    cp < codepoint::first_in_4_byte_sequence);
         // Binary UTF-8:        1110aaaa 10bbbbbb 10cccccc
         // Binary code point:            aaaabbbb bbcccccc
-        *(dest++) = static_cast<char>((cp >> 12) | 0b1110'0000);
-        *(dest++) = static_cast<char>(((cp >> 6) & 0b0011'1111) | 0b1000'0000);
-        *(dest++) = static_cast<char>((cp & 0b0011'1111) | 0b1000'0000);
+        *(dest++) = static_cast<char>((cp >> 12u) | 0b1110'0000u);
+        *(dest++) = static_cast<char>(((cp >> 6u) & 0b0011'1111u) | 0b1000'0000u);
+        *(dest++) = static_cast<char>((cp & 0b0011'1111u) | 0b1000'0000u);
         return dest;
     }
 
@@ -235,10 +235,10 @@ namespace snn::utf8
         snn_should(cp >= codepoint::first_in_4_byte_sequence && cp <= unicode::codepoint::max);
         // Binary UTF-8:        11110aaa 10bbbbbb 10cccccc 10dddddd
         // Binary code point:            000aaabb bbbbcccc ccdddddd
-        *(dest++) = static_cast<char>((cp >> 18) | 0b1111'0000);
-        *(dest++) = static_cast<char>(((cp >> 12) & 0b0011'1111) | 0b1000'0000);
-        *(dest++) = static_cast<char>(((cp >> 6) & 0b0011'1111) | 0b1000'0000);
-        *(dest++) = static_cast<char>((cp & 0b0011'1111) | 0b1000'0000);
+        *(dest++) = static_cast<char>((cp >> 18u) | 0b1111'0000u);
+        *(dest++) = static_cast<char>(((cp >> 12u) & 0b0011'1111u) | 0b1000'0000u);
+        *(dest++) = static_cast<char>(((cp >> 6u) & 0b0011'1111u) | 0b1000'0000u);
+        *(dest++) = static_cast<char>((cp & 0b0011'1111u) | 0b1000'0000u);
         return dest;
     }
 

@@ -171,6 +171,10 @@ namespace snn
             return *this;
         }
 
+        // #### Destructor
+
+        ~strcore() = default; // "Rule of five".
+
         // #### Assignment operator
 
         constexpr strcore& operator=(const same_as<char> auto c)

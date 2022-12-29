@@ -1248,9 +1248,9 @@ namespace snn::time
 
             // "Estimate month on assumption that every month has 31 days. The estimate may be too
             // low by at most one month, so adjust."
-            u16 month = day / 31; // 0-11 inclusive.
-            u16 end   = detail::days_before_month[month + 1];
-            u16 begin = end;
+            u16 month     = day / 31; // 0-11 inclusive.
+            const u16 end = detail::days_before_month[month + 1];
+            u16 begin     = end;
             if (day >= end)
             {
                 ++month;

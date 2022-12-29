@@ -134,10 +134,7 @@ namespace snn::regex
     class matches final : public matches_base<matches>
     {
       public:
-        explicit matches()
-            : cmatch_{}
-        {
-        }
+        explicit matches() = default;
 
         explicit matches(std::cmatch cmatch)
             : cmatch_{std::move(cmatch)}
@@ -145,7 +142,7 @@ namespace snn::regex
         }
 
       private:
-        std::cmatch cmatch_;
+        std::cmatch cmatch_{};
 
         friend class matches_base<matches>;
         friend class pattern;

@@ -16,6 +16,6 @@ namespace snn::file::tty
 
     [[nodiscard]] inline bool is_terminal(const int fd) noexcept
     {
-        return ::isatty(fd);
+        return ::isatty(fd) == 1;
     }
 }

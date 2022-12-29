@@ -16,6 +16,6 @@ namespace snn::random
     [[nodiscard]] inline bool boolean()
     {
         const auto i = random::number<u32>();
-        return static_cast<bool>(i & 1);
+        return static_cast<bool>(i & 1u);
     }
 }

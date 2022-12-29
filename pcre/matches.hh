@@ -29,9 +29,7 @@ namespace snn::pcre
 
         explicit matches(const not_null<pcre2_code_8*> code, const cstrview subject) noexcept
             : match_data_{::pcre2_match_data_create_from_pattern_8(code.get(), nullptr)},
-              subject_{subject},
-              count_{0},
-              error_number_{0}
+              subject_{subject}
         {
         }
 
@@ -75,7 +73,7 @@ namespace snn::pcre
 
         // #### Single element access
 
-        optional<match_view> at(const usize pos) const noexcept
+        [[nodiscard]] optional<match_view> at(const usize pos) const noexcept
         {
             if (pos < count())
             {
@@ -146,7 +144,7 @@ namespace snn::pcre
       private:
         pcre2_match_data_8* match_data_;
         cstrview subject_;
-        u32 count_;
-        int error_number_;
+        u32 count_{0};
+        int error_number_{0};
     };
 }

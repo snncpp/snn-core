@@ -24,7 +24,6 @@ namespace snn::json::detail
             : rng_{rng},
               first_{rng_.begin()},
               pool_{pool},
-              node_count_{0},
               node_limit_{node_limit},
               depth_limit_{depth_limit}
         {
@@ -37,6 +36,8 @@ namespace snn::json::detail
         // Non-movable
         decoder(decoder&&)            = delete;
         decoder& operator=(decoder&&) = delete;
+
+        ~decoder() = default; // "Rule of five".
 
         [[nodiscard]] constexpr usize byte_position() const noexcept
         {
@@ -64,7 +65,7 @@ namespace snn::json::detail
         strrng rng_;
         char* first_;
         pool::append_only<node>& pool_;
-        u32 node_count_;
+        u32 node_count_{0};
         u32 node_limit_;
         u16 depth_limit_;
 

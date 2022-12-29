@@ -148,7 +148,7 @@ namespace snn
             }                                                                                      \
             catch (const ::snn::exception& e9023)                                                  \
             {                                                                                      \
-                if (e9023.error_code() == ec)                                                      \
+                if (e9023.error_code() == (ec))                                                    \
                 {                                                                                  \
                     ec8693 = true;                                                                 \
                 }                                                                                  \

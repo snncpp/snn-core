@@ -35,9 +35,7 @@ namespace snn::pool
         // #### Explicit constructors
 
         constexpr explicit fixed(const not_zero<usize> capacity)
-            : data_{nullptr},
-              count_{0},
-              capacity_{capacity.get()}
+            : capacity_{capacity.get()}
         {
             mem::allocator<T> alloc;
             data_ = alloc.allocate(capacity).value();
@@ -214,8 +212,8 @@ namespace snn::pool
 #endif
 
       private:
-        T* data_;
-        usize count_;
+        T* data_{nullptr};
+        usize count_{0};
         usize capacity_;
 
         constexpr T* begin_() noexcept

@@ -61,9 +61,9 @@ namespace snn::url
                     const auto b = to_byte(c);
 
                     array_view<char, 3> v = append_to.template append_uninitialized<3>();
-                    v.get<0>()            = '%';                                // Prefix
-                    v.get<1>()            = hex_table.at(b >> 4, bounds::mask); // High bits.
-                    v.get<2>()            = hex_table.at(b, bounds::mask);      // Low bits.
+                    v.get<0>()            = '%';                                 // Prefix
+                    v.get<1>()            = hex_table.at(b >> 4u, bounds::mask); // High bits.
+                    v.get<2>()            = hex_table.at(b, bounds::mask);       // Low bits.
                 }
             }
         }

@@ -59,14 +59,12 @@ namespace snn::json
         };
 
         constexpr explicit node() noexcept
-            : val_{},
-              type_{type::empty}
+            : type_{type::empty}
         {
         }
 
         constexpr explicit node(const enum type t) noexcept
-            : val_{},
-              type_{t}
+            : type_{t}
         {
             snn_should(type_ == type::empty || type_ == type::array || type_ == type::object);
         }
@@ -276,7 +274,7 @@ namespace snn::json
             }
         }
 
-        constexpr const node& empty_node_() const noexcept
+        static constexpr const node& empty_node_() noexcept
         {
             return constant::value_initialized<node>;
         }

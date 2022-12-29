@@ -27,8 +27,8 @@ namespace snn
         constexpr void format(const time::duration d, cstrview, const fmt::context&,
                               strcore<Buf>& append_to, promise::no_overlap_t)
         {
-            i64 sec  = d.seconds();
-            u32 nano = d.nanoseconds();
+            const i64 sec = d.seconds();
+            u32 nano      = d.nanoseconds();
 
             auto abs = to_u64(sec);
 
