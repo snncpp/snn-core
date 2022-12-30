@@ -938,7 +938,10 @@ namespace snn::app
         constexpr bool test_has_append_inplace()
         {
             static_assert(has_append_inplace<vec<i32>>);
+            static_assert(has_append_inplace<vec<i32>, i32>);
+
             static_assert(has_append_inplace<vec<cstrview>>);
+            static_assert(has_append_inplace<vec<cstrview>, cstrview>);
 
             static_assert(!has_append_inplace<const vec<i32>>);
             static_assert(!has_append_inplace<const vec<cstrview>>);

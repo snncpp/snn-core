@@ -616,8 +616,10 @@ namespace snn
 
     // ### has_append_inplace
 
-    template <typename T>
-    concept has_append_inplace = requires(T& v) { v.append_inplace(); };
+    template <typename T, typename... Args>
+    concept has_append_inplace = requires(T& v, Args&&... args) {
+        v.append_inplace(std::forward<Args>(args)...);
+    };
 
     // ### has_at
 
