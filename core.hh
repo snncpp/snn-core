@@ -592,6 +592,11 @@ namespace snn
     concept character = strict_signed_integral<T> && same_as<const T, const char>;
 #endif
 
+    // ### octet
+
+    template <typename T>
+    concept octet = strict_integral<T> && sizeof(T) == 1;
+
     // ### same_signedness_as
 
     template <typename T, typename U>

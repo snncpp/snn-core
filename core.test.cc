@@ -1136,6 +1136,35 @@ namespace snn::app
             return true;
         }
 
+        constexpr bool test_octet()
+        {
+            static_assert(octet<char>);
+            static_assert(octet<const char>);
+            static_assert(octet<signed char>);
+            static_assert(octet<const signed char>);
+            static_assert(octet<unsigned char>);
+            static_assert(octet<const unsigned char>);
+            static_assert(octet<u8>);
+            static_assert(octet<const u8>);
+            static_assert(octet<i8>);
+            static_assert(octet<const i8>);
+            static_assert(octet<byte>);
+            static_assert(octet<const byte>);
+            static_assert(octet<char8_t>);
+            static_assert(octet<const char8_t>);
+
+            static_assert(!octet<int>);
+            static_assert(!octet<bool>);
+            static_assert(!octet<const bool>);
+            static_assert(!octet<char&>);
+            static_assert(!octet<const char&>);
+            static_assert(!octet<char*>);
+            static_assert(!octet<const char*>);
+            static_assert(!octet<cstrview>);
+
+            return true;
+        }
+
         constexpr bool test_pointer()
         {
             static_assert(pointer<int*>);
@@ -1820,6 +1849,7 @@ namespace snn
         snn_static_require(app::test_not_deduced());
         snn_static_require(app::test_not_null());
         snn_static_require(app::test_not_zero());
+        snn_static_require(app::test_octet());
         snn_static_require(app::test_pointer());
         snn_static_require(app::test_power_of_two());
         snn_static_require(app::test_predicate());
