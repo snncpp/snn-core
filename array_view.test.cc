@@ -1842,14 +1842,22 @@ namespace snn::app
                 snn_require(v.load_swap<u32>() == 0x61626364);
                 // v.load_swap<u64>(); // Will not compile.
 
+                if (!std::is_constant_evaluated())
+                {
+                    snn_require(v.as_bytes<>().load<u16>() == 0x6261);
+                    snn_require(v.as_bytes<>().load<u32>() == 0x64636261);
+                    snn_require(v.as_bytes<>().load_swap<u16>() == 0x6162);
+                    snn_require(v.as_bytes<>().load_swap<u32>() == 0x61626364);
+                }
+
                 static_assert(!app::can_load_swap<array_view<char, 7>, u64>);
                 static_assert(!app::can_load_swap<array_view<const char, 7>, u64>);
                 static_assert(app::can_load_swap<array_view<char, 8>, u64>);
                 static_assert(app::can_load_swap<array_view<const char, 8>, u64>);
 
-                // Only `char` is supported for now.
-                static_assert(!app::can_load_swap<array_view<byte, 8>, u64>);
-                static_assert(!app::can_load_swap<array_view<const byte, 8>, u64>);
+                // Only octet types support load/load_swap.
+                static_assert(!app::can_load_swap<array_view<u16, 8>, u64>);
+                static_assert(!app::can_load_swap<array_view<const u16, 8>, u64>);
             }
 
             // operator==(array_view), operator!=(array_view), operator<=>(array_view)

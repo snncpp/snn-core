@@ -338,7 +338,7 @@ namespace snn
         // #### Load (word)
 
         template <strict_unsigned_integral UInt>
-            requires(character<T> && sizeof(UInt) <= Count)
+            requires(octet<T> && sizeof(UInt) <= Count)
         [[nodiscard]] constexpr UInt load() const noexcept
         {
             return mem::raw::load<UInt>(data_);
@@ -347,7 +347,7 @@ namespace snn
         // #### Load-swap (word)
 
         template <strict_unsigned_integral UInt>
-            requires(character<T> && sizeof(UInt) <= Count)
+            requires(octet<T> && sizeof(UInt) <= Count)
         [[nodiscard]] constexpr UInt load_swap() const noexcept
         {
             return mem::raw::load_swap<UInt>(data_);
