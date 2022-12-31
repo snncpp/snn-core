@@ -11,30 +11,29 @@ namespace snn::mem::raw
 {
     // ## Functions
 
-    // ### load_swap - From char pointer
+    // ### load_swap
 
-    template <typename Int>
-    [[nodiscard]] constexpr Int load_swap(const char*) noexcept
-    {
-        static_assert(meta::always_false<Int>, "Not implemented.");
-        return 0;
-    }
+    // Load (and swap) unsigned integral from _octet_ pointer.
 
-    template <>
-    [[nodiscard]] constexpr u16 load_swap<u16>(const char* const data) noexcept
+    template <typename Int, octet Octet>
+    [[nodiscard]] constexpr Int load_swap(const Octet* const data) noexcept
     {
-        return __builtin_bswap16(mem::raw::load<u16>(data));
-    }
-
-    template <>
-    [[nodiscard]] constexpr u32 load_swap<u32>(const char* const data) noexcept
-    {
-        return __builtin_bswap32(mem::raw::load<u32>(data));
-    }
-
-    template <>
-    [[nodiscard]] constexpr u64 load_swap<u64>(const char* const data) noexcept
-    {
-        return __builtin_bswap64(mem::raw::load<u64>(data));
+        if constexpr (std::is_same_v<Int, u16>)
+        {
+            return __builtin_bswap16(mem::raw::load<u16>(data));
+        }
+        else if constexpr (std::is_same_v<Int, u32>)
+        {
+            return __builtin_bswap32(mem::raw::load<u32>(data));
+        }
+        else if constexpr (std::is_same_v<Int, u64>)
+        {
+            return __builtin_bswap64(mem::raw::load<u64>(data));
+        }
+        else
+        {
+            static_assert(meta::always_false<Int>, "Not implemented.");
+            return 0;
+        }
     }
 }
