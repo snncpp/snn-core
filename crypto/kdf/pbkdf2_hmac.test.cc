@@ -38,10 +38,10 @@ namespace snn
     {
         snn_require(app::example());
 
-        using crypto::kdf::pbkdf2_hmac;
         using crypto::hash::sha1;
         using crypto::hash::sha256;
         using crypto::hash::sha512;
+        using crypto::kdf::pbkdf2_hmac;
 
         str key;
 

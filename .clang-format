@@ -6,7 +6,6 @@ AlignOperands: AlignAfterOperator
 AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: WithoutElse
 AlwaysBreakTemplateDeclarations: Yes
-BasedOnStyle: ''
 BraceWrapping:
   AfterCaseLabel: true
   AfterClass: true
@@ -28,22 +27,22 @@ BraceWrapping:
   SplitEmptyNamespace: true
 BreakBeforeBraces: Custom
 ColumnLimit: 100
-DeriveLineEnding: false
 FixNamespaceComments: false
 IndentCaseLabels: true
-IndentRequires: true
+IndentRequiresClause: true
 IndentWidth: 4
+InsertNewlineAtEOF: true
 KeepEmptyLinesAtTheStartOfBlocks: false
+LineEnding: LF
 NamespaceIndentation: All
 PackConstructorInitializers: Never
 PenaltyBreakOpenParenthesis: 45
 PenaltyReturnTypeOnItsOwnLine: 140
 PointerAlignment: Left
 SortIncludes: Never
-SortUsingDeclarations: false
+SortUsingDeclarations: Lexicographic
 StatementAttributeLikeMacros:
   - SNN_CONSTEXPR_MAYBE
 TabWidth: 4
-UseCRLF: false
 UseTab: Never
 ...

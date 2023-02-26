@@ -126,6 +126,6 @@ namespace snn::string::range
 
     // ### split
 
-    split(cstrview, cstrview)->split<cstrview>;
-    split(cstrview, char)->split<char>;
+    split(cstrview, cstrview) -> split<cstrview>;
+    split(cstrview, char) -> split<char>;
 }
