@@ -11,7 +11,6 @@ namespace snn::app
     {
         constexpr bool example()
         {
-#if defined(__clang__) || (defined(__GNUC__) && __GNUC__ >= 10)
             snn_require(fmt::type_name<i32>() == "int");
             snn_require(fmt::type_name<str>() == "snn::strcore<snn::detail::strcore::sso>");
 
@@ -20,7 +19,6 @@ namespace snn::app
             str append_to = "cstrview == ";
             fmt::type<cstrview>(append_to);
             snn_require(append_to == "cstrview == snn::array_view<const char>");
-#endif
 
             return true;
         }
