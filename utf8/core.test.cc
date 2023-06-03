@@ -48,11 +48,17 @@ namespace snn
         static_assert(utf8::replace_if_invalid(0xFFFFFF) == 0xFFFD);
         static_assert(utf8::replace_if_invalid(constant::limit<u32>::max) == 0xFFFD);
 
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         static_assert(string_size(utf8::replacement_string()) == 3);
         static_assert(utf8::replacement_string()[0] == '\xEF');
         static_assert(utf8::replacement_string()[1] == '\xBF');
         static_assert(utf8::replacement_string()[2] == '\xBD');
         static_assert(utf8::replacement_string()[3] == '\0');
+
+        SNN_DIAGNOSTIC_POP
+
         static_assert(utf8::replacement_string<cstrview>().size() == 3);
         static_assert(utf8::replacement_string<cstrview>() == "\xEF\xBF\xBD");
 
@@ -217,22 +223,22 @@ namespace snn
 
         // "LATIN CAPITAL LETTER A" (U+0041)
         snn_require(utf8::encode_up_to_4_bytes(0x41, buffer.begin(), promise::is_valid) ==
-                    (buffer.begin() + 1));
+                    buffer.view(1).begin());
         snn_require(buffer.view() == "\x41\0\0\0\0\0\0\0");
 
         // "COMBINING RING ABOVE" (U+030A)
         snn_require(utf8::encode_up_to_4_bytes(0x30A, buffer.begin(), promise::is_valid) ==
-                    (buffer.begin() + 2));
+                    buffer.view(2).begin());
         snn_require(buffer.view() == "\xCC\x8A\0\0\0\0\0\0");
 
         // "EURO SIGN" (U+20AC)
         snn_require(utf8::encode_up_to_4_bytes(0x20AC, buffer.begin(), promise::is_valid) ==
-                    (buffer.begin() + 3));
+                    buffer.view(3).begin());
         snn_require(buffer.view() == "\xE2\x82\xAC\0\0\0\0\0");
 
         // "TANGERINE" (U+1F34A)
         snn_require(utf8::encode_up_to_4_bytes(0x1F34A, buffer.begin(), promise::is_valid) ==
-                    (buffer.begin() + 4));
+                    buffer.view(4).begin());
         snn_require(buffer.view() == "\xF0\x9F\x8D\x8A\0\0\0\0");
     }
 }

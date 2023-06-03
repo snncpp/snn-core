@@ -102,6 +102,19 @@ static_assert(std::is_same_v<std::uint8_t, unsigned char>, "std::uint8_t must be
 
 #endif
 
+// ### SNN_DIAGNOSTIC_[...]
+
+#if defined(__clang__) && defined(__clang_major__) && __clang_major__ >= 16
+#define SNN_DIAGNOSTIC_PUSH _Pragma("clang diagnostic push")
+#define SNN_DIAGNOSTIC_POP  _Pragma("clang diagnostic pop")
+#define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE                                                  \
+    _Pragma("clang diagnostic ignored \"-Wunsafe-buffer-usage\"")
+#else
+#define SNN_DIAGNOSTIC_PUSH
+#define SNN_DIAGNOSTIC_POP
+#define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+#endif
+
 // ### SNN_INT128_BOOL
 
 #if defined(__SIZEOF_INT128__) && defined(_LIBCPP_VERSION)

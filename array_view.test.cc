@@ -766,7 +766,7 @@ namespace snn::app
                 snn_require(v.count() == 0);
                 snn_require(v.is_empty());
                 snn_require(!v);
-                snn_require(v.data() == arr.data().get() + 3);
+                snn_require(v.data() == arr.end());
                 snn_require(!v.at(0).has_value());
                 snn_require(!v.front().has_value());
                 snn_require(!v.back().has_value());
@@ -1513,13 +1513,13 @@ namespace snn::app
                 {
                     auto v = src.view_exactly<1, 3>(promise::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<int, 3>>);
-                    snn_require(v.begin() == (a.begin() + 1));
+                    snn_require(v.begin() == a.view_exactly<1, 1>().begin());
                     snn_require(v.end() == a.end());
                 }
                 {
                     auto v = std::as_const(src).view_exactly<1, 3>(promise::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<const int, 3>>);
-                    snn_require(v.begin() == (a.begin() + 1));
+                    snn_require(v.begin() == a.view_exactly<1, 1>().begin());
                     snn_require(v.end() == a.end());
                 }
             }
@@ -1546,13 +1546,13 @@ namespace snn::app
                 {
                     auto v = src.view_exactly<1, 3>(promise::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<const char, 3>>);
-                    snn_require(v.begin() == (a.begin() + 1));
+                    snn_require(v.begin() == a.view_exactly<1, 1>().begin());
                     snn_require(v.end() == a.end());
                 }
                 {
                     auto v = std::as_const(src).view_exactly<1, 3>(promise::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<const char, 3>>);
-                    snn_require(v.begin() == (a.begin() + 1));
+                    snn_require(v.begin() == a.view_exactly<1, 1>().begin());
                     snn_require(v.end() == a.end());
                 }
             }
@@ -1579,13 +1579,13 @@ namespace snn::app
                 {
                     auto v = src.view_exactly<1, 3>(promise::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<char, 3>>);
-                    snn_require(v.begin() == (a.begin() + 1));
+                    snn_require(v.begin() == a.view_exactly<1, 1>().begin());
                     snn_require(v.end() == a.end());
                 }
                 {
                     auto v = std::as_const(src).view_exactly<1, 3>(promise::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<const char, 3>>);
-                    snn_require(v.begin() == (a.begin() + 1));
+                    snn_require(v.begin() == a.view_exactly<1, 1>().begin());
                     snn_require(v.end() == a.end());
                 }
             }

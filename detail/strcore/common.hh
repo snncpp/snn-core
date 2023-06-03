@@ -17,6 +17,9 @@
 
 namespace snn::detail::strcore
 {
+    SNN_DIAGNOSTIC_PUSH
+    SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
     inline constexpr char digit_lookup[201] // 200 digits + '\0'.
         = "000102030405060708091011121314151617181920212223242526272829303132333435363738394041"
           "424344454647484950515253545556575859606162636465666768697071727374757677787980818283"
@@ -1491,6 +1494,8 @@ namespace snn::detail::strcore
             return strview{not_null{storage_.large.data + pos}, replacement_size};
         }
     };
+
+    SNN_DIAGNOSTIC_POP
 
     // Type traits.
     template <typename T>

@@ -419,6 +419,9 @@ namespace snn::num
             usize index    = 0;
             bool is_signed = false;
 
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             if constexpr (std::is_signed_v<Int>)
             {
                 if (s[index] == '-')
@@ -455,6 +458,8 @@ namespace snn::num
                     ++index;
                 }
             }
+
+            SNN_DIAGNOSTIC_POP
 
             if (index != Size)
             {

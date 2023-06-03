@@ -1092,22 +1092,20 @@ namespace snn::app
 
         constexpr bool test_not_null()
         {
-            char src[] = {'H', 'e', 'l', 'l', 'o', '\0'};
-            snn_require(src[1] == 'e');
+            auto src = to_array("Hello");
+            static_assert(std::is_same_v<decltype(src), array<char, 5>>);
 
-            const not_null<char*> a{src};
-            snn_require(a.get() == src);
-            a.get()[1] = 'a';
-            snn_require(src[1] == 'a');
+            const not_null<char*> a{src.begin()};
+            snn_require(a.get() == src.begin());
 
             // Conversion
             const not_null<const char*> b{a};
-            snn_require(b.get() == src);
+            snn_require(b.get() == src.begin());
 
             // Deduction
-            not_null c{src};
+            not_null c{src.begin()};
             static_assert(std::is_same_v<decltype(c), not_null<char*>>);
-            snn_require(c.get() == src);
+            snn_require(c.get() == src.begin());
 
             return true;
         }

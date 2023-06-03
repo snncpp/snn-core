@@ -112,6 +112,9 @@ namespace snn
             return derived_().view().find(std::forward<V>(value), start_pos);
         }
 
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         template <typename OneArgPred>
         [[nodiscard]] constexpr optional_index find_if(OneArgPred p,
                                                        const usize start_pos = 0) const
@@ -157,6 +160,8 @@ namespace snn
             }
             return constant::npos;
         }
+
+        SNN_DIAGNOSTIC_POP
 
         // #### Algorithm helpers
 

@@ -13,6 +13,9 @@ namespace snn::mem
 
     // ### destruct_n
 
+    SNN_DIAGNOSTIC_PUSH
+    SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
     template <typename T>
     constexpr void destruct_n(T* const first, const usize count) noexcept
     {
@@ -26,4 +29,6 @@ namespace snn::mem
             ++cur;
         }
     }
+
+    SNN_DIAGNOSTIC_POP
 }

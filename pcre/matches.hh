@@ -87,8 +87,15 @@ namespace snn::pcre
             snn_assert(pos < count());
             const usize* const ovector = ::pcre2_get_ovector_pointer_8(match_data_);
             const usize index          = pos * 2;
-            const usize start_pos      = ovector[index];
-            const usize end_pos        = ovector[index + 1];
+
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
+            const usize start_pos = ovector[index];
+            const usize end_pos   = ovector[index + 1];
+
+            SNN_DIAGNOSTIC_POP
+
             // Do not assume that the end position is greater than the start position (pcre2demo.c).
             return match_view{subject_, math::min(start_pos, end_pos),
                               math::abs_diff(start_pos, end_pos)};

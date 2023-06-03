@@ -154,6 +154,9 @@ namespace snn::app
 
         constexpr bool test_days_before_month()
         {
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             using time::detail::days_before_month;
             snn_require(days_before_month[0] == 0);
             snn_require(days_before_month[1] == days_before_month[0] + 31);   // January
@@ -168,6 +171,8 @@ namespace snn::app
             snn_require(days_before_month[10] == days_before_month[9] + 31);  // October
             snn_require(days_before_month[11] == days_before_month[10] + 30); // November
             snn_require(days_before_month[12] == days_before_month[11] + 31); // December
+
+            SNN_DIAGNOSTIC_POP
 
             return true;
         }

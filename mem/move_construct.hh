@@ -13,6 +13,9 @@ namespace snn::mem
 
     // ### move_construct
 
+    SNN_DIAGNOSTIC_PUSH
+    SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
     template <typename T>
         requires(std::is_move_constructible_v<T>)
     constexpr void move_construct(const not_null<T*> first_move, const not_null<T*> last_move,
@@ -31,4 +34,6 @@ namespace snn::mem
             ++first_uninit;
         }
     }
+
+    SNN_DIAGNOSTIC_POP
 }

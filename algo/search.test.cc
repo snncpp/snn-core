@@ -90,7 +90,7 @@ namespace snn::app
                 static_assert(std::is_same_v<decltype(rng), range::contiguous<const char*>>);
 
                 snn_require(rng.view() == "rstuvwxyz");
-                snn_require(rng.begin() == subject.begin() + 17);
+                snn_require(rng.begin() == subject.view(17).begin());
                 snn_require(rng.end() == subject.end());
             }
 

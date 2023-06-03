@@ -558,7 +558,12 @@ namespace snn::fn
         template <typename V, usize... Indexes>
         constexpr bool contains_(const V& v, std::index_sequence<Indexes...>) const
         {
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             return ((v == array_[Indexes]) || ...);
+
+            SNN_DIAGNOSTIC_POP
         }
     };
 

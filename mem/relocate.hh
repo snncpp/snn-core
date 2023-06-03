@@ -24,6 +24,9 @@ namespace snn::mem
     constexpr void relocate(const not_null<T*> first_relocate, const not_null<T*> last_relocate,
                             const not_null<T*> first_uninitialized) noexcept
     {
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         T* first         = first_relocate.get();
         T* last          = last_relocate.get();
         const auto count = static_cast<usize>(last - first);
@@ -56,5 +59,7 @@ namespace snn::mem
                 ++first_uninit;
             }
         }
+
+        SNN_DIAGNOSTIC_POP
     }
 }

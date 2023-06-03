@@ -167,6 +167,9 @@ namespace snn
 
         // #### Single element access
 
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         template <value_type_or<reference> R = reference>
         [[nodiscard]] constexpr optional<R> at(const usize pos) noexcept(
             std::is_nothrow_copy_constructible_v<R>)
@@ -276,6 +279,8 @@ namespace snn
             snn_assert(buf_.count() > 0);
             return buf_.cbegin()[0];
         }
+
+        SNN_DIAGNOSTIC_POP
 
         // #### Append value
 
@@ -438,10 +443,16 @@ namespace snn
                     buf_.grow(not_zero{check_capacity_(recommend_capacity_())}, promise::is_valid);
                 }
 
+                SNN_DIAGNOSTIC_PUSH
+                SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
                 mem::relocate_right(not_null{buf_.begin() + pos}, not_null{buf_.end()},
                                     not_zero<usize>{1});
 
                 mem::construct(not_null{buf_.begin() + pos}, std::move(value)); // Must not throw.
+
+                SNN_DIAGNOSTIC_POP
+
                 buf_.increment_count(promise::has_capacity);
             }
             else if (pos == buf_.count())
@@ -554,9 +565,15 @@ namespace snn
             }
             else
             {
+                SNN_DIAGNOSTIC_PUSH
+                SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
                 mem::destruct_n(buf_.begin() + pos, count);
                 mem::relocate_left(not_null{buf_.begin() + pos + count}, not_null{buf_.end()},
                                    not_zero{count});
+
+                SNN_DIAGNOSTIC_POP
+
                 buf_.set_count(buf_.count() - count, promise::has_capacity);
             }
         }

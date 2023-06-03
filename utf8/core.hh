@@ -81,6 +81,9 @@ namespace snn::utf8
 
     // ### decode_X_byte_sequence
 
+    SNN_DIAGNOSTIC_PUSH
+    SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
     [[nodiscard]] constexpr pair::value_count<u32> decode_2_byte_sequence(
         const char* const data) noexcept
     {
@@ -159,6 +162,8 @@ namespace snn::utf8
         return {utf8::invalid, 1};
     }
 
+    SNN_DIAGNOSTIC_POP
+
     // ### decode_multibyte_sequence
 
     template <contiguous_range ContiguousRange>
@@ -198,6 +203,9 @@ namespace snn::utf8
     }
 
     // ## Encode functions
+
+    SNN_DIAGNOSTIC_PUSH
+    SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
 
     // ### encode_X_byte_sequence
 
@@ -264,6 +272,8 @@ namespace snn::utf8
         }
         return encode_4_byte_sequence(cp, dest, promise::is_valid);
     }
+
+    SNN_DIAGNOSTIC_POP
 
     // ## Utility functions
 

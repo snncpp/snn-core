@@ -73,6 +73,9 @@ namespace snn::range::unchecked
 
         // #### Forward
 
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         constexpr void drop_front(promise::not_empty_t)
         {
             snn_should(first_ != last_);
@@ -90,5 +93,7 @@ namespace snn::range::unchecked
             snn_should(first_ != last_);
             return *first_;
         }
+
+        SNN_DIAGNOSTIC_POP
     };
 }

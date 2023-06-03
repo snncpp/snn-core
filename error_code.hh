@@ -162,6 +162,9 @@ namespace snn
                                               const message_type* const message_lookup,
                                               const usize message_count) noexcept
         {
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             message_type msg{""};
             if (value >= 0)
             {
@@ -172,6 +175,8 @@ namespace snn
                 }
             }
             return msg;
+
+            SNN_DIAGNOSTIC_POP
         }
     };
 

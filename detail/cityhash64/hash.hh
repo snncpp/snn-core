@@ -50,6 +50,9 @@ namespace snn::detail::cityhash64
         return b;
     }
 
+    SNN_DIAGNOSTIC_PUSH
+    SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
     __attribute__((__no_sanitize__("unsigned-integer-overflow", "unsigned-shift-base")))
     constexpr usize hash_len_0_to_16(const char* const s, const usize len) noexcept
     {
@@ -180,6 +183,8 @@ namespace snn::detail::cityhash64
         return hash_len_16(hash_len_16(v.first, w.first) + shift_mix(y) * k1 + z,
                            hash_len_16(v.second, w.second) + x);
     }
+
+    SNN_DIAGNOSTIC_POP
 
     // clang-format on
 }

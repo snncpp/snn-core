@@ -79,6 +79,9 @@ namespace snn::range::unchecked
             return last_;
         }
 
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         // #### Forward
 
         constexpr void drop_front(promise::not_empty_t) noexcept
@@ -181,5 +184,7 @@ namespace snn::range::unchecked
             }
             return contiguous{meta::iterators, first, first_};
         }
+
+        SNN_DIAGNOSTIC_POP
     };
 }

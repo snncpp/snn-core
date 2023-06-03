@@ -173,6 +173,9 @@ namespace snn::app
 
         constexpr bool size_eq(const str& s, const usize size)
         {
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             snn_require(s.data().get() != nullptr);
             if (s.size() == size && s.count() == size && s.byte_size().get() == size &&
                 s.capacity() >= size && s.data().get()[size] == 0)
@@ -184,6 +187,8 @@ namespace snn::app
                 }
             }
             return false;
+
+            SNN_DIAGNOSTIC_POP
         }
 
         constexpr bool size_eq(const strbuf& s, const usize size)
@@ -245,7 +250,7 @@ namespace snn::app
             {
                 // Const iter.
                 const T src{"One Two Three"};
-                const T s{meta::iterators, src.cbegin() + 4, src.cend()};
+                const T s{meta::iterators, src.view(4).cbegin(), src.cend()};
                 snn_require(size_eq(s, 9));
                 snn_require(!size_eq(s, 0));
                 snn_require(!size_eq(s, 8));
@@ -254,8 +259,9 @@ namespace snn::app
             {
                 // Non-const iter.
                 T src{"One Two Three"};
-                const auto first = src.begin() + 4;
-                const T s{meta::iterators, first, first + 3};
+                const auto first = src.view(4).begin();
+                const auto last  = src.view(7).begin();
+                const T s{meta::iterators, first, last};
                 snn_require(size_eq(s, 3));
                 snn_require(!size_eq(s, 2));
                 snn_require(s == "Two");
@@ -900,6 +906,10 @@ namespace snn::app
                 snn_require(p.size() == 3);
                 snn_require(p == "One");
             }
+
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             {
                 T s{"One Two Three"};
                 auto p = s.view(4, 3);
@@ -991,6 +1001,9 @@ namespace snn::app
                 snn_require(p.size() == 0);
                 snn_require(p == "");
             }
+
+            SNN_DIAGNOSTIC_POP
+
             {
                 const T s{"abcdefghijklmnopqrstuvwxyz"};
                 const auto p = s.view();
@@ -1408,7 +1421,7 @@ namespace snn::app
             {
                 // Const iter.
                 const cstrview p{"One Two Three"};
-                const T s{meta::iterators, p.cbegin() + 4, p.cend()};
+                const T s{meta::iterators, p.view(4).cbegin(), p.cend()};
                 snn_require(size_eq(s, 9));
                 snn_require(s == "Two Three");
                 snn_require(s.capacity() == min_capacity);

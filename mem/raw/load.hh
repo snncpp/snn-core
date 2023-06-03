@@ -24,9 +24,14 @@ namespace snn::mem::raw
             static_assert(sizeof(i) == 2);
             if (std::is_constant_evaluated())
             {
+                SNN_DIAGNOSTIC_PUSH
+                SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
                 i = static_cast<byte>(data[1]);
                 i <<= 8u;
                 i |= u16{static_cast<byte>(data[0])};
+
+                SNN_DIAGNOSTIC_POP
             }
             else
             {
@@ -40,10 +45,15 @@ namespace snn::mem::raw
             static_assert(sizeof(i) == 4);
             if (std::is_constant_evaluated())
             {
+                SNN_DIAGNOSTIC_PUSH
+                SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
                 i = static_cast<byte>(data[0]);
                 i |= u32{static_cast<byte>(data[1])} << 8u;
                 i |= u32{static_cast<byte>(data[2])} << 16u;
                 i |= u32{static_cast<byte>(data[3])} << 24u;
+
+                SNN_DIAGNOSTIC_POP
             }
             else
             {
@@ -57,6 +67,9 @@ namespace snn::mem::raw
             static_assert(sizeof(i) == 8);
             if (std::is_constant_evaluated())
             {
+                SNN_DIAGNOSTIC_PUSH
+                SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
                 i = static_cast<byte>(data[0]);
                 i |= u64{static_cast<byte>(data[1])} << 8u;
                 i |= u64{static_cast<byte>(data[2])} << 16u;
@@ -65,6 +78,8 @@ namespace snn::mem::raw
                 i |= u64{static_cast<byte>(data[5])} << 40u;
                 i |= u64{static_cast<byte>(data[6])} << 48u;
                 i |= u64{static_cast<byte>(data[7])} << 56u;
+
+                SNN_DIAGNOSTIC_POP
             }
             else
             {

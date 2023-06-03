@@ -105,6 +105,9 @@ namespace snn::pool
 
         // #### Single element access
 
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         [[nodiscard]] constexpr T& at(const usize pos, promise::within_bounds_t) noexcept
         {
             snn_assert(pos < count_);
@@ -129,6 +132,8 @@ namespace snn::pool
             snn_assert(count_ > 0);
             return data_[0];
         }
+
+        SNN_DIAGNOSTIC_POP
 
         // #### Iterators
 
@@ -164,6 +169,9 @@ namespace snn::pool
 
         // #### Operations
 
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         constexpr T& append(T value)
         {
             if (count_ < capacity_)
@@ -194,6 +202,8 @@ namespace snn::pool
             mem::destruct(not_null{data_ + count_});
         }
 
+        SNN_DIAGNOSTIC_POP
+
         // #### Swap
 
         constexpr void swap(fixed& other) noexcept
@@ -216,6 +226,9 @@ namespace snn::pool
         usize count_{0};
         usize capacity_;
 
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         constexpr T* begin_() noexcept
         {
             return data_;
@@ -237,5 +250,7 @@ namespace snn::pool
             // Returns nullptr if data_ is nullptr and count_ is 0 (well-defined in C++).
             return data_ + count_;
         }
+
+        SNN_DIAGNOSTIC_POP
     };
 }

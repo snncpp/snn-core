@@ -31,7 +31,12 @@ namespace snn::mem::raw
         {
             for (usize i = 0; i < size.get(); ++i)
             {
+                SNN_DIAGNOSTIC_PUSH
+                SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
                 destination.get()[i] = to_char(value);
+
+                SNN_DIAGNOSTIC_POP
             }
         }
     }
@@ -48,8 +53,14 @@ namespace snn::mem::raw
         {
             for (usize i = 0; i < size.get(); ++i)
             {
+                SNN_DIAGNOSTIC_PUSH
+                SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
                 destination.get()[i] = value;
+
+                SNN_DIAGNOSTIC_POP
             }
         }
     }
+
 }

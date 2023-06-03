@@ -90,8 +90,15 @@ namespace snn::pool
             }
 
             T* p = mem::construct(not_null{next_}, std::forward<Args>(args)...).get();
+
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             ++next_;
             snn_should(next_ <= end_);
+
+            SNN_DIAGNOSTIC_POP
+
             back_ = p;
             ++count_;
             return *p;
@@ -153,6 +160,9 @@ namespace snn::pool
         usize count_{0};
         not_zero<usize> elements_per_block_;
 
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         constexpr void destruct_deallocate_() noexcept
         {
             mem::allocator<T> alloc;
@@ -209,6 +219,8 @@ namespace snn::pool
             next_ = block;
             end_  = next_ + elements_per_block_.get();
         }
+
+        SNN_DIAGNOSTIC_POP
 
         static constexpr auto optimal_elements_per_block_(const not_zero<usize> min) noexcept
         {

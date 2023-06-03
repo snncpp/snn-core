@@ -19,6 +19,9 @@ namespace snn::fmt
 {
     namespace detail
     {
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         template <math::base Base, strict_unsigned_integral UInt, typename Buf>
         constexpr void integral(UInt num, const cstrview group_separator,
                                 const usize digits_per_group, const usize min_digits,
@@ -91,6 +94,8 @@ namespace snn::fmt
             }
             snn_should(cur == first);
         }
+
+        SNN_DIAGNOSTIC_POP
 
         template <math::base Base, strict_signed_integral SInt, typename Buf>
         constexpr void integral(const SInt num, const cstrview group_separator,

@@ -19,6 +19,9 @@ namespace snn::mem
         at.get()->~T();
     }
 
+    SNN_DIAGNOSTIC_PUSH
+    SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
     template <typename T>
     constexpr void destruct(T* const first, T* const last) noexcept
     {
@@ -31,4 +34,6 @@ namespace snn::mem
             ++cur;
         }
     }
+
+    SNN_DIAGNOSTIC_POP
 }

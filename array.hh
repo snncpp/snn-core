@@ -15,6 +15,9 @@
 #include <algorithm>  // is_sorted, reverse, sort
 #include <functional> // less<void>
 
+SNN_DIAGNOSTIC_PUSH
+SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
 namespace snn
 {
     namespace detail
@@ -806,6 +809,8 @@ namespace snn
         return detail::to_array_copy<N - 1>(s, std::make_index_sequence<N - 1>{});
     }
 }
+
+SNN_DIAGNOSTIC_POP
 
 // ## Specializations
 

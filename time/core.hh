@@ -72,11 +72,22 @@ namespace snn::time
 
     namespace detail
     {
-        // The number of days in a non-leap year before a month begins. The 12th index returns the
-        // number of days before January of next year (365).
+        // The number of days in a non-leap year before a month begins (zero-based). The 12th index
+        // returns the number of days before January of next year (365).
         inline constexpr u16 days_before_month[13] = {
             0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365,
         };
+
+        [[nodiscard]] constexpr u16 days_before_zero_based_month(const i32 month_index) noexcept
+        {
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
+            snn_should(month_index >= 0 && month_index <= 12);
+            return days_before_month[month_index];
+
+            SNN_DIAGNOSTIC_POP
+        }
     }
 
     // ## Helper functions
@@ -100,8 +111,8 @@ namespace snn::time
 
         if (month >= time::january && month <= time::december)
         {
-            return static_cast<u8>(detail::days_before_month[month] -
-                                   detail::days_before_month[month - 1]);
+            return static_cast<u8>(detail::days_before_zero_based_month(month) -
+                                   detail::days_before_zero_based_month(month - 1));
         }
 
         return nullopt; // Invalid month.

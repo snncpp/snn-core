@@ -79,6 +79,9 @@ namespace snn
       private:
         const char* string_;
 
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         constexpr const char* data_() const noexcept
         {
             return &string_[1];
@@ -88,5 +91,7 @@ namespace snn
         {
             return usize{to_byte(string_[0])};
         }
+
+        SNN_DIAGNOSTIC_POP
     };
 }

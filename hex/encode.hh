@@ -13,6 +13,9 @@ namespace snn::hex
 {
     namespace detail
     {
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         template <typename Buf>
         constexpr void encode(const cstrview s, const array<char, 16>& table,
                               strcore<Buf>& append_to)
@@ -28,6 +31,8 @@ namespace snn::hex
             }
             snn_should(dest == buffer.end());
         }
+
+        SNN_DIAGNOSTIC_POP
     }
 
     // ## Functions

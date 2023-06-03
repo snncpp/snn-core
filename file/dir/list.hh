@@ -45,11 +45,16 @@ namespace snn::file::dir
             }
         }
 
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         constexpr bool skip_name(const char* name) noexcept
         {
             // Skip "." and "..".
             return name[0] == '.' && (name[1] == '\0' || (name[1] == '.' && name[2] == '\0'));
         }
+
+        SNN_DIAGNOSTIC_POP
     }
 
     // ## Functions

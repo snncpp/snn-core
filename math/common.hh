@@ -131,10 +131,17 @@ namespace snn::math
 
             // First step: 0-63
             const u32 leading_zero_bit_count = static_cast<u32>(__builtin_clzll(n | 1u));
+
             // Second step: 0-19
             const u32 approx = ((64u - leading_zero_bit_count) * 1233u) >> 12u;
+
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             // Third step: 1-20
             const u32 exact = (approx - static_cast<u32>(n < special_pow10_lookup[approx])) + 1u;
+
+            SNN_DIAGNOSTIC_POP
 
             return not_zero<usize>{exact};
         }
@@ -402,8 +409,13 @@ namespace snn::math
 
     [[nodiscard]] constexpr not_zero<u64> pow10(const num::bounded<usize, 0, 19> n) noexcept
     {
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         const u64 i = detail::special_pow10_lookup[n.get()];
         return not_zero<u64>{i > 0 ? i : 1};
+
+        SNN_DIAGNOSTIC_POP
     }
 
     // ### round_up_to_multiple

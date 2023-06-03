@@ -16,6 +16,9 @@ namespace snn::app
         {
             static_assert(is_trivially_relocatable_v<str>);
 
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             {
                 mem::allocator<str> alloc;
 
@@ -130,6 +133,9 @@ namespace snn::app
 
                 alloc.deallocate(ptr, final_count);
             }
+
+            SNN_DIAGNOSTIC_POP
+
             {
                 mem::allocator<str> alloc;
 

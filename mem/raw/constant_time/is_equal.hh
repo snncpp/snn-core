@@ -28,8 +28,13 @@ namespace snn::mem::raw::constant_time
         byte diff = 0;
         for (usize i = 0; i < sz; ++i)
         {
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             // XOR bits in aa and bb at position i, OR result with diff and store in diff.
             diff |= static_cast<byte>(aa[i] ^ bb[i]);
+
+            SNN_DIAGNOSTIC_POP
         }
         // Will have no bits set if all bytes are equal.
         return diff == 0;

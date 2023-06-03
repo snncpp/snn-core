@@ -177,7 +177,13 @@ namespace snn::app
                 v1.append(y);
                 snn_require(count_eq(v1, 4));
 
+                SNN_DIAGNOSTIC_PUSH
+                SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
                 Vec v2{meta::iterators, v1.begin() + 1, v1.end() - 1};
+
+                SNN_DIAGNOSTIC_POP
+
                 snn_require(count_eq(v2, 2));
                 snn_require(v2.at(0).value() == x);
                 snn_require(v2.at(1).value() == x);
@@ -264,12 +270,18 @@ namespace snn::app
                 auto cur  = v.begin();
                 auto last = v.end();
 
+                SNN_DIAGNOSTIC_PUSH
+                SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
                 usize count = 0;
                 while (cur < last)
                 {
                     ++count;
                     ++cur;
                 }
+
+                SNN_DIAGNOSTIC_POP
+
                 snn_require(count == 2);
                 snn_require(cur == last);
             }

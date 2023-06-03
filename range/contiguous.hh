@@ -31,6 +31,9 @@ namespace snn::range
         inline char single_char = '\xFF'; // Not null-terminated.
     }
 
+    SNN_DIAGNOSTIC_PUSH
+    SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
     // ## Classes
 
     // ### contiguous (nullable iterator) {#contiguous}
@@ -1485,6 +1488,8 @@ namespace snn::range
         // This class inherits from `contiguous_interface`, see
         // [contiguous\_interface.hh](contiguous_interface.hh) for additional functionality.
     };
+
+    SNN_DIAGNOSTIC_POP
 
     // ## Deduction guides
 

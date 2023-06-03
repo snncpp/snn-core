@@ -74,6 +74,9 @@ namespace snn::mem
 
     // ### allocator
 
+    SNN_DIAGNOSTIC_PUSH
+    SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
     template <typename T>
     class allocator final
     {
@@ -217,4 +220,6 @@ namespace snn::mem
             }
         }
     };
+
+    SNN_DIAGNOSTIC_POP
 }

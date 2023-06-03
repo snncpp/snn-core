@@ -39,6 +39,9 @@ namespace snn
 
     // ### strcore
 
+    SNN_DIAGNOSTIC_PUSH
+    SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
     template <typename Buffer>
     class strcore final : public contiguous_interface<strcore<Buffer>>
     {
@@ -1059,6 +1062,8 @@ namespace snn
             return replace_count;
         }
     };
+
+    SNN_DIAGNOSTIC_POP
 
     // ## Functions
 

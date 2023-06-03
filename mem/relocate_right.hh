@@ -21,7 +21,12 @@ namespace snn::mem
                                   const not_null<T*> last_relocate,
                                   const not_zero<usize> count) noexcept
     {
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         mem::relocate_backward(first_relocate, last_relocate,
                                not_null{last_relocate.get() + count.get()});
+
+        SNN_DIAGNOSTIC_POP
     }
 }

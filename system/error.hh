@@ -24,6 +24,9 @@ namespace snn::system
 #if defined(__linux__)
             message = ::strerrordesc_np(value);
 #else
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             // The use of sys_errlist is deprecated, but:
             // * strerror_r() might use locale.
             // * strerror() uses a static buffer and calls strerror_r().
@@ -32,6 +35,8 @@ namespace snn::system
             {
                 message = ::sys_errlist[value];
             }
+
+            SNN_DIAGNOSTIC_POP
 #endif
 
             if (message != nullptr)

@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "snn-core/array.hh"
+#include "snn-core/array_view.hh"
 
 namespace snn::chr::fn
 {
@@ -18,7 +18,7 @@ namespace snn::chr::fn
     {
       public:
         constexpr explicit lookup(const array<Int, 256>& table) noexcept
-            : data_{table.begin()}
+            : v_{table.template view<>()}
         {
         }
 
@@ -26,12 +26,10 @@ namespace snn::chr::fn
 
         [[nodiscard]] constexpr Int operator()(const char c) const noexcept
         {
-            static_assert(constant::limit<byte>::min == 0);
-            static_assert(constant::limit<byte>::max == 255);
-            return data_[to_byte(c)]; // Can't overflow.
+            return v_.at(to_byte(c), promise::within_bounds);
         }
 
       private:
-        const Int* data_;
+        array_view<const Int, 256> v_;
     };
 }

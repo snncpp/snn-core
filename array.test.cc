@@ -930,6 +930,10 @@ namespace snn::app
                 constexpr auto a = to_array({"abc", "foobar"});
                 static_assert(std::is_same_v<decltype(a), const array<const char*, 2>>);
             }
+
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             {
                 str strings[] = {"ABC", "abcdefghijklmnopqrstuvwxyz", "123"};
                 static_assert(std::is_same_v<decltype(strings), str[3]>);
@@ -961,6 +965,8 @@ namespace snn::app
                 snn_require(strings[1] == ""); // Moved
                 snn_require(strings[2] == ""); // Moved
             }
+
+            SNN_DIAGNOSTIC_POP
 
             return true;
         }

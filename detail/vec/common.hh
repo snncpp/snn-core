@@ -14,6 +14,9 @@ namespace snn::detail::vec
     template <typename T>
     inline constexpr usize max_capacity = constant::limit<iptrdiff>::max / sizeof(T);
 
+    SNN_DIAGNOSTIC_PUSH
+    SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
     // vec buffer with small capacity, can currently not be `constexpr`.
 
     template <typename T, usize SmallCapacity>
@@ -381,4 +384,6 @@ namespace snn::detail::vec
         usize count_;
         usize capacity_;
     };
+
+    SNN_DIAGNOSTIC_POP
 }

@@ -42,6 +42,9 @@
 
 namespace snn
 {
+    SNN_DIAGNOSTIC_PUSH
+    SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
     // ## Classes
 
     // ### array_view
@@ -2445,6 +2448,8 @@ namespace snn
     {
         return v.begin()[Index];
     }
+
+    SNN_DIAGNOSTIC_POP
 }
 
 // ## Specializations

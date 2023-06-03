@@ -82,10 +82,15 @@ namespace snn::range::view
 
             constexpr void drop_front(promise::not_empty_t)
             {
+                SNN_DIAGNOSTIC_PUSH
+                SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
                 snn_assert(count_ > 0);
                 --count_;
                 ++first_;
                 ++second_;
+
+                SNN_DIAGNOSTIC_POP
             }
 
             [[nodiscard]] constexpr auto front(promise::not_empty_t) const

@@ -25,11 +25,16 @@ namespace snn::mem::raw
 #if SNN_SHOULD_BOOL
         if (!std::is_constant_evaluated())
         {
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             const byte* const from_first = reinterpret_cast<const byte*>(from.get());
             const byte* const from_last  = from_first + size.get();
             const byte* const to_first   = reinterpret_cast<const byte*>(to.get());
             const byte* const to_last    = to_first + size.get();
             snn_should(!mem::raw::is_overlapping(from_first, from_last, to_first, to_last));
+
+            SNN_DIAGNOSTIC_POP
         }
 #endif
 
@@ -44,14 +49,20 @@ namespace snn::mem::raw
 #if SNN_SHOULD_BOOL
         if (!std::is_constant_evaluated())
         {
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             const byte* const from_first = reinterpret_cast<const byte*>(from.get());
             const byte* const from_last  = from_first + ByteSize;
             const byte* const to_first   = reinterpret_cast<const byte*>(to.get());
             const byte* const to_last    = to_first + ByteSize;
             snn_should(!mem::raw::is_overlapping(from_first, from_last, to_first, to_last));
+
+            SNN_DIAGNOSTIC_POP
         }
 #endif
 
         __builtin_memcpy(to.get(), from.get(), ByteSize);
     }
+
 }

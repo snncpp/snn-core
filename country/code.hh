@@ -42,9 +42,8 @@ namespace snn::country
         // #### Converting constructors
 
         consteval code(const char (&s)[3]) noexcept
-            : code_{s[0], s[1]}
+            : code{s[0], s[1]}
         {
-            snn_should(chr::is_alpha_upper(s[0]) && chr::is_alpha_upper(s[1]));
         }
 
         // #### Range
@@ -97,5 +96,11 @@ namespace snn::country
 
       private:
         array<char, 2> code_;
+
+        consteval code(const char a, const char b) noexcept
+            : code_{a, b}
+        {
+            snn_should(chr::is_alpha_upper(a) && chr::is_alpha_upper(b));
+        }
     };
 }

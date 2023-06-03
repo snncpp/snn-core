@@ -22,6 +22,9 @@ namespace snn::mem
         const not_null<T*> first_uninitialized,
         promise::no_overlap_t) noexcept(std::is_nothrow_copy_constructible_v<T>)
     {
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         const T* cur  = first_copy.get();
         const T* last = last_copy.get();
 
@@ -59,5 +62,7 @@ namespace snn::mem
                 ++cur_uninit;
             }
         }
+
+        SNN_DIAGNOSTIC_POP
     }
 }

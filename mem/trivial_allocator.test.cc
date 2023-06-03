@@ -11,6 +11,9 @@ namespace snn::app
     {
         constexpr bool test_trivial_allocator()
         {
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             {
                 mem::trivial_allocator<int> alloc;
 
@@ -93,6 +96,9 @@ namespace snn::app
 
                 alloc.deallocate(ptr, final_count);
             }
+
+            SNN_DIAGNOSTIC_POP
+
             {
                 mem::trivial_allocator<int> alloc;
 

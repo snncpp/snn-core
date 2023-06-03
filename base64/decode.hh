@@ -29,6 +29,9 @@ namespace snn::base64
 
     namespace detail
     {
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         template <typename Buf>
         [[nodiscard]] constexpr result<void> decode(
             const cstrview string, const decode_padding padding_policy, const char pad_char,
@@ -171,6 +174,8 @@ namespace snn::base64
 
             return {};
         }
+
+        SNN_DIAGNOSTIC_POP
     }
 
     // Decode and return the decoded string.

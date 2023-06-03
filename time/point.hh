@@ -517,6 +517,23 @@ namespace snn::time
             u16 day_of_year; // 0-365
         };
 
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
+        static constexpr auto lookup_day_abbr_(const u8 day) noexcept -> const char (&)[4]
+        {
+            snn_should(day <= 6);
+            return day_abbr_[day];
+        }
+
+        static constexpr auto lookup_month_abbr_(const u16 month) noexcept -> const char (&)[4]
+        {
+            snn_should(month >= 1 && month <= 12);
+            return month_abbr_[month - 1];
+        }
+
+        SNN_DIAGNOSTIC_POP
+
         constexpr u64 absolute_() const noexcept
         {
             // Avoid signed integer overflow, same assembly as:
@@ -677,7 +694,7 @@ namespace snn::time
                     case 'e':
                         if (repeat_count == 3) // Most common.
                         {
-                            append_to.append(day_abbr_[day_of_week_(abs)]);
+                            append_to.append(lookup_day_abbr_(day_of_week_(abs)));
                             break;
                         }
                         if (repeat_count == 1)
@@ -732,7 +749,7 @@ namespace snn::time
                         {
                             append_to.reserve_append(string_size("Sat, 03 Feb 2001 04:05:06 GMT"));
                             // Day of week.
-                            append_to.append(day_abbr_[day_of_week_(abs)]);
+                            append_to.append(lookup_day_abbr_(day_of_week_(abs)));
                             // Separator
                             append_to.append(", ");
                             // Day of month.
@@ -742,7 +759,7 @@ namespace snn::time
                             // Separator
                             append_to.append(' ');
                             // Month abbreviation.
-                            append_to.append(month_abbr_[ymd.m - 1]);
+                            append_to.append(lookup_month_abbr_(ymd.m));
                             // Separator
                             append_to.append(' ');
                             // Year
@@ -768,7 +785,7 @@ namespace snn::time
                         }
                         if (repeat_count == 3)
                         {
-                            append_to.append(month_abbr_[ymd.m - 1]);
+                            append_to.append(lookup_month_abbr_(ymd.m));
                             break;
                         }
                         throw_or_abort(error::invalid_format_string);
@@ -835,7 +852,7 @@ namespace snn::time
                             append_to.reserve_append(
                                 string_size("Sat, 03 Feb 2001 04:05:06 +0700"));
                             // Day of week.
-                            append_to.append(day_abbr_[day_of_week_(abs)]);
+                            append_to.append(lookup_day_abbr_(day_of_week_(abs)));
                             // Separator
                             append_to.append(", ");
                             // Day of month.
@@ -845,7 +862,7 @@ namespace snn::time
                             // Separator
                             append_to.append(' ');
                             // Month abbreviation.
-                            append_to.append(month_abbr_[ymd.m - 1]);
+                            append_to.append(lookup_month_abbr_(ymd.m));
                             // Separator
                             append_to.append(' ');
                             // Year
@@ -924,6 +941,9 @@ namespace snn::time
             }
         }
 
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         template <typename Buf>
         constexpr void format_full_date_(const year_month_day ymd, strcore<Buf>& append_to) const
         {
@@ -948,6 +968,8 @@ namespace snn::time
             dest       = format_2_digits_('0', hms.s, dest);
             snn_should(dest == append_to.end());
         }
+
+        SNN_DIAGNOSTIC_POP
 
         template <typename Buf>
         constexpr void format_nano_(const usize digit_count, const bool trim,
@@ -1005,6 +1027,9 @@ namespace snn::time
             const usize offs_size = string_size("+0700") + usize{with_separator};
             char* dest            = append_to.append_uninitialized(offs_size).begin();
 
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             *(dest++) = prefix;
 
             dest = format_2_digits_('0', static_cast<u16>(h), dest);
@@ -1013,6 +1038,8 @@ namespace snn::time
                 *(dest++) = offset_separator;
             }
             dest = format_2_digits_('0', static_cast<u16>(m), dest);
+
+            SNN_DIAGNOSTIC_POP
 
             snn_should(dest == append_to.end());
         }
@@ -1036,6 +1063,9 @@ namespace snn::time
         template <typename It>
         constexpr It format_2_digits_(const char padding, u16 i, It dest) const noexcept
         {
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
             if (i < 10)
             {
                 *(dest++) = padding;
@@ -1050,6 +1080,8 @@ namespace snn::time
                 *(dest++) = static_cast<char>(remainder + '0');
             }
             return dest;
+
+            SNN_DIAGNOSTIC_POP
         }
 
         template <typename Buf>
@@ -1100,7 +1132,7 @@ namespace snn::time
             d += 365 * y;
 
             // Add days before this month.
-            d += detail::days_before_month[month - 1];
+            d += detail::days_before_zero_based_month(month - 1);
             if (is_leap_year(year) && month >= time::march)
             {
                 ++d; // February 29
@@ -1249,7 +1281,7 @@ namespace snn::time
             // "Estimate month on assumption that every month has 31 days. The estimate may be too
             // low by at most one month, so adjust."
             u16 month     = day / 31; // 0-11 inclusive.
-            const u16 end = detail::days_before_month[month + 1];
+            const u16 end = detail::days_before_zero_based_month(month + 1);
             u16 begin     = end;
             if (day >= end)
             {
@@ -1257,7 +1289,7 @@ namespace snn::time
             }
             else
             {
-                begin = detail::days_before_month[month];
+                begin = detail::days_before_zero_based_month(month);
             }
 
             ++month; // Don't return zero based month.

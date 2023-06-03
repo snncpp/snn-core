@@ -27,6 +27,9 @@ namespace snn::base64
 
     namespace detail
     {
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         [[nodiscard]] constexpr usize encoded_size(const usize size,
                                                    const encode_padding padding_policy) noexcept
         {
@@ -124,6 +127,8 @@ namespace snn::base64
 
             snn_should(dst == dst_last);
         }
+
+        SNN_DIAGNOSTIC_POP
     }
 
     // Encode and return the encoded string.

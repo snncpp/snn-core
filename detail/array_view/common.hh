@@ -81,6 +81,9 @@ namespace snn::detail::array_view
         return static_cast<bool>(diff & ~m & 0x8080808080808080u);
     }
 
+    SNN_DIAGNOSTIC_PUSH
+    SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
     // Boyer-Moore-Horspool
     // Uses a 256 byte lookup table on stack, so don't inline.
     __attribute__((noinline)) constexpr optional_index bmh(
@@ -413,4 +416,6 @@ namespace snn::detail::array_view
 
         return constant::npos;
     }
+
+    SNN_DIAGNOSTIC_POP
 }
