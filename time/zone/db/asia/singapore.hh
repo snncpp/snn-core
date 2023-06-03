@@ -48,7 +48,7 @@ namespace snn::time::zone::db::asia
     }
 
     inline constexpr db::entry singapore{"Asia/Singapore",
-                                         "Singapore, peninsular Malaysia",
+                                         "peninsular Malaysia",
                                          "+0117+10351",
                                          detail::singapore::country_codes,
                                          detail::singapore::offsets,

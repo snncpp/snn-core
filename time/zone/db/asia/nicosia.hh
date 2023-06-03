@@ -163,7 +163,7 @@ namespace snn::time::zone::db::asia
     }
 
     inline constexpr db::entry nicosia{"Asia/Nicosia",
-                                       "Cyprus (most areas)",
+                                       "most of Cyprus",
                                        "+3510+03322",
                                        detail::nicosia::country_codes,
                                        detail::nicosia::offsets,

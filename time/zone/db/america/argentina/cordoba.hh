@@ -98,7 +98,7 @@ namespace snn::time::zone::db::america::argentina
     }
 
     inline constexpr db::entry cordoba{"America/Argentina/Cordoba",
-                                       "Argentina (most areas: CB, CC, CN, ER, FM, MN, SE, SF)",
+                                       "most areas: CB, CC, CN, ER, FM, MN, SE, SF",
                                        "-3124-06411",
                                        detail::cordoba::country_codes,
                                        detail::cordoba::offsets,

@@ -56,7 +56,7 @@ namespace snn::time::zone::db::asia
     }
 
     inline constexpr db::entry kuching{"Asia/Kuching",
-                                       "Sabah, Sarawak, Brunei",
+                                       "Sabah, Sarawak",
                                        "+0133+11020",
                                        detail::kuching::country_codes,
                                        detail::kuching::offsets,

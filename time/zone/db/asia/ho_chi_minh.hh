@@ -46,7 +46,7 @@ namespace snn::time::zone::db::asia
     }
 
     inline constexpr db::entry ho_chi_minh{"Asia/Ho_Chi_Minh",
-                                           "Vietnam (south)",
+                                           "south Vietnam",
                                            "+1045+10640",
                                            detail::ho_chi_minh::country_codes,
                                            detail::ho_chi_minh::offsets,

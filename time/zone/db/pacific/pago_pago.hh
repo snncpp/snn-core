@@ -37,7 +37,7 @@ namespace snn::time::zone::db::pacific
     }
 
     inline constexpr db::entry pago_pago{"Pacific/Pago_Pago",
-                                         "Samoa, Midway",
+                                         "Midway",
                                          "-1416-17042",
                                          detail::pago_pago::country_codes,
                                          detail::pago_pago::offsets,

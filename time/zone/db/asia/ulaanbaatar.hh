@@ -85,7 +85,7 @@ namespace snn::time::zone::db::asia
     }
 
     inline constexpr db::entry ulaanbaatar{"Asia/Ulaanbaatar",
-                                           "Mongolia (most areas)",
+                                           "most of Mongolia",
                                            "+4755+10653",
                                            detail::ulaanbaatar::country_codes,
                                            detail::ulaanbaatar::offsets,

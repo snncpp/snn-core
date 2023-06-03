@@ -198,7 +198,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry santiago{"America/Santiago",
-                                        "Chile (most areas)",
+                                        "most of Chile",
                                         "-3327-07040",
                                         detail::santiago::country_codes,
                                         detail::santiago::offsets,

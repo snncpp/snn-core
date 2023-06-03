@@ -23,16 +23,17 @@ namespace snn::time::zone::db::america
             "GL",
         };
 
-        inline constexpr array<zone::offset, 6> offsets{{
+        inline constexpr array<zone::offset, 7> offsets{{
             {"LMT", -12416, false},
             {"-03", -10800, false},
             {"-03", -10800, false},
             {"-02", -7200, true},
             {"-02", -7200, true},
             {"-02", -7200, false},
+            {"-01", -3600, true},
         }};
 
-        inline constexpr array<zone::transition, 88> transitions{{
+        inline constexpr array<zone::transition, 117> transitions{{
             {1, -1686083584},
             {4, 323845200},
             {2, 338950800},
@@ -120,12 +121,41 @@ namespace snn::time::zone::db::america
             {2, 1635642000},
             {3, 1648342800},
             {2, 1667091600},
-            {5, 1679792400},
+            {3, 1679792400},
+            {5, 1698541200},
+            {6, 1711846800},
+            {5, 1729990800},
+            {6, 1743296400},
+            {5, 1761440400},
+            {6, 1774746000},
+            {5, 1792890000},
+            {6, 1806195600},
+            {5, 1824944400},
+            {6, 1837645200},
+            {5, 1856394000},
+            {6, 1869094800},
+            {5, 1887843600},
+            {6, 1901149200},
+            {5, 1919293200},
+            {6, 1932598800},
+            {5, 1950742800},
+            {6, 1964048400},
+            {5, 1982797200},
+            {6, 1995498000},
+            {5, 2014246800},
+            {6, 2026947600},
+            {5, 2045696400},
+            {6, 2058397200},
+            {5, 2077146000},
+            {6, 2090451600},
+            {5, 2108595600},
+            {6, 2121901200},
+            {5, 2140045200},
         }};
     }
 
     inline constexpr db::entry nuuk{"America/Nuuk",
-                                    "Greenland (most areas)",
+                                    "most of Greenland",
                                     "+6411-05144",
                                     detail::nuuk::country_codes,
                                     detail::nuuk::offsets,

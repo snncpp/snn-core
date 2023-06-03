@@ -19,9 +19,8 @@ namespace snn::time::zone::db::pacific
 
     namespace detail::honolulu
     {
-        inline constexpr array<country::code, 2> country_codes{
+        inline constexpr array<country::code, 1> country_codes{
             "US",
-            "UM",
         };
 
         inline constexpr array<zone::offset, 6> offsets{{

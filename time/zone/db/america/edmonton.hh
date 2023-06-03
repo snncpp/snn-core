@@ -186,7 +186,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry edmonton{"America/Edmonton",
-                                        "Mountain - AB; BC (E); SK (W)",
+                                        "Mountain - AB; BC (E); NT (E); SK (W)",
                                         "+5333-11328",
                                         detail::edmonton::country_codes,
                                         detail::edmonton::offsets,

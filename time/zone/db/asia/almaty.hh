@@ -92,7 +92,7 @@ namespace snn::time::zone::db::asia
     }
 
     inline constexpr db::entry almaty{"Asia/Almaty",
-                                      "Kazakhstan (most areas)",
+                                      "most of Kazakhstan",
                                       "+4315+07657",
                                       detail::almaty::country_codes,
                                       detail::almaty::offsets,

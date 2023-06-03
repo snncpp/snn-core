@@ -187,7 +187,7 @@ namespace snn::time::zone::db::europe
     }
 
     inline constexpr db::entry berlin{"Europe/Berlin",
-                                      "Germany (most areas), Scandinavia",
+                                      "most of Germany",
                                       "+5230+01322",
                                       detail::berlin::country_codes,
                                       detail::berlin::offsets,

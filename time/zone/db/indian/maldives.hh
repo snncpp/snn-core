@@ -37,7 +37,7 @@ namespace snn::time::zone::db::indian
     }
 
     inline constexpr db::entry maldives{"Indian/Maldives",
-                                        "Maldives, Kerguelen, St Paul I, Amsterdam I",
+                                        "Kerguelen, St Paul I, Amsterdam I",
                                         "+0410+07330",
                                         detail::maldives::country_codes,
                                         detail::maldives::offsets,

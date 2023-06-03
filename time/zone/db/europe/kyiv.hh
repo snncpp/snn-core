@@ -167,7 +167,7 @@ namespace snn::time::zone::db::europe
     }
 
     inline constexpr db::entry kyiv{"Europe/Kyiv",
-                                    "Ukraine (most areas)",
+                                    "most of Ukraine",
                                     "+5026+03031",
                                     detail::kyiv::country_codes,
                                     detail::kyiv::offsets,

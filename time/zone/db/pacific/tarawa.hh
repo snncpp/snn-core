@@ -38,7 +38,7 @@ namespace snn::time::zone::db::pacific
     }
 
     inline constexpr db::entry tarawa{"Pacific/Tarawa",
-                                      "Gilberts, Marshalls, Tuvalu, Wallis & Futuna, Wake",
+                                      "Gilberts, Marshalls, Wake",
                                       "+0125+17300",
                                       detail::tarawa::country_codes,
                                       detail::tarawa::offsets,

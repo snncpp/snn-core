@@ -159,7 +159,7 @@ namespace snn::time::zone::db::europe
     }
 
     inline constexpr db::entry zurich{"Europe/Zurich",
-                                      "Swiss time",
+                                      "Büsingen",
                                       "+4723+00832",
                                       detail::zurich::country_codes,
                                       detail::zurich::offsets,

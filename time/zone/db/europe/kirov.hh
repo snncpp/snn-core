@@ -23,15 +23,17 @@ namespace snn::time::zone::db::europe
             "RU",
         };
 
-        inline constexpr array<zone::offset, 8> offsets{{
+        inline constexpr array<zone::offset, 10> offsets{{
             {"LMT", 11928, false},
             {"+03", 10800, false},
             {"+05", 18000, true},
             {"+04", 14400, false},
             {"+04", 14400, false},
             {"+05", 18000, true},
-            {"+04", 14400, true},
-            {"+03", 10800, false},
+            {"MSD", 14400, true},
+            {"MSK", 10800, false},
+            {"MSK", 14400, false},
+            {"MSK", 10800, false},
         }};
 
         inline constexpr array<zone::transition, 63> transitions{{
@@ -96,7 +98,7 @@ namespace snn::time::zone::db::europe
             {7, 1256425200},
             {6, 1269730800},
             {7, 1288479600},
-            {4, 1301180400},
+            {8, 1301180400},
             {7, 1414274400},
         }};
     }

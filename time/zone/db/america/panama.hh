@@ -38,7 +38,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry panama{"America/Panama",
-                                      "EST - Panama, Cayman, ON (Atikokan), NU (Coral H)",
+                                      "EST - ON (Atikokan), NU (Coral H)",
                                       "+0858-07932",
                                       detail::panama::country_codes,
                                       detail::panama::offsets,

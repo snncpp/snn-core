@@ -37,7 +37,7 @@ namespace snn::time::zone::db::asia
     }
 
     inline constexpr db::entry riyadh{"Asia/Riyadh",
-                                      "Arabia, Syowa",
+                                      "Syowa",
                                       "+2438+04643",
                                       detail::riyadh::country_codes,
                                       detail::riyadh::offsets,

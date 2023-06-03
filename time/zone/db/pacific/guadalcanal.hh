@@ -35,7 +35,7 @@ namespace snn::time::zone::db::pacific
     }
 
     inline constexpr db::entry guadalcanal{"Pacific/Guadalcanal",
-                                           "Solomons, Pohnpei",
+                                           "Pohnpei",
                                            "-0932+16012",
                                            detail::guadalcanal::country_codes,
                                            detail::guadalcanal::offsets,

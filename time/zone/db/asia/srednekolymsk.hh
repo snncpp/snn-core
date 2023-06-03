@@ -107,7 +107,7 @@ namespace snn::time::zone::db::asia
     }
 
     inline constexpr db::entry srednekolymsk{"Asia/Srednekolymsk",
-                                             "MSK+08 - Sakha (E); North Kuril Is",
+                                             "MSK+08 - Sakha (E); N Kuril Is",
                                              "+6728+15343",
                                              detail::srednekolymsk::country_codes,
                                              detail::srednekolymsk::offsets,

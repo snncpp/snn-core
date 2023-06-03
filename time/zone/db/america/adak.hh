@@ -186,7 +186,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry adak{"America/Adak",
-                                    "Aleutian Islands",
+                                    "Alaska - western Aleutians",
                                     "+515248-1763929",
                                     detail::adak::country_codes,
                                     detail::adak::offsets,

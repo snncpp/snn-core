@@ -26,7 +26,7 @@ namespace snn::time::zone::db::pacific
     }
 
     inline constexpr db::entry majuro{"Pacific/Majuro",
-                                      "Marshall Islands (most areas)",
+                                      "most of Marshall Islands",
                                       "+0709+17112",
                                       detail::majuro::country_codes,
                                       pacific::detail::tarawa::offsets,

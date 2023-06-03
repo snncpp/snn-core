@@ -48,7 +48,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry phoenix{"America/Phoenix",
-                                       "MST - Arizona (except Navajo), Creston BC",
+                                       "MST - AZ (most areas), Creston BC",
                                        "+332654-1120424",
                                        detail::phoenix::country_codes,
                                        detail::phoenix::offsets,

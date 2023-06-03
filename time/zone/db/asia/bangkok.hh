@@ -40,7 +40,7 @@ namespace snn::time::zone::db::asia
     }
 
     inline constexpr db::entry bangkok{"Asia/Bangkok",
-                                       "Indochina (most areas)",
+                                       "north Vietnam",
                                        "+1345+10031",
                                        detail::bangkok::country_codes,
                                        detail::bangkok::offsets,
