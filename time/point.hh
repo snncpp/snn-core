@@ -684,7 +684,7 @@ namespace snn::time
                     case 'd':
                         if (repeat_count <= 2)
                         {
-                            format_1_or_2_digits(repeat_count, '0', ymd.d, append_to);
+                            format_1_or_2_digits_(repeat_count, '0', ymd.d, append_to);
                             break;
                         }
                         throw_or_abort(error::invalid_format_string);
@@ -718,7 +718,7 @@ namespace snn::time
                     case 'g':
                         if (repeat_count <= 2)
                         {
-                            format_1_or_2_digits(repeat_count, '0', hms.hour_12(), append_to);
+                            format_1_or_2_digits_(repeat_count, '0', hms.hour_12(), append_to);
                             break;
                         }
                         throw_or_abort(error::invalid_format_string);
@@ -728,7 +728,7 @@ namespace snn::time
                     case 'h':
                         if (repeat_count <= 2)
                         {
-                            format_1_or_2_digits(repeat_count, '0', hms.h, append_to);
+                            format_1_or_2_digits_(repeat_count, '0', hms.h, append_to);
                             break;
                         }
                         throw_or_abort(error::invalid_format_string);
@@ -738,7 +738,7 @@ namespace snn::time
                     case 'i':
                         if (repeat_count <= 2)
                         {
-                            format_1_or_2_digits(repeat_count, '0', hms.m, append_to);
+                            format_1_or_2_digits_(repeat_count, '0', hms.m, append_to);
                             break;
                         }
                         throw_or_abort(error::invalid_format_string);
@@ -780,7 +780,7 @@ namespace snn::time
                     case 'm':
                         if (repeat_count <= 2)
                         {
-                            format_1_or_2_digits(repeat_count, '0', ymd.m, append_to);
+                            format_1_or_2_digits_(repeat_count, '0', ymd.m, append_to);
                             break;
                         }
                         if (repeat_count == 3)
@@ -884,7 +884,7 @@ namespace snn::time
                     case 's':
                         if (repeat_count <= 2)
                         {
-                            format_1_or_2_digits(repeat_count, '0', hms.s, append_to);
+                            format_1_or_2_digits_(repeat_count, '0', hms.s, append_to);
                             break;
                         }
                         throw_or_abort(error::invalid_format_string);
@@ -1045,8 +1045,8 @@ namespace snn::time
         }
 
         template <typename Buf>
-        constexpr void format_1_or_2_digits(const usize digit_count, const char padding,
-                                            const u16 i, strcore<Buf>& append_to) const
+        constexpr void format_1_or_2_digits_(const usize digit_count, const char padding,
+                                             const u16 i, strcore<Buf>& append_to) const
         {
             if (digit_count == 1 && i <= 9)
             {
