@@ -103,6 +103,11 @@ namespace snn::pool
             return capacity_;
         }
 
+        [[nodiscard]] constexpr usize remaining_capacity() const noexcept
+        {
+            return capacity_ - count_;
+        }
+
         // #### Single element access
 
         SNN_DIAGNOSTIC_PUSH
@@ -213,13 +218,6 @@ namespace snn::pool
             std::swap(count_, other.count_);
             std::swap(capacity_, other.capacity_);
         }
-
-#if SNN_SHOULD_BOOL
-        [[nodiscard]] constexpr const T* block() const noexcept // For unit test.
-        {
-            return data_;
-        }
-#endif
 
       private:
         T* data_{nullptr};

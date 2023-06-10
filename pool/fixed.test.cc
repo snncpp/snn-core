@@ -19,6 +19,7 @@ namespace snn::app
             snn_require(!pool.is_full());
             snn_require(pool.count() == 0);
             snn_require(pool.capacity() == 6);
+            snn_require(pool.remaining_capacity() == 6);
 
             pool.append(112233);
             pool.append(43529);
@@ -30,6 +31,7 @@ namespace snn::app
             snn_require(!pool.is_full());
             snn_require(pool.count() == 4);
             snn_require(pool.capacity() == 6);
+            snn_require(pool.remaining_capacity() == 2);
 
             pool.append(73622);
             pool.append_inplace(123456789);
@@ -39,6 +41,7 @@ namespace snn::app
             snn_require(pool.is_full());
             snn_require(pool.count() == 6);
             snn_require(pool.capacity() == 6);
+            snn_require(pool.remaining_capacity() == 0);
 
             // Pool is full, appending will throw.
             snn_require_throws_code(pool.append(7), generic::error::insufficient_capacity);
@@ -55,6 +58,7 @@ namespace snn::app
             snn_require(!pool.is_full());
             snn_require(pool.count() == 5);
             snn_require(pool.capacity() == 6);
+            snn_require(pool.remaining_capacity() == 1);
 
             return true;
         }
@@ -246,11 +250,11 @@ namespace snn::app
                 snn_require_throws_code(pool.append_inplace("uvwx"),
                                         generic::error::insufficient_capacity);
 
-                snn_should(pool.block() != nullptr);
+                snn_should(pool.cbegin() != nullptr);
 
                 if (!std::is_constant_evaluated())
                 {
-                    snn_should(mem::raw::is_equal(not_null{pool.block()},
+                    snn_should(mem::raw::is_equal(not_null{pool.cbegin()},
                                                   not_null{"abcdefghijklmnopqrstuvwx"},
                                                   byte_size{24}));
                 }
@@ -344,7 +348,7 @@ namespace snn::app
                 snn_require(!p2.is_empty());
                 snn_require(p2.is_full());
 
-                snn_should(p1.block() == nullptr);
+                snn_should(p1.cbegin() == nullptr);
 
                 usize c = 0;
                 for (const auto& elem : p2)
