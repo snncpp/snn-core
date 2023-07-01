@@ -118,9 +118,12 @@ namespace snn::range::view
     template <input_range FirstRng, input_range SecondRng>
     class pair final : public detail::pair<FirstRng, SecondRng>
     {
+      private:
+        using base_type = detail::pair<FirstRng, SecondRng>;
+
       public:
         constexpr explicit pair(FirstRng first, SecondRng second)
-            : detail::pair<FirstRng, SecondRng>{std::move(first), std::move(second)}
+            : base_type{std::move(first), std::move(second)}
         {
         }
 

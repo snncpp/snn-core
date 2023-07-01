@@ -106,9 +106,12 @@ namespace snn::range::view
     template <forward_range Rng>
     class chunk final : public detail::chunk<Rng>
     {
+      private:
+        using base_type = detail::chunk<Rng>;
+
       public:
         constexpr explicit chunk(Rng rng, const usize count) noexcept
-            : detail::chunk<Rng>{std::move(rng), not_zero{math::max(count, 1)}}
+            : base_type{std::move(rng), not_zero{math::max(count, 1)}}
         {
         }
 

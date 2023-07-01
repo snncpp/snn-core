@@ -129,8 +129,7 @@ namespace snn
 
             // Copy assignment operator.
             constexpr result_storage& operator=(const result_storage& other) noexcept(
-                std::is_nothrow_copy_assignable_v<T> //
-                    && std::is_nothrow_copy_constructible_v<T>)
+                std::is_nothrow_copy_assignable_v<T> && std::is_nothrow_copy_constructible_v<T>)
             {
                 // This works even if this == &other.
 
@@ -214,9 +213,8 @@ namespace snn
                 }
             }
 
-            constexpr void assign(const T& v) noexcept(
-                std::is_nothrow_copy_assignable_v<T> //
-                    && std::is_nothrow_copy_constructible_v<T>)
+            constexpr void assign(const T& v) noexcept(std::is_nothrow_copy_assignable_v<T> &&
+                                                       std::is_nothrow_copy_constructible_v<T>)
             {
                 if (has_value_)
                 {
@@ -433,8 +431,7 @@ namespace snn
         void operator=(const U&) = delete;
 
         constexpr void assign_or_rebind(const T& v) noexcept(
-            std::is_nothrow_copy_assignable_v<T> //
-                && std::is_nothrow_copy_constructible_v<T>)
+            std::is_nothrow_copy_assignable_v<T> && std::is_nothrow_copy_constructible_v<T>)
         {
             storage_.assign(v);
         }
@@ -578,8 +575,7 @@ namespace snn
 
         template <typename U>
         [[nodiscard]] constexpr T value_or(U&& alt) const& noexcept(
-            std::is_nothrow_copy_constructible_v<T> //
-                && std::is_nothrow_constructible_v<T, U>)
+            std::is_nothrow_copy_constructible_v<T> && std::is_nothrow_constructible_v<T, U>)
             requires(!std::is_arithmetic_v<T>)
         {
             if (has_value())
@@ -602,8 +598,7 @@ namespace snn
         }
 
         [[nodiscard]] constexpr T value_or_default() const& noexcept(
-            std::is_nothrow_copy_constructible_v<T> //
-                && std::is_nothrow_default_constructible_v<T>)
+            std::is_nothrow_copy_constructible_v<T> && std::is_nothrow_default_constructible_v<T>)
         {
             if (has_value())
             {
@@ -878,8 +873,8 @@ namespace snn
 
         template <typename U>
         [[nodiscard]] constexpr value_type value_or(U&& alt) const
-            noexcept(std::is_nothrow_copy_constructible_v<value_type>       //
-                         && std::is_nothrow_constructible_v<value_type, U>) //
+            noexcept(std::is_nothrow_copy_constructible_v<value_type> &&
+                     std::is_nothrow_constructible_v<value_type, U>)
             requires(!std::is_arithmetic_v<value_type>)
         {
             if (has_value())
@@ -890,8 +885,8 @@ namespace snn
         }
 
         [[nodiscard]] constexpr value_type value_or_default() const
-            noexcept(std::is_nothrow_copy_constructible_v<value_type> //
-                         && std::is_nothrow_default_constructible_v<value_type>)
+            noexcept(std::is_nothrow_copy_constructible_v<value_type> &&
+                     std::is_nothrow_default_constructible_v<value_type>)
         {
             if (has_value())
             {
