@@ -104,7 +104,7 @@ namespace snn::file::dir
                                     Container& entries)
     {
         return list(path, [&entries](const transient_entry e) {
-            entries.append_inplace(e.name<cstrview>(), e.type());
+            entries.append_inplace(e.name<str>(), e.type());
         });
     }
 

@@ -30,8 +30,8 @@ namespace snn::file::dir
 
         // #### Explicit constructors
 
-        constexpr explicit entry(const cstrview name, const file::type type)
-            : n{name},
+        constexpr explicit entry(str name, const file::type type)
+            : n{std::move(name)},
               t{type}
         {
         }
