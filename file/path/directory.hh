@@ -14,8 +14,8 @@ namespace snn::file::path
     // ### directory
 
     template <typename String = str>
-    [[nodiscard]] constexpr result<String> directory(const cstrview path) noexcept(
-        std::is_nothrow_constructible_v<String, cstrview>)
+    [[nodiscard]] constexpr result<String> directory(const cstrview path)
+        noexcept(std::is_nothrow_constructible_v<String, cstrview>)
     {
         return split<cstrview>(path).and_then([](auto&& parts) {
             return String{parts.directory()};

@@ -55,8 +55,8 @@ namespace snn::process
         }
 
         template <typename String = str>
-        [[nodiscard]] result<String> read_line() noexcept(
-            std::is_nothrow_constructible_v<String, cstrview>)
+        [[nodiscard]] result<String> read_line()
+            noexcept(std::is_nothrow_constructible_v<String, cstrview>)
         {
             if (file_ == nullptr)
             {

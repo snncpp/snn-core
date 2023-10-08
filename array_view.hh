@@ -202,8 +202,8 @@ namespace snn
         // #### Single element access
 
         template <value_type_or<reference> R = reference>
-        [[nodiscard]] constexpr optional<R> at(const usize pos) noexcept(
-            std::is_nothrow_copy_constructible_v<R>)
+        [[nodiscard]] constexpr optional<R> at(const usize pos)
+            noexcept(std::is_nothrow_copy_constructible_v<R>)
         {
             if (pos < Count)
             {
@@ -291,8 +291,8 @@ namespace snn
         }
 
         template <value_type_or<reference> R = reference>
-        [[nodiscard]] constexpr optional<R> front() noexcept(
-            std::is_nothrow_copy_constructible_v<R>)
+        [[nodiscard]] constexpr optional<R> front()
+            noexcept(std::is_nothrow_copy_constructible_v<R>)
         {
             if constexpr (Count > 0)
             {
@@ -1009,8 +1009,8 @@ namespace snn
         // #### Single element access
 
         template <value_type_or<reference> R = reference>
-        [[nodiscard]] constexpr optional<R> at(const usize pos) noexcept(
-            std::is_nothrow_copy_constructible_v<R>)
+        [[nodiscard]] constexpr optional<R> at(const usize pos)
+            noexcept(std::is_nothrow_copy_constructible_v<R>)
         {
             if (pos < count_)
             {
@@ -1077,8 +1077,8 @@ namespace snn
         }
 
         template <value_type_or<reference> R = reference>
-        [[nodiscard]] constexpr optional<R> front() noexcept(
-            std::is_nothrow_copy_constructible_v<R>)
+        [[nodiscard]] constexpr optional<R> front()
+            noexcept(std::is_nothrow_copy_constructible_v<R>)
         {
             if (count_)
             {

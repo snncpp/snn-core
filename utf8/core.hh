@@ -285,8 +285,8 @@ namespace snn::utf8
     }
 
     template <typename String>
-    [[nodiscard]] constexpr String replacement_string() noexcept(
-        std::is_nothrow_copy_constructible_v<String>)
+    [[nodiscard]] constexpr String replacement_string()
+        noexcept(std::is_nothrow_copy_constructible_v<String>)
     {
         return String{not_null<const char*>{"\xEF\xBF\xBD"}, usize{3}}; // U+FFFD
     }

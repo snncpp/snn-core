@@ -14,8 +14,8 @@ namespace snn::file::path
     // ### base
 
     template <typename String = str>
-    [[nodiscard]] constexpr result<String> base(const cstrview path) noexcept(
-        std::is_nothrow_constructible_v<String, cstrview>)
+    [[nodiscard]] constexpr result<String> base(const cstrview path)
+        noexcept(std::is_nothrow_constructible_v<String, cstrview>)
     {
         return split<cstrview>(path).and_then([](auto&& parts) { return String{parts.base()}; });
     }

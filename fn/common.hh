@@ -17,6 +17,8 @@
 
 namespace snn::fn
 {
+    // clang-format off
+
     // ## Arithmetic
 
     // These could be aliased to `std::plus<void>` and so on, but both Clang and GCC will suppress
@@ -1076,4 +1078,6 @@ namespace snn::fn
             return f_(get<Indexes>(std::forward<Tuple>(t))...);
         }
     };
+
+    // clang-format on
 }

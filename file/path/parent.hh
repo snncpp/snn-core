@@ -20,8 +20,8 @@ namespace snn::file::path
     // Return the lexical parent path from a string path, `"."` and `".."` have no special meaning.
 
     template <typename String = str>
-    [[nodiscard]] constexpr String parent(const cstrview path) noexcept(
-        std::is_nothrow_constructible_v<String, cstrrng>)
+    [[nodiscard]] constexpr String parent(const cstrview path)
+        noexcept(std::is_nothrow_constructible_v<String, cstrrng>)
     {
         auto rng = path.range();
 

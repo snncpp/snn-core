@@ -149,8 +149,8 @@ namespace snn::range
         }
 
         template <value_type_or<reference> R = reference>
-        [[nodiscard]] constexpr optional<R> front() noexcept(
-            std::is_nothrow_copy_constructible_v<R>)
+        [[nodiscard]] constexpr optional<R> front()
+            noexcept(std::is_nothrow_copy_constructible_v<R>)
         {
             if (first_ != last_)
             {
@@ -226,8 +226,8 @@ namespace snn::range
         // #### Random access
 
         template <value_type_or<reference> R = reference>
-        [[nodiscard]] constexpr optional<R> at(const usize pos) noexcept(
-            std::is_nothrow_copy_constructible_v<R>)
+        [[nodiscard]] constexpr optional<R> at(const usize pos)
+            noexcept(std::is_nothrow_copy_constructible_v<R>)
         {
             if (pos < count())
             {
@@ -269,8 +269,8 @@ namespace snn::range
         // #### Contiguous
 
         template <value_type_or<reference> R = reference>
-        [[nodiscard]] constexpr optional<R> pop_back() noexcept(
-            std::is_nothrow_copy_constructible_v<R>)
+        [[nodiscard]] constexpr optional<R> pop_back()
+            noexcept(std::is_nothrow_copy_constructible_v<R>)
         {
             if (first_ != last_)
             {
@@ -293,8 +293,8 @@ namespace snn::range
         }
 
         template <value_type_or<reference> R = reference>
-        [[nodiscard]] constexpr optional<R> pop_front() noexcept(
-            std::is_nothrow_copy_constructible_v<R>)
+        [[nodiscard]] constexpr optional<R> pop_front()
+            noexcept(std::is_nothrow_copy_constructible_v<R>)
         {
             if (first_ != last_)
             {
@@ -324,8 +324,8 @@ namespace snn::range
         }
 
         template <typename OneArgPred>
-        constexpr contiguous pop_back_while(OneArgPred p) noexcept(
-            noexcept(p(std::as_const(*first_))))
+        constexpr contiguous pop_back_while(OneArgPred p)
+            noexcept(noexcept(p(std::as_const(*first_))))
         {
             const auto last = last_;
             while (first_ != last_ && p(std::as_const(*(last_ - 1))))
@@ -336,8 +336,8 @@ namespace snn::range
         }
 
         template <typename OneArgPred>
-        constexpr contiguous pop_front_while(OneArgPred p) noexcept(
-            noexcept(p(std::as_const(*first_))))
+        constexpr contiguous pop_front_while(OneArgPred p)
+            noexcept(noexcept(p(std::as_const(*first_))))
         {
             const auto first = first_;
             while (first_ != last_ && p(std::as_const(*first_)))
@@ -811,8 +811,8 @@ namespace snn::range
         }
 
         template <typename OneArgPred>
-        constexpr contiguous pop_back_while(OneArgPred p) noexcept(
-            noexcept(p(std::as_const(*first_))))
+        constexpr contiguous pop_back_while(OneArgPred p)
+            noexcept(noexcept(p(std::as_const(*first_))))
         {
             const auto last = last_;
             while (first_ != last_ && p(std::as_const(*(last_ - 1))))
@@ -854,8 +854,8 @@ namespace snn::range
         }
 
         template <typename OneArgPred>
-        constexpr contiguous pop_front_while(OneArgPred p) noexcept(
-            noexcept(p(std::as_const(*first_))))
+        constexpr contiguous pop_front_while(OneArgPred p)
+            noexcept(noexcept(p(std::as_const(*first_))))
         {
             const auto first = first_;
             while (first_ != last_ && p(std::as_const(*first_)))
@@ -1365,8 +1365,8 @@ namespace snn::range
         }
 
         template <typename OneArgPred>
-        constexpr contiguous pop_back_while(OneArgPred p) noexcept(
-            noexcept(p(std::as_const(*first_))))
+        constexpr contiguous pop_back_while(OneArgPred p)
+            noexcept(noexcept(p(std::as_const(*first_))))
         {
             const auto last = last_;
             while (first_ != last_ && p(std::as_const(*(last_ - 1))))
@@ -1408,8 +1408,8 @@ namespace snn::range
         }
 
         template <typename OneArgPred>
-        constexpr contiguous pop_front_while(OneArgPred p) noexcept(
-            noexcept(p(std::as_const(*first_))))
+        constexpr contiguous pop_front_while(OneArgPred p)
+            noexcept(noexcept(p(std::as_const(*first_))))
         {
             const auto first = first_;
             while (first_ != last_ && p(std::as_const(*first_)))

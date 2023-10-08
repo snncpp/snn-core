@@ -104,8 +104,8 @@ namespace snn::file::path
     // ### split
 
     template <typename String = str>
-    [[nodiscard]] constexpr result<parts<String>> split(const cstrview path) noexcept(
-        std::is_nothrow_constructible_v<String, cstrview>)
+    [[nodiscard]] constexpr result<parts<String>> split(const cstrview path)
+        noexcept(std::is_nothrow_constructible_v<String, cstrview>)
     {
         usize base_pos = 0;
         usize ext_pos  = 0;

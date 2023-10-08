@@ -116,8 +116,8 @@ namespace snn
             }
 
             // Copy constructor.
-            constexpr result_storage(const result_storage& other) noexcept(
-                std::is_nothrow_copy_constructible_v<T>)
+            constexpr result_storage(const result_storage& other)
+                noexcept(std::is_nothrow_copy_constructible_v<T>)
                 : storage_{.error = ErrorStorage{}},
                   has_value_{other.has_value_}
             {
@@ -128,8 +128,9 @@ namespace snn
             }
 
             // Copy assignment operator.
-            constexpr result_storage& operator=(const result_storage& other) noexcept(
-                std::is_nothrow_copy_assignable_v<T> && std::is_nothrow_copy_constructible_v<T>)
+            constexpr result_storage& operator=(const result_storage& other)
+                noexcept(std::is_nothrow_copy_assignable_v<T> &&
+                         std::is_nothrow_copy_constructible_v<T>)
             {
                 // This works even if this == &other.
 
@@ -393,8 +394,8 @@ namespace snn
 
         result() = delete; // For better compilation errors.
 
-        constexpr result(const not_deduced_t<T>& v) noexcept(
-            std::is_nothrow_copy_constructible_v<T>)
+        constexpr result(const not_deduced_t<T>& v)
+            noexcept(std::is_nothrow_copy_constructible_v<T>)
             : storage_{v}
         {
         }
@@ -430,8 +431,9 @@ namespace snn
         template <typename U>
         void operator=(const U&) = delete;
 
-        constexpr void assign_or_rebind(const T& v) noexcept(
-            std::is_nothrow_copy_assignable_v<T> && std::is_nothrow_copy_constructible_v<T>)
+        constexpr void assign_or_rebind(const T& v)
+            noexcept(std::is_nothrow_copy_assignable_v<T> &&
+                     std::is_nothrow_copy_constructible_v<T>)
         {
             storage_.assign(v);
         }

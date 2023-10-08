@@ -171,8 +171,8 @@ namespace snn
         SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
 
         template <value_type_or<reference> R = reference>
-        [[nodiscard]] constexpr optional<R> at(const usize pos) noexcept(
-            std::is_nothrow_copy_constructible_v<R>)
+        [[nodiscard]] constexpr optional<R> at(const usize pos)
+            noexcept(std::is_nothrow_copy_constructible_v<R>)
         {
             if (pos < buf_.count())
             {
@@ -245,8 +245,8 @@ namespace snn
         }
 
         template <value_type_or<reference> R = reference>
-        [[nodiscard]] constexpr optional<R> front() noexcept(
-            std::is_nothrow_copy_constructible_v<R>)
+        [[nodiscard]] constexpr optional<R> front()
+            noexcept(std::is_nothrow_copy_constructible_v<R>)
         {
             if (buf_.count() > 0)
             {

@@ -17,10 +17,10 @@ namespace snn::mem
 
     template <typename T>
         requires(std::is_copy_constructible_v<T>)
-    constexpr void copy_construct(
-        const not_null<const T*> first_copy, const not_null<const T*> last_copy,
-        const not_null<T*> first_uninitialized,
-        promise::no_overlap_t) noexcept(std::is_nothrow_copy_constructible_v<T>)
+    constexpr void copy_construct(const not_null<const T*> first_copy,
+                                  const not_null<const T*> last_copy,
+                                  const not_null<T*> first_uninitialized, promise::no_overlap_t)
+        noexcept(std::is_nothrow_copy_constructible_v<T>)
     {
         SNN_DIAGNOSTIC_PUSH
         SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE

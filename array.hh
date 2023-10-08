@@ -133,8 +133,8 @@ namespace snn
         // #### Single element access
 
         template <value_type_or<reference> R = reference>
-        [[nodiscard]] constexpr optional<R> at(const usize pos) noexcept(
-            std::is_nothrow_copy_constructible_v<R>)
+        [[nodiscard]] constexpr optional<R> at(const usize pos)
+            noexcept(std::is_nothrow_copy_constructible_v<R>)
         {
             if (pos < Count)
             {
@@ -222,8 +222,8 @@ namespace snn
         }
 
         template <value_type_or<reference> R = reference>
-        [[nodiscard]] constexpr optional<R> front() noexcept(
-            std::is_nothrow_copy_constructible_v<R>)
+        [[nodiscard]] constexpr optional<R> front()
+            noexcept(std::is_nothrow_copy_constructible_v<R>)
         {
             if constexpr (Count > 0)
             {
@@ -760,8 +760,8 @@ namespace snn
     // ### swap
 
     template <typename T, usize Count>
-    constexpr void swap(array<T, Count>& a,
-                        array<T, Count>& b) noexcept(Count == 0 || std::is_nothrow_swappable_v<T>)
+    constexpr void swap(array<T, Count>& a, array<T, Count>& b)
+        noexcept(Count == 0 || std::is_nothrow_swappable_v<T>)
     {
         a.swap(b);
     }
@@ -787,8 +787,8 @@ namespace snn
 
     template <typename T, usize Count>
         requires(!std::is_array_v<T> && !std::is_same_v<T, const char>)
-    [[nodiscard]] constexpr array<std::remove_cv_t<T>, Count> to_array(T (&a)[Count]) noexcept(
-        std::is_nothrow_constructible_v<T, T&>)
+    [[nodiscard]] constexpr array<std::remove_cv_t<T>, Count> to_array(T (&a)[Count])
+        noexcept(std::is_nothrow_constructible_v<T, T&>)
     {
         static_assert(std::is_constructible_v<T, T&>);
         return detail::to_array_copy<Count>(a, std::make_index_sequence<Count>{});
@@ -796,8 +796,8 @@ namespace snn
 
     template <typename T, usize Count>
         requires(!std::is_array_v<T> && !std::is_same_v<T, const char>)
-    [[nodiscard]] constexpr array<std::remove_cv_t<T>, Count> to_array(T (&&a)[Count]) noexcept(
-        std::is_nothrow_move_constructible_v<T>)
+    [[nodiscard]] constexpr array<std::remove_cv_t<T>, Count> to_array(T (&&a)[Count])
+        noexcept(std::is_nothrow_move_constructible_v<T>)
     {
         static_assert(std::is_move_constructible_v<T>);
         return detail::to_array_move<Count>(std::move(a), std::make_index_sequence<Count>{});

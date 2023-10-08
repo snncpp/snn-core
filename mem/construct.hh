@@ -22,8 +22,8 @@ namespace snn::mem
 
     template <typename T, typename... Args>
         requires brace_constructible_from<T, Args...>
-    constexpr not_null<T*> construct(const not_null<T*> at, Args&&... args) noexcept(
-        std::is_nothrow_constructible_v<T, Args...>)
+    constexpr not_null<T*> construct(const not_null<T*> at, Args&&... args)
+        noexcept(std::is_nothrow_constructible_v<T, Args...>)
     {
         std::construct_at(at.get(), std::forward<Args>(args)...);
         return at;

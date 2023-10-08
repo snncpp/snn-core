@@ -3,6 +3,7 @@ Language: Cpp
 AlignConsecutiveAssignments: Consecutive
 AlignConsecutiveMacros: Consecutive
 AlignOperands: AlignAfterOperator
+AllowBreakBeforeNoexceptSpecifier: Always
 AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: WithoutElse
 AlwaysBreakTemplateDeclarations: Yes

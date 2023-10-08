@@ -13,6 +13,7 @@
 #ifdef SNN_DEBUG
 #include "snn-core/hex/table/common.hh"
 #include <iostream>
+
 namespace snn
 {
     // ## Functions

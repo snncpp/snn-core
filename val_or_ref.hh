@@ -27,8 +27,8 @@ namespace snn
 
         // #### Explicit constructors
 
-        constexpr explicit val_or_ref(const not_deduced_t<T>& v) noexcept(
-            std::is_nothrow_copy_constructible_v<T>)
+        constexpr explicit val_or_ref(const not_deduced_t<T>& v)
+            noexcept(std::is_nothrow_copy_constructible_v<T>)
             : value_{v}
         {
         }

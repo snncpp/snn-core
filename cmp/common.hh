@@ -17,8 +17,8 @@ namespace snn::cmp
     // Arguments that are temporaries (rvalues) will not compile.
 
     template <typename A, typename B, typename TwoArgPred = fn::less_than>
-    [[nodiscard]] constexpr decltype(auto) max(
-        A&& a, B&& b, TwoArgPred is_less = TwoArgPred{}) noexcept(noexcept(is_less(a, b)))
+    [[nodiscard]] constexpr decltype(auto) max(A&& a, B&& b, TwoArgPred is_less = TwoArgPred{})
+        noexcept(noexcept(is_less(a, b)))
     {
         return fn::max{std::move(is_less)}(std::forward<A>(a), std::forward<B>(b));
     }
@@ -29,8 +29,8 @@ namespace snn::cmp
     // Arguments that are temporaries (rvalues) will not compile.
 
     template <typename A, typename B, typename TwoArgPred = fn::less_than>
-    [[nodiscard]] constexpr decltype(auto) min(
-        A&& a, B&& b, TwoArgPred is_less = TwoArgPred{}) noexcept(noexcept(is_less(b, a)))
+    [[nodiscard]] constexpr decltype(auto) min(A&& a, B&& b, TwoArgPred is_less = TwoArgPred{})
+        noexcept(noexcept(is_less(b, a)))
     {
         return fn::min{std::move(is_less)}(std::forward<A>(a), std::forward<B>(b));
     }
