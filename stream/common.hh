@@ -12,24 +12,18 @@ namespace snn::stream
 {
     // ## Concepts
 
-    // clang-format off
-
     // ### readable
 
     template <typename T>
-    concept readable = requires(T& t)
-    {
-        {t.read_some(strview{})} -> same_as<result<usize>>;
+    concept readable = requires(T& t) {
+        { t.read_some(strview{}) } -> same_as<result<usize>>;
     };
 
     // ### writable
 
     template <typename T>
-    concept writable = requires(T& t)
-    {
-        {t.write_some(cstrview{})} -> same_as<result<usize>>;
-        {t.write_all(cstrview{})}  -> same_as<result<void>>;
+    concept writable = requires(T& t) {
+        { t.write_some(cstrview{}) } -> same_as<result<usize>>;
+        { t.write_all(cstrview{}) } -> same_as<result<void>>;
     };
-
-    // clang-format on
 }

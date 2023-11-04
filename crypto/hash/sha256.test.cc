@@ -20,9 +20,7 @@ namespace snn::app
 
             h.reset();
 
-            h << "a"
-              << "b"
-              << "c";
+            h << "a" << "b" << "c";
             digest = h.final_hex();
             snn_require(digest ==
                         "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");

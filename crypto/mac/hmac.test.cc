@@ -14,8 +14,7 @@ namespace snn::app
         bool example()
         {
             crypto::mac::hmac<crypto::hash::sha256> h{"Jefe"};
-            h << "what do ya want"
-              << " for nothing?";
+            h << "what do ya want" << " for nothing?";
             const str mac = h.final_hex();
             snn_require(mac.size() == 64);
             snn_require(mac == "5bdcc146bf60754e6a042426089575c75a003f089d2739839dec58b964ec3843");

@@ -12,24 +12,19 @@ namespace snn::io
 {
     // ## Concepts
 
-    // clang-format off
-
     // ### readable
 
     template <typename T>
-    concept readable = requires(T& t)
-    {
-        {t.read_some(int{}, strview{})} -> same_as<result<usize>>;
+    concept readable = requires(T& t) {
+        { t.read_some(int{}, strview{}) } -> same_as<result<usize>>;
     };
 
     // ### writable
 
     template <typename T>
-    concept writable = requires(T& t)
-    {
-        {t.write_some(int{}, cstrview{})} -> same_as<result<usize>>;
-        {t.write_all(int{}, cstrview{})}  -> same_as<result<void>>;
+    concept writable = requires(T& t) {
+        { t.write_some(int{}, cstrview{}) } -> same_as<result<usize>>;
+        { t.write_all(int{}, cstrview{}) } -> same_as<result<void>>;
     };
 
-    // clang-format on
 }

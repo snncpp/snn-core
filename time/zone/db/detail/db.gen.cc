@@ -297,14 +297,12 @@ namespace snn::app
             {
                 // Offsets
 
-                hh << "\n        "
-                   << "inline constexpr array<zone::offset, " << as_num(offsets.count())
-                   << "> offsets{{\n";
+                hh << "\n        " << "inline constexpr array<zone::offset, "
+                   << as_num(offsets.count()) << "> offsets{{\n";
                 for (const auto& offset : offsets)
                 {
-                    hh << "            "
-                       << "{\"" << offset.abbr().view() << "\", " << as_num(offset.seconds())
-                       << ", ";
+                    hh << "            " << "{\"" << offset.abbr().view() << "\", "
+                       << as_num(offset.seconds()) << ", ";
                     if (offset.is_dst())
                     {
                         hh << "true";
@@ -319,13 +317,12 @@ namespace snn::app
 
                 // Transitions
 
-                hh << "\n        "
-                   << "inline constexpr array<zone::transition, " << as_num(transitions.count())
-                   << "> transitions{{\n";
+                hh << "\n        " << "inline constexpr array<zone::transition, "
+                   << as_num(transitions.count()) << "> transitions{{\n";
                 for (const auto& t : transitions)
                 {
-                    hh << "            "
-                       << "{" << as_num(t.offset_index) << ", " << as_num(t.when) << "},\n";
+                    hh << "            " << "{" << as_num(t.offset_index) << ", " << as_num(t.when)
+                       << "},\n";
                 }
                 hh << "        }};\n";
             }

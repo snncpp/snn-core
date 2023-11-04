@@ -38,8 +38,7 @@ namespace snn::app
             snn_require(algo::is_equal(v.range(), init_list<cstrview>{"Hello", "aaaaaaaa"}));
 
             v.reserve_append(2); // Optimization (not required).
-            v << "this"
-              << "and-that";
+            v << "this" << "and-that";
 
             snn_require(v.count() == 4);
             snn_require(algo::is_equal(v.range(), init_list<cstrview>{"Hello", "aaaaaaaa", "this",

@@ -455,8 +455,6 @@ namespace snn
     template <typename T>
     inline constexpr bool is_strict_integral_v = is_strict_integral<T>::value;
 
-    // clang-format off
-
     // ## Core concepts
 
     // ### arithmetic
@@ -491,11 +489,13 @@ namespace snn
     // * If a type is move constructible it must also be nothrow move constructible.
     // * If a type is move assignable it must also be nothrow move assignable.
 
+    // clang-format off
     template <typename T>
     concept sane = (!std::is_copy_constructible_v<T> || std::is_move_constructible_v<T>) &&
                    (!std::is_copy_assignable_v<T> || std::is_move_assignable_v<T>) &&
                    (!std::is_move_constructible_v<T> || std::is_nothrow_move_constructible_v<T>) &&
                    (!std::is_move_assignable_v<T> || std::is_nothrow_move_assignable_v<T>);
+    // clang-format on
 
     // ### value_type_or
 
@@ -520,8 +520,9 @@ namespace snn
     // ### constructible_from_iterators
 
     template <typename T>
-    concept constructible_from_iterators
-        = requires(T& v) { T{meta::iterators, v.begin(), v.end()}; };
+    concept constructible_from_iterators = requires(T& v) {
+        T{meta::iterators, v.begin(), v.end()};
+    };
 
     // ### implicitly_default_constructible
 
@@ -537,8 +538,8 @@ namespace snn
     // ### explicitly_default_constructible
 
     template <typename T>
-    concept explicitly_default_constructible
-        = std::is_default_constructible_v<T> && !implicitly_default_constructible<T>;
+    concept explicitly_default_constructible =
+        std::is_default_constructible_v<T> && !implicitly_default_constructible<T>;
 
     // ## Callable concepts
 
@@ -547,16 +548,17 @@ namespace snn
     // Callable without the overhead of `std::invoke(...)`.
 
     template <typename Fn, typename... Args>
-    concept callable = requires(Fn&& fn, Args&&... args) {
-        std::forward<Fn>(fn)(std::forward<Args>(args)...);
-    };
+    concept callable =
+        requires(Fn&& fn, Args&&... args) { std::forward<Fn>(fn)(std::forward<Args>(args)...); };
 
     // ### predicate
 
     // Callable that doesn't modify the parameters, with a boolean-testable return value.
 
     template <typename P, typename... Args>
-    concept predicate = requires(P& p, const Args&... args) { {!p(args...)} -> same_as<bool>; };
+    concept predicate = requires(P& p, const Args&... args) {
+        { !p(args...) } -> same_as<bool>;
+    };
 
     // ## Integral concepts
 
@@ -613,15 +615,17 @@ namespace snn
     // ### same_signedness_as
 
     template <typename T, typename U>
-    concept same_signedness_as
-        = integral<T> && integral<U> && (std::is_signed_v<T> == std::is_signed_v<U>);
+    concept same_signedness_as =
+        integral<T> && integral<U> && (std::is_signed_v<T> == std::is_signed_v<U>);
 
     // ## Iterable concepts
 
     // ### legacy_iterable
 
     template <typename T>
-    concept legacy_iterable = requires(T& v) { {v.begin()} -> same_as<decltype(v.end())>; };
+    concept legacy_iterable = requires(T& v) {
+        { v.begin() } -> same_as<decltype(v.end())>;
+    };
 
     // ## Non-type concepts
 
@@ -635,9 +639,8 @@ namespace snn
     // ### has_append_inplace
 
     template <typename T, typename... Args>
-    concept has_append_inplace = requires(T& v, Args&&... args) {
-        v.append_inplace(std::forward<Args>(args)...);
-    };
+    concept has_append_inplace =
+        requires(T& v, Args&&... args) { v.append_inplace(std::forward<Args>(args)...); };
 
     // ### has_at
 
@@ -647,12 +650,16 @@ namespace snn
     // ### has_contiguous_iterator
 
     template <typename T>
-    concept has_contiguous_iterator = requires(T& v) { {v.begin()} -> pointer; };
+    concept has_contiguous_iterator = requires(T& v) {
+        { v.begin() } -> pointer;
+    };
 
     // ### has_count
 
     template <typename T>
-    concept has_count = requires(T& v) { {v.count()} -> unsigned_integral; };
+    concept has_count = requires(T& v) {
+        { v.count() } -> unsigned_integral;
+    };
 
     // ### has_drop_back
 
@@ -668,8 +675,6 @@ namespace snn
 
     template <typename From, typename To>
     concept has_to = requires(const From& v) { v.template to<To>(); };
-
-    // clang-format on
 
     // ## Type traits
 
