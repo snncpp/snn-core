@@ -4,7 +4,6 @@
 #include "snn-core/process/spawner.hh"
 
 #include "snn-core/unittest.hh"
-#include "snn-core/file/is_something.hh"
 #include "snn-core/file/reader_writer.hh"
 #include "snn-core/process/pipe.hh"
 #include "snn-core/stream/buffered_reader.hh"
