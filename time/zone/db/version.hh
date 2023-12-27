@@ -11,5 +11,5 @@
 
 namespace snn::time::zone::db
 {
-    inline constexpr cstrview version{"2023c"};
+    inline constexpr cstrview version{"2023d"};
 }

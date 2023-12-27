@@ -224,7 +224,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry winnipeg{"America/Winnipeg",
-                                        "Central - ON (west); Manitoba",
+                                        "Central - ON (west), Manitoba",
                                         "+4953-09709",
                                         detail::winnipeg::country_codes,
                                         detail::winnipeg::offsets,

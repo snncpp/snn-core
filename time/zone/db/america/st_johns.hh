@@ -279,7 +279,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry st_johns{"America/St_Johns",
-                                        "Newfoundland; Labrador (southeast)",
+                                        "Newfoundland, Labrador (SE)",
                                         "+4734-05243",
                                         detail::st_johns::country_codes,
                                         detail::st_johns::offsets,

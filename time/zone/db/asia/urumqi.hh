@@ -19,9 +19,8 @@ namespace snn::time::zone::db::asia
 
     namespace detail::urumqi
     {
-        inline constexpr array<country::code, 2> country_codes{
+        inline constexpr array<country::code, 1> country_codes{
             "CN",
-            "AQ",
         };
 
         inline constexpr array<zone::offset, 2> offsets{{
@@ -35,7 +34,7 @@ namespace snn::time::zone::db::asia
     }
 
     inline constexpr db::entry urumqi{"Asia/Urumqi",
-                                      "Xinjiang Time, Vostok",
+                                      "Xinjiang Time",
                                       "+4348+08735",
                                       detail::urumqi::country_codes,
                                       detail::urumqi::offsets,

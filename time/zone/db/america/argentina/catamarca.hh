@@ -98,7 +98,7 @@ namespace snn::time::zone::db::america::argentina
     }
 
     inline constexpr db::entry catamarca{"America/Argentina/Catamarca",
-                                         "Catamarca (CT); Chubut (CH)",
+                                         "Catamarca (CT), Chubut (CH)",
                                          "-2828-06547",
                                          detail::catamarca::country_codes,
                                          detail::catamarca::offsets,

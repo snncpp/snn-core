@@ -190,7 +190,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry boise{"America/Boise",
-                                     "Mountain - ID (south); OR (east)",
+                                     "Mountain - ID (south), OR (east)",
                                      "+433649-1161209",
                                      detail::boise::country_codes,
                                      detail::boise::offsets,

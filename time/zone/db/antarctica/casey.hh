@@ -23,15 +23,14 @@ namespace snn::time::zone::db::antarctica
             "AQ",
         };
 
-        inline constexpr array<zone::offset, 5> offsets{{
+        inline constexpr array<zone::offset, 4> offsets{{
             {"-00", 0, false},
             {"+08", 28800, false},
             {"+11", 39600, false},
             {"+08", 28800, false},
-            {"+11", 39600, false},
         }};
 
-        inline constexpr array<zone::transition, 12> transitions{{
+        inline constexpr array<zone::transition, 17> transitions{{
             {1, -31536000},
             {2, 1255802400},
             {1, 1267714800},
@@ -44,6 +43,11 @@ namespace snn::time::zone::db::antarctica
             {2, 1570129200},
             {1, 1583596800},
             {2, 1601740860},
+            {1, 1615640400},
+            {2, 1633190460},
+            {1, 1647090000},
+            {2, 1664640060},
+            {1, 1678291200},
         }};
     }
 

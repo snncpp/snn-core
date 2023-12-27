@@ -58,7 +58,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry puerto_rico{"America/Puerto_Rico",
-                                           "AST",
+                                           "AST - QC (Lower North Shore)",
                                            "+182806-0660622",
                                            detail::puerto_rico::country_codes,
                                            detail::puerto_rico::offsets,

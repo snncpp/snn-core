@@ -38,7 +38,7 @@ namespace snn::time::zone::db::asia
     }
 
     inline constexpr db::entry jayapura{"Asia/Jayapura",
-                                        "New Guinea (West Papua / Irian Jaya); Malukus/Moluccas",
+                                        "New Guinea (West Papua / Irian Jaya), Malukus/Moluccas",
                                         "-0232+14042",
                                         detail::jayapura::country_codes,
                                         detail::jayapura::offsets,

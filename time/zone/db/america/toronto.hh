@@ -270,7 +270,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry toronto{"America/Toronto",
-                                       "Eastern - ON, QC (most areas)",
+                                       "Eastern - ON & QC (most areas)",
                                        "+4339-07923",
                                        detail::toronto::country_codes,
                                        detail::toronto::offsets,

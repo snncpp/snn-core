@@ -12,7 +12,6 @@
 #include "snn-core/time/zone/offset.hh"
 #include "snn-core/time/zone/transition.hh"
 #include "snn-core/time/zone/db/entry.hh"
-#include "snn-core/time/zone/db/asia/urumqi.hh"
 
 namespace snn::time::zone::db::antarctica
 {
@@ -23,14 +22,27 @@ namespace snn::time::zone::db::antarctica
         inline constexpr array<country::code, 1> country_codes{
             "AQ",
         };
+
+        inline constexpr array<zone::offset, 3> offsets{{
+            {"-00", 0, false},
+            {"+07", 25200, false},
+            {"+05", 18000, false},
+        }};
+
+        inline constexpr array<zone::transition, 4> transitions{{
+            {1, -380073600},
+            {0, 760035600},
+            {1, 783648000},
+            {2, 1702839600},
+        }};
     }
 
     inline constexpr db::entry vostok{"Antarctica/Vostok",
                                       "Vostok",
                                       "-7824+10654",
                                       detail::vostok::country_codes,
-                                      asia::detail::urumqi::offsets,
-                                      asia::detail::urumqi::transitions};
+                                      detail::vostok::offsets,
+                                      detail::vostok::transitions};
 
     // clang-format on
 }

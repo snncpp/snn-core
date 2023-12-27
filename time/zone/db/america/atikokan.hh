@@ -26,7 +26,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry atikokan{"America/Atikokan",
-                                        "EST - ON (Atikokan); NU (Coral H)",
+                                        "EST - ON (Atikokan), NU (Coral H)",
                                         "+484531-0913718",
                                         detail::atikokan::country_codes,
                                         america::detail::panama::offsets,

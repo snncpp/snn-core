@@ -38,7 +38,7 @@ namespace snn::time::zone::db::asia
     }
 
     inline constexpr db::entry dubai{"Asia/Dubai",
-                                     "Crozet, Scattered Is",
+                                     "Crozet",
                                      "+2518+05518",
                                      detail::dubai::country_codes,
                                      detail::dubai::offsets,

@@ -63,7 +63,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry belem{"America/Belem",
-                                     "Pará (east); Amapá",
+                                     "Pará (east), Amapá",
                                      "-0127-04829",
                                      detail::belem::country_codes,
                                      detail::belem::offsets,

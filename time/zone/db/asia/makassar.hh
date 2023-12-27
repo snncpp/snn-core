@@ -40,7 +40,7 @@ namespace snn::time::zone::db::asia
     }
 
     inline constexpr db::entry makassar{"Asia/Makassar",
-                                        "Borneo (east, south); Sulawesi/Celebes, Bali, Nusa Tengarra; Timor (west)",
+                                        "Borneo (east, south), Sulawesi/Celebes, Bali, Nusa Tengarra, Timor (west)",
                                         "-0507+11924",
                                         detail::makassar::country_codes,
                                         detail::makassar::offsets,

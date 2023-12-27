@@ -264,7 +264,7 @@ namespace snn::time::zone::db::america
     }
 
     inline constexpr db::entry halifax{"America/Halifax",
-                                       "Atlantic - NS (most areas); PE",
+                                       "Atlantic - NS (most areas), PE",
                                        "+4439-06336",
                                        detail::halifax::country_codes,
                                        detail::halifax::offsets,
