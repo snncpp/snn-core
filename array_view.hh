@@ -1202,12 +1202,16 @@ namespace snn
             count_ = 0;
         }
 
+        // Drop up to N elements from the front.
+
         constexpr void drop_front_n(const usize count) noexcept
         {
             const usize c = math::min(count, count_);
             data_ += c;
             count_ -= c;
         }
+
+        // Drop up to N elements from the back.
 
         constexpr void drop_back_n(const usize count) noexcept
         {
