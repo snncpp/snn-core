@@ -15,24 +15,24 @@ namespace snn::mem::raw
 
     // Load (and swap) unsigned integral from _octet_ pointer.
 
-    template <typename Int, octet Octet>
-    [[nodiscard]] constexpr Int load_swap(const Octet* const data) noexcept
+    template <strict_unsigned_integral UInt, octet Octet>
+    [[nodiscard]] constexpr UInt load_swap(const Octet* const data) noexcept
     {
-        if constexpr (std::is_same_v<Int, u16>)
+        if constexpr (std::is_same_v<UInt, u16>)
         {
             return __builtin_bswap16(mem::raw::load<u16>(data));
         }
-        else if constexpr (std::is_same_v<Int, u32>)
+        else if constexpr (std::is_same_v<UInt, u32>)
         {
             return __builtin_bswap32(mem::raw::load<u32>(data));
         }
-        else if constexpr (std::is_same_v<Int, u64>)
+        else if constexpr (std::is_same_v<UInt, u64>)
         {
             return __builtin_bswap64(mem::raw::load<u64>(data));
         }
         else
         {
-            static_assert(meta::always_false<Int>, "Not implemented.");
+            static_assert(meta::always_false<UInt>, "Not implemented.");
             return 0;
         }
     }

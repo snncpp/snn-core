@@ -15,10 +15,10 @@ namespace snn::mem::raw
 
     // Load unsigned integral from _octet_ pointer.
 
-    template <typename Int, octet Octet>
-    [[nodiscard]] constexpr Int load(const Octet* const data) noexcept
+    template <strict_unsigned_integral UInt, octet Octet>
+    [[nodiscard]] constexpr UInt load(const Octet* const data) noexcept
     {
-        if constexpr (std::is_same_v<Int, u16>)
+        if constexpr (std::is_same_v<UInt, u16>)
         {
             u16 i = 0;
             static_assert(sizeof(i) == 2);
@@ -39,7 +39,7 @@ namespace snn::mem::raw
             }
             return i;
         }
-        else if constexpr (std::is_same_v<Int, u32>)
+        else if constexpr (std::is_same_v<UInt, u32>)
         {
             u32 i = 0;
             static_assert(sizeof(i) == 4);
@@ -61,7 +61,7 @@ namespace snn::mem::raw
             }
             return i;
         }
-        else if constexpr (std::is_same_v<Int, u64>)
+        else if constexpr (std::is_same_v<UInt, u64>)
         {
             u64 i = 0;
             static_assert(sizeof(i) == 8);
@@ -89,7 +89,7 @@ namespace snn::mem::raw
         }
         else
         {
-            static_assert(meta::always_false<Int>, "Not implemented.");
+            static_assert(meta::always_false<UInt>, "Not implemented.");
             return 0;
         }
     }
