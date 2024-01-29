@@ -672,7 +672,10 @@ namespace snn
             return replace(needle, "");
         }
 
-        constexpr usize replace(const same_as<char> auto c, const same_as<char> auto replacement,
+        // Replace all occurrences of `needle` with `replacement`.
+
+        constexpr usize replace(const same_as<char> auto needle,
+                                const same_as<char> auto replacement,
                                 const usize start_pos = 0) noexcept
         {
             strview s           = buf_.view();
@@ -681,7 +684,7 @@ namespace snn
             usize replace_count = 0;
             for (usize i = start_pos; i < size; ++i)
             {
-                if (data[i] == c)
+                if (data[i] == needle)
                 {
                     data[i] = replacement;
                     ++replace_count;
@@ -689,6 +692,8 @@ namespace snn
             }
             return replace_count;
         }
+
+        // Replace all occurrences of `needle` with `replacement`.
 
         constexpr usize replace(const transient<cstrview> needle,
                                 const transient<cstrview> replacement, const usize start_pos = 0)
