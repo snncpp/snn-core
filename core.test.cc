@@ -1518,7 +1518,7 @@ namespace snn::app
             static_assert(!strict_signed_integral<float>);
             static_assert(!strict_signed_integral<cstrview>);
 
-            static_assert(strict_signed_integral<char> || strict_unsigned_integral<char>);
+            static_assert(strict_signed_integral<char> != strict_unsigned_integral<char>);
 
 #if SNN_INT128_BOOL
             static_assert(strict_signed_integral<i128>);
@@ -1537,14 +1537,13 @@ namespace snn::app
             static_assert(strict_unsigned_integral<usize>);
             static_assert(strict_unsigned_integral<const usize>);
             static_assert(!strict_unsigned_integral<bool>);
-            static_assert(!strict_unsigned_integral<char>);
             static_assert(!strict_unsigned_integral<int>);
             static_assert(!strict_unsigned_integral<const int>);
             static_assert(!strict_unsigned_integral<usize&>);
             static_assert(!strict_unsigned_integral<usize*>);
             static_assert(!strict_unsigned_integral<float>);
 
-            static_assert(strict_signed_integral<char> || strict_unsigned_integral<char>);
+            static_assert(strict_signed_integral<char> != strict_unsigned_integral<char>);
 
 #if SNN_INT128_BOOL
             static_assert(strict_unsigned_integral<u128>);
