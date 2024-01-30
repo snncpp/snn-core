@@ -746,7 +746,7 @@ namespace snn::range
         template <typename T, typename... Ts>
             requires(meta::none_v<std::is_const, T, Ts...> &&
                      meta::all_v<std::is_trivially_copyable, T, Ts...>)
-        constexpr bool drop_front_read(T& obj, Ts&... objs) noexcept
+        [[nodiscard]] constexpr bool drop_front_read(T& obj, Ts&... objs) noexcept
         {
             constexpr usize TotalSize = (sizeof(T) + ... + sizeof(Ts));
             if (count() >= TotalSize)
@@ -1300,7 +1300,7 @@ namespace snn::range
         template <typename T, typename... Ts>
             requires(meta::none_v<std::is_const, T, Ts...> &&
                      meta::all_v<std::is_trivially_copyable, T, Ts...>)
-        constexpr bool drop_front_read(T& obj, Ts&... objs) noexcept
+        [[nodiscard]] constexpr bool drop_front_read(T& obj, Ts&... objs) noexcept
         {
             constexpr usize TotalSize = (sizeof(T) + ... + sizeof(Ts));
             if (count() >= TotalSize)
