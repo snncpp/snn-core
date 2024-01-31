@@ -713,6 +713,18 @@ namespace snn::range
             return false;
         }
 
+        // Drop exactly N elements from the front.
+
+        constexpr bool drop_front_exactly_n(const usize count) noexcept
+        {
+            if (this->count() >= count)
+            {
+                first_ += count;
+                return true;
+            }
+            return false;
+        }
+
         template <predicate<char> OneArgPred>
         constexpr bool drop_front_if(OneArgPred p)
         {
@@ -1262,6 +1274,18 @@ namespace snn::range
             if (has_front<Offset>(s))
             {
                 first_ += (Offset + s.get().size());
+                return true;
+            }
+            return false;
+        }
+
+        // Drop exactly N elements from the front.
+
+        constexpr bool drop_front_exactly_n(const usize count) noexcept
+        {
+            if (this->count() >= count)
+            {
+                first_ += count;
                 return true;
             }
             return false;

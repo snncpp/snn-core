@@ -71,6 +71,45 @@ namespace snn::app
             return index == cp_rng.count();
         }
 
+        template <typename Rng = strrng>
+        constexpr bool test_drop_front_exactly_n()
+        {
+            array src{'a', 'b', 'c', 'd', 'e', 'f'};
+            Rng rng = src.range();
+            snn_require(rng.count() == 6);
+            snn_require(rng.view() == "abcdef");
+
+            snn_require(!rng.drop_front_exactly_n(99));
+            snn_require(!rng.drop_front_exactly_n(7));
+
+            snn_require(rng.count() == 6);
+            snn_require(rng.view() == "abcdef");
+
+            snn_require(rng.drop_front_exactly_n(0));
+            snn_require(rng.count() == 6);
+            snn_require(rng.view() == "abcdef");
+
+            snn_require(rng.drop_front_exactly_n(2));
+            snn_require(rng.count() == 4);
+            snn_require(rng.view() == "cdef");
+
+            snn_require(rng.drop_front_exactly_n(4));
+            snn_require(rng.count() == 0);
+            snn_require(rng.view() == "");
+
+            snn_require(rng.drop_front_exactly_n(0));
+            snn_require(rng.count() == 0);
+            snn_require(rng.view() == "");
+
+            snn_require(!rng.drop_front_exactly_n(1));
+            snn_require(!rng.drop_front_exactly_n(99));
+
+            snn_require(rng.count() == 0);
+            snn_require(rng.view() == "");
+
+            return true;
+        }
+
         template <typename strrng>
         bool test_drop_front_read()
         {
@@ -148,8 +187,12 @@ namespace snn
     void unittest()
     {
         snn_static_require(app::example());
+
         snn_require(app::test_drop_front_read<strrng>());
         snn_require(app::test_drop_front_read<cstrrng>());
+
+        snn_static_require(app::test_drop_front_exactly_n<strrng>());
+        snn_static_require(app::test_drop_front_exactly_n<cstrrng>());
 
         // constexpr contiguous()
         {
