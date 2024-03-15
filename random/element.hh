@@ -15,7 +15,7 @@ namespace snn::random
     // ### element
 
     template <typename Container>
-    [[nodiscard]] auto element(Container& container)
+    [[nodiscard]] auto element(Container& container) //
         -> optional<decltype(container.at(usize{}, promise::within_bounds))>
     {
         const auto random_index = random::number<usize>(0, container.count());

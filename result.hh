@@ -1024,7 +1024,7 @@ namespace snn
         void and_then(F&&) const& = delete;
 
         template <typename F>
-        [[nodiscard]] constexpr auto and_then(F&& f) && noexcept(noexcept(std::forward<F>(f)()))
+        [[nodiscard]] constexpr auto and_then(F&& f) && noexcept(noexcept(std::forward<F>(f)())) //
             -> result_wrap_t<decltype(std::forward<F>(f)()), ErrorStorage>
         {
             if (has_value())
@@ -1163,7 +1163,7 @@ namespace snn
 
     template <typename T, typename Err, typename V>
         requires(!is_result_v<V>)
-    constexpr auto operator<=>(const result<T, Err>& left, const V& right)
+    constexpr auto operator<=>(const result<T, Err>& left, const V& right) //
         -> decltype(left.value(promise::has_value) <=> right)
     {
         if (left.has_value())

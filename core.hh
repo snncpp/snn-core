@@ -520,7 +520,7 @@ namespace snn
     // ### constructible_from_iterators
 
     template <typename T>
-    concept constructible_from_iterators = requires(T& v) {
+    concept constructible_from_iterators = requires(T& v) { //
         T{meta::iterators, v.begin(), v.end()};
     };
 
@@ -548,8 +548,9 @@ namespace snn
     // Callable without the overhead of `std::invoke(...)`.
 
     template <typename Fn, typename... Args>
-    concept callable =
-        requires(Fn&& fn, Args&&... args) { std::forward<Fn>(fn)(std::forward<Args>(args)...); };
+    concept callable = requires(Fn&& fn, Args&&... args) { //
+        std::forward<Fn>(fn)(std::forward<Args>(args)...);
+    };
 
     // ### predicate
 

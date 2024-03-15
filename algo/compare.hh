@@ -15,7 +15,7 @@ namespace snn::algo
     // ### compare
 
     template <input_range FirstRng, input_range SecondRng>
-    [[nodiscard]] constexpr auto compare(FirstRng a, SecondRng b)
+    [[nodiscard]] constexpr auto compare(FirstRng a, SecondRng b) //
         -> decltype(a.front(promise::not_empty) <=> b.front(promise::not_empty))
     {
         if constexpr (random_access_range<FirstRng> && legacy_iterable<FirstRng> &&

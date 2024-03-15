@@ -612,8 +612,8 @@ namespace snn::fn
     template <typename LowerIncl, typename UpperExcl>
     in_interval(LowerIncl&&, UpperExcl&&) -> in_interval<LowerIncl, UpperExcl>;
     template <typename LowerIncl, typename UpperExcl, typename TwoArgPred>
-    in_interval(LowerIncl&&, UpperExcl&&, TwoArgPred)
-        -> in_interval<LowerIncl, UpperExcl, TwoArgPred>;
+    in_interval(LowerIncl&&, UpperExcl&&, TwoArgPred) //
+        ->in_interval<LowerIncl, UpperExcl, TwoArgPred>;
 
     // ### in_interval_incl
 
@@ -655,8 +655,8 @@ namespace snn::fn
     template <typename LowerIncl, typename UpperIncl>
     in_interval_incl(LowerIncl&&, UpperIncl&&) -> in_interval_incl<LowerIncl, UpperIncl>;
     template <typename LowerIncl, typename UpperIncl, typename TwoArgPred>
-    in_interval_incl(LowerIncl&&, UpperIncl&&, TwoArgPred)
-        -> in_interval_incl<LowerIncl, UpperIncl, TwoArgPred>;
+    in_interval_incl(LowerIncl&&, UpperIncl&&, TwoArgPred) //
+        ->in_interval_incl<LowerIncl, UpperIncl, TwoArgPred>;
 
     // ### in_tuple
 

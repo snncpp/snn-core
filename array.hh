@@ -701,7 +701,7 @@ namespace snn
     }
 
     template <typename T, usize Count>
-    constexpr auto operator<=>(const array<T, Count>& left, const array<T, Count>& right)
+    constexpr auto operator<=>(const array<T, Count>& left, const array<T, Count>& right) //
         -> decltype(left.priv_buf_[0] <=> right.priv_buf_[0])
     {
         // char is compared as unsigned char, just like array_view.
