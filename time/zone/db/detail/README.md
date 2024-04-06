@@ -18,7 +18,7 @@ Don't use a path with spaces or special characters in it.
 
 Replace:
 
-    CFLAGS=
+    #CFLAGS= -O 1
 
 With:
 

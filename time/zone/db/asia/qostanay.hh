@@ -23,7 +23,7 @@ namespace snn::time::zone::db::asia
             "KZ",
         };
 
-        inline constexpr array<zone::offset, 11> offsets{{
+        inline constexpr array<zone::offset, 12> offsets{{
             {"LMT", 15268, false},
             {"+04", 14400, false},
             {"+05", 18000, false},
@@ -35,9 +35,10 @@ namespace snn::time::zone::db::asia
             {"+04", 14400, false},
             {"+06", 21600, false},
             {"+06", 21600, true},
+            {"+05", 18000, false},
         }};
 
-        inline constexpr array<zone::transition, 51> transitions{{
+        inline constexpr array<zone::transition, 52> transitions{{
             {1, -1441167268},
             {2, -1247544000},
             {3, 354913200},
@@ -89,6 +90,7 @@ namespace snn::time::zone::db::asia
             {5, 1067115600},
             {6, 1080421200},
             {9, 1099170000},
+            {2, 1709229600},
         }};
     }
 
