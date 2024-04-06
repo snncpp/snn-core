@@ -18,6 +18,8 @@
 #include "snn-core/chr/common.hh"
 #include "snn-core/encoding/scheme.hh"
 #include "snn-core/mem/raw/is_equal.hh"
+#include "snn-core/mem/raw/load.hh"
+#include "snn-core/mem/raw/load_swap.hh"
 #include "snn-core/mem/raw/move.hh"
 #include "snn-core/pair/common.hh"
 #include "snn-core/range/contiguous.fwd.hh"
@@ -755,6 +757,30 @@ namespace snn::range
             return false;
         }
 
+        template <strict_integral Int>
+        [[nodiscard]] constexpr bool drop_front_load(Int& i) noexcept
+        {
+            if (count() >= sizeof(i))
+            {
+                i = static_cast<Int>(mem::raw::load<std::make_unsigned_t<Int>>(first_));
+                first_ += sizeof(i);
+                return true;
+            }
+            return false;
+        }
+
+        template <strict_integral Int>
+        [[nodiscard]] constexpr bool drop_front_load_swap(Int& i) noexcept
+        {
+            if (count() >= sizeof(i))
+            {
+                i = static_cast<Int>(mem::raw::load_swap<std::make_unsigned_t<Int>>(first_));
+                first_ += sizeof(i);
+                return true;
+            }
+            return false;
+        }
+
         template <typename T, typename... Ts>
             requires(meta::none_v<std::is_const, T, Ts...> &&
                      meta::all_v<std::is_trivially_copyable, T, Ts...>)
@@ -1316,6 +1342,30 @@ namespace snn::range
                     }
                 }
                 first_ += s.size();
+                return true;
+            }
+            return false;
+        }
+
+        template <strict_integral Int>
+        [[nodiscard]] constexpr bool drop_front_load(Int& i) noexcept
+        {
+            if (count() >= sizeof(i))
+            {
+                i = static_cast<Int>(mem::raw::load<std::make_unsigned_t<Int>>(first_));
+                first_ += sizeof(i);
+                return true;
+            }
+            return false;
+        }
+
+        template <strict_integral Int>
+        [[nodiscard]] constexpr bool drop_front_load_swap(Int& i) noexcept
+        {
+            if (count() >= sizeof(i))
+            {
+                i = static_cast<Int>(mem::raw::load_swap<std::make_unsigned_t<Int>>(first_));
+                first_ += sizeof(i);
                 return true;
             }
             return false;

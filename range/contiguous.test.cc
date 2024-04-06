@@ -110,6 +110,76 @@ namespace snn::app
             return true;
         }
 
+        template <typename Rng>
+        constexpr bool drop_front_load()
+        {
+            array src{'a', 'b', 'c', 'd', 'e', 'f'};
+            Rng rng = src.range();
+            snn_require(rng.count() == 6);
+            snn_require(rng.view() == "abcdef");
+
+            u32 a{};
+
+            snn_require(rng.drop_front_load(a));
+            snn_require(a == 0x64636261);
+            snn_require(rng.count() == 2);
+            snn_require(rng.view() == "ef");
+
+            snn_require(!rng.drop_front_load(a));
+            snn_require(a == 0x64636261); // Previous value.
+            snn_require(rng.count() == 2);
+            snn_require(rng.view() == "ef");
+
+            i16 b{};
+
+            snn_require(rng.drop_front_load(b));
+            snn_require(b == 0x6665);
+            snn_require(rng.count() == 0);
+            snn_require(rng.view() == "");
+
+            snn_require(!rng.drop_front_load(b));
+            snn_require(b == 0x6665); // Previous value.
+            snn_require(rng.count() == 0);
+            snn_require(rng.view() == "");
+
+            return true;
+        }
+
+        template <typename Rng>
+        constexpr bool drop_front_load_swap()
+        {
+            array src{'a', 'b', 'c', 'd', 'e', 'f'};
+            Rng rng = src.range();
+            snn_require(rng.count() == 6);
+            snn_require(rng.view() == "abcdef");
+
+            u32 a{};
+
+            snn_require(rng.drop_front_load_swap(a));
+            snn_require(a == 0x61626364);
+            snn_require(rng.count() == 2);
+            snn_require(rng.view() == "ef");
+
+            snn_require(!rng.drop_front_load_swap(a));
+            snn_require(a == 0x61626364); // Previous value.
+            snn_require(rng.count() == 2);
+            snn_require(rng.view() == "ef");
+
+            i16 b{};
+
+            snn_require(rng.drop_front_load_swap(b));
+            snn_require(b == 0x6566);
+            snn_require(rng.count() == 0);
+            snn_require(rng.view() == "");
+
+            snn_require(!rng.drop_front_load_swap(b));
+            snn_require(b == 0x6566); // Previous value.
+            snn_require(rng.count() == 0);
+            snn_require(rng.view() == "");
+
+            return true;
+        }
+
         template <typename strrng>
         bool test_drop_front_read()
         {
@@ -187,6 +257,12 @@ namespace snn
     void unittest()
     {
         snn_static_require(app::example());
+
+        snn_static_require(app::drop_front_load<strrng>());
+        snn_static_require(app::drop_front_load<cstrrng>());
+
+        snn_static_require(app::drop_front_load_swap<strrng>());
+        snn_static_require(app::drop_front_load_swap<cstrrng>());
 
         snn_require(app::test_drop_front_read<strrng>());
         snn_require(app::test_drop_front_read<cstrrng>());
