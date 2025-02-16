@@ -214,7 +214,7 @@ namespace snn
         }
         {
             constexpr decltype(auto) val = as_ref("abc");
-            static_assert(std::is_same_v<decltype(val), const val_or_ref<const char(&)[4]>>);
+            static_assert(std::is_same_v<decltype(val), const val_or_ref<const char (&)[4]>>);
         }
 
         // as_cref
@@ -232,7 +232,7 @@ namespace snn
         }
         {
             constexpr decltype(auto) val = as_cref("abc");
-            static_assert(std::is_same_v<decltype(val), const val_or_ref<const char(&)[4]>>);
+            static_assert(std::is_same_v<decltype(val), const val_or_ref<const char (&)[4]>>);
         }
 
         // as_val

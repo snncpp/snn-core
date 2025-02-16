@@ -489,13 +489,11 @@ namespace snn
     // * If a type is move constructible it must also be nothrow move constructible.
     // * If a type is move assignable it must also be nothrow move assignable.
 
-    // clang-format off
     template <typename T>
     concept sane = (!std::is_copy_constructible_v<T> || std::is_move_constructible_v<T>) &&
                    (!std::is_copy_assignable_v<T> || std::is_move_assignable_v<T>) &&
                    (!std::is_move_constructible_v<T> || std::is_nothrow_move_constructible_v<T>) &&
                    (!std::is_move_assignable_v<T> || std::is_nothrow_move_assignable_v<T>);
-    // clang-format on
 
     // ### value_type_or
 

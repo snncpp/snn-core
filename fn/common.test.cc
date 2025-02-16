@@ -286,7 +286,7 @@ namespace snn::app
             }
             {
                 auto f = fn::contains{"abc"};
-                static_assert(std::is_same_v<decltype(f), fn::contains<const char(&)[4]>>);
+                static_assert(std::is_same_v<decltype(f), fn::contains<const char (&)[4]>>);
             }
             {
                 int i{};
@@ -333,7 +333,7 @@ namespace snn::app
             }
             {
                 auto f = fn::has_back{"abc"};
-                static_assert(std::is_same_v<decltype(f), fn::has_back<const char(&)[4]>>);
+                static_assert(std::is_same_v<decltype(f), fn::has_back<const char (&)[4]>>);
             }
             {
                 int i{};
@@ -380,7 +380,7 @@ namespace snn::app
             }
             {
                 auto f = fn::has_front{"abc"};
-                static_assert(std::is_same_v<decltype(f), fn::has_front<const char(&)[4]>>);
+                static_assert(std::is_same_v<decltype(f), fn::has_front<const char (&)[4]>>);
             }
             {
                 int i{};
@@ -438,7 +438,7 @@ namespace snn::app
             }
             {
                 auto f = fn::is{fn::equal_to{}, "abc"};
-                static_assert(std::is_same_v<decltype(f), fn::is<fn::equal_to, const char(&)[4]>>);
+                static_assert(std::is_same_v<decltype(f), fn::is<fn::equal_to, const char (&)[4]>>);
             }
             {
                 fn::equal_to eq{};
@@ -742,12 +742,12 @@ namespace snn::app
                 str s2;
                 auto f = fn::in_tuple{a, 'x', "abcd", std::move(s1), 123, s2};
                 static_assert(
-                    std::is_same_v<decltype(f), fn::in_tuple<const char&, char, const char(&)[5],
+                    std::is_same_v<decltype(f), fn::in_tuple<const char&, char, const char (&)[5],
                                                              str, int, str&>>);
 
                 auto cpy = fn::in_tuple{f}; // Copying is preferred over wrapping.
                 static_assert(
-                    std::is_same_v<decltype(cpy), fn::in_tuple<const char&, char, const char(&)[5],
+                    std::is_same_v<decltype(cpy), fn::in_tuple<const char&, char, const char (&)[5],
                                                                str, int, str&>>);
             }
 
@@ -877,8 +877,8 @@ namespace snn::app
             snn_require(return_true(123, "foo", "bar") == true);
 
             auto return_hello = fn::ret{"hello"};
-            static_assert(std::is_same_v<decltype(return_hello), fn::ret<const char(&)[6]>>);
-            static_assert(std::is_same_v<decltype(return_hello()), const char(&)[6]>);
+            static_assert(std::is_same_v<decltype(return_hello), fn::ret<const char (&)[6]>>);
+            static_assert(std::is_same_v<decltype(return_hello()), const char (&)[6]>);
             snn_require(return_hello() == cstrview{"hello"});
             snn_require(return_hello(123) == cstrview{"hello"});
             snn_require(return_hello(123, "foo", "bar") == cstrview{"hello"});
