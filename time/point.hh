@@ -1167,7 +1167,7 @@ namespace snn::time
             const u16 month = ymd.m;
             const u16 day   = ymd.d;
 
-            // Day of week where monday is 0.
+            // Day of week where Monday is 0.
             const auto wday = static_cast<u8>((day_of_week_(abs) + 6) % 7);
 
             // constexpr u8 mon = 0;

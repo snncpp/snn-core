@@ -15,7 +15,7 @@ A modern, safer alternative to the _C++ Standard Library_ (for Linux/BSD).
  * Validation member functions like `.all(...)` and `.any(...)` on iterable containers.
  * Safe integral class and a decimal class with a static/dynamic scale ([num/](num/)).
  * Command line options parsing ([env/](env/)).
- * Filesystem library ([file/](file/)).
+ * File system library ([file/](file/)).
  * Fast JSON parsing ([json/](json/)).
  * Go-like [build-tool][buildtool] with fuzzing support.
  * And much more...
