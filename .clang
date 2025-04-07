@@ -13,6 +13,7 @@
 -Wno-c++98-compat-pedantic
 -Wno-ctad-maybe-unsupported
 -Wno-padded
+-Wno-switch-default
 -Wno-switch-enum
 -Wno-weak-vtables
 
