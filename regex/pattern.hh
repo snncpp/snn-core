@@ -23,6 +23,7 @@ namespace snn::regex
     inline constexpr auto ecmascript = std::regex::ECMAScript;
     inline constexpr auto icase      = std::regex::icase;
     inline constexpr auto optimize   = std::regex::optimize;
+    inline constexpr auto multiline  = std::regex::multiline;
 
     // ## Classes
 
