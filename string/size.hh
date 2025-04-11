@@ -40,7 +40,12 @@ namespace snn::string
     {
         if (first != nullptr)
         {
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
+
             return __builtin_strlen(first);
+
+            SNN_DIAGNOSTIC_POP
         }
         return 0;
     }
@@ -48,6 +53,11 @@ namespace snn::string
     [[nodiscard]] constexpr usize size(const not_null<const char*> first,
                                        promise::null_terminated_t) noexcept
     {
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
+
         return __builtin_strlen(first.get());
+
+        SNN_DIAGNOSTIC_POP
     }
 }

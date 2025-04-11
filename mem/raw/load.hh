@@ -35,7 +35,12 @@ namespace snn::mem::raw
             }
             else
             {
+                SNN_DIAGNOSTIC_PUSH
+                SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
+
                 __builtin_memcpy(&i, data, sizeof(i));
+
+                SNN_DIAGNOSTIC_POP
             }
             return i;
         }
@@ -57,7 +62,12 @@ namespace snn::mem::raw
             }
             else
             {
+                SNN_DIAGNOSTIC_PUSH
+                SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
+
                 __builtin_memcpy(&i, data, sizeof(i));
+
+                SNN_DIAGNOSTIC_POP
             }
             return i;
         }
@@ -83,7 +93,12 @@ namespace snn::mem::raw
             }
             else
             {
+                SNN_DIAGNOSTIC_PUSH
+                SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
+
                 __builtin_memcpy(&i, data, sizeof(i));
+
+                SNN_DIAGNOSTIC_POP
             }
             return i;
         }

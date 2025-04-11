@@ -22,47 +22,53 @@ namespace snn::mem
                                   const not_null<T*> first_uninitialized, promise::no_overlap_t)
         noexcept(std::is_nothrow_copy_constructible_v<T>)
     {
-        SNN_DIAGNOSTIC_PUSH
-        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
-
         const T* cur  = first_copy.get();
         const T* last = last_copy.get();
 
         snn_should(cur <= last);
 
-        if (!std::is_constant_evaluated() && std::is_trivially_copyable_v<T>)
-        {
-            const auto count = static_cast<usize>(last - cur);
-            mem::raw::copy(first_copy, first_uninitialized, byte_size{count * sizeof(T)},
-                           promise::no_overlap);
-        }
-        else
-        {
-            T* cur_uninit = first_uninitialized.get();
-            while (cur != last)
-            {
-                if constexpr (std::is_nothrow_copy_constructible_v<T>)
-                {
-                    mem::construct(not_null{cur_uninit}, *cur);
-                }
-                else
-                {
-                    try
-                    {
-                        mem::construct(not_null{cur_uninit}, *cur);
-                    }
-                    catch (...)
-                    {
-                        mem::destruct(first_uninitialized.get(), cur_uninit);
-                        throw;
-                    }
-                }
+        // Optimal path.
 
-                ++cur;
-                ++cur_uninit;
+        if constexpr (std::is_trivially_copyable_v<T>)
+        {
+            if (!std::is_constant_evaluated())
+            {
+                const auto count = static_cast<usize>(last - cur);
+                mem::raw::copy(first_copy, first_uninitialized, byte_size{count * sizeof(T)},
+                               promise::no_overlap);
+                return;
             }
         }
 
-        SNN_DIAGNOSTIC_POP
+        // General path.
+
+        T* cur_uninit = first_uninitialized.get();
+        while (cur != last)
+        {
+            if constexpr (std::is_nothrow_copy_constructible_v<T>)
+            {
+                mem::construct(not_null{cur_uninit}, *cur);
+            }
+            else
+            {
+                try
+                {
+                    mem::construct(not_null{cur_uninit}, *cur);
+                }
+                catch (...)
+                {
+                    mem::destruct(first_uninitialized.get(), cur_uninit);
+                    throw;
+                }
+            }
+
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
+            ++cur;
+            ++cur_uninit;
+
+            SNN_DIAGNOSTIC_POP
+        }
     }
 }

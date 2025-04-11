@@ -4,7 +4,7 @@
 #include "snn-core/mem/raw/load.hh"
 
 #include "snn-core/unittest.hh"
-#include <cstring> // memcpy
+#include "snn-core/mem/raw/copy.hh"
 
 namespace snn::app
 {
@@ -21,7 +21,7 @@ namespace snn::app
         u16 load_ref<u16>(const char* const data) noexcept
         {
             u16 i = 0;
-            std::memcpy(&i, data, sizeof(i));
+            mem::raw::copy(not_null{data}, not_null{&i}, byte_size{sizeof(i)}, promise::no_overlap);
             return i;
         }
 
@@ -29,7 +29,7 @@ namespace snn::app
         u32 load_ref<u32>(const char* const data) noexcept
         {
             u32 i = 0;
-            std::memcpy(&i, data, sizeof(i));
+            mem::raw::copy(not_null{data}, not_null{&i}, byte_size{sizeof(i)}, promise::no_overlap);
             return i;
         }
 
@@ -37,7 +37,7 @@ namespace snn::app
         u64 load_ref<u64>(const char* const data) noexcept
         {
             u64 i = 0;
-            std::memcpy(&i, data, sizeof(i));
+            mem::raw::copy(not_null{data}, not_null{&i}, byte_size{sizeof(i)}, promise::no_overlap);
             return i;
         }
     }

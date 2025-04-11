@@ -17,13 +17,23 @@ namespace snn::mem::raw
     [[nodiscard]] constexpr bool is_equal(const not_null<A*> a, const not_null<B*> b,
                                           const byte_size size) noexcept
     {
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
+
         return __builtin_memcmp(a.get(), b.get(), size.get()) == 0;
+
+        SNN_DIAGNOSTIC_POP
     }
 
     template <usize ByteSize, same_as<const char> ConstChar, usize N>
         requires(N == ByteSize + 1)
     [[nodiscard]] constexpr bool is_equal(const not_null<const char*> a, ConstChar (&b)[N]) noexcept
     {
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
+
         return __builtin_memcmp(a.get(), b, ByteSize) == 0;
+
+        SNN_DIAGNOSTIC_POP
     }
 }

@@ -94,7 +94,13 @@ namespace snn::mem
                 if (new_ptr != nullptr && old_ptr != nullptr)
                 {
                     const usize copy_count = math::min(new_count.get(), use_count);
+
+                    SNN_DIAGNOSTIC_PUSH
+                    SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
+
                     __builtin_memcpy(new_ptr, old_ptr, copy_count * sizeof(T));
+
+                    SNN_DIAGNOSTIC_POP
 
                     ::delete[] old_ptr; // Destruct _and_ release memory.
                 }

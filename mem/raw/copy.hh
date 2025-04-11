@@ -22,6 +22,9 @@ namespace snn::mem::raw
     constexpr void copy(const not_null<const From*> from, const not_null<To*> to,
                         const byte_size size, promise::no_overlap_t) noexcept
     {
+        static_assert(std::is_trivially_copyable_v<From>);
+        static_assert(std::is_trivially_copyable_v<To>);
+
 #if SNN_SHOULD_BOOL
         if (!std::is_constant_evaluated())
         {
@@ -38,7 +41,12 @@ namespace snn::mem::raw
         }
 #endif
 
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
+
         __builtin_memcpy(to.get(), from.get(), size.get());
+
+        SNN_DIAGNOSTIC_POP
     }
 
     template <usize ByteSize, typename From, typename To>
@@ -46,6 +54,9 @@ namespace snn::mem::raw
     constexpr void copy(const not_null<const From*> from, const not_null<To*> to,
                         promise::no_overlap_t) noexcept
     {
+        static_assert(std::is_trivially_copyable_v<From>);
+        static_assert(std::is_trivially_copyable_v<To>);
+
 #if SNN_SHOULD_BOOL
         if (!std::is_constant_evaluated())
         {
@@ -62,7 +73,11 @@ namespace snn::mem::raw
         }
 #endif
 
-        __builtin_memcpy(to.get(), from.get(), ByteSize);
-    }
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
 
+        __builtin_memcpy(to.get(), from.get(), ByteSize);
+
+        SNN_DIAGNOSTIC_POP
+    }
 }

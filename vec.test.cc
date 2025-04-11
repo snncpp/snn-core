@@ -6,7 +6,6 @@
 #include "snn-core/unittest.hh"
 #include "snn-core/fn/common.hh"
 #include "snn-core/algo/is_equal.hh"
-#include <cstring> // memcmp
 #include <string>  // string
 
 namespace snn::app
@@ -1155,7 +1154,8 @@ namespace snn::app
 
                 if (!std::is_constant_evaluated())
                 {
-                    snn_require(std::memcmp(v.begin()[0].data(), s.data().get(), 40) == 0);
+                    snn_require(mem::raw::is_equal(not_null{v.begin()[0].data()}, s.data(),
+                                                   byte_size{40}));
                 }
             }
 

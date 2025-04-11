@@ -74,9 +74,6 @@ namespace snn::mem
 
     // ### allocator
 
-    SNN_DIAGNOSTIC_PUSH
-    SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
-
     template <typename T>
     class allocator final
     {
@@ -159,67 +156,81 @@ namespace snn::mem
                 return optional_allocation<T*>{nullptr};
             }
 
-            if (!std::is_constant_evaluated() && is_trivially_relocatable_v<T>)
-            {
-                void* new_ptr = nullptr;
+            // Optimal path.
 
-                // Trivially copyable (no destructor), new allocation or no destruction needed?
-                if (std::is_trivially_copyable_v<T> || old_ptr == nullptr ||
-                    new_count.get() >= use_count) [[likely]]
+            if constexpr (is_trivially_relocatable_v<T>)
+            {
+                if (!std::is_constant_evaluated())
                 {
-                    new_ptr = std::realloc(old_ptr, new_count.get() * sizeof(T));
-                }
-                else
-                {
-                    new_ptr = std::malloc(new_count.get() * sizeof(T));
-                    if (new_ptr != nullptr)
+                    void* new_ptr = nullptr;
+
+                    // Trivially copyable (no destructor), new allocation or no destruction needed?
+                    if (std::is_trivially_copyable_v<T> || old_ptr == nullptr ||
+                        new_count.get() >= use_count) [[likely]]
                     {
-                        snn_should(new_count.get() < use_count);
-
-                        const usize relocate_count = new_count.get();
-                        const usize destruct_count = use_count - relocate_count;
-
-                        mem::relocate(not_null{old_ptr}, not_null{old_ptr + relocate_count},
-                                      not_null{static_cast<T*>(new_ptr)});
-
-                        mem::destruct_n(old_ptr + relocate_count, destruct_count);
-
-                        std::free(old_ptr);
+                        new_ptr = std::realloc(old_ptr, new_count.get() * sizeof(T));
                     }
-                }
+                    else
+                    {
+                        new_ptr = std::malloc(new_count.get() * sizeof(T));
+                        if (new_ptr != nullptr)
+                        {
+                            snn_should(new_count.get() < use_count);
 
-                return optional_allocation{static_cast<T*>(new_ptr)};
+                            const usize relocate_count = new_count.get();
+                            const usize destruct_count = use_count - relocate_count;
+
+                            SNN_DIAGNOSTIC_PUSH
+                            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
+                            mem::relocate(not_null{old_ptr}, not_null{old_ptr + relocate_count},
+                                          not_null{static_cast<T*>(new_ptr)});
+
+                            mem::destruct_n(old_ptr + relocate_count, destruct_count);
+
+                            SNN_DIAGNOSTIC_POP
+
+                            std::free(old_ptr);
+                        }
+                    }
+
+                    return optional_allocation{static_cast<T*>(new_ptr)};
+                }
             }
-            else
+
+            // General path.
+
+            std::allocator<T> stdalloc;
+
+            T* new_ptr = nullptr;
+
+            try
             {
-                std::allocator<T> stdalloc;
-
-                T* new_ptr = nullptr;
-
-                try
-                {
-                    new_ptr = stdalloc.allocate(new_count.get());
-                }
-                catch (...)
-                {
-                    snn_should(new_ptr == nullptr);
-                }
-
-                if (new_ptr != nullptr && old_ptr != nullptr)
-                {
-                    const usize move_count = math::min(new_count.get(), use_count);
-                    mem::move_construct(not_null{old_ptr}, not_null{old_ptr + move_count},
-                                        not_null{new_ptr}, promise::no_overlap);
-
-                    mem::destruct_n(old_ptr, use_count);
-
-                    stdalloc.deallocate(old_ptr, initial_count);
-                }
-
-                return optional_allocation{new_ptr};
+                new_ptr = stdalloc.allocate(new_count.get());
             }
+            catch (...)
+            {
+                snn_should(new_ptr == nullptr);
+            }
+
+            if (new_ptr != nullptr && old_ptr != nullptr)
+            {
+                const usize move_count = math::min(new_count.get(), use_count);
+
+                SNN_DIAGNOSTIC_PUSH
+                SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
+                mem::move_construct(not_null{old_ptr}, not_null{old_ptr + move_count},
+                                    not_null{new_ptr}, promise::no_overlap);
+
+                SNN_DIAGNOSTIC_POP
+
+                mem::destruct_n(old_ptr, use_count);
+
+                stdalloc.deallocate(old_ptr, initial_count);
+            }
+
+            return optional_allocation{new_ptr};
         }
     };
-
-    SNN_DIAGNOSTIC_POP
 }

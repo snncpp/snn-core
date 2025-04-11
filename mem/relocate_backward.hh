@@ -43,20 +43,26 @@ namespace snn::mem
         }
 #endif
 
-        if (!std::is_constant_evaluated() && is_trivially_relocatable_v<T>)
+        // Optimal path.
+
+        if constexpr (is_trivially_relocatable_v<T>)
         {
-            mem::raw::move(not_null<const T*>{first}, not_null{first_uninit},
-                           byte_size{count * sizeof(T)});
-        }
-        else
-        {
-            while (first != last)
+            if (!std::is_constant_evaluated())
             {
-                --last;
-                --last_uninit;
-                mem::construct(not_null{last_uninit}, std::move(*last));
-                mem::destruct(not_null{last});
+                mem::raw::move(not_null<const T*>{first}, not_null{first_uninit},
+                               byte_size{count * sizeof(T)});
+                return;
             }
+        }
+
+        // General path.
+
+        while (first != last)
+        {
+            --last;
+            --last_uninit;
+            mem::construct(not_null{last_uninit}, std::move(*last));
+            mem::destruct(not_null{last});
         }
 
         SNN_DIAGNOSTIC_POP

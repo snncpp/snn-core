@@ -7,6 +7,7 @@
 
 #include "snn-core/null_term.hh"
 #include "snn-core/file/type.hh"
+#include "snn-core/string/size.hh"
 
 namespace snn::file::dir
 {
@@ -32,7 +33,8 @@ namespace snn::file::dir
               name_size_maybe_{name_size},
               type_{type}
         {
-            snn_should(__builtin_strlen(name_data_.get()) == name_size_maybe_);
+            snn_should(string::size(name_data_.not_null(), promise::null_terminated) ==
+                       name_size_maybe_);
         }
 
         // #### Name
@@ -110,9 +112,11 @@ namespace snn::file::dir
         constexpr usize name_size_() const noexcept
         {
             if (name_size_maybe_ != constant::limit<u32>::max)
+            {
                 return name_size_maybe_;
-            else
-                return __builtin_strlen(name_data_.get());
+            }
+
+            return string::size(name_data_.not_null(), promise::null_terminated);
         }
     };
 }

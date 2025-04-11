@@ -104,15 +104,32 @@ static_assert(std::is_same_v<std::uint8_t, unsigned char>, "std::uint8_t must be
 
 // ### SNN_DIAGNOSTIC_[...]
 
-#if defined(__clang__) && defined(__clang_major__) && __clang_major__ >= 16
+#if defined(__clang__) && defined(__clang_major__)
 #define SNN_DIAGNOSTIC_PUSH _Pragma("clang diagnostic push")
 #define SNN_DIAGNOSTIC_POP  _Pragma("clang diagnostic pop")
+#define SNN_DIAGNOSTIC_IGNORE_FORMAT_NONLITERAL                                                  \
+    _Pragma("clang diagnostic ignored \"-Wformat-nonliteral\"")
+
+#if __clang_major__ >= 16
 #define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE                                                  \
     _Pragma("clang diagnostic ignored \"-Wunsafe-buffer-usage\"")
 #else
+#define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+#endif
+
+#if __clang_major__ >= 20
+#define SNN_DIAGNOSTIC_IGNORE_NONTRIVIAL_MEMCALL                                                   \
+    _Pragma("clang diagnostic ignored \"-Wnontrivial-memcall\"")
+#define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL                                     \
+    _Pragma("clang diagnostic ignored \"-Wunsafe-buffer-usage-in-libc-call\"")
+#else
+#define SNN_DIAGNOSTIC_IGNORE_NONTRIVIAL_MEMCALL
+#define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
+#endif
+#else
 #define SNN_DIAGNOSTIC_PUSH
 #define SNN_DIAGNOSTIC_POP
-#define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+#define SNN_DIAGNOSTIC_IGNORE_FORMAT_NONLITERAL
 #endif
 
 // ### SNN_INT128_BOOL

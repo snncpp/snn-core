@@ -16,7 +16,12 @@ namespace snn::mem::raw
     template <typename T>
     void fill(const not_null<T*> destination, const byte_size size, const byte value) noexcept
     {
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
+
         __builtin_memset(destination.get(), value, size.get());
+
+        SNN_DIAGNOSTIC_POP
     }
 
     template <>
@@ -25,7 +30,12 @@ namespace snn::mem::raw
     {
         if (!std::is_constant_evaluated())
         {
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
+
             __builtin_memset(destination.get(), value, size.get());
+
+            SNN_DIAGNOSTIC_POP
         }
         else
         {
@@ -47,7 +57,12 @@ namespace snn::mem::raw
     {
         if (!std::is_constant_evaluated())
         {
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
+
             __builtin_memset(destination.get(), value, size.get());
+
+            SNN_DIAGNOSTIC_POP
         }
         else
         {
@@ -62,5 +77,4 @@ namespace snn::mem::raw
             }
         }
     }
-
 }

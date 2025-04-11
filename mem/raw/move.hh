@@ -21,13 +21,31 @@ namespace snn::mem::raw
     constexpr void move(const not_null<const From*> from, const not_null<To*> to,
                         const byte_size size) noexcept
     {
+        static_assert(is_trivially_relocatable_v<From>);
+        static_assert(is_trivially_relocatable_v<To>);
+
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
+        SNN_DIAGNOSTIC_IGNORE_NONTRIVIAL_MEMCALL
+
         __builtin_memmove(to.get(), from.get(), size.get());
+
+        SNN_DIAGNOSTIC_POP
     }
 
     template <usize ByteSize, typename From, typename To>
         requires(sizeof(From) == 1 && sizeof(To) == 1)
     constexpr void move(const not_null<const From*> from, const not_null<To*> to) noexcept
     {
+        static_assert(is_trivially_relocatable_v<From>);
+        static_assert(is_trivially_relocatable_v<To>);
+
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
+        SNN_DIAGNOSTIC_IGNORE_NONTRIVIAL_MEMCALL
+
         __builtin_memmove(to.get(), from.get(), ByteSize);
+
+        SNN_DIAGNOSTIC_POP
     }
 }

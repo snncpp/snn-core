@@ -195,10 +195,9 @@ namespace snn
 
             array<char, 64> fixed_buf;
 
-#if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wformat-nonliteral"
-#endif
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_FORMAT_NONLITERAL
+            SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
 
             int ret = std::snprintf(fixed_buf.writable().get(), fixed_buf.size(),
                                     fmt_buf.data().get(), d);
@@ -229,9 +228,7 @@ namespace snn
                 throw_or_abort(fmt::error::printf_error);
             }
 
-#if defined(__clang__)
-#pragma clang diagnostic pop
-#endif
+            SNN_DIAGNOSTIC_POP
         }
 
         template <typename Buf>
