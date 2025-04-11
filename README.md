@@ -47,8 +47,8 @@ This library currently targets [POSIX][posix] and is developed and tested on:
 
 | Operating system     | Compiler             |
 | -------------------- | -------------------- |
-| FreeBSD 13.1         | Clang 13+            |
-| Fedora Linux 36      | Clang 13+            |
+| FreeBSD 14.2         | Clang 18+            |
+| Fedora Linux 41      | Clang 19+            |
 
 
 ## Limitations
