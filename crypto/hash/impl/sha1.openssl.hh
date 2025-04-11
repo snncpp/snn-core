@@ -10,10 +10,8 @@
 // functions (`EVP_MD_CTX_new()`) that can fail is not what we want here. Note that the OpenSSL man
 // page example for `EVP_DIGESTINIT` does not take allocation failure into account.
 
-#if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-#endif
+SNN_DIAGNOSTIC_PUSH
+SNN_DIAGNOSTIC_IGNORE_DEPRECATED_DECLARATIONS
 
 namespace snn::crypto::hash
 {
@@ -55,6 +53,4 @@ namespace snn::crypto::hash
     };
 }
 
-#if defined(__clang__)
-#pragma clang diagnostic pop
-#endif
+SNN_DIAGNOSTIC_POP

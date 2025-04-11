@@ -107,7 +107,11 @@ static_assert(std::is_same_v<std::uint8_t, unsigned char>, "std::uint8_t must be
 #if defined(__clang__) && defined(__clang_major__)
 #define SNN_DIAGNOSTIC_PUSH _Pragma("clang diagnostic push")
 #define SNN_DIAGNOSTIC_POP  _Pragma("clang diagnostic pop")
-#define SNN_DIAGNOSTIC_IGNORE_FORMAT_NONLITERAL                                                  \
+#define SNN_DIAGNOSTIC_IGNORE_DEPRECATED_DECLARATIONS                                              \
+    _Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")
+#define SNN_DIAGNOSTIC_IGNORE_EXIT_TIME_DESTRUCTORS                                                \
+    _Pragma("clang diagnostic ignored \"-Wexit-time-destructors\"")
+#define SNN_DIAGNOSTIC_IGNORE_FORMAT_NONLITERAL                                                    \
     _Pragma("clang diagnostic ignored \"-Wformat-nonliteral\"")
 
 #if __clang_major__ >= 16
@@ -129,6 +133,8 @@ static_assert(std::is_same_v<std::uint8_t, unsigned char>, "std::uint8_t must be
 #else
 #define SNN_DIAGNOSTIC_PUSH
 #define SNN_DIAGNOSTIC_POP
+#define SNN_DIAGNOSTIC_IGNORE_DEPRECATED_DECLARATIONS
+#define SNN_DIAGNOSTIC_IGNORE_EXIT_TIME_DESTRUCTORS
 #define SNN_DIAGNOSTIC_IGNORE_FORMAT_NONLITERAL
 #endif
 

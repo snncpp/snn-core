@@ -48,14 +48,13 @@ namespace snn::detail::strcore
 
         static not_null<char*> writable() noexcept
         {
-#if defined(__clang__)
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wexit-time-destructors"
-#endif
+            SNN_DIAGNOSTIC_PUSH
+            SNN_DIAGNOSTIC_IGNORE_EXIT_TIME_DESTRUCTORS
+
             static canary c;
-#if defined(__clang__)
-#pragma clang diagnostic pop
-#endif
+
+            SNN_DIAGNOSTIC_POP
+
             return not_null{c.buf_};
         }
 
