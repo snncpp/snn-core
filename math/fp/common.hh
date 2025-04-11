@@ -6,6 +6,7 @@
 #pragma once
 
 #include "snn-core/math/common.hh"
+#include <bit>   // bit_cast
 #include <cmath> // isinf, round, roundf, roundl
 
 namespace snn::math::fp
@@ -129,9 +130,12 @@ namespace snn::math::fp
     // ### is_bitwise_equal
 
     template <floating_point Fp>
-    [[nodiscard]] bool is_bitwise_equal(const Fp a, const not_deduced_t<Fp> b) noexcept
+    [[nodiscard]] constexpr bool is_bitwise_equal(const Fp a, const not_deduced_t<Fp> b) noexcept
     {
-        return __builtin_memcmp(&a, &b, sizeof(Fp)) == 0;
+        static_assert(sizeof(Fp) == sizeof(float) || sizeof(Fp) == sizeof(double),
+                      "Only standard floating-point types without padding are supported.");
+        using UInt = promote_integral_t<u8, sizeof(Fp) * constant::bits_per_byte>;
+        return std::bit_cast<UInt>(a) == std::bit_cast<UInt>(b);
     }
 
     // ### is_infinity

@@ -266,16 +266,45 @@ namespace snn
             snn_require(!math::fp::is_almost_equal(nan, nan, nan));
         }
 
-        // bool is_bitwise_equal(const F a, const not_deduced_t<F> b)
+        // constexpr bool is_bitwise_equal(const F a, const not_deduced_t<F> b)
         {
             constexpr auto infinity = constant::fp::limit<double>::infinity;
             constexpr auto nan      = constant::fp::limit<double>::nan;
 
+            static_assert(math::fp::is_bitwise_equal(infinity, infinity));
+            static_assert(math::fp::is_bitwise_equal(nan, nan));
+            static_assert(math::fp::is_bitwise_equal(123.456, 123.456));
+
+            snn_require(math::fp::is_bitwise_equal(infinity, infinity));
             snn_require(math::fp::is_bitwise_equal(nan, nan));
             snn_require(math::fp::is_bitwise_equal(123.456, 123.456));
 
+            static_assert(!math::fp::is_bitwise_equal(0.0, -0.0));
+            static_assert(!math::fp::is_bitwise_equal(123.456, 123.457));
+            static_assert(!math::fp::is_bitwise_equal(infinity, -infinity));
+
             snn_require(!math::fp::is_bitwise_equal(0.0, -0.0));
             snn_require(!math::fp::is_bitwise_equal(123.456, 123.457));
+            snn_require(!math::fp::is_bitwise_equal(infinity, -infinity));
+        }
+        {
+            constexpr auto infinity = constant::fp::limit<float>::infinity;
+            constexpr auto nan      = constant::fp::limit<float>::nan;
+
+            static_assert(math::fp::is_bitwise_equal(infinity, infinity));
+            static_assert(math::fp::is_bitwise_equal(nan, nan));
+            static_assert(math::fp::is_bitwise_equal(123.456f, 123.456f));
+
+            snn_require(math::fp::is_bitwise_equal(infinity, infinity));
+            snn_require(math::fp::is_bitwise_equal(nan, nan));
+            snn_require(math::fp::is_bitwise_equal(123.456f, 123.456f));
+
+            static_assert(!math::fp::is_bitwise_equal(0.0f, -0.0f));
+            static_assert(!math::fp::is_bitwise_equal(123.456f, 123.457f));
+            static_assert(!math::fp::is_bitwise_equal(infinity, -infinity));
+
+            snn_require(!math::fp::is_bitwise_equal(0.0f, -0.0f));
+            snn_require(!math::fp::is_bitwise_equal(123.456f, 123.457f));
             snn_require(!math::fp::is_bitwise_equal(infinity, -infinity));
         }
 
