@@ -114,7 +114,7 @@ namespace snn
             snn_require(!math::fp::is_within_bounds<u64>(9007199254740992.0));
             snn_require(!math::fp::is_within_bounds<u64>(-9007199254740992.0));
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             // long double
 
             // Max
@@ -204,7 +204,7 @@ namespace snn
             static_assert(!math::fp::is_within_bounds<double>(constant::limit<i64>::min));
             static_assert(!math::fp::is_within_bounds<double>(constant::limit<i64>::max));
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             // long double
 
             constexpr i128 max = constant::limit<u64>::max;

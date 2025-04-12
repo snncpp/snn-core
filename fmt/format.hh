@@ -138,7 +138,7 @@ namespace snn::fmt
             {
                 unsigned_integral,
                 signed_integral,
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
                 unsigned_128bit_integral,
                 signed_128bit_integral,
 #endif
@@ -202,7 +202,7 @@ namespace snn::fmt
             {
             }
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             constexpr explicit argument(const i128& i) noexcept
                 : signed_128bit_integral_{i},
                   type_{type::signed_128bit_integral}
@@ -238,7 +238,7 @@ namespace snn::fmt
                                 promise::no_overlap);
                         break;
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
                     case type::unsigned_128bit_integral:
                         format_(unsigned_128bit_integral_, format_string, ctx, append_to,
                                 promise::no_overlap);
@@ -316,7 +316,7 @@ namespace snn::fmt
             union
             {
                 cstrview string_;
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
                 u128 unsigned_128bit_integral_;
                 i128 signed_128bit_integral_;
 #endif

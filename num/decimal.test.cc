@@ -799,7 +799,7 @@ namespace snn::app
                 static_assert(num::decimal<6>{-5}.round(6).value() == -5);
             }
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             {
                 constexpr num::decimal<18, i128> m{"982638329232.796222182832823234"};
                 snn_require(m.format(2, '.', ' ') == "982 638 329 232.80");

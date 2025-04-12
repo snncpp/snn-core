@@ -279,7 +279,7 @@ namespace snn::json
             return constant::value_initialized<node>;
         }
 
-#if SNN_SHOULD_BOOL
+#if SNN_SHOULD_ENABLED
         static constexpr bool is_valid_(const cstrview s, const enum type t) noexcept
         {
             return t == type::string ||

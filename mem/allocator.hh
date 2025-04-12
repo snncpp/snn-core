@@ -81,7 +81,7 @@ namespace snn::mem
         static_assert(!std::is_array_v<T>, "Array type is currently not supported.");
 
         // The pointer returned by `malloc` is suitably aligned for any scalar type.
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
         static_assert(alignof(T) <= alignof(u128), "Alignment must be malloc() compatible.");
 #else
         static_assert(alignof(T) <= alignof(u64), "Alignment must be malloc() compatible.");

@@ -274,7 +274,7 @@ namespace snn
         static_assert(math::clamp<i32>(constant::limit<u64>::min) == constant::limit<u64>::min);
         static_assert(math::clamp<i32>(constant::limit<u64>::max) == constant::limit<i32>::max);
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
         static_assert(math::clamp<u32>(constant::limit<i128>::min) == constant::limit<u32>::min);
         static_assert(math::clamp<u32>(constant::limit<i128>::max) == constant::limit<u32>::max);
         static_assert(math::clamp<u32>(constant::limit<u128>::min) == constant::limit<u128>::min);
@@ -417,7 +417,7 @@ namespace snn
             }
         }
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
         static_assert(math::count_digits<base::decimal, u128>(0).get() == 1);
         static_assert(math::count_digits<base::decimal, u128>(1).get() == 1);
         static_assert(math::count_digits<base::decimal, u128>(10).get() == 2);
@@ -525,7 +525,7 @@ namespace snn
         static_assert(math::max_digits<i64, base::octal>().get() == 22);
         static_assert(math::max_digits<u64, base::octal>().get() == 22);
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
         static_assert(math::max_digits<i128, base::binary>().get() == 128);
         static_assert(math::max_digits<u128, base::binary>().get() == 128);
 
@@ -596,7 +596,7 @@ namespace snn
         static_assert(!math::is_within_bounds<usize>(constant::limit<i16>::min));
         static_assert(!math::is_within_bounds<usize>(constant::limit<i32>::min));
         static_assert(!math::is_within_bounds<usize>(constant::limit<i64>::min));
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
         static_assert(math::is_within_bounds<usize>(constant::limit<u128>::min));
         static_assert(!math::is_within_bounds<usize>(constant::limit<u128>::max));
         static_assert(!math::is_within_bounds<usize>(constant::limit<i128>::min));
@@ -628,7 +628,7 @@ namespace snn
         static_assert(math::is_within_bounds<isize>(constant::limit<u32>::min));
         static_assert(math::is_within_bounds<isize>(constant::limit<u64>::min));
         static_assert(!math::is_within_bounds<isize>(constant::limit<usize>::max));
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
         static_assert(math::is_within_bounds<isize>(constant::limit<u128>::min));
         static_assert(!math::is_within_bounds<isize>(constant::limit<u128>::max));
         static_assert(!math::is_within_bounds<isize>(constant::limit<i128>::min));

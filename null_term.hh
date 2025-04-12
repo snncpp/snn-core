@@ -27,7 +27,7 @@ namespace snn
         constexpr explicit null_term(const snn::not_null<Ptr> ptr) noexcept
             : ptr_{ptr}
         {
-            if constexpr (SNN_ADDRESS_SANITIZER_BOOL)
+            if constexpr (SNN_ADDRESS_SANITIZER_ENABLED)
             {
                 snn_should(count_() < constant::limit<usize>::max);
             }
@@ -92,7 +92,7 @@ namespace snn
         constexpr explicit null_term(const snn::not_null<const char*> s) noexcept
             : s_{s}
         {
-            if constexpr (SNN_ADDRESS_SANITIZER_BOOL)
+            if constexpr (SNN_ADDRESS_SANITIZER_ENABLED)
             {
                 snn_should(string::size(s, promise::null_terminated) < constant::limit<usize>::max);
             }

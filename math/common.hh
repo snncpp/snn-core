@@ -321,7 +321,7 @@ namespace snn::math
         return detail::count_digits_with_clz(n);
     }
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
     template <>
     [[nodiscard]] constexpr not_zero<usize> count_digits<math::base::decimal, u128>(u128 n) noexcept
     {

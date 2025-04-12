@@ -95,7 +95,7 @@ namespace snn::app
 
             snn_require(fmt::integral<strbuf>(constant::limit<i16>::max, ' ') == "32 767");
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             snn_require(fmt::integral(constant::limit<i128>::min, ' ') ==
                         "-170 141 183 460 469 231 731 687 303 715 884 105 728");
             snn_require(fmt::integral(constant::limit<i128>::max, ' ') ==

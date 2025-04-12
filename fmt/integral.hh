@@ -447,7 +447,7 @@ namespace snn
         using type = i64;
     };
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
     template <>
     struct formatter_format_as<u128>
     {

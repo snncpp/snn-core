@@ -145,7 +145,7 @@ namespace snn::pool
             std::swap(elements_per_block_, other.elements_per_block_);
         }
 
-#if SNN_SHOULD_BOOL
+#if SNN_SHOULD_ENABLED
         [[nodiscard]] constexpr const vec<T*>& blocks() const noexcept // For unit test.
         {
             return blocks_;

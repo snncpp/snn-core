@@ -25,7 +25,7 @@ namespace snn::detail::strcore
           "424344454647484950515253545556575859606162636465666768697071727374757677787980818283"
           "84858687888990919293949596979899";
 
-#if SNN_SHOULD_BOOL
+#if SNN_SHOULD_ENABLED
     // 1-byte buffer for empty strings, must not be modified.
     // Not null-terminated.
     // Can help AddressSanitizer catch buffer-overflows.
@@ -498,7 +498,7 @@ namespace snn::detail::strcore
         constexpr void init_() noexcept
         {
             buf_ = strview{}.writable().get();
-#if SNN_SHOULD_BOOL
+#if SNN_SHOULD_ENABLED
             if (!std::is_constant_evaluated())
             {
                 buf_ = canary::writable().get();

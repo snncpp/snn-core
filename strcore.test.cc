@@ -1731,7 +1731,7 @@ namespace snn::app
                 snn_require(s == "10101110-1001ff-00fa83b020355-12301246555"
                                  "1777777777777777777777");
             }
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             {
                 T s;
                 s.append_integral(constant::limit<u128>::max);

@@ -374,7 +374,7 @@ namespace snn::app
 
             snn_require(fmt::format("\\x{:4X\\x2}", u16{1234}) == "\\x04\\xD2");
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             snn_require(fmt::format("{,60>:+0 }\n"
                                     "{,60>:+0 }\n",
                                     constant::limit<i128>::min, constant::limit<i128>::max) ==

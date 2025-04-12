@@ -25,7 +25,7 @@ namespace snn::mem::raw
         static_assert(std::is_trivially_copyable_v<From>);
         static_assert(std::is_trivially_copyable_v<To>);
 
-#if SNN_SHOULD_BOOL
+#if SNN_SHOULD_ENABLED
         if (!std::is_constant_evaluated())
         {
             SNN_DIAGNOSTIC_PUSH
@@ -57,7 +57,7 @@ namespace snn::mem::raw
         static_assert(std::is_trivially_copyable_v<From>);
         static_assert(std::is_trivially_copyable_v<To>);
 
-#if SNN_SHOULD_BOOL
+#if SNN_SHOULD_ENABLED
         if (!std::is_constant_evaluated())
         {
             SNN_DIAGNOSTIC_PUSH

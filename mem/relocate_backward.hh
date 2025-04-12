@@ -34,7 +34,7 @@ namespace snn::mem
         T* last_uninit   = last_uninitialized.get();
         T* first_uninit  = last_uninit - count;
 
-#if SNN_SHOULD_BOOL
+#if SNN_SHOULD_ENABLED
         snn_should(first <= last);
         if (!std::is_constant_evaluated())
         {

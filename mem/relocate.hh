@@ -35,7 +35,7 @@ namespace snn::mem
 
         ignore_if_unused(last_uninit);
 
-#if SNN_SHOULD_BOOL
+#if SNN_SHOULD_ENABLED
         snn_should(first <= last);
         if (!std::is_constant_evaluated())
         {

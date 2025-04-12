@@ -25,10 +25,10 @@ namespace snn::app
 
             // Macro constants.
 
-            static_assert(std::is_same_v<decltype(SNN_ADDRESS_SANITIZER_BOOL), bool>);
-            static_assert(std::is_same_v<decltype(SNN_ASSERT_BOOL), bool>);
-            static_assert(std::is_same_v<decltype(SNN_SHOULD_BOOL), bool>);
-            static_assert(std::is_same_v<decltype(SNN_INT128_BOOL), bool>);
+            static_assert(std::is_same_v<decltype(SNN_ADDRESS_SANITIZER_ENABLED), int>);
+            static_assert(std::is_same_v<decltype(SNN_ASSERT_ENABLED), int>);
+            static_assert(std::is_same_v<decltype(SNN_SHOULD_ENABLED), int>);
+            static_assert(std::is_same_v<decltype(SNN_INT128_ENABLED), int>);
 
             // Types
 
@@ -60,7 +60,7 @@ namespace snn::app
 
             static_assert(std::is_same_v<byte, std::uint8_t>);
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             static_assert(std::is_same_v<u128, __uint128_t>);
             static_assert(std::is_same_v<i128, __int128_t>);
 #endif
@@ -573,7 +573,7 @@ namespace snn::app
             static_assert(std::is_same_v<decltype(force_signed(u64{})), i64>);
             static_assert(std::is_same_v<decltype(force_signed(isize{})), isize>);
             static_assert(std::is_same_v<decltype(force_signed(usize{})), isize>);
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             static_assert(std::is_same_v<decltype(force_signed(i128{})), i128>);
             static_assert(std::is_same_v<decltype(force_signed(u128{})), i128>);
 #endif
@@ -601,7 +601,7 @@ namespace snn::app
             static_assert(std::is_same_v<decltype(force_unsigned(u64{})), u64>);
             static_assert(std::is_same_v<decltype(force_unsigned(isize{})), usize>);
             static_assert(std::is_same_v<decltype(force_unsigned(usize{})), usize>);
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             static_assert(std::is_same_v<decltype(force_unsigned(i128{})), u128>);
             static_assert(std::is_same_v<decltype(force_unsigned(u128{})), u128>);
 #endif
@@ -640,7 +640,7 @@ namespace snn::app
             static_assert(!integral<float>);
             static_assert(!integral<cstrview>);
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             static_assert(integral<i128>);
             static_assert(integral<u128>);
 #endif
@@ -772,7 +772,7 @@ namespace snn::app
             static_assert(is_strict_integral_v<usize>);
             static_assert(is_strict_integral_v<const usize>);
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             static_assert(is_strict_integral_v<i128>);
             static_assert(is_strict_integral_v<u128>);
 #endif
@@ -1316,7 +1316,7 @@ namespace snn::app
             static_assert(std::is_same_v<promote_integral_t<i64, 32>, i64>);
             static_assert(std::is_same_v<promote_integral_t<i64, 64>, i64>);
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             static_assert(std::is_same_v<promote_integral_t<bool, 128>, u128>);
             static_assert(std::is_same_v<promote_integral_t<u8, 128>, u128>);
             static_assert(std::is_same_v<promote_integral_t<u16, 128>, u128>);
@@ -1444,7 +1444,7 @@ namespace snn::app
             static_assert(!signed_integral<float>);
             static_assert(!signed_integral<cstrview>);
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             static_assert(signed_integral<i128>);
             static_assert(!signed_integral<u128>);
 #endif
@@ -1470,7 +1470,7 @@ namespace snn::app
             static_assert(!strict_integral<float>);
             static_assert(!strict_integral<cstrview>);
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             static_assert(strict_integral<i128>);
             static_assert(strict_integral<u128>);
 #endif
@@ -1496,7 +1496,7 @@ namespace snn::app
             static_assert(!strict_integral_min<float, 8>);
             static_assert(!strict_integral_min<cstrview, 8>);
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             static_assert(strict_integral_min<i128, 128>);
             static_assert(strict_integral_min<u128, 128>);
             static_assert(!strict_integral_min<i64, 128>);
@@ -1520,7 +1520,7 @@ namespace snn::app
 
             static_assert(strict_signed_integral<char> != strict_unsigned_integral<char>);
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             static_assert(strict_signed_integral<i128>);
             static_assert(!strict_signed_integral<u128>);
 #endif
@@ -1545,7 +1545,7 @@ namespace snn::app
 
             static_assert(strict_signed_integral<char> != strict_unsigned_integral<char>);
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             static_assert(strict_unsigned_integral<u128>);
             static_assert(!strict_unsigned_integral<i128>);
 #endif
@@ -1765,7 +1765,7 @@ namespace snn::app
             static_assert(!unsigned_integral<usize*>);
             static_assert(!unsigned_integral<float>);
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
             static_assert(unsigned_integral<u128>);
             static_assert(!unsigned_integral<i128>);
 #endif
@@ -1879,11 +1879,11 @@ namespace snn
         snn_static_require(app::test_unsigned_integral());
         snn_static_require(app::test_value_type_or());
 
-        // Bool macros.
-        static_assert(std::is_same_v<decltype(SNN_ADDRESS_SANITIZER_BOOL), bool>);
-        static_assert(std::is_same_v<decltype(SNN_ASSERT_BOOL), bool>);
-        static_assert(std::is_same_v<decltype(SNN_SHOULD_BOOL), bool>);
-        static_assert(std::is_same_v<decltype(SNN_INT128_BOOL), bool>);
+        // Macro constants.
+        static_assert(std::is_same_v<decltype(SNN_ADDRESS_SANITIZER_ENABLED), int>);
+        static_assert(std::is_same_v<decltype(SNN_ASSERT_ENABLED), int>);
+        static_assert(std::is_same_v<decltype(SNN_SHOULD_ENABLED), int>);
+        static_assert(std::is_same_v<decltype(SNN_INT128_ENABLED), int>);
 
         // Types aliases.
         static_assert(sizeof(usize) == sizeof(isize));

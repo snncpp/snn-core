@@ -40,28 +40,28 @@ static_assert(std::is_same_v<std::uint8_t, unsigned char>, "std::uint8_t must be
 
 // ## Macros
 
-// ### SNN_ADDRESS_SANITIZER_BOOL
+// ### SNN_ADDRESS_SANITIZER_ENABLED
 
 // https://clang.llvm.org/docs/AddressSanitizer.html
 // #conditional-compilation-with-has-feature-address-sanitizer
 #if defined(__has_feature)
 #if __has_feature(address_sanitizer)
-#define SNN_ADDRESS_SANITIZER_BOOL true
+#define SNN_ADDRESS_SANITIZER_ENABLED 1
 #endif
 // https://gcc.gnu.org/onlinedocs/cpp/Common-Predefined-Macros.html
 #elif defined(__SANITIZE_ADDRESS__)
 #if __SANITIZE_ADDRESS__
-#define SNN_ADDRESS_SANITIZER_BOOL true
+#define SNN_ADDRESS_SANITIZER_ENABLED 1
 #endif
 #endif
 
-#if !defined(SNN_ADDRESS_SANITIZER_BOOL)
-#define SNN_ADDRESS_SANITIZER_BOOL false
+#if !defined(SNN_ADDRESS_SANITIZER_ENABLED)
+#define SNN_ADDRESS_SANITIZER_ENABLED 0
 #endif
 
 // ### snn_assert & snn_should[_if_not_fuzzing]
 
-// Including constants SNN_ASSERT_BOOL and SNN_SHOULD_BOOL.
+// Including constants SNN_ASSERT_ENABLED and SNN_SHOULD_ENABLED.
 
 #if defined(FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION)
 
@@ -70,10 +70,10 @@ static_assert(std::is_same_v<std::uint8_t, unsigned char>, "std::uint8_t must be
 #else
 #define snn_assert(e) assert(e)
 #endif
-#define SNN_ASSERT_BOOL true
+#define SNN_ASSERT_ENABLED 1
 
 #define snn_should(e)   snn_assert(e)
-#define SNN_SHOULD_BOOL true
+#define SNN_SHOULD_ENABLED 1
 
 #define snn_should_if_not_fuzzing(e) ((void)0)
 
@@ -81,21 +81,21 @@ static_assert(std::is_same_v<std::uint8_t, unsigned char>, "std::uint8_t must be
 
 #if defined(NDEBUG)
 #define snn_assert(e)   ((void)0)
-#define SNN_ASSERT_BOOL false
+#define SNN_ASSERT_ENABLED 0
 #elif defined(__OPTIMIZE__)
 #define snn_assert(e)   (__builtin_expect(!!(e), 1) ? (void)0 : __builtin_trap())
-#define SNN_ASSERT_BOOL true
+#define SNN_ASSERT_ENABLED 1
 #else
 #define snn_assert(e)   assert(e)
-#define SNN_ASSERT_BOOL true
+#define SNN_ASSERT_ENABLED 1
 #endif
 
 #if defined(NDEBUG) || defined(__OPTIMIZE__)
 #define snn_should(e)   ((void)0)
-#define SNN_SHOULD_BOOL false
+#define SNN_SHOULD_ENABLED 0
 #else
 #define snn_should(e)   assert(e)
-#define SNN_SHOULD_BOOL true
+#define SNN_SHOULD_ENABLED 1
 #endif
 
 #define snn_should_if_not_fuzzing(e) snn_should(e)
@@ -138,13 +138,13 @@ static_assert(std::is_same_v<std::uint8_t, unsigned char>, "std::uint8_t must be
 #define SNN_DIAGNOSTIC_IGNORE_FORMAT_NONLITERAL
 #endif
 
-// ### SNN_INT128_BOOL
+// ### SNN_INT128_ENABLED
 
 #if defined(__SIZEOF_INT128__) && defined(_LIBCPP_VERSION)
-#define SNN_INT128_BOOL true
+#define SNN_INT128_ENABLED 1
 #else
 // In GNU C++ Standard Library (libstdc++) `std::is_integral_v<__int128_t>` is `false`.
-#define SNN_INT128_BOOL false
+#define SNN_INT128_ENABLED 0
 #endif
 
 namespace snn
@@ -179,7 +179,7 @@ namespace snn
 
     using byte = std::uint8_t;
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
     using u128 = __uint128_t;
     using i128 = __int128_t;
 #endif
@@ -457,7 +457,7 @@ namespace snn
         {
         };
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
         template <>
         struct is_strict_integral_strict<i128> : public std::true_type
         {
@@ -854,7 +854,7 @@ namespace snn
             using type = u64;
         };
 
-#if SNN_INT128_BOOL
+#if SNN_INT128_ENABLED
         template <>
         struct promote_integral_lookup<128, true>
         {
