@@ -24,7 +24,7 @@ namespace snn
 
         // Construct with the implicit promise that the pointer is null-terminated.
 
-        constexpr explicit null_term(const snn::not_null<Ptr> ptr) noexcept
+        constexpr explicit null_term(const not_null<Ptr> ptr) noexcept
             : ptr_{ptr}
         {
             if constexpr (SNN_ADDRESS_SANITIZER_ENABLED)
@@ -35,10 +35,16 @@ namespace snn
 
         // Construct with the explicit promise that the pointer is null-terminated.
 
-        constexpr explicit null_term(const snn::not_null<Ptr> ptr,
-                                     promise::null_terminated_t) noexcept
+        constexpr explicit null_term(const not_null<Ptr> ptr, promise::null_terminated_t) noexcept
             : null_term{ptr}
         {
+        }
+
+        // #### as_not_null
+
+        [[nodiscard]] constexpr not_null<Ptr> as_not_null() const noexcept
+        {
+            return ptr_;
         }
 
         // #### get
@@ -46,13 +52,6 @@ namespace snn
         [[nodiscard]] constexpr Ptr get() const noexcept
         {
             return ptr_.get();
-        }
-
-        // #### not_null
-
-        [[nodiscard]] constexpr snn::not_null<Ptr> not_null() const noexcept
-        {
-            return ptr_;
         }
 
         // #### Conversion
@@ -65,7 +64,7 @@ namespace snn
         }
 
       private:
-        snn::not_null<Ptr> ptr_;
+        not_null<Ptr> ptr_;
 
         constexpr usize count_() const noexcept
         {
@@ -89,7 +88,7 @@ namespace snn
 
         // Construct with the implicit promise that the pointer is null-terminated.
 
-        constexpr explicit null_term(const snn::not_null<const char*> s) noexcept
+        constexpr explicit null_term(const not_null<const char*> s) noexcept
             : s_{s}
         {
             if constexpr (SNN_ADDRESS_SANITIZER_ENABLED)
@@ -100,7 +99,7 @@ namespace snn
 
         // Construct with the explicit promise that the pointer is null-terminated.
 
-        constexpr explicit null_term(const snn::not_null<const char*> s,
+        constexpr explicit null_term(const not_null<const char*> s,
                                      promise::null_terminated_t) noexcept
             : null_term{s}
         {
@@ -110,14 +109,14 @@ namespace snn
 
         template <same_as<const char> ConstChar, usize N>
         constexpr null_term(ConstChar (&s)[N]) noexcept
-            : s_{snn::not_null{s}}
+            : s_{not_null{s}}
         {
         }
 
         template <typename Buf>
             requires(strcore<Buf>::is_null_terminated())
         null_term(const strcore<Buf>& s)
-            : s_{s.null_terminated().not_null()}
+            : s_{s.null_terminated().as_not_null()}
         {
         }
 
@@ -125,18 +124,18 @@ namespace snn
             requires(strcore<Buf>::is_null_terminated())
         null_term(const strcore<Buf>&&) = delete; // Temporary, use null_terminated() if safe.
 
+        // #### as_not_null
+
+        [[nodiscard]] constexpr not_null<const char*> as_not_null() const noexcept
+        {
+            return s_;
+        }
+
         // #### get
 
         [[nodiscard]] constexpr const char* get() const noexcept
         {
             return s_.get();
-        }
-
-        // #### not_null
-
-        [[nodiscard]] constexpr snn::not_null<const char*> not_null() const noexcept
-        {
-            return s_;
         }
 
         // #### Conversion
@@ -149,7 +148,7 @@ namespace snn
         }
 
       private:
-        snn::not_null<const char*> s_;
+        not_null<const char*> s_;
     };
 
     // ## Deduction guides

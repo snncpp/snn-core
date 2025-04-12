@@ -33,7 +33,7 @@ namespace snn::file::dir
               name_size_maybe_{name_size},
               type_{type}
         {
-            snn_should(string::size(name_data_.not_null(), promise::null_terminated) ==
+            snn_should(string::size(name_data_.as_not_null(), promise::null_terminated) ==
                        name_size_maybe_);
         }
 
@@ -43,7 +43,7 @@ namespace snn::file::dir
         [[nodiscard]] constexpr String name() const
             noexcept(std::is_nothrow_constructible_v<String, not_null<const char*>, usize>)
         {
-            return String{name_data_.not_null(), name_size_()};
+            return String{name_data_.as_not_null(), name_size_()};
         }
 
         template <same_as<null_term<const char*>> NullTermConstChar>
@@ -116,7 +116,7 @@ namespace snn::file::dir
                 return name_size_maybe_;
             }
 
-            return string::size(name_data_.not_null(), promise::null_terminated);
+            return string::size(name_data_.as_not_null(), promise::null_terminated);
         }
     };
 }

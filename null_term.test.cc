@@ -16,7 +16,7 @@ namespace snn::app
                 null_term nt{arr.writable()};
                 static_assert(std::is_same_v<decltype(nt), null_term<int*>>);
                 snn_require(nt.get() == arr.begin());
-                snn_require(nt.not_null().get() == arr.begin());
+                snn_require(nt.as_not_null().get() == arr.begin());
                 snn_require(nt.to<array_view<int>>().count() == 2);
             }
             {
@@ -59,7 +59,7 @@ namespace snn::app
                 null_term nt{arr.writable(), promise::null_terminated};
                 static_assert(std::is_same_v<decltype(nt), null_term<const char**>>);
                 snn_require(nt.get() == arr.begin());
-                snn_require(nt.not_null().get() == arr.begin());
+                snn_require(nt.as_not_null().get() == arr.begin());
                 snn_require(nt.to<array_view<const char*>>().count() == 2);
                 static_assert(noexcept(nt.to<array_view<const char*>>()));
             }
@@ -68,14 +68,14 @@ namespace snn::app
                 null_term nt{arr.writable()};
                 static_assert(std::is_same_v<decltype(nt), null_term<int*>>);
                 snn_require(nt.get() == arr.begin());
-                snn_require(nt.not_null().get() == arr.begin());
+                snn_require(nt.as_not_null().get() == arr.begin());
             }
             {
                 array arr{'F', 'o', 'o', '\0', 'B', 'a', 'r'};
                 null_term nt{arr.writable()};
                 static_assert(std::is_same_v<decltype(nt), null_term<char*>>);
                 snn_require(nt.get() == arr.begin());
-                snn_require(nt.not_null().get() == arr.begin());
+                snn_require(nt.as_not_null().get() == arr.begin());
                 snn_require(nt.to<strview>() == "Foo");
                 static_assert(noexcept(nt.to<strview>()));
             }
