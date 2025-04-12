@@ -7,6 +7,6 @@
 
 #include "snn-core/core.hh"
 #if !defined(PCRE2_CODE_UNIT_WIDTH)
-#define PCRE2_CODE_UNIT_WIDTH 0
+    #define PCRE2_CODE_UNIT_WIDTH 0
 #endif
 #include <pcre2.h> // pcre2* [#lib:pcre2-8]

@@ -7,9 +7,9 @@
 
 #include "snn-core/error_code.hh"
 #if defined(__linux__)
-#include <cstring> // strerrordesc_np
+    #include <cstring> // strerrordesc_np
 #else
-#include <cstdio> // sys_errlist, sys_nerr
+    #include <cstdio> // sys_errlist, sys_nerr
 #endif
 
 namespace snn::system

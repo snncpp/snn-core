@@ -33,9 +33,9 @@ static_assert(std::is_same_v<std::uint8_t, unsigned char>, "std::uint8_t must be
 // ### Little-endian
 
 #if !defined(__BYTE_ORDER__) || !defined(__ORDER_LITTLE_ENDIAN__)
-#error "Both __BYTE_ORDER__ and __ORDER_LITTLE_ENDIAN__ must be defined."
+    #error "Both __BYTE_ORDER__ and __ORDER_LITTLE_ENDIAN__ must be defined."
 #elif __BYTE_ORDER__ != __ORDER_LITTLE_ENDIAN__
-#error "Little-endian required."
+    #error "Little-endian required."
 #endif
 
 // ## Macros
@@ -43,20 +43,19 @@ static_assert(std::is_same_v<std::uint8_t, unsigned char>, "std::uint8_t must be
 // ### SNN_ADDRESS_SANITIZER_ENABLED
 
 // https://clang.llvm.org/docs/AddressSanitizer.html
-// #conditional-compilation-with-has-feature-address-sanitizer
 #if defined(__has_feature)
-#if __has_feature(address_sanitizer)
-#define SNN_ADDRESS_SANITIZER_ENABLED 1
-#endif
+    #if __has_feature(address_sanitizer)
+        #define SNN_ADDRESS_SANITIZER_ENABLED 1
+    #endif
 // https://gcc.gnu.org/onlinedocs/cpp/Common-Predefined-Macros.html
 #elif defined(__SANITIZE_ADDRESS__)
-#if __SANITIZE_ADDRESS__
-#define SNN_ADDRESS_SANITIZER_ENABLED 1
-#endif
+    #if __SANITIZE_ADDRESS__
+        #define SNN_ADDRESS_SANITIZER_ENABLED 1
+    #endif
 #endif
 
 #if !defined(SNN_ADDRESS_SANITIZER_ENABLED)
-#define SNN_ADDRESS_SANITIZER_ENABLED 0
+    #define SNN_ADDRESS_SANITIZER_ENABLED 0
 #endif
 
 // ### snn_assert & snn_should[_if_not_fuzzing]
@@ -64,87 +63,83 @@ static_assert(std::is_same_v<std::uint8_t, unsigned char>, "std::uint8_t must be
 // Including constants SNN_ASSERT_ENABLED and SNN_SHOULD_ENABLED.
 
 #if defined(FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION)
+    #if defined(__OPTIMIZE__)
+        #define snn_assert(e) (__builtin_expect(!!(e), 1) ? (void)0 : __builtin_trap())
+    #else
+        #define snn_assert(e) assert(e)
+    #endif
+    #define SNN_ASSERT_ENABLED 1
 
-#if defined(__OPTIMIZE__)
-#define snn_assert(e) (__builtin_expect(!!(e), 1) ? (void)0 : __builtin_trap())
+    #define snn_should(e)      snn_assert(e)
+    #define SNN_SHOULD_ENABLED 1
+
+    #define snn_should_if_not_fuzzing(e) ((void)0)
 #else
-#define snn_assert(e) assert(e)
-#endif
-#define SNN_ASSERT_ENABLED 1
+    #if defined(NDEBUG)
+        #define snn_assert(e)      ((void)0)
+        #define SNN_ASSERT_ENABLED 0
+    #elif defined(__OPTIMIZE__)
+        #define snn_assert(e)      (__builtin_expect(!!(e), 1) ? (void)0 : __builtin_trap())
+        #define SNN_ASSERT_ENABLED 1
+    #else
+        #define snn_assert(e)      assert(e)
+        #define SNN_ASSERT_ENABLED 1
+    #endif
 
-#define snn_should(e)   snn_assert(e)
-#define SNN_SHOULD_ENABLED 1
+    #if defined(NDEBUG) || defined(__OPTIMIZE__)
+        #define snn_should(e)      ((void)0)
+        #define SNN_SHOULD_ENABLED 0
+    #else
+        #define snn_should(e)      assert(e)
+        #define SNN_SHOULD_ENABLED 1
+    #endif
 
-#define snn_should_if_not_fuzzing(e) ((void)0)
-
-#else // !defined(FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION)
-
-#if defined(NDEBUG)
-#define snn_assert(e)   ((void)0)
-#define SNN_ASSERT_ENABLED 0
-#elif defined(__OPTIMIZE__)
-#define snn_assert(e)   (__builtin_expect(!!(e), 1) ? (void)0 : __builtin_trap())
-#define SNN_ASSERT_ENABLED 1
-#else
-#define snn_assert(e)   assert(e)
-#define SNN_ASSERT_ENABLED 1
-#endif
-
-#if defined(NDEBUG) || defined(__OPTIMIZE__)
-#define snn_should(e)   ((void)0)
-#define SNN_SHOULD_ENABLED 0
-#else
-#define snn_should(e)   assert(e)
-#define SNN_SHOULD_ENABLED 1
-#endif
-
-#define snn_should_if_not_fuzzing(e) snn_should(e)
-
+    #define snn_should_if_not_fuzzing(e) snn_should(e)
 #endif
 
 // ### SNN_DIAGNOSTIC_[...]
 
 #if defined(__clang__) && defined(__clang_major__)
-#define SNN_DIAGNOSTIC_PUSH _Pragma("clang diagnostic push")
-#define SNN_DIAGNOSTIC_POP  _Pragma("clang diagnostic pop")
-#define SNN_DIAGNOSTIC_IGNORE_DEPRECATED_DECLARATIONS                                              \
-    _Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")
-#define SNN_DIAGNOSTIC_IGNORE_EXIT_TIME_DESTRUCTORS                                                \
-    _Pragma("clang diagnostic ignored \"-Wexit-time-destructors\"")
-#define SNN_DIAGNOSTIC_IGNORE_FORMAT_NONLITERAL                                                    \
-    _Pragma("clang diagnostic ignored \"-Wformat-nonliteral\"")
+    #define SNN_DIAGNOSTIC_PUSH _Pragma("clang diagnostic push")
+    #define SNN_DIAGNOSTIC_POP  _Pragma("clang diagnostic pop")
+    #define SNN_DIAGNOSTIC_IGNORE_DEPRECATED_DECLARATIONS                                          \
+        _Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")
+    #define SNN_DIAGNOSTIC_IGNORE_EXIT_TIME_DESTRUCTORS                                            \
+        _Pragma("clang diagnostic ignored \"-Wexit-time-destructors\"")
+    #define SNN_DIAGNOSTIC_IGNORE_FORMAT_NONLITERAL                                                \
+        _Pragma("clang diagnostic ignored \"-Wformat-nonliteral\"")
 
-#if __clang_major__ >= 16
-#define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE                                                  \
-    _Pragma("clang diagnostic ignored \"-Wunsafe-buffer-usage\"")
-#else
-#define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
-#endif
+    #if __clang_major__ >= 16
+        #define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE                                          \
+            _Pragma("clang diagnostic ignored \"-Wunsafe-buffer-usage\"")
+    #else
+        #define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+    #endif
 
-#if __clang_major__ >= 20
-#define SNN_DIAGNOSTIC_IGNORE_NONTRIVIAL_MEMCALL                                                   \
-    _Pragma("clang diagnostic ignored \"-Wnontrivial-memcall\"")
-#define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL                                     \
-    _Pragma("clang diagnostic ignored \"-Wunsafe-buffer-usage-in-libc-call\"")
+    #if __clang_major__ >= 20
+        #define SNN_DIAGNOSTIC_IGNORE_NONTRIVIAL_MEMCALL                                           \
+            _Pragma("clang diagnostic ignored \"-Wnontrivial-memcall\"")
+        #define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL                             \
+            _Pragma("clang diagnostic ignored \"-Wunsafe-buffer-usage-in-libc-call\"")
+    #else
+        #define SNN_DIAGNOSTIC_IGNORE_NONTRIVIAL_MEMCALL
+        #define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
+    #endif
 #else
-#define SNN_DIAGNOSTIC_IGNORE_NONTRIVIAL_MEMCALL
-#define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
-#endif
-#else
-#define SNN_DIAGNOSTIC_PUSH
-#define SNN_DIAGNOSTIC_POP
-#define SNN_DIAGNOSTIC_IGNORE_DEPRECATED_DECLARATIONS
-#define SNN_DIAGNOSTIC_IGNORE_EXIT_TIME_DESTRUCTORS
-#define SNN_DIAGNOSTIC_IGNORE_FORMAT_NONLITERAL
+    #define SNN_DIAGNOSTIC_PUSH
+    #define SNN_DIAGNOSTIC_POP
+    #define SNN_DIAGNOSTIC_IGNORE_DEPRECATED_DECLARATIONS
+    #define SNN_DIAGNOSTIC_IGNORE_EXIT_TIME_DESTRUCTORS
+    #define SNN_DIAGNOSTIC_IGNORE_FORMAT_NONLITERAL
 #endif
 
 // ### SNN_INT128_ENABLED
 
 #if defined(__SIZEOF_INT128__) && defined(_LIBCPP_VERSION)
-#define SNN_INT128_ENABLED 1
+    #define SNN_INT128_ENABLED 1
 #else
-// In GNU C++ Standard Library (libstdc++) `std::is_integral_v<__int128_t>` is `false`.
-#define SNN_INT128_ENABLED 0
+    // In GNU C++ Standard Library (libstdc++) `std::is_integral_v<__int128_t>` is `false`.
+    #define SNN_INT128_ENABLED 0
 #endif
 
 namespace snn

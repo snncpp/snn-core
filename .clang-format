@@ -31,6 +31,7 @@ BreakBeforeBraces: Custom
 ColumnLimit: 100
 FixNamespaceComments: false
 IndentCaseLabels: true
+IndentPPDirectives: BeforeHash
 IndentRequiresClause: true
 IndentWidth: 4
 InsertNewlineAtEOF: true
@@ -43,8 +44,6 @@ PenaltyReturnTypeOnItsOwnLine: 140
 PointerAlignment: Left
 SortIncludes: Never
 SortUsingDeclarations: Lexicographic
-StatementAttributeLikeMacros:
-  - SNN_CONSTEXPR_MAYBE
 TabWidth: 4
 UseTab: Never
 ...

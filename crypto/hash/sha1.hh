@@ -6,7 +6,7 @@
 #pragma once
 
 #if defined(SNN_BEARSSL_HASH)
-#include "snn-core/crypto/hash/impl/sha1.bearssl.hh"
+    #include "snn-core/crypto/hash/impl/sha1.bearssl.hh"
 #else
-#include "snn-core/crypto/hash/impl/sha1.openssl.hh"
+    #include "snn-core/crypto/hash/impl/sha1.openssl.hh"
 #endif

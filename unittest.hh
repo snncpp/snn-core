@@ -204,9 +204,9 @@ namespace snn
 // context. (GCCs constexpr support is not as good as Clangs.)
 
 #if defined(__clang__)
-#define snn_static_require(e)                                                                      \
-    static_assert(e);                                                                              \
-    snn_require(e)
+    #define snn_static_require(e)                                                                  \
+        static_assert(e);                                                                          \
+        snn_require(e)
 #else
-#define snn_static_require(e) snn_require(e)
+    #define snn_static_require(e) snn_require(e)
 #endif

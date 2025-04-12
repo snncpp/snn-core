@@ -11,8 +11,8 @@
 #include "snn-core/strcore.fwd.hh"
 
 #ifdef SNN_DEBUG
-#include "snn-core/hex/table/common.hh"
-#include <iostream>
+    #include "snn-core/hex/table/common.hh"
+    #include <iostream>
 
 namespace snn
 {
@@ -107,9 +107,9 @@ namespace snn
 
 // ### snn_debug[_line]
 
-#define snn_debug(...)      snn::debug(__VA_ARGS__)
-#define snn_debug_line(...) snn::debug_line(__VA_ARGS__)
+    #define snn_debug(...)      snn::debug(__VA_ARGS__)
+    #define snn_debug_line(...) snn::debug_line(__VA_ARGS__)
 #else
-#define snn_debug(...)      ((void)0)
-#define snn_debug_line(...) ((void)0)
+    #define snn_debug(...)      ((void)0)
+    #define snn_debug_line(...) ((void)0)
 #endif

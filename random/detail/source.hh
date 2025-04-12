@@ -5,12 +5,12 @@
 
 #include "snn-core/array_view.hh"
 #if defined(__linux__)
-#include "snn-core/exception.hh"
-#include "snn-core/math/common.hh"
-#include "snn-core/system/error.hh"
-#include <unistd.h> // getentropy
+    #include "snn-core/exception.hh"
+    #include "snn-core/math/common.hh"
+    #include "snn-core/system/error.hh"
+    #include <unistd.h> // getentropy
 #else
-#include <cstdlib> // arc4random, arc4random_buf
+    #include <cstdlib> // arc4random, arc4random_buf
 #endif
 
 // arc4random(3) never fails and uses ChaCha20 as of FreeBSD 12.

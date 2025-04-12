@@ -10,9 +10,9 @@
 
 #include "snn-core/core.hh"
 #if defined(__linux__)
-#include <string.h> // explicit_bzero
+    #include <string.h> // explicit_bzero
 #else
-#include <strings.h> // explicit_bzero
+    #include <strings.h> // explicit_bzero
 #endif
 
 namespace snn::mem::raw
