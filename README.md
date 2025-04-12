@@ -301,7 +301,7 @@ All identifiers should be in `snake_case` with the following exceptions:
  * Function-like macros should be lowercase with "snn_" prefix.
    Example: `snn_assert()` or `snn_should()`.
  * Macro constants should be uppercase with "SNN_" prefix.
-   Example: `SNN_ASSERT_BOOL` or `SNN_INT128_BOOL`.
+   Example: `SNN_ASSERT_ENABLED` or `SNN_INT128_ENABLED`.
 
 
 ## Documentation
