@@ -32,6 +32,7 @@ namespace snn::app
             snn_require(two.get("TwoTwo").to<u64>().value() == 22);
             snn_require(two.get("ThreeThree").is_string());
             snn_require(two.get("ThreeThree").to<cstrview>() == " 33 ");
+            snn_require(two.get("ThreeThree").view() == " 33 ");
 
             // Non-existing
             snn_require(root.get("Three").is_empty());
@@ -54,6 +55,7 @@ namespace snn::app
                 snn_require(n.to<str>() == "true");
                 snn_require(n.to<cstrview>() == "true");
                 snn_require(n.to<cstrview>().begin() == s.begin());
+                snn_require(n.view() == "true");
             }
 
             {

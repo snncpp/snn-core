@@ -253,6 +253,11 @@ namespace snn::json
             return range::forward<iterator>{meta::iterators, cbegin(), cend()};
         }
 
+        [[nodiscard]] constexpr cstrview view() const noexcept
+        {
+            return val_;
+        }
+
       private:
         cstrview val_;
         node* sibling_next_ = nullptr;
