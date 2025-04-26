@@ -457,9 +457,9 @@ namespace snn
 
         // #### Count/Size
 
-        [[nodiscard]] constexpr snn::byte_size byte_size() const noexcept
+        [[nodiscard]] constexpr snn::byte_size<usize> byte_size() const noexcept
         {
-            return snn::byte_size{buf_.size()};
+            return snn::byte_size<usize>{buf_.size()};
         }
 
         [[nodiscard]] constexpr usize count() const noexcept

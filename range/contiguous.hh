@@ -349,9 +349,9 @@ namespace snn::range
             return contiguous{meta::iterators, first, first_};
         }
 
-        [[nodiscard]] constexpr snn::byte_size byte_size() const noexcept
+        [[nodiscard]] constexpr snn::byte_size<usize> byte_size() const noexcept
         {
-            return snn::byte_size{sizeof(value_type) * count()};
+            return snn::byte_size<usize>{sizeof(value_type) * count()};
         }
 
         [[nodiscard]] constexpr usize size() const noexcept
@@ -915,9 +915,9 @@ namespace snn::range
             return contiguous{meta::internal, first, first_};
         }
 
-        [[nodiscard]] constexpr snn::byte_size byte_size() const noexcept
+        [[nodiscard]] constexpr snn::byte_size<usize> byte_size() const noexcept
         {
-            return snn::byte_size{count()};
+            return snn::byte_size<usize>{count()};
         }
 
         [[nodiscard]] constexpr usize size() const noexcept
@@ -1505,9 +1505,9 @@ namespace snn::range
             return contiguous{meta::internal, first, first_};
         }
 
-        [[nodiscard]] constexpr snn::byte_size byte_size() const noexcept
+        [[nodiscard]] constexpr snn::byte_size<usize> byte_size() const noexcept
         {
-            return snn::byte_size{count()};
+            return snn::byte_size<usize>{count()};
         }
 
         [[nodiscard]] constexpr usize size() const noexcept

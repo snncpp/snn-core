@@ -19,7 +19,7 @@ namespace snn::mem::raw
 
     template <typename From, typename To>
     constexpr void move(const not_null<const From*> from, const not_null<To*> to,
-                        const byte_size size) noexcept
+                        const byte_size<usize> size) noexcept
     {
         static_assert(is_trivially_relocatable_v<From>);
         static_assert(is_trivially_relocatable_v<To>);

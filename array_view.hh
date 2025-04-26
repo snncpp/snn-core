@@ -160,9 +160,9 @@ namespace snn
 
         // #### Count/Size
 
-        [[nodiscard]] static constexpr snn::byte_size byte_size() noexcept
+        [[nodiscard]] static constexpr snn::byte_size<usize> byte_size() noexcept
         {
-            return snn::byte_size{sizeof(value_type) * Count};
+            return snn::byte_size<usize>{sizeof(value_type) * Count};
         }
 
         [[nodiscard]] static constexpr usize count() noexcept
@@ -967,9 +967,9 @@ namespace snn
 
         // #### Count/Size
 
-        [[nodiscard]] constexpr snn::byte_size byte_size() const noexcept
+        [[nodiscard]] constexpr snn::byte_size<usize> byte_size() const noexcept
         {
-            return snn::byte_size{sizeof(value_type) * count_};
+            return snn::byte_size<usize>{sizeof(value_type) * count_};
         }
 
         [[nodiscard]] constexpr usize count() const noexcept
@@ -1476,9 +1476,9 @@ namespace snn
 
         // #### Count/Size
 
-        [[nodiscard]] constexpr snn::byte_size byte_size() const noexcept
+        [[nodiscard]] constexpr snn::byte_size<usize> byte_size() const noexcept
         {
-            return snn::byte_size{count_};
+            return snn::byte_size<usize>{count_};
         }
 
         [[nodiscard]] constexpr usize count() const noexcept
@@ -1937,9 +1937,9 @@ namespace snn
 
         // #### Count/Size
 
-        [[nodiscard]] constexpr snn::byte_size byte_size() const noexcept
+        [[nodiscard]] constexpr snn::byte_size<usize> byte_size() const noexcept
         {
-            return snn::byte_size{count_};
+            return snn::byte_size<usize>{count_};
         }
 
         [[nodiscard]] constexpr usize count() const noexcept
@@ -2227,7 +2227,7 @@ namespace snn
                 usize dst_size = count_;
 
                 // First copy, might be 0 bytes and can overlap.
-                snn::byte_size bsize{math::min(dst_size, sv.size())};
+                snn::byte_size<usize> bsize{math::min(dst_size, sv.size())};
                 mem::raw::move(sv.data(), not_null{dst}, bsize);
 
                 const char* src = dst;
@@ -2239,7 +2239,7 @@ namespace snn
                 while (dst_size > 0)
                 {
                     // Nth copy, is never 0 bytes and never overlaps.
-                    bsize = snn::byte_size{math::min(dst_size, src_size)};
+                    bsize = snn::byte_size<usize>{math::min(dst_size, src_size)};
                     mem::raw::copy(not_null{src}, not_null{dst}, bsize, promise::no_overlap);
                     dst += bsize.get();
                     dst_size -= bsize.get();

@@ -90,9 +90,9 @@ namespace snn
 
         // #### Count/Size
 
-        [[nodiscard]] static constexpr snn::byte_size byte_size() noexcept
+        [[nodiscard]] static constexpr snn::byte_size<usize> byte_size() noexcept
         {
-            return snn::byte_size{sizeof(T) * Count};
+            return snn::byte_size<usize>{sizeof(T) * Count};
         }
 
         [[nodiscard]] static constexpr usize count() noexcept

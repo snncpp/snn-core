@@ -22,13 +22,13 @@ namespace snn::mem::raw
     // ### zero
 
     template <typename T>
-    void zero(const not_null<T*> destination, const byte_size size) noexcept
+    void zero(const not_null<T*> destination, const byte_size<usize> size) noexcept
     {
         ::explicit_bzero(destination.get(), size.get());
     }
 
     template <typename T>
-    void zero(T* const destination, const byte_size size) noexcept
+    void zero(T* const destination, const byte_size<usize> size) noexcept
     {
         snn_assert(size.get() == 0 || destination != nullptr);
         if (destination != nullptr)

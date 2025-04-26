@@ -13,9 +13,9 @@ namespace snn::mem::raw::constant_time
 
     // ### is_equal
 
-    [[nodiscard]] __attribute__((noinline)) inline bool is_equal(const not_null<const void*> a,
-                                                                 const not_null<const void*> b,
-                                                                 const byte_size size) noexcept
+    [[nodiscard]] __attribute__((noinline)) inline bool is_equal(
+        const not_null<const void*> a, const not_null<const void*> b,
+        const byte_size<usize> size) noexcept
     {
         // Volatile to prevent optimization, tested with:
         // * clang version 13.0.1

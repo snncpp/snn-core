@@ -14,7 +14,8 @@ namespace snn::mem::raw
     // ### fill
 
     template <typename T>
-    void fill(const not_null<T*> destination, const byte_size size, const byte value) noexcept
+    void fill(const not_null<T*> destination, const byte_size<usize> size,
+              const byte value) noexcept
     {
         SNN_DIAGNOSTIC_PUSH
         SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
@@ -25,7 +26,7 @@ namespace snn::mem::raw
     }
 
     template <>
-    constexpr void fill<char>(const not_null<char*> destination, const byte_size size,
+    constexpr void fill<char>(const not_null<char*> destination, const byte_size<usize> size,
                               const byte value) noexcept
     {
         if (!std::is_constant_evaluated())
@@ -52,7 +53,7 @@ namespace snn::mem::raw
     }
 
     template <>
-    constexpr void fill<byte>(const not_null<byte*> destination, const byte_size size,
+    constexpr void fill<byte>(const not_null<byte*> destination, const byte_size<usize> size,
                               const byte value) noexcept
     {
         if (!std::is_constant_evaluated())

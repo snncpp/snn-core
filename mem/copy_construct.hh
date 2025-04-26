@@ -34,7 +34,7 @@ namespace snn::mem
             if (!std::is_constant_evaluated())
             {
                 const auto count = static_cast<usize>(last - cur);
-                mem::raw::copy(first_copy, first_uninitialized, byte_size{count * sizeof(T)},
+                mem::raw::copy(first_copy, first_uninitialized, byte_size<usize>{count * sizeof(T)},
                                promise::no_overlap);
                 return;
             }

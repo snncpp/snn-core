@@ -52,7 +52,7 @@ namespace snn::fmt
 
     template <usize Divisor, typename StringLike, typename Buf>
         requires(Divisor == 1000 || Divisor == 1024)
-    constexpr void byte_size(const snn::byte_size bs, const array<StringLike, 8>& suffixes,
+    constexpr void byte_size(const snn::byte_size<usize> bs, const array<StringLike, 8>& suffixes,
                              const transient<cstrview> decimal_point,
                              const transient<cstrview> spacing, strcore<Buf>& append_to)
     {
@@ -121,7 +121,7 @@ namespace snn::fmt
     }
 
     template <usize Divisor, any_strcore Str = str, typename StringLike>
-    [[nodiscard]] constexpr Str byte_size(const snn::byte_size bs,
+    [[nodiscard]] constexpr Str byte_size(const snn::byte_size<usize> bs,
                                           const array<StringLike, 8>& suffixes,
                                           const transient<cstrview> decimal_point = ".",
                                           const transient<cstrview> spacing       = " ")
@@ -132,13 +132,13 @@ namespace snn::fmt
     }
 
     template <typename Buf>
-    constexpr void byte_size(const snn::byte_size bs, strcore<Buf>& append_to)
+    constexpr void byte_size(const snn::byte_size<usize> bs, strcore<Buf>& append_to)
     {
         fmt::byte_size<1000>(bs, fmt::table::byte_size::si, ".", " ", append_to);
     }
 
     template <any_strcore Str = str>
-    [[nodiscard]] constexpr Str byte_size(const snn::byte_size bs)
+    [[nodiscard]] constexpr Str byte_size(const snn::byte_size<usize> bs)
     {
         Str append_to;
         fmt::byte_size(bs, append_to);
@@ -150,16 +150,16 @@ namespace snn
 {
     // ## Specializations
 
-    // ### formatter<byte_size>
+    // ### formatter<byte_size<UInt>>
 
-    template <>
-    struct formatter<byte_size>
+    template <typename UInt>
+    struct formatter<byte_size<UInt>>
     {
-        using type = byte_size;
+        using type = byte_size<UInt>;
 
         template <typename Buf>
-        constexpr void format(const byte_size bs, const cstrview format_string, const fmt::context&,
-                              strcore<Buf>& append_to, promise::no_overlap_t)
+        constexpr void format(const byte_size<usize> bs, const cstrview format_string,
+                              const fmt::context&, strcore<Buf>& append_to, promise::no_overlap_t)
         {
             snn_should(std::is_constant_evaluated() || !format_string.overlaps(append_to));
 

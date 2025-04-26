@@ -260,12 +260,16 @@ namespace snn::app
         constexpr bool test_byte_size()
         {
             static_assert(byte_size{0}.get() == 0);
-            static_assert(byte_size{3}.get() == 3);
             static_assert(byte_size{42}.get() == 42);
+            static_assert(byte_size{999'999'999'999}.get() == 999'999'999'999);
 
             constexpr byte_size a{123};
             constexpr byte_size b{123};
             constexpr byte_size c{92};
+
+            static_assert(std::is_same_v<decltype(a), const byte_size<usize>>);
+            static_assert(std::is_same_v<decltype(a.get()), usize>);
+            static_assert(sizeof(a) == sizeof(usize));
 
             static_assert(a == b);
             static_assert(!(a == c));
@@ -278,6 +282,42 @@ namespace snn::app
 
             static_assert(a > c);
             static_assert(!(c > a));
+
+            // Deduction (will hold a `usize` by default when created with an integer literal).
+
+            static_assert(std::is_same_v<decltype(byte_size{0}), byte_size<usize>>);
+            static_assert(std::is_same_v<decltype(byte_size{999'999'999'999}), byte_size<usize>>);
+            static_assert(std::is_same_v<decltype(byte_size{u8{}}), byte_size<u8>>);
+            static_assert(std::is_same_v<decltype(byte_size{u16{}}), byte_size<u16>>);
+            static_assert(std::is_same_v<decltype(byte_size{u32{}}), byte_size<u32>>);
+            static_assert(std::is_same_v<decltype(byte_size{u64{}}), byte_size<usize>>);
+
+            // Explicit type.
+
+            constexpr byte_size<u32> bs{456};
+            static_assert(bs.get() == 456);
+            static_assert(std::is_same_v<decltype(bs), const byte_size<u32>>);
+            static_assert(std::is_same_v<decltype(bs.get()), u32>);
+            static_assert(sizeof(bs) == sizeof(u32));
+
+            // Conversion
+
+            constexpr byte_size from{constant::limit<u32>::max};
+            static_assert(std::is_same_v<decltype(from), const byte_size<u32>>);
+            constexpr byte_size<usize> to = from; // Implicit conversion.
+            static_assert(to.get() == constant::limit<u32>::max);
+
+            static_assert(std::is_nothrow_convertible_v<byte_size<usize>, byte_size<usize>>);
+            static_assert(std::is_nothrow_convertible_v<byte_size<u32>, byte_size<usize>>);
+            static_assert(std::is_nothrow_convertible_v<byte_size<u16>, byte_size<u32>>);
+            static_assert(std::is_nothrow_convertible_v<byte_size<u8>, byte_size<u16>>);
+
+            // Would narrow.
+            static_assert(!std::is_convertible_v<byte_size<usize>, byte_size<u32>>);
+            static_assert(!std::is_convertible_v<byte_size<u32>, byte_size<u16>>);
+
+            // Implicit conversion from an integral is not allowed.
+            static_assert(!std::is_convertible_v<usize, byte_size<usize>>);
 
             return true;
         }

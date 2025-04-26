@@ -1186,24 +1186,52 @@ namespace snn
 
     // ### byte_size
 
+    template <strict_unsigned_integral UInt>
     class byte_size final
     {
       public:
-        constexpr explicit byte_size(const usize size) noexcept
+        // #### Explicit constructors
+
+        constexpr explicit byte_size(const not_deduced_t<UInt> size) noexcept
             : size_{size}
         {
         }
 
-        [[nodiscard]] constexpr usize get() const noexcept
+        // #### Converting constructors
+
+        template <typename U>
+            requires (sizeof(U) <= sizeof(UInt))
+        constexpr byte_size(const byte_size<U> other) noexcept
+            : size_{other.get()}
+        {
+        }
+
+        // #### Value
+
+        [[nodiscard]] constexpr UInt get() const noexcept
         {
             return size_;
         }
 
+        // #### Comparison operators
+
         constexpr auto operator<=>(const byte_size&) const noexcept = default;
 
       private:
-        usize size_;
+        UInt size_;
     };
+
+    // #### Deduction guides
+
+    // For signed integer literals.
+
+    explicit byte_size(int) -> byte_size<usize>;
+    explicit byte_size(i64) -> byte_size<usize>;
+
+    // For all unsigned integrals.
+
+    template <strict_unsigned_integral UInt>
+    explicit byte_size(UInt) -> byte_size<UInt>;
 
     // ### not_null
 

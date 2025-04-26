@@ -15,7 +15,7 @@ namespace snn::mem::raw
 
     template <typename A, typename B>
     [[nodiscard]] constexpr bool is_equal(const not_null<A*> a, const not_null<B*> b,
-                                          const byte_size size) noexcept
+                                          const byte_size<usize> size) noexcept
     {
         SNN_DIAGNOSTIC_PUSH
         SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
