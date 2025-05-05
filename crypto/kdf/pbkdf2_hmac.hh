@@ -76,7 +76,7 @@ namespace snn::crypto::kdf
             hmac.update(digest_one.view());
             hmac.final(digest_one);
 
-            digest_two.transform(digest_one, chr::fn::xor_bits{});
+            digest_two.transform_with(digest_one, chr::fn::xor_bits{});
         }
 
         return Str{digest_two.view(0, DerivedKeySize)};

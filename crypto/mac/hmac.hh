@@ -52,12 +52,12 @@ namespace snn::crypto::mac
 
             // Inner
             padding.fill('\x36');
-            padding.transform(key, chr::fn::xor_bits{});
+            padding.transform_with(key, chr::fn::xor_bits{});
             inner_.update(padding.view());
 
             // Outer
             padding.fill('\x5c');
-            padding.transform(key, chr::fn::xor_bits{});
+            padding.transform_with(key, chr::fn::xor_bits{});
             outer_.update(padding.view());
         }
 

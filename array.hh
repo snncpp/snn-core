@@ -608,7 +608,7 @@ namespace snn
         }
 
         template <typename U, typename TwoArgOp>
-        constexpr void transform(const array<U, Count>& other, TwoArgOp op)
+        constexpr void transform_with(const array_view<U, Count> other, TwoArgOp op)
         {
             for (usize i = 0; i < Count; ++i)
             {
@@ -617,12 +617,9 @@ namespace snn
         }
 
         template <typename U, typename TwoArgOp>
-        constexpr void transform(const array_view<U, Count> other, TwoArgOp op)
+        constexpr void transform_with(const array<U, Count>& other, TwoArgOp op)
         {
-            for (usize i = 0; i < Count; ++i)
-            {
-                priv_buf_[i] = op(std::as_const(priv_buf_[i]), other.begin()[i]);
-            }
+            transform_with(other.template view<>(), std::move(op));
         }
 
         // #### Validation helpers

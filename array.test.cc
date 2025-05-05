@@ -741,7 +741,7 @@ namespace snn::app
             {
                 array a{1, 3, 7};
                 array b{2, 1, 3};
-                a.transform(b, fn::multiply{});
+                a.transform_with(b, fn::multiply{});
                 snn_require(a.at(0).value() == 2);
                 snn_require(a.at(1).value() == 3);
                 snn_require(a.at(2).value() == 21);

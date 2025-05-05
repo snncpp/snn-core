@@ -1325,6 +1325,20 @@ namespace snn::app
                 snn_require(arr.at(2).value() == "456defghijklmnopqrstuvwxyz");
             }
 
+            // transform_with
+            {
+                array a{1, 3, 7};
+                array b{2, 1, 3};
+                a.view<>().transform_with(b.view<>(), fn::multiply{});
+                snn_require(a.at(0).value() == 2);
+                snn_require(a.at(1).value() == 3);
+                snn_require(a.at(2).value() == 21);
+
+                snn_require(b.at(0).value() == 2);
+                snn_require(b.at(1).value() == 1);
+                snn_require(b.at(2).value() == 3);
+            }
+
             // range
             {
                 const cstrview s{"Hello"};
