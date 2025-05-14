@@ -135,6 +135,9 @@ static_assert(std::is_same_v<std::uint8_t, unsigned char>, "std::uint8_t must be
     #define SNN_DIAGNOSTIC_IGNORE_DEPRECATED_DECLARATIONS
     #define SNN_DIAGNOSTIC_IGNORE_EXIT_TIME_DESTRUCTORS
     #define SNN_DIAGNOSTIC_IGNORE_FORMAT_NONLITERAL
+    #define SNN_DIAGNOSTIC_IGNORE_NONTRIVIAL_MEMCALL
+    #define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+    #define SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL
 #endif
 
 // ### SNN_INT128_ENABLED
@@ -1200,7 +1203,7 @@ namespace snn
         // #### Converting constructors
 
         template <typename U>
-            requires (sizeof(U) <= sizeof(UInt))
+            requires(sizeof(U) <= sizeof(UInt))
         constexpr byte_size(const byte_size<U> other) noexcept
             : size_{other.get()}
         {
