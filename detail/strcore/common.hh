@@ -120,12 +120,12 @@ namespace snn::detail::strcore
       public:
         using trivially_relocatable_type = buf;
 
-        constexpr buf() noexcept
+        constexpr explicit buf() noexcept
         {
             init_();
         }
 
-        constexpr buf(const usize capacity)
+        constexpr explicit buf(container::reserve_t, const usize capacity)
         {
             if (capacity)
             {
@@ -137,7 +137,7 @@ namespace snn::detail::strcore
             }
         }
 
-        constexpr buf(const not_null<const char*> data, const usize size)
+        constexpr explicit buf(const not_null<const char*> data, const usize size)
         {
             if (size)
             {
@@ -151,9 +151,21 @@ namespace snn::detail::strcore
         }
 
         template <character Char, usize Count>
-        constexpr buf(const snn::array_view<Char, Count> s)
+        constexpr explicit buf(const snn::array_view<Char, Count> s)
         {
-            if constexpr (Count > 0)
+            if constexpr (Count == constant::dynamic_count)
+            {
+                if (s)
+                {
+                    init_(s.size(), not_zero{s.size()});
+                    mem::raw::copy(s.data(), not_null{buf_}, s.byte_size(), promise::no_overlap);
+                }
+                else
+                {
+                    init_();
+                }
+            }
+            else if constexpr (Count > 0)
             {
                 init_(Count, not_zero{Count});
                 mem::raw::copy<Count>(not_null{s.data()}, not_null{buf_}, promise::no_overlap);
@@ -164,21 +176,7 @@ namespace snn::detail::strcore
             }
         }
 
-        template <character Char>
-        constexpr buf(const snn::array_view<Char> s)
-        {
-            if (s)
-            {
-                init_(s.size(), not_zero{s.size()});
-                mem::raw::copy(s.data(), not_null{buf_}, s.byte_size(), promise::no_overlap);
-            }
-            else
-            {
-                init_();
-            }
-        }
-
-        constexpr buf(const usize count, const char c)
+        constexpr explicit buf(container::fill_t, const usize count, const char c)
         {
             if (count)
             {
@@ -191,7 +189,7 @@ namespace snn::detail::strcore
             }
         }
 
-        constexpr buf(const char* const first, const char* const last)
+        constexpr explicit buf(meta::iterators_t, const char* const first, const char* const last)
         {
             snn_should(first == last || (first != nullptr && last != nullptr && first < last));
             if (first != last)
@@ -572,12 +570,12 @@ namespace snn::detail::strcore
       public:
         using trivially_relocatable_type = sso;
 
-        constexpr sso() noexcept
+        constexpr explicit sso() noexcept
         {
             init_();
         }
 
-        constexpr sso(const usize capacity)
+        constexpr explicit sso(container::reserve_t, const usize capacity)
         {
             if (std::is_constant_evaluated())
             {
@@ -592,15 +590,19 @@ namespace snn::detail::strcore
             }
         }
 
-        constexpr sso(const not_null<const char*> data, const usize size)
+        constexpr explicit sso(const not_null<const char*> data, const usize size)
         {
             mem::raw::copy(data, init_(size), byte_size{size}, promise::no_overlap);
         }
 
         template <character Char, usize Count>
-        constexpr sso(const snn::array_view<Char, Count> s)
+        constexpr explicit sso(const snn::array_view<Char, Count> s)
         {
-            if constexpr (Count > 0)
+            if constexpr (Count == constant::dynamic_count)
+            {
+                mem::raw::copy(s.data(), init_(s.size()), s.byte_size(), promise::no_overlap);
+            }
+            else if constexpr (Count > 0)
             {
                 mem::raw::copy<Count>(not_null{s.data()}, init_(Count), promise::no_overlap);
             }
@@ -610,18 +612,12 @@ namespace snn::detail::strcore
             }
         }
 
-        template <character Char>
-        constexpr sso(const snn::array_view<Char> s)
-        {
-            mem::raw::copy(s.data(), init_(s.size()), s.byte_size(), promise::no_overlap);
-        }
-
-        constexpr sso(const usize count, const char c)
+        constexpr explicit sso(container::fill_t, const usize count, const char c)
         {
             mem::raw::fill(init_(count), byte_size{count}, to_byte(c));
         }
 
-        constexpr sso(const char* const first, const char* const last)
+        constexpr explicit sso(meta::iterators_t, const char* const first, const char* const last)
         {
             snn_should(first == last || (first != nullptr && last != nullptr && first < last));
             if (first != last)

@@ -76,13 +76,13 @@ namespace snn
         }
 
         constexpr explicit strcore(container::reserve_t, const usize capacity)
-            : buf_{capacity}
+            : buf_{container::reserve, capacity}
         {
         }
 
         template <character Char>
         constexpr explicit strcore(container::fill_t, const usize count, const Char c)
-            : buf_{count, c}
+            : buf_{container::fill, count, c}
         {
         }
 
@@ -95,7 +95,7 @@ namespace snn
         }
 
         constexpr explicit strcore(const const_pointer s, promise::null_terminated_t)
-            : buf_{s, s + string::size(s, promise::null_terminated)}
+            : buf_{meta::iterators, s, s + string::size(s, promise::null_terminated)}
         {
         }
 
@@ -106,7 +106,7 @@ namespace snn
 
         constexpr explicit strcore(meta::iterators_t, const const_pointer first,
                                    const const_pointer last)
-            : buf_{first, last}
+            : buf_{meta::iterators, first, last}
         {
         }
 
@@ -119,7 +119,7 @@ namespace snn
         }
 
         constexpr strcore(const init_list<char> l)
-            : buf_{l.begin(), l.end()}
+            : buf_{meta::iterators, l.begin(), l.end()}
         {
         }
 
