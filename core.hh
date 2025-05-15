@@ -362,6 +362,12 @@ namespace snn
             explicit reserve_t() = default;
         };
         inline constexpr reserve_t reserve;
+
+        struct size_for_overwrite_t final
+        {
+            explicit size_for_overwrite_t() = default;
+        };
+        inline constexpr size_for_overwrite_t size_for_overwrite;
     }
 
     // ## Type traits

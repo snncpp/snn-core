@@ -80,6 +80,11 @@ namespace snn
         {
         }
 
+        constexpr explicit strcore(container::size_for_overwrite_t, const usize size)
+            : buf_{container::size_for_overwrite, size}
+        {
+        }
+
         template <character Char>
         constexpr explicit strcore(container::fill_t, const usize count, const Char c)
             : buf_{container::fill, count, c}

@@ -21,7 +21,12 @@ namespace snn
             snn_require(file::path::canonical("./canonical.test.cc").value() ==
                         file::path::join(cwd, "canonical.test.cc"));
         }
-
+        {
+            decltype(auto) res = file::path::canonical<strbuf>(".");
+            static_assert(std::is_same_v<decltype(res), result<strbuf>>);
+            snn_require(res);
+            snn_require(res.value().has_front("/"));
+        }
         {
             decltype(auto) res = file::path::canonical("/tmp/non_existing_389287329");
             static_assert(std::is_same_v<decltype(res), result<str>>);

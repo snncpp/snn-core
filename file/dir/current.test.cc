@@ -10,14 +10,25 @@ namespace snn
 {
     void unittest()
     {
-        const str current_path = file::dir::current().value();
-        snn_require(current_path.has_front('/')); // Must be absolute.
-        snn_require(current_path.has_back("/file/dir"));
+        {
+            const str current_path = file::dir::current().value();
+            snn_require(current_path.has_front('/')); // Must be absolute.
+            snn_require(current_path.has_back("/file/dir"));
 
-        const str current_logical_path = file::dir::current_logical().value();
-        snn_require(current_logical_path.has_front('/')); // Must be absolute.
-        snn_require(current_logical_path.has_back("/file/dir"));
+            const str current_logical_path = file::dir::current_logical().value();
+            snn_require(current_logical_path.has_front('/')); // Must be absolute.
+            snn_require(current_logical_path.has_back("/file/dir"));
 
-        snn_require(file::is_same(current_path, current_logical_path));
+            snn_require(file::is_same(current_path, current_logical_path));
+        }
+        {
+            const auto current_path = file::dir::current<strbuf>().value();
+            snn_require(current_path.has_front('/')); // Must be absolute.
+            snn_require(current_path.has_back("/file/dir"));
+
+            const auto current_logical_path = file::dir::current_logical<strbuf>().value();
+            snn_require(current_logical_path.has_front('/')); // Must be absolute.
+            snn_require(current_logical_path.has_back("/file/dir"));
+        }
     }
 }

@@ -118,20 +118,19 @@ namespace snn::file
                 math::min(src_size, math::clamp(buffer_size, buf_min_size, buf_max_size));
             snn_should(buf_size > 0);
 
-            strbuf buf;
-            strview buffer = buf.resize_for_overwrite(buf_size);
+            strbuf buf{container::size_for_overwrite, buf_size};
 
             // Read & write loop.
 
             while (true)
             {
-                const auto res = src.read_some(buffer);
+                const auto res = src.read_some(buf.view());
                 if (res)
                 {
                     const usize read_size = res.value(promise::has_value);
                     if (read_size > 0)
                     {
-                        if (const auto r = dst.write_all(buffer.view(0, read_size)); !r)
+                        if (const auto r = dst.write_all(buf.view(0, read_size)); !r)
                         {
                             return r.error_code();
                         }

@@ -137,6 +137,18 @@ namespace snn::detail::strcore
             }
         }
 
+        constexpr explicit buf(container::size_for_overwrite_t, const usize size)
+        {
+            if (size)
+            {
+                init_(size, not_zero{size});
+            }
+            else
+            {
+                init_();
+            }
+        }
+
         constexpr explicit buf(const not_null<const char*> data, const usize size)
         {
             if (size)
@@ -588,6 +600,11 @@ namespace snn::detail::strcore
                 else
                     init_large_(0, capacity);
             }
+        }
+
+        constexpr explicit sso(container::size_for_overwrite_t, const usize size)
+        {
+            init_(size);
         }
 
         constexpr explicit sso(const not_null<const char*> data, const usize size)

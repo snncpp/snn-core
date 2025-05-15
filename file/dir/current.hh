@@ -27,15 +27,13 @@ namespace snn::file::dir
     template <any_strcore Str = str>
     [[nodiscard]] result<Str> current()
     {
-        Str path;
-
 #if defined(__FreeBSD__)
         // FreeBSD uses `MAXPATHLEN` with `getcwd`, but it is defined to `PATH_MAX`.
         static_assert(MAXPATHLEN == PATH_MAX);
 #endif
+        Str path{container::size_for_overwrite, PATH_MAX};
 
-        auto buf = path.resize_for_overwrite(PATH_MAX);
-        if (::getcwd(buf.writable().get(), buf.size()) == nullptr)
+        if (::getcwd(path.begin(), path.size()) == nullptr)
         {
             return error_code{errno, system::error_category};
         }

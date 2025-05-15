@@ -1229,6 +1229,27 @@ namespace snn::app
                                         generic::error::size_would_exceed_max_size);
             }
 
+            // T{container::size_for_overwrite, size}
+            {
+                T s{container::size_for_overwrite, 0};
+                snn_require(size_eq(s, 0));
+                snn_require(s.capacity() == default_capacity);
+            }
+            {
+                T s{container::size_for_overwrite, min_capacity};
+                snn_require(size_eq(s, min_capacity));
+                snn_require(s.capacity() == min_capacity);
+            }
+            {
+                T s{container::size_for_overwrite, min_capacity + 1};
+                snn_require(size_eq(s, min_capacity + 1));
+                snn_require(s.capacity() > min_capacity);
+            }
+            {
+                snn_require_throws_code((T{container::size_for_overwrite, constant::npos}),
+                                        generic::error::size_would_exceed_max_size);
+            }
+
             // T(char(&s)[N])
             {
                 const T s{""};
