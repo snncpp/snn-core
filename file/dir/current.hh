@@ -34,7 +34,7 @@ namespace snn::file::dir
         static_assert(MAXPATHLEN == PATH_MAX);
 #endif
 
-        auto buf = path.resize_uninitialized(PATH_MAX);
+        auto buf = path.resize_for_overwrite(PATH_MAX);
         if (::getcwd(buf.writable().get(), buf.size()) == nullptr)
         {
             return error_code{errno, system::error_category};

@@ -67,7 +67,7 @@ namespace snn::base64
 
             // Can't overflow (57-bit-virtual-address-space).
             strview buffer =
-                append_to.append_uninitialized(encoded_size(string.size(), padding_policy));
+                append_to.append_for_overwrite(encoded_size(string.size(), padding_policy));
 
             auto dst            = buffer.begin();
             const auto dst_last = buffer.cend();

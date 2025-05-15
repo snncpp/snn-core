@@ -23,7 +23,7 @@ namespace snn::string
         if (s)
         {
             const usize fill_size = num::safe{s.size()}.multiply(times).value();
-            append_to.append_uninitialized(fill_size).fill(s);
+            append_to.append_for_overwrite(fill_size).fill(s);
         }
     }
 

@@ -246,7 +246,7 @@ namespace snn::detail::strcore
             }
         }
 
-        constexpr strview append_uninitialized(const usize size_increase)
+        constexpr strview append_for_overwrite(const usize size_increase)
         {
             const usize org_size      = size_;
             const usize remaining_cap = cap_ - size_;
@@ -343,7 +343,7 @@ namespace snn::detail::strcore
             }
         }
 
-        constexpr strview replace_uninitialized(const usize pos, const usize size,
+        constexpr strview replace_for_overwrite(const usize pos, const usize size,
                                                 const usize replacement_size)
         {
             if (pos > size_)
@@ -424,11 +424,11 @@ namespace snn::detail::strcore
             }
             else
             {
-                append_uninitialized(size - size_).fill(fill);
+                append_for_overwrite(size - size_).fill(fill);
             }
         }
 
-        constexpr strview resize_uninitialized(const usize size)
+        constexpr strview resize_for_overwrite(const usize size)
         {
             reserve(size);
             size_ = size;
@@ -690,12 +690,12 @@ namespace snn::detail::strcore
             }
         }
 
-        constexpr strview append_uninitialized(const usize size_increase)
+        constexpr strview append_for_overwrite(const usize size_increase)
         {
             if (is_small_())
-                return append_uninitialized_small_(size_increase);
+                return append_for_overwrite_small_(size_increase);
             else
-                return append_uninitialized_large_(size_increase);
+                return append_for_overwrite_large_(size_increase);
         }
 
         constexpr void assign(const not_null<const char*> data, const usize size)
@@ -857,13 +857,13 @@ namespace snn::detail::strcore
             }
         }
 
-        constexpr strview replace_uninitialized(const usize pos, const usize size,
+        constexpr strview replace_for_overwrite(const usize pos, const usize size,
                                                 const usize replacement_size)
         {
             if (is_small_())
-                return replace_uninit_small_(pos, size, replacement_size);
+                return replace_for_overwrite_small_(pos, size, replacement_size);
             else
-                return replace_uninit_large_(pos, size, replacement_size);
+                return replace_for_overwrite_large_(pos, size, replacement_size);
         }
 
         constexpr void reserve(const usize capacity)
@@ -934,7 +934,7 @@ namespace snn::detail::strcore
                 }
                 else
                 {
-                    append_uninitialized_small_(size - cur_size).fill(fill);
+                    append_for_overwrite_small_(size - cur_size).fill(fill);
                 }
             }
             else
@@ -946,12 +946,12 @@ namespace snn::detail::strcore
                 }
                 else
                 {
-                    append_uninitialized_large_(size - cur_size).fill(fill);
+                    append_for_overwrite_large_(size - cur_size).fill(fill);
                 }
             }
         }
 
-        constexpr strview resize_uninitialized(const usize size)
+        constexpr strview resize_for_overwrite(const usize size)
         {
             if (is_small_())
             {
@@ -1337,7 +1337,7 @@ namespace snn::detail::strcore
             set_large_(buf, new_size, cap_incl_zero);
         }
 
-        strview append_uninitialized_small_(const usize size_increase)
+        strview append_for_overwrite_small_(const usize size_increase)
         {
             const usize cur_size          = small_size_();
             const usize rem_cap_incl_zero = small_capacity_incl_zero_ - cur_size;
@@ -1355,7 +1355,7 @@ namespace snn::detail::strcore
             }
         }
 
-        constexpr strview append_uninitialized_large_(const usize size_increase)
+        constexpr strview append_for_overwrite_large_(const usize size_increase)
         {
             const usize cur_size          = storage_.large.size;
             const usize rem_cap_incl_zero = storage_.large.capacity_incl_zero() - cur_size;
@@ -1372,8 +1372,8 @@ namespace snn::detail::strcore
             return strview{not_null{storage_.large.data + cur_size}, size_increase};
         }
 
-        strview replace_uninit_small_(const usize pos, const usize size,
-                                      const usize replacement_size)
+        strview replace_for_overwrite_small_(const usize pos, const usize size,
+                                             const usize replacement_size)
         {
             const usize cur_size          = small_size_();
             const usize cur_cap_excl_zero = small_max_size_;
@@ -1432,8 +1432,8 @@ namespace snn::detail::strcore
             return strview{not_null{storage_.small + pos}, replacement_size};
         }
 
-        constexpr strview replace_uninit_large_(const usize pos, const usize size,
-                                                const usize replacement_size)
+        constexpr strview replace_for_overwrite_large_(const usize pos, const usize size,
+                                                       const usize replacement_size)
         {
             const usize cur_size          = storage_.large.size;
             const usize cur_cap_excl_zero = storage_.large.capacity_incl_zero() - 1;

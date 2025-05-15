@@ -55,26 +55,26 @@ namespace snn::utf8
 
         if (cp < codepoint::first_in_2_byte_sequence)
         {
-            char* const dest = append_to.append_uninitialized(1).begin();
+            char* const dest = append_to.append_for_overwrite(1).begin();
             *dest            = static_cast<char>(cp);
             return strview{not_null{dest}, 1};
         }
 
         if (cp < codepoint::first_in_3_byte_sequence)
         {
-            char* const dest = append_to.append_uninitialized(2).begin();
+            char* const dest = append_to.append_for_overwrite(2).begin();
             encode_2_byte_sequence(cp, dest, promise::is_valid);
             return strview{not_null{dest}, 2};
         }
 
         if (cp < codepoint::first_in_4_byte_sequence)
         {
-            char* const dest = append_to.append_uninitialized(3).begin();
+            char* const dest = append_to.append_for_overwrite(3).begin();
             encode_3_byte_sequence(cp, dest, promise::is_valid);
             return strview{not_null{dest}, 3};
         }
 
-        char* const dest = append_to.append_uninitialized(4).begin();
+        char* const dest = append_to.append_for_overwrite(4).begin();
         encode_4_byte_sequence(cp, dest, promise::is_valid);
         return strview{not_null{dest}, 4};
     }

@@ -155,7 +155,7 @@ namespace snn
             if (this != &other)
             {
                 const cstrview s = other.view();
-                mem::raw::copy(s.data(), buf_.resize_uninitialized(s.size()).writable(),
+                mem::raw::copy(s.data(), buf_.resize_for_overwrite(s.size()).writable(),
                                s.byte_size(), promise::no_overlap);
             }
             return *this;
@@ -182,7 +182,7 @@ namespace snn
 
         constexpr strcore& operator=(const same_as<char> auto c)
         {
-            buf_.resize_uninitialized(1).begin()[0] = c;
+            buf_.resize_for_overwrite(1).begin()[0] = c;
             return *this;
         }
 
@@ -190,7 +190,7 @@ namespace snn
         constexpr strcore& operator=(const char (&s)[N])
         {
             constexpr usize Size = N - 1;
-            mem::raw::copy<Size>(not_null{s}, buf_.resize_uninitialized(Size).writable(),
+            mem::raw::copy<Size>(not_null{s}, buf_.resize_for_overwrite(Size).writable(),
                                  promise::no_overlap);
             return *this;
         }
@@ -203,7 +203,7 @@ namespace snn
             }
             else
             {
-                mem::raw::copy(not_null{l.begin()}, buf_.resize_uninitialized(l.size()).writable(),
+                mem::raw::copy(not_null{l.begin()}, buf_.resize_for_overwrite(l.size()).writable(),
                                snn::byte_size{l.size()}, promise::no_overlap);
             }
             return *this;
@@ -355,14 +355,14 @@ namespace snn
 
         constexpr void append(const same_as<char> auto c)
         {
-            buf_.append_uninitialized(1).begin()[0] = c;
+            buf_.append_for_overwrite(1).begin()[0] = c;
         }
 
         template <usize N>
         constexpr void append(const char (&s)[N])
         {
             constexpr usize Size = N - 1;
-            mem::raw::copy<Size>(not_null{s}, buf_.append_uninitialized(Size).writable(),
+            mem::raw::copy<Size>(not_null{s}, buf_.append_for_overwrite(Size).writable(),
                                  promise::no_overlap);
         }
 
@@ -370,7 +370,7 @@ namespace snn
         {
             if (l.size() > 0)
             {
-                mem::raw::copy(not_null{l.begin()}, buf_.append_uninitialized(l.size()).writable(),
+                mem::raw::copy(not_null{l.begin()}, buf_.append_for_overwrite(l.size()).writable(),
                                snn::byte_size{l.size()}, promise::no_overlap);
             }
         }
@@ -380,7 +380,7 @@ namespace snn
         template <character Char, usize Count>
         constexpr void append(const array<Char, Count>& a)
         {
-            mem::raw::copy<Count>(a.data(), buf_.append_uninitialized(Count).writable(),
+            mem::raw::copy<Count>(a.data(), buf_.append_for_overwrite(Count).writable(),
                                   promise::no_overlap);
         }
 
@@ -410,7 +410,7 @@ namespace snn
         constexpr void append_integral(const UInt num, const usize min_digits = 0)
         {
             const usize size = math::max(math::count_digits<Base>(num).get(), min_digits);
-            strview dest     = buf_.append_uninitialized(size);
+            strview dest     = buf_.append_for_overwrite(size);
             append_unsigned_<Base>(dest.end(), dest.begin(), num);
         }
 
@@ -427,7 +427,7 @@ namespace snn
             }
 
             size += math::max(math::count_digits<Base>(n).get(), min_digits);
-            strview dest = buf_.append_uninitialized(size);
+            strview dest = buf_.append_for_overwrite(size);
             char* first  = dest.begin();
             char* last   = dest.end();
 
@@ -440,19 +440,19 @@ namespace snn
             append_unsigned_<Base>(last, first, n);
         }
 
-        // #### Append uninitialized
+        // #### Append for overwrite
 
         template <usize SizeIncrease>
             requires(SizeIncrease != constant::dynamic_count)
-        [[nodiscard]] constexpr auto append_uninitialized()
+        [[nodiscard]] constexpr auto append_for_overwrite()
         {
-            return array_view<char, SizeIncrease>{buf_.append_uninitialized(SizeIncrease).begin(),
+            return array_view<char, SizeIncrease>{buf_.append_for_overwrite(SizeIncrease).begin(),
                                                   promise::has_capacity};
         }
 
-        [[nodiscard]] constexpr strview append_uninitialized(const usize size_increase)
+        [[nodiscard]] constexpr strview append_for_overwrite(const usize size_increase)
         {
-            return buf_.append_uninitialized(size_increase);
+            return buf_.append_for_overwrite(size_increase);
         }
 
         // #### Count/Size
@@ -616,14 +616,14 @@ namespace snn
             const cstrview sv = s.get();
             if (!std::is_constant_evaluated() && !buf_.overlaps(sv)) [[likely]]
             {
-                mem::raw::copy(sv.data(), buf_.replace_uninitialized(pos, 0, sv.size()).writable(),
+                mem::raw::copy(sv.data(), buf_.replace_for_overwrite(pos, 0, sv.size()).writable(),
                                sv.byte_size(), promise::no_overlap);
             }
             else
             {
                 // This could be optimized, but it's currently not worth the complexity.
                 Buffer tmp{buf_.view()};
-                mem::raw::copy(sv.data(), tmp.replace_uninitialized(pos, 0, sv.size()).writable(),
+                mem::raw::copy(sv.data(), tmp.replace_for_overwrite(pos, 0, sv.size()).writable(),
                                sv.byte_size(), promise::no_overlap);
                 buf_.swap(tmp);
             }
@@ -634,7 +634,7 @@ namespace snn
         {
             const cstrview sv = s.get();
             snn_should(std::is_constant_evaluated() || !buf_.overlaps(sv));
-            mem::raw::copy(sv.data(), buf_.replace_uninitialized(pos, 0, sv.size()).writable(),
+            mem::raw::copy(sv.data(), buf_.replace_for_overwrite(pos, 0, sv.size()).writable(),
                            sv.byte_size(), promise::no_overlap);
         }
 
@@ -642,13 +642,13 @@ namespace snn
         constexpr void insert_at(const usize pos, ConstChar (&s)[N])
         {
             constexpr usize Size = N - 1;
-            mem::raw::copy<Size>(not_null{s}, buf_.replace_uninitialized(pos, 0, Size).writable(),
+            mem::raw::copy<Size>(not_null{s}, buf_.replace_for_overwrite(pos, 0, Size).writable(),
                                  promise::no_overlap);
         }
 
-        [[nodiscard]] constexpr strview insert_uninitialized(const usize pos, const usize size)
+        [[nodiscard]] constexpr strview insert_for_overwrite(const usize pos, const usize size)
         {
-            return buf_.replace_uninitialized(pos, 0, size);
+            return buf_.replace_for_overwrite(pos, 0, size);
         }
 
         constexpr void drop_at(const usize pos, const usize count) noexcept
@@ -707,7 +707,7 @@ namespace snn
             if (!std::is_constant_evaluated() && !buf_.overlaps(replacement)) [[likely]]
             {
                 mem::raw::copy(replacement.data(),
-                               buf_.replace_uninitialized(pos, size, replacement.size()).writable(),
+                               buf_.replace_for_overwrite(pos, size, replacement.size()).writable(),
                                replacement.byte_size(), promise::no_overlap);
             }
             else
@@ -715,7 +715,7 @@ namespace snn
                 // This could be optimized, but it's currently not worth the complexity.
                 Buffer tmp{buf_.view()};
                 mem::raw::copy(replacement.data(),
-                               tmp.replace_uninitialized(pos, size, replacement.size()).writable(),
+                               tmp.replace_for_overwrite(pos, size, replacement.size()).writable(),
                                replacement.byte_size(), promise::no_overlap);
                 buf_.swap(tmp);
             }
@@ -727,7 +727,7 @@ namespace snn
             const cstrview replacement = s.get();
             snn_should(std::is_constant_evaluated() || !buf_.overlaps(replacement));
             mem::raw::copy(replacement.data(),
-                           buf_.replace_uninitialized(pos, size, replacement.size()).writable(),
+                           buf_.replace_for_overwrite(pos, size, replacement.size()).writable(),
                            replacement.byte_size(), promise::no_overlap);
         }
 
@@ -736,14 +736,14 @@ namespace snn
         {
             constexpr usize Size = N - 1;
             mem::raw::copy<Size>(not_null{replacement},
-                                 buf_.replace_uninitialized(pos, size, Size).writable(),
+                                 buf_.replace_for_overwrite(pos, size, Size).writable(),
                                  promise::no_overlap);
         }
 
-        [[nodiscard]] constexpr strview replace_uninitialized(const usize pos, const usize size,
+        [[nodiscard]] constexpr strview replace_for_overwrite(const usize pos, const usize size,
                                                               const usize replacement_size)
         {
-            return buf_.replace_uninitialized(pos, size, replacement_size);
+            return buf_.replace_for_overwrite(pos, size, replacement_size);
         }
 
         constexpr void reset() noexcept
@@ -756,9 +756,9 @@ namespace snn
             buf_.resize(size, fill);
         }
 
-        [[nodiscard]] constexpr strview resize_uninitialized(const usize size)
+        [[nodiscard]] constexpr strview resize_for_overwrite(const usize size)
         {
-            return buf_.resize_uninitialized(size);
+            return buf_.resize_for_overwrite(size);
         }
 
         constexpr void truncate(const usize size) noexcept

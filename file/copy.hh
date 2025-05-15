@@ -119,7 +119,7 @@ namespace snn::file
             snn_should(buf_size > 0);
 
             strbuf buf;
-            strview buffer = buf.resize_uninitialized(buf_size);
+            strview buffer = buf.resize_for_overwrite(buf_size);
 
             // Read & write loop.
 

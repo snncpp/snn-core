@@ -19,7 +19,7 @@ namespace snn::random
     {
         if (size > 0)
         {
-            random::detail::source::fill(append_to.append_uninitialized(size));
+            random::detail::source::fill(append_to.append_for_overwrite(size));
         }
     }
 

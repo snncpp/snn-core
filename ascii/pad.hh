@@ -28,9 +28,9 @@ namespace snn::ascii
             const usize diff        = size - s.size();
             const usize left_count  = diff / 2;
             const usize right_count = diff - left_count;
-            padded.append_uninitialized(left_count).fill(c);
+            padded.append_for_overwrite(left_count).fill(c);
             padded.append(s);
-            padded.append_uninitialized(right_count).fill(c);
+            padded.append_for_overwrite(right_count).fill(c);
         }
         else
         {
@@ -57,9 +57,9 @@ namespace snn::ascii
             const usize diff        = size - s.size();
             const usize left_count  = diff / 2;
             const usize right_count = diff - left_count;
-            padded.append_uninitialized(left_count).fill(ps);
+            padded.append_for_overwrite(left_count).fill(ps);
             padded.append(s);
-            padded.append_uninitialized(right_count).fill(ps);
+            padded.append_for_overwrite(right_count).fill(ps);
         }
         else
         {
@@ -80,8 +80,8 @@ namespace snn::ascii
             const usize left_count  = diff / 2;
             const usize right_count = diff - left_count;
             string.reserve(size);
-            string.insert_uninitialized(0, left_count).fill(c);
-            string.append_uninitialized(right_count).fill(c);
+            string.insert_for_overwrite(0, left_count).fill(c);
+            string.append_for_overwrite(right_count).fill(c);
         }
     }
 
@@ -105,8 +105,8 @@ namespace snn::ascii
             const usize left_count  = diff / 2;
             const usize right_count = diff - left_count;
             string.reserve(size);
-            string.insert_uninitialized(0, left_count).fill(ps);
-            string.append_uninitialized(right_count).fill(ps);
+            string.insert_for_overwrite(0, left_count).fill(ps);
+            string.append_for_overwrite(right_count).fill(ps);
         }
     }
 
@@ -121,7 +121,7 @@ namespace snn::ascii
         Str padded{container::reserve, math::max(s.size(), size)};
         if (size > s.size())
         {
-            padded.append_uninitialized(size - s.size()).fill(c);
+            padded.append_for_overwrite(size - s.size()).fill(c);
         }
         padded.append(s);
         return padded;
@@ -143,7 +143,7 @@ namespace snn::ascii
         if (size > s.size())
         {
             const usize fill_size = size - s.size();
-            padded.append_uninitialized(fill_size).fill(ps);
+            padded.append_for_overwrite(fill_size).fill(ps);
         }
         padded.append(s);
         return padded;
@@ -158,7 +158,7 @@ namespace snn::ascii
         const usize current_size = string.size();
         if (size > current_size)
         {
-            string.insert_uninitialized(0, size - current_size).fill(c);
+            string.insert_for_overwrite(0, size - current_size).fill(c);
         }
     }
 
@@ -179,7 +179,7 @@ namespace snn::ascii
         if (size > current_size)
         {
             const usize fill_size = size - current_size;
-            string.insert_uninitialized(0, fill_size).fill(ps);
+            string.insert_for_overwrite(0, fill_size).fill(ps);
         }
     }
 
@@ -195,7 +195,7 @@ namespace snn::ascii
         padded.append(s);
         if (size > s.size())
         {
-            padded.append_uninitialized(size - s.size()).fill(c);
+            padded.append_for_overwrite(size - s.size()).fill(c);
         }
         return padded;
     }
@@ -217,7 +217,7 @@ namespace snn::ascii
         if (size > s.size())
         {
             const usize fill_size = size - s.size();
-            padded.append_uninitialized(fill_size).fill(ps);
+            padded.append_for_overwrite(fill_size).fill(ps);
         }
         return padded;
     }
@@ -231,7 +231,7 @@ namespace snn::ascii
         const usize current_size = string.size();
         if (size > current_size)
         {
-            string.append_uninitialized(size - current_size).fill(c);
+            string.append_for_overwrite(size - current_size).fill(c);
         }
     }
 
@@ -252,7 +252,7 @@ namespace snn::ascii
         if (size > current_size)
         {
             const usize fill_size = size - current_size;
-            string.append_uninitialized(fill_size).fill(ps);
+            string.append_for_overwrite(fill_size).fill(ps);
         }
     }
 }

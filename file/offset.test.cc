@@ -22,7 +22,7 @@ namespace snn
         snn_require(offset_before.value() == 0);
 
         str s;
-        strview dest = s.resize_uninitialized(12);
+        strview dest = s.resize_for_overwrite(12);
 
         snn_require(r.read_some(dest).value() == 12);
         snn_require(s == "// Copyright");

@@ -32,7 +32,7 @@ namespace snn::app
 
             const usize cap = buf.capacity();
 
-            buf.resize_uninitialized(cap).fill(fill_string);
+            buf.resize_for_overwrite(cap).fill(fill_string);
 
             snn_assert(buf.capacity() == cap);
             snn_assert(buf.size() == cap);

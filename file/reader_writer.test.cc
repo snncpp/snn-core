@@ -56,7 +56,7 @@ namespace snn
             snn_require(rw.write_all("ABC"));
 
             str buf;
-            strview dest = buf.resize_uninitialized(3);
+            strview dest = buf.resize_for_overwrite(3);
             snn_require(rw.read_some(dest).value_or_default() == 3);
             snn_require(buf == "def");
 
@@ -230,14 +230,14 @@ namespace snn
             snn_require(res);
             snn_require(res.value() == 0);
 
-            strview dest = s.resize_uninitialized(12);
+            strview dest = s.resize_for_overwrite(12);
 
             res = rw.read_some(dest);
             snn_require(res);
             snn_require(res.value() == 12);
             snn_require(s == "// Copyright");
 
-            res = rw.read_some(s.resize_uninitialized(4));
+            res = rw.read_some(s.resize_for_overwrite(4));
             snn_require(res);
             snn_require(res.value() == 4);
             snn_require(s == " (c)");
@@ -271,15 +271,15 @@ namespace snn
             strbuf chunk3;
 
             // We can read the first 1'000 bytes.
-            snn_require(rw.read_fill(chunk1.resize_uninitialized(1'000)));
+            snn_require(rw.read_fill(chunk1.resize_for_overwrite(1'000)));
             snn_require(chunk1.has_front("// Copyright"));
 
             // We can read an additional 1'000 bytes.
-            snn_require(rw.read_fill(chunk2.resize_uninitialized(1'000)));
+            snn_require(rw.read_fill(chunk2.resize_for_overwrite(1'000)));
             snn_require(chunk2 != chunk1);
 
             // We can't read an additional 50'000 bytes.
-            auto res = rw.read_fill(chunk3.resize_uninitialized(50'000));
+            auto res = rw.read_fill(chunk3.resize_for_overwrite(50'000));
             snn_require(!res);
             snn_require(res.error_code() == file::error::no_more_data);
         }
@@ -312,7 +312,7 @@ namespace snn
             snn_require(rw.open_for_reading("/dev/urandom"));
             str s;
             constexpr usize buf_size = 16;
-            auto res                 = rw.read_some(s.resize_uninitialized(buf_size));
+            auto res                 = rw.read_some(s.resize_for_overwrite(buf_size));
             snn_require(res);
             snn_require(res.value() == buf_size);
         }

@@ -54,7 +54,7 @@ namespace snn::app
                 snn_require(s.view(3, 3) == "Two");
                 snn_require(s.view_offset(-6) == "Two333");
 
-                s.append_uninitialized(10).fill("Four");
+                s.append_for_overwrite(10).fill("Four");
                 snn_require(s == "OneTwo333FourFourFo");
 
                 s.append_integral<math::base::binary>(5);
@@ -2619,18 +2619,18 @@ namespace snn::app
                 snn_require(a == b);
             }
 
-            // resize_uninitialized
+            // resize_for_overwrite
             {
                 T s;
 
                 const char* first = s.data().get();
-                char* dest        = s.resize_uninitialized(0).writable().get(); // No reallocation.
+                char* dest        = s.resize_for_overwrite(0).writable().get(); // No reallocation.
                 snn_require(dest == first);
 
                 snn_require(size_eq(s, 0));
                 snn_require(s.capacity() == default_capacity);
 
-                mem::raw::copy<10>(not_null{"0123456789"}, s.resize_uninitialized(10).writable(),
+                mem::raw::copy<10>(not_null{"0123456789"}, s.resize_for_overwrite(10).writable(),
                                    promise::no_overlap);
                 snn_require(size_eq(s, 10));
                 snn_require(s.capacity() == min_capacity);
@@ -2638,7 +2638,7 @@ namespace snn::app
 
                 cstrview tmp{
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ9876543210_-<>()"};
-                mem::raw::copy(tmp.data(), s.resize_uninitialized(tmp.size()).writable(),
+                mem::raw::copy(tmp.data(), s.resize_for_overwrite(tmp.size()).writable(),
                                tmp.byte_size(), promise::no_overlap);
                 snn_require(size_eq(s, 68));
                 snn_require(s.capacity() >= 68);
@@ -2646,24 +2646,24 @@ namespace snn::app
                                  "9876543210_-<>()");
 
                 first = s.data().get();
-                dest  = s.resize_uninitialized(s.capacity()).writable().get(); // No reallocation.
+                dest  = s.resize_for_overwrite(s.capacity()).writable().get(); // No reallocation.
                 snn_require(dest == first);
             }
 
-            // append_uninitialized(size_increase)
+            // append_for_overwrite(size_increase)
             {
                 T s;
 
                 {
                     const char* const last        = s.end();
-                    const char* const append_dest = s.append_uninitialized(0).begin();
+                    const char* const append_dest = s.append_for_overwrite(0).begin();
                     snn_require(append_dest == last);
                 }
 
                 snn_require(size_eq(s, 0));
                 snn_require(s.capacity() == default_capacity);
 
-                strview buffer = s.append_uninitialized(10);
+                strview buffer = s.append_for_overwrite(10);
                 snn_require(buffer.size() == 10);
                 mem::raw::copy<10>(not_null{"0123456789"}, buffer.writable(), promise::no_overlap);
                 snn_require(size_eq(s, 10));
@@ -2671,7 +2671,7 @@ namespace snn::app
                 snn_require(s == "0123456789");
 
                 const cstrview tmp{"abcdefghijklmnopqrstuvwxyz!@ABCDEFGHIJKLMNOPQRSTUVWXYZ#$"};
-                buffer = s.append_uninitialized(tmp.size());
+                buffer = s.append_for_overwrite(tmp.size());
                 snn_require(buffer.size() == tmp.size());
                 mem::raw::copy(tmp.data(), buffer.writable(), tmp.byte_size(), promise::no_overlap);
                 snn_require(size_eq(s, 66));
@@ -2681,7 +2681,7 @@ namespace snn::app
 
                 {
                     const char* const last        = s.end();
-                    const char* const append_dest = s.append_uninitialized(0).begin();
+                    const char* const append_dest = s.append_for_overwrite(0).begin();
                     snn_require(append_dest == last);
                 }
             }
@@ -2691,34 +2691,34 @@ namespace snn::app
                 snn_require(s.capacity() == min_capacity);
 
                 const char* const last        = s.end();
-                const char* const append_dest = s.append_uninitialized(0).begin();
+                const char* const append_dest = s.append_for_overwrite(0).begin();
                 snn_require(append_dest == last);
 
                 snn_require(size_eq(s, min_capacity));
                 snn_require(s.capacity() == min_capacity);
             }
 
-            // append_uninitialized<SizeIncrease>()
+            // append_for_overwrite<SizeIncrease>()
             {
                 T s = "abc";
 
                 {
-                    auto v = s.template append_uninitialized<3>();
+                    auto v = s.template append_for_overwrite<3>();
                     static_assert(std::is_same_v<decltype(v), array_view<char, 3>>);
                     v.fill('D');
                 }
 
                 snn_require(s == "abcDDD");
 
-                s.template append_uninitialized<2>().fill('e');
-                s.template append_uninitialized<1>().fill('F');
+                s.template append_for_overwrite<2>().fill('e');
+                s.template append_for_overwrite<1>().fill('F');
 
                 snn_require(s == "abcDDDeeF");
 
                 {
                     const char* const last_before = s.end();
 
-                    auto v = s.template append_uninitialized<0>();
+                    auto v = s.template append_for_overwrite<0>();
                     static_assert(std::is_same_v<decltype(v), array_view<char, 0>>);
 
                     snn_require(v.begin() == last_before);
@@ -2727,20 +2727,20 @@ namespace snn::app
                 snn_require(s == "abcDDDeeF");
             }
 
-            // insert_uninitialized
+            // insert_for_overwrite
             {
                 T s;
 
                 {
                     const char* const first = s.begin();
-                    const char* const dest  = s.insert_uninitialized(0, 0).begin();
+                    const char* const dest  = s.insert_for_overwrite(0, 0).begin();
                     snn_require(dest == first);
                 }
 
                 snn_require(size_eq(s, 0));
                 snn_require(s.capacity() == default_capacity);
 
-                strview buf = s.insert_uninitialized(0, 10);
+                strview buf = s.insert_for_overwrite(0, 10);
                 snn_require(buf.size() == 10);
                 mem::raw::copy<10>(not_null{"0123456789"}, buf.writable(), promise::no_overlap);
                 snn_require(size_eq(s, 10));
@@ -2748,7 +2748,7 @@ namespace snn::app
                 snn_require(s == "0123456789");
 
                 const cstrview tmp{"abcdefghijklmnopqrstuvwxyz!@ABCDEFGHIJKLMNOPQRSTUVWXYZ#$"};
-                buf = s.insert_uninitialized(5, tmp.size());
+                buf = s.insert_for_overwrite(5, tmp.size());
                 snn_require(buf.size() == tmp.size());
                 mem::raw::copy(tmp.data(), buf.writable(), tmp.byte_size(), promise::no_overlap);
                 snn_require(size_eq(s, 66));
@@ -2758,25 +2758,25 @@ namespace snn::app
 
                 {
                     const char* const first = s.begin();
-                    const char* const dest  = s.insert_uninitialized(0, 0).begin();
+                    const char* const dest  = s.insert_for_overwrite(0, 0).begin();
                     snn_require(dest == first);
                 }
             }
 
-            // replace_uninitialized
+            // replace_for_overwrite
             {
                 T s;
 
                 {
                     const char* const first = s.begin();
-                    const char* const dest  = s.replace_uninitialized(0, 0, 0).begin();
+                    const char* const dest  = s.replace_for_overwrite(0, 0, 0).begin();
                     snn_require(dest == first);
                 }
 
                 snn_require(size_eq(s, 0));
                 snn_require(s.capacity() == default_capacity);
 
-                strview buf = s.replace_uninitialized(0, 0, 10);
+                strview buf = s.replace_for_overwrite(0, 0, 10);
                 snn_require(buf.size() == 10);
                 mem::raw::copy<10>(not_null{"0123456789"}, buf.writable(), promise::no_overlap);
                 snn_require(size_eq(s, 10));
@@ -2784,7 +2784,7 @@ namespace snn::app
                 snn_require(s == "0123456789");
 
                 const cstrview tmp{"abcdefghijklmnopqrstuvwxyz!@ABCDEFGHIJKLMNOPQRSTUVWXYZ#$"};
-                buf = s.replace_uninitialized(3, 4, tmp.size());
+                buf = s.replace_for_overwrite(3, 4, tmp.size());
                 snn_require(buf.size() == tmp.size());
                 mem::raw::copy(tmp.data(), buf.writable(), tmp.byte_size(), promise::no_overlap);
                 snn_require(size_eq(s, 62));
@@ -2794,18 +2794,18 @@ namespace snn::app
 
                 {
                     const char* const first = s.begin();
-                    const char* const dest  = s.replace_uninitialized(0, 0, 0).begin();
+                    const char* const dest  = s.replace_for_overwrite(0, 0, 0).begin();
                     snn_require(dest == first);
                 }
             }
             {
                 T s = "abcdef";
-                s.replace_uninitialized(2, 2, 1).fill('X');
+                s.replace_for_overwrite(2, 2, 1).fill('X');
                 snn_require(s == "abXef");
             }
             {
                 T s = "abcdefghijklmnopqrstuvwxyz";
-                s.replace_uninitialized(3, 10, 4).fill('X');
+                s.replace_for_overwrite(3, 10, 4).fill('X');
                 snn_require(s == "abcXXXXnopqrstuvwxyz");
             }
             {
@@ -2814,7 +2814,7 @@ namespace snn::app
                 snn_require(s.capacity() == min_capacity);
 
                 const char* const first = s.begin();
-                const char* const dest  = s.replace_uninitialized(0, 0, 0).begin();
+                const char* const dest  = s.replace_for_overwrite(0, 0, 0).begin();
                 snn_require(dest == first);
 
                 snn_require(size_eq(s, min_capacity));

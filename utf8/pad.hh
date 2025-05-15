@@ -72,8 +72,8 @@ namespace snn::utf8
             if (unicode::is_ascii(cp))
             {
                 s.reserve_append(fill_count);
-                s.insert_uninitialized(0, left_count).fill(static_cast<char>(cp));
-                s.append_uninitialized(right_count).fill(static_cast<char>(cp));
+                s.insert_for_overwrite(0, left_count).fill(static_cast<char>(cp));
+                s.append_for_overwrite(right_count).fill(static_cast<char>(cp));
             }
             else
             {
@@ -88,8 +88,8 @@ namespace snn::utf8
                 // An overflow here is harmless.
                 s.reserve_append(left_fill_size + right_fill_size);
 
-                s.insert_uninitialized(0, left_fill_size).fill(encoded);
-                s.append_uninitialized(right_fill_size).fill(encoded);
+                s.insert_for_overwrite(0, left_fill_size).fill(encoded);
+                s.append_for_overwrite(right_fill_size).fill(encoded);
             }
         }
     }
@@ -127,8 +127,8 @@ namespace snn::utf8
             // An overflow here is harmless.
             s.reserve_append(left_fill_size + right_fill_size);
 
-            s.insert_uninitialized(0, left_fill_size).fill(ps);
-            s.append_uninitialized(right_fill_size).fill(ps);
+            s.insert_for_overwrite(0, left_fill_size).fill(ps);
+            s.append_for_overwrite(right_fill_size).fill(ps);
         }
     }
 
@@ -144,7 +144,7 @@ namespace snn::utf8
 
             if (unicode::is_ascii(cp))
             {
-                s.insert_uninitialized(0, fill_count).fill(static_cast<char>(cp));
+                s.insert_for_overwrite(0, fill_count).fill(static_cast<char>(cp));
             }
             else
             {
@@ -152,7 +152,7 @@ namespace snn::utf8
                 const cstrview encoded = utf8::encode(cp, buffer);
 
                 const usize fill_size = num::safe{encoded.size()}.multiply(fill_count).value();
-                s.insert_uninitialized(0, fill_size).fill(encoded);
+                s.insert_for_overwrite(0, fill_size).fill(encoded);
             }
         }
     }
@@ -181,7 +181,7 @@ namespace snn::utf8
         {
             const usize fill_count = count - current_count;
             const usize fill_size  = detail::pad_fill_size(fill_count, ps, promise::not_empty);
-            s.insert_uninitialized(0, fill_size).fill(ps);
+            s.insert_for_overwrite(0, fill_size).fill(ps);
         }
     }
 
@@ -197,7 +197,7 @@ namespace snn::utf8
 
             if (unicode::is_ascii(cp))
             {
-                s.append_uninitialized(fill_count).fill(static_cast<char>(cp));
+                s.append_for_overwrite(fill_count).fill(static_cast<char>(cp));
             }
             else
             {
@@ -205,7 +205,7 @@ namespace snn::utf8
                 const cstrview encoded = utf8::encode(cp, buffer);
 
                 const usize fill_size = num::safe{encoded.size()}.multiply(fill_count).value();
-                s.append_uninitialized(fill_size).fill(encoded);
+                s.append_for_overwrite(fill_size).fill(encoded);
             }
         }
     }
@@ -234,7 +234,7 @@ namespace snn::utf8
         {
             const usize fill_count = count - current_count;
             const usize fill_size  = detail::pad_fill_size(fill_count, ps, promise::not_empty);
-            s.append_uninitialized(fill_size).fill(ps);
+            s.append_for_overwrite(fill_size).fill(ps);
         }
     }
 }

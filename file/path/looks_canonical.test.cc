@@ -71,9 +71,9 @@ namespace snn
             // Test `PATH_MAX`.
             str path{"/"};
             snn_require(file::path::looks_canonical(path));
-            path.append_uninitialized(99).fill('a');
+            path.append_for_overwrite(99).fill('a');
             snn_require(file::path::looks_canonical(path));
-            path.append_uninitialized(99'999).fill('a');
+            path.append_for_overwrite(99'999).fill('a');
             snn_require(!file::path::looks_canonical(path));
         }
     }

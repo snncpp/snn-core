@@ -31,14 +31,14 @@ namespace snn
 
         str s;
 
-        snn_require(r.read_some(s.resize_uninitialized(4)).value() == 4);
+        snn_require(r.read_some(s.resize_for_overwrite(4)).value() == 4);
         snn_require(s == "Copy");
 
         snn_require(file::offset(fd).value_or_default() == 7);
         snn_require(file::seek(fd, 0));
         snn_require(file::offset(fd).value_or(123) == 0);
 
-        snn_require(r.read_some(s.resize_uninitialized(12)).value() == 12);
+        snn_require(r.read_some(s.resize_for_overwrite(12)).value() == 12);
         snn_require(s == "// Copyright");
         snn_require(file::offset(fd).value_or_default() == 12);
 

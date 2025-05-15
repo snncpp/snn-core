@@ -28,7 +28,7 @@ namespace snn::hex
 
             // Every 2 bytes turns into 1 byte. This does nothing if the string is empty.
             const usize size_restore = append_to.size();
-            strview buffer           = append_to.append_uninitialized(string.size() / 2);
+            strview buffer           = append_to.append_for_overwrite(string.size() / 2);
             auto dest                = buffer.begin();
 
             auto cur        = string.cbegin();

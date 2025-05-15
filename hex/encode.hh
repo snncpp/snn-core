@@ -21,7 +21,7 @@ namespace snn::hex
                               strcore<Buf>& append_to)
         {
             // Every byte turns into 2 bytes. Can't overflow (57-bit-virtual-address-space).
-            strview buffer = append_to.append_uninitialized(s.size() * 2);
+            strview buffer = append_to.append_for_overwrite(s.size() * 2);
             char* dest     = buffer.begin();
             for (const char c : s)
             {

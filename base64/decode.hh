@@ -69,7 +69,7 @@ namespace snn::base64
             if (unpadded_block_count > 0)
             {
                 // Every 4 byte block decodes to 3 bytes.
-                strview buffer = append_to.append_uninitialized(unpadded_block_count * 3);
+                strview buffer = append_to.append_for_overwrite(unpadded_block_count * 3);
                 auto dst       = buffer.begin();
 
                 do

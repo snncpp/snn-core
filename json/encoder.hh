@@ -164,20 +164,20 @@ namespace snn::json
 
                 append_to << "[\n";
                 ++depth;
-                append_to.append_uninitialized(2 * depth).fill(' ');
+                append_to.append_for_overwrite(2 * depth).fill(' ');
 
                 pretty_encode_(node_first, append_to, depth);
 
                 for (const node& n : rng)
                 {
                     append_to << ",\n";
-                    append_to.append_uninitialized(2 * depth).fill(' ');
+                    append_to.append_for_overwrite(2 * depth).fill(' ');
                     pretty_encode_(n, append_to, depth);
                 }
 
                 append_to << '\n';
                 --depth;
-                append_to.append_uninitialized(2 * depth).fill(' ');
+                append_to.append_for_overwrite(2 * depth).fill(' ');
                 append_to << ']';
             }
             else
@@ -228,7 +228,7 @@ namespace snn::json
 
                 append_to << "{\n";
                 ++depth;
-                append_to.append_uninitialized(2 * depth).fill(' ');
+                append_to.append_for_overwrite(2 * depth).fill(' ');
 
                 // Key
                 json::encode(node_first.to<cstrview>(), options_, append_to, promise::no_overlap);
@@ -239,7 +239,7 @@ namespace snn::json
                 for (const node& n : rng)
                 {
                     append_to << ",\n";
-                    append_to.append_uninitialized(2 * depth).fill(' ');
+                    append_to.append_for_overwrite(2 * depth).fill(' ');
                     // Key
                     json::encode(n.to<cstrview>(), options_, append_to, promise::no_overlap);
                     append_to << ": ";
@@ -249,7 +249,7 @@ namespace snn::json
 
                 append_to << '\n';
                 --depth;
-                append_to.append_uninitialized(2 * depth).fill(' ');
+                append_to.append_for_overwrite(2 * depth).fill(' ');
                 append_to << '}';
             }
             else

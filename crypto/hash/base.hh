@@ -42,7 +42,7 @@ namespace snn::crypto::hash
         template <typename Buf>
         void final(strcore<Buf>& append_to)
         {
-            final(append_to.template append_uninitialized<OutputSize>());
+            final(append_to.template append_for_overwrite<OutputSize>());
         }
 
         template <any_strcore Str = str>

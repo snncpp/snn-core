@@ -27,7 +27,7 @@ namespace snn::file::path
         // user-supplied buffer of unspecified size, including the terminating null character."
         // https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/limits.h.html
         Str s;
-        char* const buffer = s.resize_uninitialized(PATH_MAX).begin();
+        char* const buffer = s.resize_for_overwrite(PATH_MAX).begin();
         if (::realpath(path.get().get(), buffer) != nullptr)
         {
             s.truncate(s.find('\0').value_or_npos());

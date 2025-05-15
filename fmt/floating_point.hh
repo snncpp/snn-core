@@ -210,7 +210,7 @@ namespace snn
                 }
                 else
                 {
-                    auto dyn_buf = append_to.append_uninitialized(size_needed + sizeof('\0'));
+                    auto dyn_buf = append_to.append_for_overwrite(size_needed + sizeof('\0'));
                     ret          = std::snprintf(dyn_buf.writable().get(), dyn_buf.size(),
                                                  fmt_buf.data().get(), d);
                     if (ret >= 0 && to_usize(ret) == size_needed)

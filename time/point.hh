@@ -618,7 +618,7 @@ namespace snn::time
                     case 'D':
                         if (repeat_count == 2)
                         {
-                            char* dest = append_to.append_uninitialized(2).begin();
+                            char* dest = append_to.append_for_overwrite(2).begin();
                             dest       = format_2_digits_(' ', ymd.d, dest);
                             snn_should(dest == append_to.end());
                             break;
@@ -753,7 +753,7 @@ namespace snn::time
                             // Separator
                             append_to.append(", ");
                             // Day of month.
-                            char* dest = append_to.append_uninitialized(2).begin();
+                            char* dest = append_to.append_for_overwrite(2).begin();
                             dest       = format_2_digits_('0', ymd.d, dest);
                             snn_should(dest == append_to.end());
                             // Separator
@@ -856,7 +856,7 @@ namespace snn::time
                             // Separator
                             append_to.append(", ");
                             // Day of month.
-                            char* dest = append_to.append_uninitialized(2).begin();
+                            char* dest = append_to.append_for_overwrite(2).begin();
                             dest       = format_2_digits_('0', ymd.d, dest);
                             snn_should(dest == append_to.end());
                             // Separator
@@ -948,7 +948,7 @@ namespace snn::time
         constexpr void format_full_date_(const year_month_day ymd, strcore<Buf>& append_to) const
         {
             format_year_(ymd.y, append_to);
-            char* dest = append_to.append_uninitialized(string_size("-02-03")).begin();
+            char* dest = append_to.append_for_overwrite(string_size("-02-03")).begin();
             *(dest++)  = '-';
             dest       = format_2_digits_('0', ymd.m, dest);
             *(dest++)  = '-';
@@ -960,7 +960,7 @@ namespace snn::time
         constexpr void format_full_time_(const hour_minute_second hms,
                                          strcore<Buf>& append_to) const
         {
-            char* dest = append_to.append_uninitialized(string_size("04:05:06")).begin();
+            char* dest = append_to.append_for_overwrite(string_size("04:05:06")).begin();
             dest       = format_2_digits_('0', hms.h, dest);
             *(dest++)  = ':';
             dest       = format_2_digits_('0', hms.m, dest);
@@ -1025,7 +1025,7 @@ namespace snn::time
             const u32 m = (abs_offs % time::seconds_per_hour<u32>) / time::seconds_per_minute<u32>;
 
             const usize offs_size = string_size("+0700") + usize{with_separator};
-            char* dest            = append_to.append_uninitialized(offs_size).begin();
+            char* dest            = append_to.append_for_overwrite(offs_size).begin();
 
             SNN_DIAGNOSTIC_PUSH
             SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
@@ -1054,7 +1054,7 @@ namespace snn::time
             }
             else
             {
-                char* dest = append_to.append_uninitialized(2).begin();
+                char* dest = append_to.append_for_overwrite(2).begin();
                 dest       = format_2_digits_(padding, i, dest);
                 snn_should(dest == append_to.end());
             }

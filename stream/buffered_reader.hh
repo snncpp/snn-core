@@ -70,7 +70,7 @@ namespace snn::stream
             // Is the buffer empty?
             if (offset_ >= buffer_.size())
             {
-                const auto res = stream_.read_some(buffer_.resize_uninitialized(read_size_));
+                const auto res = stream_.read_some(buffer_.resize_for_overwrite(read_size_));
                 if (res)
                 {
                     buffer_.truncate(res.value(promise::has_value));
@@ -195,7 +195,7 @@ namespace snn::stream
 
                 // Read and append to the buffer.
                 const usize prior_size = buffer_.size();
-                const auto res = stream_.read_some(buffer_.append_uninitialized(read_size_));
+                const auto res = stream_.read_some(buffer_.append_for_overwrite(read_size_));
                 if (res)
                 {
                     const usize appended_size = res.value(promise::has_value);

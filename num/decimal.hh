@@ -257,7 +257,7 @@ namespace snn::num
                         append_to.append_integral(sub, min_digits);
                     }
 
-                    append_to.append_uninitialized(missing_zero_count).fill('0');
+                    append_to.append_for_overwrite(missing_zero_count).fill('0');
                 }
             }
         }

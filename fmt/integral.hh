@@ -40,7 +40,7 @@ namespace snn::fmt
                                     .value();
             }
 
-            strview dest      = append_to.append_uninitialized(combined_size);
+            strview dest      = append_to.append_for_overwrite(combined_size);
             char* const first = dest.begin();
             char* cur         = dest.end();
 

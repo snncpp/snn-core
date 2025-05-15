@@ -50,7 +50,7 @@ namespace snn::file
         if (file_size > 0)
         {
             const usize size_before = append_to.size();
-            if (const auto res = rw.read_fill(append_to.append_uninitialized(file_size)); !res)
+            if (const auto res = rw.read_fill(append_to.append_for_overwrite(file_size)); !res)
             {
                 append_to.truncate(size_before);
                 return res.error_code();
