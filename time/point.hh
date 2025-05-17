@@ -594,8 +594,10 @@ namespace snn::time
             {
                 const char c = rng.pop_front(promise::not_empty);
 
-                usize repeat_count = 1;
-                if (chr::is_alpha(c))
+                const bool is_alpha = chr::is_alpha(c);
+                usize repeat_count  = 1;
+
+                if (is_alpha)
                 {
                     repeat_count += rng.pop_front_while(fn::is{fn::equal_to{}, c}).count();
                 }
@@ -931,7 +933,7 @@ namespace snn::time
                         throw_or_abort(error::invalid_format_string);
 
                     default:
-                        if (!chr::is_alpha(c))
+                        if (!is_alpha)
                         {
                             append_to.append(c);
                             break;
