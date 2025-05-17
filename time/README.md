@@ -66,14 +66,15 @@
                     "01" to "12".
     mmm             Month (abbreviated name).
                     "Jan" to "Dec".
-    n               Nanosecond fraction, 1-digit, fixed. (Tenths of a second.)
-    nn              Nanosecond fraction, 2-digit, fixed. (Hundredths of a second.)
-    nnn...
+    n               Nanosecond fraction, 1-digit, fixed. (Tenths of a second, truncated.)
+    nn              Nanosecond fraction, 2-digit, fixed. (Hundredths of a second, truncated.)
+    nnn...          Nanosecond fraction, _-digit, fixed. (Truncated.)
     nnnnnnnnn       Nanosecond fraction, 9-digit, fixed.
-    N               Nanosecond fraction, 1-digit, trimmed. (Tenths of a second.)
-    NN              Nanosecond fraction, 2-digit, trimmed. (Hundredths of a second.)
-    NNN...
+    N               Nanosecond fraction, 1-digit, trimmed. (Tenths of a second, truncated.)
+    NN              Nanosecond fraction, 2-digit, trimmed. (Hundredths of a second, truncated.)
+    NNN...          Nanosecond fraction, _-digit, trimmed. (Truncated.)
     NNNNNNNNN       Nanosecond fraction, 9-digit, trimmed.
+                    Trailing zeros will be trimmed.
     o               Time offset in seconds.
                     "0", "3600", "-28800" etc.
     oooo            Time offset in zero padded +/-hours-minutes.
@@ -102,6 +103,9 @@
     z               ISO 8601/RFC 3339 with 'Z' timezone (without fraction).
     .               Is only special if followed by an optional fraction N, in which case it will be
                     removed if the fraction is zero.
+    \               Escape character.
+                    E.g. "\n" is a literal 'n', not a new line.
+    [^A-Za-z]       Non-alpha, will be included as is.
 
 ### Reserved format syntax
 

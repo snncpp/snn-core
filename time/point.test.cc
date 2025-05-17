@@ -274,6 +274,8 @@ namespace snn::app
                 snn_require(p.format("t", sthlm) == "01:39:15");
                 snn_require(p.format("yyyy", sthlm) == "2014");
                 snn_require(p.format("", sthlm) == "");
+                snn_require(p.format(".", sthlm) == ".");
+                snn_require(p.format("..", sthlm) == "..");
                 snn_require(p.format("-", sthlm) == "-");
                 snn_require(p.format("--", sthlm) == "--");
                 snn_require(p.format(R"(yyyy-mm-dd hh:ii:ss\)", sthlm) == "2014-03-30 01:39:15");
@@ -281,6 +283,7 @@ namespace snn::app
                             R"(2014-03-30 01:39:15\)");
                 snn_require(p.format(R"(\)", sthlm) == "");
                 snn_require(p.format(R"(\\)", sthlm) == R"(\)");
+                snn_require(p.format(R"(\n)", sthlm) == "n");
                 snn_require(p.format(R"(\yyyyy-\mmm-\ddd)", sthlm) == "y2014-m03-d30");
 
                 snn_require_throws_code(p.format("x"), time::error::unescaped_alpha_character);
@@ -315,27 +318,43 @@ namespace snn::app
                 snn_require(nz.format(quick) == "2014-03-30 00:39:15.4500752 +0000");
                 snn_require(zo.format(quick) == "2014-03-30 00:39:15 +0000");
 
-                // Fixed fraction.
+                // Fixed fraction (truncated, not rounded).
                 snn_require(nz.format("t.n") == "00:39:15.4");
                 snn_require(zo.format("t.n") == "00:39:15.0");
                 snn_require(nz.format("t.nn") == "00:39:15.45");
                 snn_require(zo.format("t.nn") == "00:39:15.00");
                 snn_require(nz.format("t.nnn") == "00:39:15.450");
                 snn_require(zo.format("t.nnn") == "00:39:15.000");
+                snn_require(nz.format("t.nnnn") == "00:39:15.4500");
+                snn_require(zo.format("t.nnnn") == "00:39:15.0000");
+                snn_require(nz.format("t.nnnnn") == "00:39:15.45007");
+                snn_require(zo.format("t.nnnnn") == "00:39:15.00000");
                 snn_require(nz.format("t.nnnnnn") == "00:39:15.450075");
                 snn_require(zo.format("t.nnnnnn") == "00:39:15.000000");
+                snn_require(nz.format("t.nnnnnnn") == "00:39:15.4500752");
+                snn_require(zo.format("t.nnnnnnn") == "00:39:15.0000000");
+                snn_require(nz.format("t.nnnnnnnn") == "00:39:15.45007520");
+                snn_require(zo.format("t.nnnnnnnn") == "00:39:15.00000000");
                 snn_require(nz.format("t.nnnnnnnnn") == "00:39:15.450075200");
                 snn_require(zo.format("t.nnnnnnnnn") == "00:39:15.000000000");
 
-                // Trimmed fraction.
+                // Trimmed fraction (truncated, not rounded).
                 snn_require(nz.format("t.N") == "00:39:15.4");
                 snn_require(zo.format("t.N") == "00:39:15");
                 snn_require(nz.format("t.NN") == "00:39:15.45");
                 snn_require(zo.format("t.NN") == "00:39:15");
                 snn_require(nz.format("t.NNN") == "00:39:15.45");
                 snn_require(zo.format("t.NNN") == "00:39:15");
+                snn_require(nz.format("t.NNNN") == "00:39:15.45");
+                snn_require(zo.format("t.NNNN") == "00:39:15");
+                snn_require(nz.format("t.NNNNN") == "00:39:15.45007");
+                snn_require(zo.format("t.NNNNN") == "00:39:15");
                 snn_require(nz.format("t.NNNNNN") == "00:39:15.450075");
                 snn_require(zo.format("t.NNNNNN") == "00:39:15");
+                snn_require(nz.format("t.NNNNNNN") == "00:39:15.4500752");
+                snn_require(zo.format("t.NNNNNNN") == "00:39:15");
+                snn_require(nz.format("t.NNNNNNNN") == "00:39:15.4500752");
+                snn_require(zo.format("t.NNNNNNNN") == "00:39:15");
                 snn_require(nz.format("t.NNNNNNNNN") == "00:39:15.4500752");
                 snn_require(zo.format("t.NNNNNNNNN") == "00:39:15");
             }
