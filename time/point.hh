@@ -56,8 +56,12 @@ namespace snn::time
 
         // #### For use without location
 
-        inline constexpr char iso8601_z[] = "z"; // 2001-02-03T04:05:06Z
-        inline constexpr char rfc1123[]   = "l"; // Sat, 03 Feb 2001 04:05:06 GMT
+        // Note: `iso8601_*z` format strings are also RFC 3339 compatible.
+        inline constexpr char iso8601_z[]       = "z";   // 2001-02-03T04:05:06Z
+        inline constexpr char iso8601_milli_z[] = "zz";  // 2001-02-03T04:05:06.123Z
+        inline constexpr char iso8601_nano_z[]  = "zzz"; // 2001-02-03T04:05:06.123456789Z
+
+        inline constexpr char rfc1123[] = "l"; // Sat, 03 Feb 2001 04:05:06 GMT
     }
 
     // ## Classes
@@ -627,8 +631,8 @@ namespace snn::time
                         }
                         throw_or_abort(error::invalid_format_string);
 
-                    // N - Nanosecond fraction, 1-digit, trimmed. (Tenths of a second.)
-                    // NN - Nanosecond fraction, 2-digit, trimmed. (Hundredths of a second.)
+                    // N         - Nanosecond fraction, 1-digit, trimmed. (Tenths of a second.)
+                    // NN        - Nanosecond fraction, 2-digit, trimmed. (Hundredths of a second.)
                     // NNN...
                     // NNNNNNNNN - Nanosecond fraction, 9-digit, trimmed.
                     case 'N':
@@ -681,7 +685,7 @@ namespace snn::time
                         }
                         throw_or_abort(error::invalid_format_string);
 
-                    // d - Day of the month.
+                    // d  - Day of the month.
                     // dd - Day of the month, zero padded.
                     case 'd':
                         if (repeat_count <= 2)
@@ -691,7 +695,7 @@ namespace snn::time
                         }
                         throw_or_abort(error::invalid_format_string);
 
-                    // e - Day of the week (single digit)
+                    // e   - Day of the week (single digit)
                     // eee - Day of the week (abbreviated name).
                     case 'e':
                         if (repeat_count == 3) // Most common.
@@ -715,7 +719,7 @@ namespace snn::time
                         }
                         throw_or_abort(error::invalid_format_string);
 
-                    // g - Hour (12-hour clock).
+                    // g  - Hour (12-hour clock).
                     // gg - Hour (12-hour clock), zero padded.
                     case 'g':
                         if (repeat_count <= 2)
@@ -725,7 +729,7 @@ namespace snn::time
                         }
                         throw_or_abort(error::invalid_format_string);
 
-                    // h - Hour (24-hour clock).
+                    // h  - Hour (24-hour clock).
                     // hh - Hour (24-hour clock), zero padded.
                     case 'h':
                         if (repeat_count <= 2)
@@ -735,7 +739,7 @@ namespace snn::time
                         }
                         throw_or_abort(error::invalid_format_string);
 
-                    // i - Minute
+                    // i  - Minute
                     // ii - Minute, zero padded.
                     case 'i':
                         if (repeat_count <= 2)
@@ -776,8 +780,8 @@ namespace snn::time
                         }
                         throw_or_abort(error::invalid_format_string);
 
-                    // m - Month
-                    // mm - Month, zero padded.
+                    // m   - Month
+                    // mm  - Month, zero padded.
                     // mmm - Month (abbreviated name).
                     case 'm':
                         if (repeat_count <= 2)
@@ -792,8 +796,8 @@ namespace snn::time
                         }
                         throw_or_abort(error::invalid_format_string);
 
-                    // n - Nanosecond fraction, 1-digit, fixed. (Tenths of a second.)
-                    // nn - Nanosecond fraction, 2-digit, fixed. (Hundredths of a second.)
+                    // n         - Nanosecond fraction, 1-digit, fixed. (Tenths of a second.)
+                    // nn        - Nanosecond fraction, 2-digit, fixed. (Hundredths of a second.)
                     // nnn...
                     // nnnnnnnnn - Nanosecond fraction, 9-digit, fixed.
                     case 'n':
@@ -805,8 +809,8 @@ namespace snn::time
                         }
                         throw_or_abort(error::invalid_format_string);
 
-                    // o - Time offset in seconds.
-                    // oooo - Time offset in +/-hours-minutes, e.g. "+0700".
+                    // o     - Time offset in seconds.
+                    // oooo  - Time offset in +/-hours-minutes, e.g. "+0700".
                     // ooooo - Time offset in +/-hours-colon-minutes, e.g. "+07:00".
                     case 'o':
                         if (repeat_count == 4)
@@ -881,7 +885,7 @@ namespace snn::time
                         }
                         throw_or_abort(error::invalid_format_string);
 
-                    // s - Second
+                    // s  - Second
                     // ss - Second, zero padded.
                     case 's':
                         if (repeat_count <= 2)
@@ -919,14 +923,25 @@ namespace snn::time
                         }
                         throw_or_abort(error::invalid_format_string);
 
-                    // z - ISO 8601/RFC 3339 with 'Z' timezone (without fraction).
+                    // z   - ISO 8601/RFC 3339 with 'Z' timezone, without fraction.
+                    // zz  - ISO 8601/RFC 3339 with 'Z' timezone, with millisecond fraction.
+                    // zzz - ISO 8601/RFC 3339 with 'Z' timezone, with nanosecond fraction.
                     case 'z':
-                        if (repeat_count == 1)
+                        if (repeat_count <= 3)
                         {
-                            append_to.reserve_append(string_size("2001-02-03T04:05:06Z"));
+                            // Repeat count 1: 20 characters: 2001-02-03T04:05:06Z
+                            // Repeat count 2: 24 characters: 2001-02-03T04:05:06.123Z
+                            // Repeat count 3: 30 characters: 2001-02-03T04:05:06.123456789Z
+                            append_to.reserve_append(15 + (5 * repeat_count)); // Approx.
                             format_full_date_(ymd, append_to);
                             append_to.append('T');
                             format_full_time_(hms, append_to);
+                            if (repeat_count > 1)
+                            {
+                                append_to.append('.');
+                                constexpr bool trim = false;
+                                format_nano_(repeat_count == 2 ? 3 : 9, trim, append_to);
+                            }
                             append_to.append('Z');
                             break;
                         }

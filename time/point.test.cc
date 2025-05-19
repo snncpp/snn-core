@@ -247,6 +247,8 @@ namespace snn::app
 
                 snn_require(p.format(rfc2822) == "Sun, 30 Mar 2014 00:39:15 +0000");
                 snn_require(p.format(iso8601_z) == "2014-03-30T00:39:15Z");
+                snn_require(p.format(iso8601_milli_z) == "2014-03-30T00:39:15.000Z");
+                snn_require(p.format(iso8601_nano_z) == "2014-03-30T00:39:15.000000000Z");
                 snn_require(p.format(rfc1123) == "Sun, 30 Mar 2014 00:39:15 GMT");
 
                 snn_require(p.format(date, sthlm) == "2014-03-30");
@@ -287,6 +289,7 @@ namespace snn::app
                 snn_require(p.format(R"(\yyyyy-\mmm-\ddd)", sthlm) == "y2014-m03-d30");
 
                 snn_require_throws_code(p.format("x"), time::error::unescaped_alpha_character);
+                snn_require_throws_code(p.format("zzzz"), time::error::invalid_format_string);
 
                 strbuf s{"One"};
                 s << p;
@@ -317,6 +320,12 @@ namespace snn::app
 
                 snn_require(nz.format(quick) == "2014-03-30 00:39:15.4500752 +0000");
                 snn_require(zo.format(quick) == "2014-03-30 00:39:15 +0000");
+
+                snn_require(nz.format(iso8601_milli_z) == "2014-03-30T00:39:15.450Z");
+                snn_require(zo.format(iso8601_milli_z) == "2014-03-30T00:39:15.000Z");
+
+                snn_require(nz.format(iso8601_nano_z) == "2014-03-30T00:39:15.450075200Z");
+                snn_require(zo.format(iso8601_nano_z) == "2014-03-30T00:39:15.000000000Z");
 
                 // Fixed fraction (truncated, not rounded).
                 snn_require(nz.format("t.n") == "00:39:15.4");

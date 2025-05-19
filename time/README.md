@@ -74,7 +74,7 @@
     NN              Nanosecond fraction, 2-digit, trimmed. (Hundredths of a second, truncated.)
     NNN...          Nanosecond fraction, _-digit, trimmed. (Truncated.)
     NNNNNNNNN       Nanosecond fraction, 9-digit, trimmed.
-                    Trailing zeros will be trimmed.
+                    Trailing zeros in the fraction will be trimmed.
     o               Time offset in seconds.
                     "0", "3600", "-28800" etc.
     oooo            Time offset in zero padded +/-hours-minutes.
@@ -84,8 +84,8 @@
     OOO             Time zone abbreviation.
                     "GMT", "CEST" etc.
     p
-    q               Quick/readable with optional fraction.
-                    "2001-02-03 04:05:06 +0700" or "2001-02-03 04:05:06.809 +0700".
+    q               Quick/readable with trimmed fraction (trailing zeros removed).
+                    "2001-02-03 04:05:06 +0700" or "2001-02-03 04:05:06.123456789 +0700".
     r               RFC 2822
                     "Sat, 03 Feb 2001 04:05:06 +0700"
     s               Second
@@ -100,7 +100,12 @@
     w
     x
     yyyy            Year, 4-digit (minimum), zero padded.
-    z               ISO 8601/RFC 3339 with 'Z' timezone (without fraction).
+    z               ISO 8601/RFC 3339 with 'Z' timezone, without fraction.
+                    "2001-02-03T04:05:06Z"
+    zz              ISO 8601/RFC 3339 with 'Z' timezone, with fixed millisecond fraction.
+                    "2001-02-03T04:05:06.123Z"
+    zzz             ISO 8601/RFC 3339 with 'Z' timezone, with fixed nanosecond fraction.
+                    "2001-02-03T04:05:06.123456789Z"
     .               Is only special if followed by an optional fraction N, in which case it will be
                     removed if the fraction is zero.
     \               Escape character.
