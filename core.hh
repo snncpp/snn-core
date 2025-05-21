@@ -549,9 +549,8 @@ namespace snn
     // ### constructible_from_iterators
 
     template <typename T>
-    concept constructible_from_iterators = requires(T& v) { //
-        T{meta::iterators, v.begin(), v.end()};
-    };
+    concept constructible_from_iterators =
+        requires(T& v) { T{meta::iterators, v.begin(), v.end()}; };
 
     // ### implicitly_default_constructible
 
@@ -577,9 +576,8 @@ namespace snn
     // Callable without the overhead of `std::invoke(...)`.
 
     template <typename Fn, typename... Args>
-    concept callable = requires(Fn&& fn, Args&&... args) { //
-        std::forward<Fn>(fn)(std::forward<Args>(args)...);
-    };
+    concept callable =
+        requires(Fn&& fn, Args&&... args) { std::forward<Fn>(fn)(std::forward<Args>(args)...); };
 
     // ### predicate
 
@@ -1300,10 +1298,25 @@ namespace snn
     class numeric final
     {
       public:
+        // #### Explicit constructors
+
         constexpr explicit numeric(const Num value) noexcept
             : value_{value}
         {
         }
+
+        // #### Converting constructors
+
+        // Allow integrals with the same signedness to be promoted.
+
+        template <typename I>
+            requires(sizeof(I) < sizeof(Num) && same_signedness_as<Num, I>)
+        constexpr numeric(const numeric<I> other) noexcept
+            : value_{other.get()}
+        {
+        }
+
+        // #### Value
 
         [[nodiscard]] constexpr Num get() const noexcept
         {

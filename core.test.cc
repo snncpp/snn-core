@@ -1174,6 +1174,54 @@ namespace snn::app
             return true;
         }
 
+        constexpr bool test_numeric()
+        {
+            decltype(auto) a = as_num(123);
+            static_assert(std::is_same_v<decltype(a), numeric<int>>);
+            snn_require(a.get() == 123);
+
+            a = as_num(456);
+            snn_require(a.get() == 456);
+
+            decltype(auto) b = as_num<i16>(78);
+            static_assert(std::is_same_v<decltype(b), numeric<i16>>);
+            snn_require(b.get() == 78);
+
+            numeric<i64> c = b; // Implicit conversion from `i16` to `i32` is allowed.
+            snn_require(c.get() == 78);
+
+            static_assert(std::is_convertible_v<numeric<i8>, numeric<i8>>);
+            static_assert(std::is_convertible_v<numeric<i8>, numeric<i16>>);
+            static_assert(std::is_convertible_v<numeric<i8>, numeric<i32>>);
+            static_assert(std::is_convertible_v<numeric<i8>, numeric<i64>>);
+
+            static_assert(std::is_convertible_v<numeric<u8>, numeric<u8>>);
+            static_assert(std::is_convertible_v<numeric<u8>, numeric<u16>>);
+            static_assert(std::is_convertible_v<numeric<u8>, numeric<u32>>);
+            static_assert(std::is_convertible_v<numeric<u8>, numeric<u64>>);
+
+            static_assert(!std::is_convertible_v<numeric<i8>, numeric<u8>>);
+            static_assert(!std::is_convertible_v<numeric<i8>, numeric<u16>>);
+            static_assert(!std::is_convertible_v<numeric<i8>, numeric<u32>>);
+            static_assert(!std::is_convertible_v<numeric<i8>, numeric<u64>>);
+
+            static_assert(!std::is_convertible_v<numeric<u8>, numeric<i8>>);
+            static_assert(!std::is_convertible_v<numeric<u8>, numeric<i16>>);
+            static_assert(!std::is_convertible_v<numeric<u8>, numeric<i32>>);
+            static_assert(!std::is_convertible_v<numeric<u8>, numeric<i64>>);
+
+            static_assert(!std::is_convertible_v<numeric<i64>, numeric<i8>>);
+            static_assert(!std::is_convertible_v<numeric<i64>, numeric<i16>>);
+            static_assert(!std::is_convertible_v<numeric<i64>, numeric<i32>>);
+
+            static_assert(std::is_convertible_v<numeric<float>, numeric<float>>);
+
+            static_assert(!std::is_convertible_v<numeric<float>, numeric<double>>);
+            static_assert(!std::is_convertible_v<numeric<double>, numeric<float>>);
+
+            return true;
+        }
+
         constexpr bool test_octet()
         {
             static_assert(octet<char>);
@@ -1886,6 +1934,7 @@ namespace snn
         snn_static_require(app::test_not_deduced());
         snn_static_require(app::test_not_null());
         snn_static_require(app::test_not_zero());
+        snn_static_require(app::test_numeric());
         snn_static_require(app::test_octet());
         snn_static_require(app::test_pointer());
         snn_static_require(app::test_power_of_two());
