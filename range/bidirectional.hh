@@ -71,6 +71,9 @@ namespace snn::range
             return last_;
         }
 
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         // #### Forward
 
         constexpr void drop_front(promise::not_empty_t)
@@ -154,5 +157,7 @@ namespace snn::range
             snn_assert(first_ != last_);
             --last_;
         }
+
+        SNN_DIAGNOSTIC_POP
     };
 }
