@@ -24,15 +24,18 @@ namespace snn::algo
 
             while (rng)
             {
-                decltype(auto) e = rng.front(promise::not_empty);
-                if (is_less(std::as_const(e), std::as_const(prev.get())))
+                val_or_ref cur{rng.front(promise::not_empty)};
+                rng.drop_front(promise::not_empty);
+
+                if (is_less(std::as_const(cur.get()), std::as_const(prev.get())))
                 {
                     return false;
                 }
-                prev.assign_or_rebind(std::forward<decltype(e)>(e));
-                rng.drop_front(promise::not_empty);
+
+                prev.assign_or_rebind(std::move(cur).get());
             }
         }
+
         return true;
     }
 }
