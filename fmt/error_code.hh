@@ -19,16 +19,13 @@ namespace snn::fmt
     template <typename Buf>
     constexpr void error_code(const snn::error_code ec, strcore<Buf>& append_to)
     {
-        append_to << ec.category().name<cstrview>() << ": " << ec.message<cstrview>() << " ("
-                  << as_num(ec.value()) << ")";
+        ec.format(append_to);
     }
 
     template <any_strcore Str = str>
     [[nodiscard]] constexpr Str error_code(const snn::error_code ec)
     {
-        Str append_to;
-        fmt::error_code(ec, append_to);
-        return append_to;
+        return ec.format<Str>();
     }
 }
 

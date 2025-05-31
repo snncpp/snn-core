@@ -6,7 +6,9 @@
 #pragma once
 
 #include "snn-core/array.hh"
+#include "snn-core/array_view.fwd.hh"
 #include "snn-core/null_term.hh"
+#include "snn-core/strcore.fwd.hh"
 #include "snn-core/mem/raw/compare.hh"
 
 namespace snn
@@ -239,6 +241,23 @@ namespace snn
                 return *category_;
             }
             return empty_category_;
+        }
+
+        template <typename Buf>
+        constexpr void format(strcore<Buf>& append_to) const
+        {
+            using array_view_type = array_view<const typename strcore<Buf>::value_type>;
+            static_assert(std::is_same_v<array_view_type, cstrview>);
+            append_to << category().name<array_view_type>() << ": " << message<array_view_type>()
+                      << " (" << as_num(value_) << ')';
+        }
+
+        template <any_strcore Str = str>
+        [[nodiscard]] constexpr Str format() const
+        {
+            Str append_to;
+            format(append_to);
+            return append_to;
         }
 
         [[nodiscard]] static constexpr bool has_boolean_state() noexcept

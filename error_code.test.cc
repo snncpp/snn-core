@@ -17,12 +17,18 @@ namespace snn::app
                 snn_require(!ec); // Zero value.
                 snn_require(ec.value() == 0);
                 snn_require(ec.message<cstrview>() == "No error");
+                snn_require(ec.category().name<cstrview>() == "Generic");
+                snn_require(ec.format() == "Generic: No error (0)");
             }
             {
                 auto ec = make_error_code(generic::error::no_value);
                 snn_require(ec); // Not zero.
                 snn_require(ec.value() != 0);
                 snn_require(ec.message<cstrview>() == "No value");
+                snn_require(ec.category().name<cstrview>() == "Generic");
+                snn_require(ec.format() == concat("Generic: No value (",
+                                                  as_num(to_underlying(generic::error::no_value)),
+                                                  ")"));
             }
 
             return true;
@@ -107,6 +113,10 @@ namespace snn::app
             auto first  = make_error_code(app::error::first);
             auto second = error_code{app::error::second};
             auto third  = error_code{3, app::error_category};
+
+            snn_require(first.format() == "App: First (1)");
+            static_assert(std::is_same_v<decltype(first.format<str>()), str>);
+            static_assert(std::is_same_v<decltype(first.format<strbuf>()), strbuf>);
 
             snn_require(zero.non_zero_or(not_zero<i32>{1}, app::error_category) ==
                         app::error::first);
