@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "snn-core/core.hh"
+#include "snn-core/algo/remove_if.fwd.hh"
 #include <algorithm> // remove_if
 
 namespace snn::algo

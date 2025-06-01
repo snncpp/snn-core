@@ -12,8 +12,10 @@
 
 #include "snn-core/array_view.fwd.hh"
 #include "snn-core/optional.fwd.hh"
-#include <algorithm>  // is_sorted, reverse, sort
-#include <functional> // less<void>
+#include "snn-core/algo/is_sorted.hh"
+#include "snn-core/algo/reverse.hh"
+#include "snn-core/algo/sort.fwd.hh"
+#include "snn-core/fn/common.hh"
 
 SNN_DIAGNOSTIC_PUSH
 SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
@@ -551,10 +553,10 @@ namespace snn
             }
         }
 
-        template <typename TwoArgPred = std::less<void>>
+        template <typename TwoArgPred = fn::less_than>
         [[nodiscard]] constexpr bool is_sorted(TwoArgPred is_less = TwoArgPred{}) const
         {
-            return std::is_sorted(begin(), end(), std::move(is_less));
+            return algo::is_sorted(range(), std::move(is_less));
         }
 
         template <typename U, typename V>
@@ -589,13 +591,13 @@ namespace snn
 
         constexpr void reverse()
         {
-            std::reverse(begin(), end());
+            algo::reverse(range());
         }
 
-        template <typename TwoArgPred = std::less<void>>
+        template <typename TwoArgPred = fn::less_than>
         constexpr void sort(TwoArgPred is_less = TwoArgPred{})
         {
-            std::sort(begin(), end(), std::move(is_less));
+            algo::sort(range(), std::move(is_less));
         }
 
         template <typename OneArgOp>

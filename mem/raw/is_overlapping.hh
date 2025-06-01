@@ -20,7 +20,6 @@ namespace snn::mem::raw
                                                 const T* b_first, const T* b_last) noexcept
     {
         // Branchless (two conditional moves).
-        // This uses std::less<void> which is well defined when comparing pointers.
         return fn::less_than{}(cmp::max(a_first, b_first), cmp::min(a_last, b_last));
     }
 

@@ -4,9 +4,9 @@
 // # Application entry point
 
 #include "snn-core/array_view.hh"
+#include "snn-core/strcore.hh"
 #include "snn-core/env/argument.hh"
-#include "snn-core/fmt/exception.hh"
-#include "snn-core/fmt/print.hh"
+#include "snn-core/file/standard/error.hh"
 
 namespace snn
 {
@@ -28,20 +28,22 @@ int main(int argc, char* argv[])
         static_assert(sizeof(snn::env::argument) == sizeof(char*));
         static_assert(alignof(snn::env::argument) == alignof(char*));
 
+        // `argc` is guaranteed to be non-negative.
         return snn::main(snn::array_view{reinterpret_cast<const snn::env::argument*>(&argv[0]),
                                          snn::to_usize(argc)});
     }
     catch (const snn::exception& e)
     {
-        snn::fmt::print_error("Error: {}\n", e);
+        snn::file::standard::error{} << "Error: " << e.error_code().format() << "\n";
     }
     catch (const std::exception& e)
     {
-        snn::fmt::print_error("Error: {}\n", e);
+        snn::file::standard::error{}
+            << "Error: " << snn::cstrview{e.what(), snn::promise::null_terminated} << "\n";
     }
     catch (...)
     {
-        snn::fmt::print_error("Error: Unknown exception\n");
+        snn::file::standard::error{} << "Error: Unknown exception\n";
     }
 
     return snn::constant::exit::failure;

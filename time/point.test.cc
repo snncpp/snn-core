@@ -4,6 +4,8 @@
 #include "snn-core/time/point.hh"
 
 #include "snn-core/unittest.hh"
+#include "snn-core/fmt/format.hh"
+#include "snn-core/fmt/print.hh"
 #include "snn-core/random/number.hh"
 #include "snn-core/time/zone/db/utc.hh"
 #include "snn-core/time/zone/db/america/los_angeles.hh"

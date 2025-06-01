@@ -7,6 +7,7 @@
 #include "snn-core/unittest.hh"
 #include "snn-core/algo/is_equal.hh"
 #include "snn-core/fn/common.hh"
+#include "snn-core/fn/invoke.hh"
 
 namespace snn::app
 {

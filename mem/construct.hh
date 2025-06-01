@@ -14,7 +14,7 @@ namespace snn::mem
 
     // ### construct
 
-    // `std::construct_at(...)` must be used for this function to work in an constant evaluated
+    // `std::construct_at(...)` must be used for this function to work in a constant evaluated
     // context, but it uses parentheses instead of brace initialization, which isn't as strict and
     // narrows without warning. Using different initialization methods depending on context is
     // error-prone, so for now this function is constrained by the concept:

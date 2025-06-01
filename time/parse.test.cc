@@ -6,6 +6,7 @@
 #include "snn-core/unittest.hh"
 #include "snn-core/ascii/lower.hh"
 #include "snn-core/ascii/upper.hh"
+#include "snn-core/file/standard/error.hh"
 #include "snn-core/random/number.hh"
 #include "snn-core/time/point.hh"
 
@@ -72,7 +73,7 @@ namespace snn::app
             }
             catch (...)
             {
-                fmt::print_error("{}\n{}\n", datetime, unixtime);
+                file::standard::error{} << concat(datetime, '\n', as_num(unixtime), '\n');
                 throw;
             }
         }

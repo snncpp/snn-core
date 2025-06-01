@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "snn-core/fn/common.hh"
+#include "snn-core/algo/sort.fwd.hh"
 #include <algorithm> // sort
 
 namespace snn::algo
@@ -14,9 +14,9 @@ namespace snn::algo
 
     // ### sort
 
-    template <random_access_range RandomAccessRng, typename TwoArgPred = fn::less_than>
+    template <random_access_range RandomAccessRng, typename TwoArgPred>
         requires legacy_iterable<RandomAccessRng>
-    constexpr void sort(RandomAccessRng rng, TwoArgPred is_less = TwoArgPred{})
+    constexpr void sort(RandomAccessRng rng, TwoArgPred is_less)
     {
         using front_type = decltype(rng.front(promise::not_empty));
         static_assert(std::is_reference_v<front_type>, "Range must be non-generating.");

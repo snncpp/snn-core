@@ -4,6 +4,7 @@
 #include "snn-core/fmt/byte_size.hh"
 
 #include "snn-core/unittest.hh"
+#include "snn-core/fmt/format.hh"
 
 namespace snn::app
 {

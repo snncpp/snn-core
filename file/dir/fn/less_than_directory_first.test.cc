@@ -5,6 +5,7 @@
 
 #include "snn-core/array.hh"
 #include "snn-core/unittest.hh"
+#include "snn-core/algo/sort.hh"
 
 namespace snn::app
 {

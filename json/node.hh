@@ -12,6 +12,7 @@
 #include "snn-core/json/type.hh"
 #include "snn-core/range/forward.hh"
 #include "snn-core/range/view/enumerate.hh"
+#include <iterator> // forward_iterator_tag
 
 namespace snn::json
 {

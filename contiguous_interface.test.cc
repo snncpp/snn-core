@@ -5,6 +5,9 @@
 
 #include "snn-core/unittest.hh"
 #include "snn-core/algo/is_equal.hh"
+#include "snn-core/algo/remove_consecutive_duplicates.hh"
+#include "snn-core/algo/remove_if.hh"
+#include "snn-core/algo/sort.hh"
 #include "snn-core/chr/common.hh"
 #include "snn-core/fn/common.hh"
 #include "snn-core/ascii/fn/equal_to_icase.hh"

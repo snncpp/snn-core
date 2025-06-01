@@ -4,6 +4,7 @@
 #include "snn-core/thread/sleep_for.hh"
 
 #include "snn-core/unittest.hh"
+#include "snn-core/fmt/print.hh"
 #include "snn-core/time/duration.formatter.hh"
 #include "snn-core/time/stopwatch.hh"
 #include "snn-core/time/unit.hh"

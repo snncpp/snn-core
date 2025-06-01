@@ -11,7 +11,6 @@
 #include <cstddef>          // nullptr_t, ptrdiff_t, size_t
 #include <cstdint>          // int*_t, uint*_t, *_MAX, ...
 #include <initializer_list> // initializer_list
-#include <iterator>         // begin, end, iterator_traits, *_iterator_tag
 #include <limits>           // numeric_limits
 #include <tuple>            // ignore, tuple, tuple_element, tuple_size
 #include <type_traits>      // is_*, make_*signed, ...

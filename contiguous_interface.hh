@@ -28,8 +28,12 @@
 #pragma once
 
 #include "snn-core/optional_index.hh"
+#include "snn-core/algo/is_sorted.hh"
+#include "snn-core/algo/remove_consecutive_duplicates.fwd.hh"
+#include "snn-core/algo/remove_if.fwd.hh"
+#include "snn-core/algo/reverse.hh"
+#include "snn-core/algo/sort.fwd.hh"
 #include "snn-core/fn/common.hh"
-#include <algorithm> // is_sorted, remove_if, reverse, sort, unique
 
 namespace snn
 {
@@ -186,8 +190,7 @@ namespace snn
         template <typename TwoArgPred = fn::less_than>
         [[nodiscard]] constexpr bool is_sorted(TwoArgPred is_less = TwoArgPred{}) const
         {
-            const auto rng = derived_().range();
-            return std::is_sorted(rng.begin(), rng.end(), std::move(is_less));
+            return algo::is_sorted(derived_().range(), std::move(is_less));
         }
 
         template <typename V>
@@ -200,9 +203,11 @@ namespace snn
         constexpr usize remove_consecutive_duplicates(TwoArgPred is_equal = TwoArgPred{})
         {
             auto rng                = derived_().range();
-            const auto last         = std::unique(rng.begin(), rng.end(), std::move(is_equal));
-            const auto remove_count = to_usize(rng.end() - last);
-            derived_().truncate(to_usize(last - rng.begin()));
+            const auto count_before = rng.count();
+            const auto count_after =
+                algo::remove_consecutive_duplicates(rng, std::move(is_equal)).count();
+            derived_().truncate(count_after);
+            const auto remove_count = count_before - count_after;
             return remove_count;
         }
 
@@ -210,9 +215,10 @@ namespace snn
         constexpr usize remove_if(OneArgPred p)
         {
             auto rng                = derived_().range();
-            const auto last         = std::remove_if(rng.begin(), rng.end(), std::move(p));
-            const auto remove_count = to_usize(rng.end() - last);
-            derived_().truncate(to_usize(last - rng.begin()));
+            const auto count_before = rng.count();
+            const auto count_after  = algo::remove_if(rng, std::move(p)).count();
+            derived_().truncate(count_after);
+            const auto remove_count = count_before - count_after;
             return remove_count;
         }
 
@@ -248,15 +254,13 @@ namespace snn
 
         constexpr void reverse()
         {
-            auto rng = derived_().range();
-            std::reverse(rng.begin(), rng.end());
+            algo::reverse(derived_().range());
         }
 
         template <typename TwoArgPred = fn::less_than>
         constexpr void sort(TwoArgPred is_less = TwoArgPred{})
         {
-            auto rng = derived_().range();
-            std::sort(rng.begin(), rng.end(), std::move(is_less));
+            algo::sort(derived_().range(), std::move(is_less));
         }
 
         template <typename OneArgOp>

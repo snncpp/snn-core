@@ -13,6 +13,7 @@
 #include "snn-core/strcore.hh"
 #include "snn-core/vec.hh"
 #include "snn-core/algo/find_greater_than_or_equal_to.hh"
+#include "snn-core/algo/sort.hh"
 #include "snn-core/chr/common.hh"
 #include "snn-core/env/argument.hh"
 #include "snn-core/env/error.hh"

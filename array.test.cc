@@ -6,6 +6,7 @@
 #include "snn-core/unittest.hh"
 #include "snn-core/algo/is_equal.hh"
 #include "snn-core/algo/replace.hh"
+#include "snn-core/algo/sort.hh"
 #include "snn-core/chr/common.hh"
 #include "snn-core/fn/common.hh"
 

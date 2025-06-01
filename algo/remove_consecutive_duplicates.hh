@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "snn-core/fn/common.hh"
+#include "snn-core/algo/remove_consecutive_duplicates.fwd.hh"
 #include <algorithm> // unique
 
 namespace snn::algo
@@ -14,10 +14,10 @@ namespace snn::algo
 
     // ### remove_consecutive_duplicates
 
-    template <forward_range ForwardRng, typename TwoArgPred = fn::equal_to>
+    template <forward_range ForwardRng, typename TwoArgPred>
         requires legacy_iterable<ForwardRng> && constructible_from_iterators<ForwardRng>
-    [[nodiscard]] constexpr ForwardRng remove_consecutive_duplicates(
-        ForwardRng rng, TwoArgPred is_equal = TwoArgPred{})
+    [[nodiscard]] constexpr ForwardRng remove_consecutive_duplicates(ForwardRng rng,
+                                                                     TwoArgPred is_equal)
     {
         const auto first      = rng.begin();
         const auto last       = rng.end();

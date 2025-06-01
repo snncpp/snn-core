@@ -21,6 +21,9 @@
 #include "snn-core/optional_index.hh"
 #include "snn-core/strcore.fwd.hh"
 #include "snn-core/val_or_ref.hh"
+#include "snn-core/algo/is_sorted.hh"
+#include "snn-core/algo/reverse.hh"
+#include "snn-core/algo/sort.fwd.hh"
 #include "snn-core/ascii/to_integral.hh"
 #include "snn-core/ascii/to_integral_prefix.hh"
 #include "snn-core/detail/array_view/common.hh"
@@ -38,7 +41,6 @@
 #include "snn-core/range/forward.hh"
 #include "snn-core/range/contiguous.fwd.hh"
 #include "snn-core/string/size.hh"
-#include <algorithm> // is_sorted, reverse, sort
 
 namespace snn
 {
@@ -715,7 +717,7 @@ namespace snn
         template <typename TwoArgPred = fn::less_than>
         [[nodiscard]] constexpr bool is_sorted(TwoArgPred is_less = TwoArgPred{}) const
         {
-            return std::is_sorted(begin(), end(), std::move(is_less));
+            return algo::is_sorted(range(), std::move(is_less));
         }
 
         template <typename U, typename V>
@@ -750,13 +752,13 @@ namespace snn
 
         constexpr void reverse()
         {
-            std::reverse(begin(), end());
+            algo::reverse(range());
         }
 
         template <typename TwoArgPred = fn::less_than>
         constexpr void sort(TwoArgPred is_less = TwoArgPred{})
         {
-            std::sort(begin(), end(), std::move(is_less));
+            algo::sort(range(), std::move(is_less));
         }
 
         template <typename OneArgOp>

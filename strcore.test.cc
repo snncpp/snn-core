@@ -5,6 +5,8 @@
 
 #include "snn-core/array.hh"
 #include "snn-core/unittest.hh"
+#include "snn-core/algo/sort.hh"
+#include "snn-core/algo/remove_if.hh"
 #include "snn-core/chr/common.hh"
 #include "snn-core/fn/common.hh"
 #include "snn-core/file/read.hh"

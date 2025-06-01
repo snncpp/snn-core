@@ -9,6 +9,7 @@
 #include "snn-core/range/contiguous.hh"
 #include "snn-core/range/forward.hh"
 #include "snn-core/range/random_access.hh"
+#include <iterator> // begin, end, iterator_traits, *_iterator_tag
 
 namespace snn
 {

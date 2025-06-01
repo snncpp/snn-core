@@ -7,6 +7,7 @@
 
 #include "snn-core/main.hh"
 #include "snn-core/file/dir/change.hh"
+#include "snn-core/file/standard/error.hh"
 #include "snn-core/fn/common.hh"
 #include <cstdlib> // quick_exit
 
@@ -29,11 +30,10 @@ namespace snn
     {
         try
         {
-            fmt::print_error("{}:{}: {} ({})\n",                        //
-                             cstrview{file, promise::null_terminated},  //
-                             line,                                      //
-                             cstrview{desc, promise::null_terminated},  //
-                             cstrview{expr, promise::null_terminated}); //
+            file::standard::error{}
+                << concat(cstrview{file, promise::null_terminated}, ':', as_num(line), ": ",
+                          cstrview{desc, promise::null_terminated}, " (",
+                          cstrview{expr, promise::null_terminated}, ")\n");
         }
         catch (...)
         {
@@ -50,12 +50,12 @@ namespace snn
     {
         if (arguments.count() > 1)
         {
-            fmt::print_error_line("Error: Unit test executable does not take arguments.");
+            file::standard::error{} << "Error: Unit test executable does not take arguments.\n";
 
             if (arguments.view(1).all(fn::to{meta::type<cstrview>, fn::has_back{".cc"}}))
             {
-                fmt::print_error_line("If you're using https://github.com/snncpp/build-tool, did "
-                                      "you mean to use the \"runall\" command?");
+                file::standard::error{} << "If you're using https://github.com/snncpp/build-tool, "
+                                           "did you mean to use the \"runall\" command?\n";
             }
 
             return constant::exit::failure;

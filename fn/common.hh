@@ -13,7 +13,6 @@
 #pragma once
 
 #include "snn-core/array_view.fwd.hh"
-#include <functional> // invoke, less<void>
 
 namespace snn::fn
 {
@@ -125,7 +124,10 @@ namespace snn::fn
     // suppress warnings when using function objects defined in system headers. With these function
     // objects we get warnings _and_ `[[nodiscard]]`.
 
-    // `less_than` will use `std::less<void>` internally for pointer types.
+    // A note on pointers (2025-05-27): These function objects do not handle pointer comparison
+    // differently than any other value comparison (just like libc++). A plain less than comparison
+    // results in the same code generation as `std::less<void>` on all tested compilers (Clang, GCC
+    // and MSVC, both x86-64 and ARM64).
 
     // ### equal_to
 
@@ -190,18 +192,8 @@ namespace snn::fn
         template <typename T, typename U>
         [[nodiscard]] constexpr decltype(auto) operator()(T&& t, U&& u) const
             noexcept(noexcept(std::forward<T>(t) < std::forward<U>(u)))
-            requires(!pointer<T> || !pointer<U>)
         {
             return std::forward<T>(t) < std::forward<U>(u);
-        }
-
-        template <typename T, typename U>
-        [[nodiscard]] constexpr decltype(auto) operator()(T&& t, U&& u) const
-            noexcept(noexcept(std::less<void>{}(std::forward<T>(t), std::forward<U>(u))))
-            requires(pointer<T> && pointer<U>)
-        {
-            // `std::less<void>` is well defined for pointers.
-            return std::less<void>{}(std::forward<T>(t), std::forward<U>(u));
         }
 
         using is_transparent = void;
@@ -1007,44 +999,6 @@ namespace snn::fn
         {
             return std::forward<T>(v);
         }
-    };
-
-    // ### invoke
-
-    template <typename F, typename Projection = fn::transparent, typename ProjectionN = Projection>
-    class invoke final
-    {
-      public:
-        constexpr explicit invoke(F f) noexcept
-            : f_{std::move(f)}
-        {
-        }
-
-        constexpr explicit invoke(F f, Projection p)
-            : f_{std::move(f)},
-              p_{p},
-              pn_{p}
-        {
-        }
-
-        constexpr explicit invoke(F f, Projection p, ProjectionN pn) noexcept
-            : f_{std::move(f)},
-              p_{std::move(p)},
-              pn_{std::move(pn)}
-        {
-        }
-
-        template <typename Arg, typename... ArgN>
-        constexpr decltype(auto) operator()(Arg&& arg, ArgN&&... argn) const
-        {
-            return std::invoke(f_, std::invoke(p_, std::forward<Arg>(arg)),
-                               std::invoke(pn_, std::forward<ArgN>(argn))...);
-        }
-
-      private:
-        F f_;
-        Projection p_{};
-        ProjectionN pn_{};
     };
 
     // ### unpack

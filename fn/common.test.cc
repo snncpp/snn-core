@@ -120,7 +120,7 @@ namespace snn::app
             snn_require(!fn::less_than{}(2, 1));
             static_assert(std::is_same_v<fn::less_than, fn::lt>);
 
-            // `fn::less_than` with pointers (uses `std::less<void>` internally).
+            // `fn::less_than` with pointers.
             array a{'a', 'b', 'c'};
             snn_require(fn::less_than{}(a.begin(), a.end()));
             snn_require(!fn::less_than{}(a.begin(), a.begin()));
@@ -1033,39 +1033,6 @@ namespace snn::app
             return true;
         }
 
-        constexpr bool test_invoke()
-        {
-            {
-                fn::invoke clear_str{&str::clear};
-
-                str s = "abc";
-                snn_require(s == "abc");
-                clear_str(s);
-                snn_require(s == "");
-            }
-            {
-                struct person
-                {
-                    int id;
-                    cstrview name;
-                    cstrview title;
-                };
-
-                constexpr person a{123, "foo", "abc"};
-                constexpr person b{456, "bar", "def"};
-
-                static_assert(fn::invoke{fn::less_than{}, &person::id}(a, b));
-                static_assert(!fn::invoke{fn::less_than{}, &person::id}(b, a));
-
-                static_assert(!fn::invoke{fn::less_than{}, &person::name}(a, b));
-                static_assert(fn::invoke{fn::less_than{}, &person::name}(b, a));
-
-                static_assert(fn::invoke{fn::less_than{}, &person::title, &person::name}(a, b));
-                static_assert(!fn::invoke{fn::less_than{}, &person::name, &person::title}(a, b));
-            }
-            return true;
-        }
-
         constexpr bool test_unpack()
         {
             pair::first_second p1{3, 5};
@@ -1114,7 +1081,6 @@ namespace snn
         snn_static_require(app::test_element());
         snn_static_require(app::test_to());
         snn_static_require(app::test_transparent());
-        snn_static_require(app::test_invoke());
         snn_static_require(app::test_unpack());
     }
 }

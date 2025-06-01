@@ -11,6 +11,7 @@
 #include "snn-core/math/common.hh"
 #include "snn-core/range/bidirectional.hh"
 #include "snn-core/range/forward.hh"
+#include <iterator> // iterator_traits, *_iterator_tag
 
 namespace snn::set
 {
