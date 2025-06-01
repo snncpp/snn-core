@@ -69,6 +69,12 @@ namespace snn
 
         // #### Explicit constructors
 
+        template <typename Buf>
+        constexpr explicit strcore(const strcore<Buf>& s)
+            : buf_{s.view()}
+        {
+        }
+
         template <character Char>
         constexpr explicit strcore(range::contiguous<Char*> rng)
             : buf_{rng.data(), rng.count()}
@@ -139,12 +145,6 @@ namespace snn
         template <character Char, usize Count>
         constexpr strcore(const array_view<Char, Count> s)
             : buf_{s}
-        {
-        }
-
-        template <typename Buf>
-        constexpr strcore(const strcore<Buf>& s)
-            : buf_{s.view()}
         {
         }
 
