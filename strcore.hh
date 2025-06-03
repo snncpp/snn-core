@@ -137,12 +137,6 @@ namespace snn
         strcore(init_list<int>) = delete; // Error-prone
 
         template <character Char, usize Count>
-        constexpr strcore(const array<Char, Count>& a)
-            : buf_{a.template view<>()}
-        {
-        }
-
-        template <character Char, usize Count>
         constexpr strcore(const array_view<Char, Count> s)
             : buf_{s}
         {

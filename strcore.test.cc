@@ -117,23 +117,6 @@ namespace snn::app
             return true;
         }
 
-        constexpr bool test_strcore_array()
-        {
-            {
-                array<char, 0> arr;
-                str s = arr;
-                snn_require(s.is_empty());
-            }
-            {
-                array arr{'a', 'b', 'c'};
-                str s = arr;
-                snn_require(s == "abc");
-                snn_require(s.size() == 3);
-            }
-
-            return true;
-        }
-
         constexpr bool test_stream_append_array()
         {
             str s;
@@ -3242,7 +3225,6 @@ namespace snn
         snn_static_require(app::test_concat());
         snn_static_require(app::test_hash());
         snn_static_require(app::test_str());
-        snn_static_require(app::test_strcore_array());
         snn_static_require(app::test_stream_append_array());
 
         snn_require(app::test_find_rnd());
