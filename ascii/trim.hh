@@ -7,8 +7,6 @@
 
 #pragma once
 
-#include "snn-core/array_view.fwd.hh"
-#include "snn-core/strcore.fwd.hh"
 #include "snn-core/chr/common.hh"
 #include "snn-core/fn/common.hh"
 #include "snn-core/math/common.hh"
@@ -19,18 +17,19 @@ namespace snn::ascii
 
     // ### trim_left_inplace_if
 
-    template <typename Buf, typename OneArgPred>
-    constexpr void trim_left_inplace_if(strcore<Buf>& s, OneArgPred p)
+    template <typename String, typename OneArgPred>
+    constexpr void trim_left_inplace_if(String& s, OneArgPred p)
     {
+        static_assert(std::is_same_v<front_value_t<String&>, char>);
         const usize pos = s.find_if(fn::_not{std::move(p)}).value_or_npos();
-        s.drop_at(0, pos);
-    }
-
-    template <character Char, typename OneArgPred>
-    constexpr void trim_left_inplace_if(array_view<Char>& s, OneArgPred p)
-    {
-        const usize pos = s.find_if(fn::_not{std::move(p)}).value_or_npos();
-        s.drop_front_n(pos);
+        if constexpr (requires { s.drop_front_n(pos); })
+        {
+            s.drop_front_n(pos);
+        }
+        else
+        {
+            s.drop_at(0, pos);
+        }
     }
 
     // ### trim_left_inplace
@@ -95,5 +94,21 @@ namespace snn::ascii
     {
         trim_left_inplace(s);
         trim_right_inplace(s);
+    }
+
+    // ### trim
+
+    template <typename String>
+    [[nodiscard]] constexpr String trim(String s, const char c) noexcept
+    {
+        trim_inplace(s, c);
+        return s;
+    }
+
+    template <typename String>
+    [[nodiscard]] constexpr String trim(String s) noexcept
+    {
+        trim_inplace(s);
+        return s;
     }
 }

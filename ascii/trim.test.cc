@@ -12,6 +12,9 @@ namespace snn::app
     {
         constexpr bool example()
         {
+            snn_require(ascii::trim(cstrview{" abc \n"}) == "abc");
+            snn_require(ascii::trim(cstrview{" abc \n"}, ' ') == "abc \n");
+
             str s{" FooBar-123\n"};
 
             ascii::trim_right_inplace(s);
@@ -134,6 +137,25 @@ namespace snn::app
                 snn_require(s.size() == 8);
                 ascii::trim_inplace_if(s, [](const char c) { return c < 'a'; });
                 snn_require(s == "");
+            }
+
+            // trim(String)
+            // trim(String, char)
+            {
+                decltype(auto) s = ascii::trim(T{" abc\n"});
+                static_assert(std::is_same_v<decltype(s), T>);
+                snn_require(s == "abc");
+
+                snn_require(ascii::trim(T{}) == "");
+                snn_require(ascii::trim(T{"   "}) == "");
+                snn_require(ascii::trim(T{" \n\t "}) == "");
+                snn_require(ascii::trim(T{" \nabc\t "}) == "abc");
+                snn_require(ascii::trim(T{" \nabc\t "}, '\t') == " \nabc\t ");
+                snn_require(ascii::trim(T{" \nabc\t "}, ' ') == "\nabc\t");
+
+                snn_require(ascii::trim(T{"  abc\n\n"}) == "abc");
+                snn_require(ascii::trim(T{"  abc\n\n"}, ' ') == "abc\n\n");
+                snn_require(ascii::trim(T{"  abc\n\n"}, '\n') == "  abc");
             }
 
             return true;
