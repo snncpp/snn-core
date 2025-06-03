@@ -123,9 +123,9 @@ namespace snn
         [[nodiscard]] constexpr optional_index find_if(OneArgPred p,
                                                        const usize start_pos = 0) const
         {
-            const auto view   = derived_().view();
-            const auto data   = view.begin();
-            const usize count = view.count();
+            const auto view        = derived_().view();
+            const auto* const data = view.begin();
+            const usize count      = view.count();
             for (usize i = start_pos; i < count; ++i)
             {
                 if (p(std::as_const(data[i])))
@@ -147,9 +147,9 @@ namespace snn
         [[nodiscard]] constexpr optional_index find_in_reverse_if(
             OneArgPred p, const usize start_pos = constant::npos) const
         {
-            const auto view = derived_().view();
-            const auto data = view.begin();
-            usize i         = view.count();
+            const auto view        = derived_().view();
+            const auto* const data = view.begin();
+            usize i                = view.count();
             if (start_pos < i)
             {
                 i = start_pos + 1;
