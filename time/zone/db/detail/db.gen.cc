@@ -14,6 +14,7 @@
 #include "snn-core/file/dir/list.hh"
 #include "snn-core/file/path/append.hh"
 #include "snn-core/file/path/join.hh"
+#include "snn-core/fmt/print.hh"
 #include "snn-core/fn/common.hh"
 #include "snn-core/map/unsorted.hh"
 #include "snn-core/range/view/drop_last.hh"
