@@ -23,16 +23,18 @@ namespace snn::time::zone::db::asia
             "TL",
         };
 
-        inline constexpr array<zone::offset, 3> offsets{{
+        inline constexpr array<zone::offset, 5> offsets{{
             {"LMT", 30140, false},
+            {"+08", 28800, false},
+            {"+09", 32400, false},
             {"+08", 28800, false},
             {"+09", 32400, false},
         }};
 
         inline constexpr array<zone::transition, 4> transitions{{
-            {1, -1830414140},
+            {1, -1830412800},
             {2, -879152400},
-            {1, 199897200},
+            {3, 199897200},
             {2, 969120000},
         }};
     }

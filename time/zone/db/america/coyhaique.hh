@@ -17,14 +17,14 @@ namespace snn::time::zone::db::america
 {
     // clang-format off
 
-    namespace detail::punta_arenas
+    namespace detail::coyhaique
     {
         inline constexpr array<country::code, 1> country_codes{
             "CL",
         };
 
         inline constexpr array<zone::offset, 8> offsets{{
-            {"LMT", -17020, false},
+            {"LMT", -17296, false},
             {"SMT", -16965, false},
             {"-05", -18000, false},
             {"-04", -14400, false},
@@ -34,8 +34,8 @@ namespace snn::time::zone::db::america
             {"-03", -10800, false},
         }};
 
-        inline constexpr array<zone::transition, 117> transitions{{
-            {1, -2524504580},
+        inline constexpr array<zone::transition, 133> transitions{{
+            {1, -2524504304},
             {2, -1892661435},
             {1, -1688410800},
             {3, -1619205435},
@@ -151,16 +151,32 @@ namespace snn::time::zone::db::america
             {5, 1410062400},
             {6, 1463281200},
             {5, 1471147200},
-            {7, 1480820400},
+            {6, 1494730800},
+            {5, 1502596800},
+            {6, 1526180400},
+            {5, 1534046400},
+            {6, 1554606000},
+            {5, 1567915200},
+            {6, 1586055600},
+            {5, 1599364800},
+            {6, 1617505200},
+            {5, 1630814400},
+            {6, 1648954800},
+            {5, 1662868800},
+            {6, 1680404400},
+            {5, 1693713600},
+            {6, 1712458800},
+            {5, 1725768000},
+            {7, 1742439600},
         }};
     }
 
-    inline constexpr db::entry punta_arenas{"America/Punta_Arenas",
-                                            "Magallanes Region",
-                                            "-5309-07055",
-                                            detail::punta_arenas::country_codes,
-                                            detail::punta_arenas::offsets,
-                                            detail::punta_arenas::transitions};
+    inline constexpr db::entry coyhaique{"America/Coyhaique",
+                                         "Aysén Region",
+                                         "-4534-07204",
+                                         detail::coyhaique::country_codes,
+                                         detail::coyhaique::offsets,
+                                         detail::coyhaique::transitions};
 
     // clang-format on
 }

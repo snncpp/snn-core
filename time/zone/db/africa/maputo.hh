@@ -31,12 +31,12 @@ namespace snn::time::zone::db::africa
         };
 
         inline constexpr array<zone::offset, 2> offsets{{
-            {"LMT", 7820, false},
+            {"LMT", 7818, false},
             {"CAT", 7200, false},
         }};
 
         inline constexpr array<zone::transition, 1> transitions{{
-            {1, -2109291020},
+            {1, -1924999818},
         }};
     }
 

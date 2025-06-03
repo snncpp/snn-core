@@ -19,8 +19,9 @@ namespace snn::time::zone::db::asia
 
     namespace detail::singapore
     {
-        inline constexpr array<country::code, 2> country_codes{
+        inline constexpr array<country::code, 3> country_codes{
             "SG",
+            "AQ",
             "MY",
         };
 
@@ -48,7 +49,7 @@ namespace snn::time::zone::db::asia
     }
 
     inline constexpr db::entry singapore{"Asia/Singapore",
-                                         "peninsular Malaysia",
+                                         "peninsular Malaysia, Concordia",
                                          "+0117+10351",
                                          detail::singapore::country_codes,
                                          detail::singapore::offsets,

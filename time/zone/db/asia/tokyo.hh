@@ -19,8 +19,9 @@ namespace snn::time::zone::db::asia
 
     namespace detail::tokyo
     {
-        inline constexpr array<country::code, 1> country_codes{
+        inline constexpr array<country::code, 2> country_codes{
             "JP",
+            "AU",
         };
 
         inline constexpr array<zone::offset, 4> offsets{{
@@ -44,7 +45,7 @@ namespace snn::time::zone::db::asia
     }
 
     inline constexpr db::entry tokyo{"Asia/Tokyo",
-                                     "",
+                                     "Eyre Bird Observatory",
                                      "+353916+1394441",
                                      detail::tokyo::country_codes,
                                      detail::tokyo::offsets,

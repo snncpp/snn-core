@@ -33,8 +33,8 @@ namespace snn::time::zone::db::america
 
         inline constexpr array<zone::transition, 57> transitions{{
             {1, -1514743200},
-            {2, 377935200},
-            {4, 407653200},
+            {2, 378201600},
+            {4, 405068400},
             {3, 828864000},
             {4, 846399600},
             {3, 860313600},

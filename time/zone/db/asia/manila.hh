@@ -23,32 +23,37 @@ namespace snn::time::zone::db::asia
             "PH",
         };
 
-        inline constexpr array<zone::offset, 6> offsets{{
-            {"LMT", -57360, false},
-            {"LMT", 29040, false},
+        inline constexpr array<zone::offset, 7> offsets{{
+            {"LMT", -57368, false},
+            {"LMT", 29032, false},
             {"PDT", 32400, true},
+            {"PST", 28800, false},
             {"PST", 28800, false},
             {"JST", 32400, false},
             {"PST", 28800, false},
         }};
 
-        inline constexpr array<zone::transition, 10> transitions{{
-            {1, -3944621040},
-            {3, -2229321840},
+        inline constexpr array<zone::transition, 14> transitions{{
+            {1, -3944621032},
+            {4, -2219083200},
             {2, -1046678400},
-            {3, -1038733200},
-            {4, -873273600},
-            {3, -794221200},
+            {3, -1040115600},
+            {2, -885024000},
+            {5, -880016400},
+            {2, -783594000},
+            {3, -760093200},
             {2, -496224000},
-            {3, -489315600},
-            {2, 259344000},
-            {3, 275151600},
+            {3, -491562000},
+            {2, 228326400},
+            {3, 243702000},
+            {2, 643219200},
+            {3, 649177200},
         }};
     }
 
     inline constexpr db::entry manila{"Asia/Manila",
                                       "",
-                                      "+1435+12100",
+                                      "+143512+1205804",
                                       detail::manila::country_codes,
                                       detail::manila::offsets,
                                       detail::manila::transitions};

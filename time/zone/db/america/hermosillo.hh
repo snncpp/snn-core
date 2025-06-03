@@ -23,26 +23,22 @@ namespace snn::time::zone::db::america
             "MX",
         };
 
-        inline constexpr array<zone::offset, 7> offsets{{
+        inline constexpr array<zone::offset, 5> offsets{{
             {"LMT", -26632, false},
             {"MST", -25200, false},
             {"CST", -21600, false},
             {"MDT", -21600, true},
             {"MST", -25200, false},
-            {"PST", -28800, false},
-            {"MST", -25200, false},
         }};
 
-        inline constexpr array<zone::transition, 15> transitions{{
+        inline constexpr array<zone::transition, 13> transitions{{
             {1, -1514739600},
-            {2, -1343066400},
+            {2, -1343149200},
             {4, -1234807200},
-            {3, -1220292000},
+            {3, -1220461200},
             {4, -1207159200},
             {2, -1191344400},
             {4, -873828000},
-            {5, -661539600},
-            {4, 28800},
             {3, 828867600},
             {4, 846403200},
             {3, 860317200},

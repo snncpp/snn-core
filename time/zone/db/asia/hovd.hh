@@ -85,7 +85,7 @@ namespace snn::time::zone::db::asia
     }
 
     inline constexpr db::entry hovd{"Asia/Hovd",
-                                    "Bayan-Ölgii, Govi-Altai, Hovd, Uvs, Zavkhan",
+                                    "Bayan-Ölgii, Hovd, Uvs",
                                     "+4801+09139",
                                     detail::hovd::country_codes,
                                     detail::hovd::offsets,
