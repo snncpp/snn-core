@@ -1572,7 +1572,7 @@ namespace snn
                                               const usize count = constant::npos) const noexcept
         {
             const usize i = math::min(pos, count_);
-            return array_view{meta::internal, data_ + i, math::min(count_ - i, count)};
+            return cstrview{meta::internal, data_ + i, math::min(count_ - i, count)};
         }
 
         // #### View exactly
@@ -2079,7 +2079,7 @@ namespace snn
 
         [[nodiscard]] constexpr strview view() noexcept
         {
-            return array_view{meta::internal, data_, count_};
+            return strview{meta::internal, data_, count_};
         }
 
         [[nodiscard]] constexpr cstrview view() const noexcept
@@ -2091,7 +2091,7 @@ namespace snn
                                              const usize count = constant::npos) noexcept
         {
             const usize i = math::min(pos, count_);
-            return array_view{meta::internal, data_ + i, math::min(count_ - i, count)};
+            return strview{meta::internal, data_ + i, math::min(count_ - i, count)};
         }
 
         [[nodiscard]] constexpr cstrview view(const usize pos,
