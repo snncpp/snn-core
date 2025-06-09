@@ -701,7 +701,7 @@ namespace snn
     // ### has_to
 
     template <typename From, typename To>
-    concept has_to = requires(const From& v) { v.template to<To>(); };
+    concept has_to = requires(From&& v) { std::forward<From>(v).template to<To>(); };
 
     // ## Type traits
 
