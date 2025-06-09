@@ -968,21 +968,25 @@ namespace snn::fn
         }
 
         template <typename V, typename... Vals>
-        constexpr decltype(auto) operator()(const V& v, const Vals&... vals) const
+        constexpr decltype(auto) operator()(V&& v, Vals&&... vals) const
         {
-            return f_(conv_(v), conv_(vals)...);
+            return f_(conv_(std::forward<V>(v)), conv_(std::forward<Vals>(vals))...);
         }
 
       private:
         F f_;
 
         template <typename V>
-        constexpr auto conv_(const V& v) const
+        constexpr auto conv_(V&& v) const
         {
             if constexpr (has_to<V, To>)
-                return v.template to<To>();
+            {
+                return std::forward<V>(v).template to<To>();
+            }
             else
-                return To{v};
+            {
+                return To{std::forward<V>(v)};
+            }
         }
     };
 
