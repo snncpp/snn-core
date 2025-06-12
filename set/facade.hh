@@ -84,8 +84,8 @@ namespace snn::set
 
         // #### Converting constructors
 
-        facade(init_list<value_type> init)
-            : set_{init}
+        facade(init_list<value_type> values)
+            : set_{values}
         {
         }
 

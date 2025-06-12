@@ -16,9 +16,9 @@ namespace snn::algo
     // ### sum
 
     template <input_range Rng, typename T>
-    [[nodiscard]] constexpr T sum(Rng rng, T init)
+    [[nodiscard]] constexpr T sum(Rng rng, T initial_value)
     {
-        return algo::reduce(std::move(rng), std::move(init), fn::add{});
+        return algo::reduce(std::move(rng), std::move(initial_value), fn::add{});
     }
 
     template <input_range Rng>

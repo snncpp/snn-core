@@ -143,8 +143,8 @@ namespace snn::map
 
         // #### Converting constructors
 
-        facade(init_list<value_type> init)
-            : map_{init}
+        facade(init_list<value_type> values)
+            : map_{values}
         {
         }
 

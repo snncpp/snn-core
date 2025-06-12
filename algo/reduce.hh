@@ -14,14 +14,14 @@ namespace snn::algo
     // ### reduce
 
     template <input_range Rng, typename T, typename TwoArgOp>
-    [[nodiscard]] constexpr T reduce(Rng rng, T init, TwoArgOp op)
+    [[nodiscard]] constexpr T reduce(Rng rng, T initial_value, TwoArgOp op)
     {
         while (rng)
         {
             const auto& e = rng.front(promise::not_empty);
-            init          = op(std::move(init), e);
+            initial_value = op(std::move(initial_value), e);
             rng.drop_front(promise::not_empty);
         }
-        return init;
+        return initial_value;
     }
 }

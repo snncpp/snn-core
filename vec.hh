@@ -81,15 +81,15 @@ namespace snn
 
         // #### Converting constructors
 
-        constexpr vec(initializer_list<T> init)
+        constexpr vec(initializer_list<T> values)
             : vec{}
         {
-            if (init.size() > 0)
+            if (values.size() > 0)
             {
-                reserve(init.size());
-                mem::copy_construct(not_null{init.begin()}, not_null{init.end()},
+                reserve(values.size());
+                mem::copy_construct(not_null{values.begin()}, not_null{values.end()},
                                     not_null{buf_.begin()}, promise::no_overlap);
-                buf_.set_count(init.size(), promise::has_capacity);
+                buf_.set_count(values.size(), promise::has_capacity);
             }
         }
 

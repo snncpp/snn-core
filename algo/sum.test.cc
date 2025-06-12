@@ -14,13 +14,13 @@ namespace snn::app
         {
             array numbers{7, 8, 9};
 
-            // Default init value is a `num::safe<...>`.
+            // Default initial value is a `num::safe<...>`.
             auto sum = algo::sum(numbers.range());
             static_assert(std::is_same_v<decltype(sum), num::safe<int>>);
             snn_require(sum.has_value());
             snn_require(sum.value() == 24);
 
-            // Custom init value.
+            // Custom initial value.
             snn_require(algo::sum(numbers.range(), 0) == 24);
             snn_require(algo::sum(numbers.range(), 100) == 124);
 
@@ -29,7 +29,7 @@ namespace snn::app
 
         constexpr bool test_sum()
         {
-            // T sum(Rng rng, T init)
+            // T sum(Rng rng, T initial_value)
             {
                 snn_require(algo::sum(array<int, 0>{}.range(), 0) == 0);
                 snn_require(algo::sum(array{7}.range(), 0) == 7);
