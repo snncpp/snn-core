@@ -53,7 +53,7 @@ namespace snn
 
         const usize encoding_count = encodings.count() + 1; // +1 for unknown.
 
-        strbuf hh{container::reserve, constant::size::kibibyte<usize>};
+        strbuf hh{init::reserve, constant::size::kibibyte<usize>};
 
         // scheme.hh
 

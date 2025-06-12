@@ -80,7 +80,7 @@ namespace snn::range
         {
         }
 
-        constexpr explicit contiguous(meta::iterators_t, const iterator first,
+        constexpr explicit contiguous(init::from_t, const iterator first,
                                       const iterator last) noexcept
             : first_{first},
               last_{last}
@@ -291,7 +291,7 @@ namespace snn::range
         {
             const auto last = last_;
             last_ -= math::min(count, this->count());
-            return contiguous{meta::iterators, last_, last};
+            return contiguous{init::from, last_, last};
         }
 
         template <value_type_or<reference> R = reference>
@@ -315,7 +315,7 @@ namespace snn::range
         {
             const auto first = first_;
             first_ += math::min(count, this->count());
-            return contiguous{meta::iterators, first, first_};
+            return contiguous{init::from, first, first_};
         }
 
         // #### Extended
@@ -334,7 +334,7 @@ namespace snn::range
             {
                 --last_;
             }
-            return contiguous{meta::iterators, last_, last};
+            return contiguous{init::from, last_, last};
         }
 
         template <typename OneArgPred>
@@ -346,7 +346,7 @@ namespace snn::range
             {
                 ++first_;
             }
-            return contiguous{meta::iterators, first, first_};
+            return contiguous{init::from, first, first_};
         }
 
         [[nodiscard]] constexpr snn::byte_size<usize> byte_size() const noexcept
@@ -375,7 +375,7 @@ namespace snn::range
 
         [[nodiscard]] constexpr auto range() const noexcept
         {
-            return contiguous<const_pointer>{meta::iterators, first_, last_};
+            return contiguous<const_pointer>{init::from, first_, last_};
         }
 
         [[nodiscard]] constexpr auto view() noexcept
@@ -394,7 +394,7 @@ namespace snn::range
                                                           promise::is_valid_t) const noexcept
         {
             snn_should(suffix.end() == last_ && suffix.begin() >= first_);
-            return contiguous{meta::iterators, first_, suffix.begin()};
+            return contiguous{init::from, first_, suffix.begin()};
         }
 
         [[nodiscard]] constexpr pointer writable() noexcept
@@ -420,7 +420,7 @@ namespace snn::range
 
         friend class contiguous<char*>;
 
-        constexpr explicit contiguous(meta::internal_t, const char* const first,
+        constexpr explicit contiguous(init::internal_t, const char* const first,
                                       const char* const last) noexcept
             : first_{first},
               last_{last}
@@ -480,7 +480,7 @@ namespace snn::range
         {
         }
 
-        constexpr explicit contiguous(meta::iterators_t, const iterator first,
+        constexpr explicit contiguous(init::from_t, const iterator first,
                                       const iterator last) noexcept
             : contiguous{}
         {
@@ -630,7 +630,7 @@ namespace snn::range
         {
             const auto last = last_;
             last_ -= math::min(count, this->count());
-            return contiguous{meta::internal, last_, last};
+            return contiguous{init::internal, last_, last};
         }
 
         template <value_type_or<reference> R = reference>
@@ -653,7 +653,7 @@ namespace snn::range
         {
             const auto first = first_;
             first_ += math::min(count, this->count());
-            return contiguous{meta::internal, first, first_};
+            return contiguous{init::internal, first, first_};
         }
 
         // #### Extended
@@ -857,7 +857,7 @@ namespace snn::range
             {
                 --last_;
             }
-            return contiguous{meta::internal, last_, last};
+            return contiguous{init::internal, last_, last};
         }
 
         template <strict_integral Int, math::base Base = math::base::decimal, usize MaxDigits = 0>
@@ -900,7 +900,7 @@ namespace snn::range
             {
                 ++first_;
             }
-            return contiguous{meta::internal, first, first_};
+            return contiguous{init::internal, first, first_};
         }
 
         template <typename OneArgPred, typename OneArgFn>
@@ -912,7 +912,7 @@ namespace snn::range
                 f(*first_);
                 ++first_;
             }
-            return contiguous{meta::internal, first, first_};
+            return contiguous{init::internal, first, first_};
         }
 
         [[nodiscard]] constexpr snn::byte_size<usize> byte_size() const noexcept
@@ -949,7 +949,7 @@ namespace snn::range
                                                           promise::is_valid_t) const noexcept
         {
             snn_should(suffix.end() == last_ && suffix.begin() >= first_);
-            return contiguous{meta::internal, first_, suffix.begin()};
+            return contiguous{init::internal, first_, suffix.begin()};
         }
 
         // #### Contiguous interface
@@ -967,7 +967,7 @@ namespace snn::range
         char* first_;
         char* last_;
 
-        constexpr explicit contiguous(meta::internal_t, char* const first,
+        constexpr explicit contiguous(init::internal_t, char* const first,
                                       char* const last) noexcept
             : first_{first},
               last_{last}
@@ -1021,7 +1021,7 @@ namespace snn::range
         {
         }
 
-        constexpr explicit contiguous(meta::iterators_t, const iterator first,
+        constexpr explicit contiguous(init::from_t, const iterator first,
                                       const iterator last) noexcept
             : contiguous{}
         {
@@ -1220,7 +1220,7 @@ namespace snn::range
         {
             const auto last = last_;
             last_ -= math::min(count, this->count());
-            return contiguous{meta::internal, last_, last};
+            return contiguous{init::internal, last_, last};
         }
 
         template <value_type_or<reference> R = reference>
@@ -1243,7 +1243,7 @@ namespace snn::range
         {
             const auto first = first_;
             first_ += math::min(count, this->count());
-            return contiguous{meta::internal, first, first_};
+            return contiguous{init::internal, first, first_};
         }
 
         // #### Extended
@@ -1447,7 +1447,7 @@ namespace snn::range
             {
                 --last_;
             }
-            return contiguous{meta::internal, last_, last};
+            return contiguous{init::internal, last_, last};
         }
 
         template <strict_integral Int, math::base Base = math::base::decimal, usize MaxDigits = 0>
@@ -1490,7 +1490,7 @@ namespace snn::range
             {
                 ++first_;
             }
-            return contiguous{meta::internal, first, first_};
+            return contiguous{init::internal, first, first_};
         }
 
         template <typename OneArgPred, typename OneArgFn>
@@ -1502,7 +1502,7 @@ namespace snn::range
                 f(*first_);
                 ++first_;
             }
-            return contiguous{meta::internal, first, first_};
+            return contiguous{init::internal, first, first_};
         }
 
         [[nodiscard]] constexpr snn::byte_size<usize> byte_size() const noexcept
@@ -1530,7 +1530,7 @@ namespace snn::range
 
         [[nodiscard]] constexpr auto range() const noexcept
         {
-            return contiguous<const char*>{meta::internal, first_, last_};
+            return contiguous<const char*>{init::internal, first_, last_};
         }
 
         [[nodiscard]] constexpr auto view() noexcept
@@ -1549,7 +1549,7 @@ namespace snn::range
                                                           promise::is_valid_t) const noexcept
         {
             snn_should(suffix.end() == last_ && suffix.begin() >= first_);
-            return contiguous{meta::internal, first_, suffix.begin()};
+            return contiguous{init::internal, first_, suffix.begin()};
         }
 
         [[nodiscard]] constexpr auto writable() noexcept

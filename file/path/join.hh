@@ -42,7 +42,7 @@ namespace snn::file::path
     template <any_strcore Str = str, typename... Args>
     [[nodiscard]] constexpr Str join(const Args&... args)
     {
-        Str append_to{container::reserve, (detail::join::size(args) + ...)};
+        Str append_to{init::reserve, (detail::join::size(args) + ...)};
         (path::detail::append::append(args, append_to), ...);
         return append_to;
     }

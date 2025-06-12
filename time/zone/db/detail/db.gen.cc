@@ -240,7 +240,7 @@ namespace snn::app
             // Will be empty if `links_to` is empty.
             const vec<str> source_identifiers = app::split_into_identifiers(links_to);
 
-            strbuf hh{container::reserve, 10'000};
+            strbuf hh{init::reserve, 10'000};
 
             hh << "// Copyright (c) 2022 Mikael Simonsson <https://mikaelsimonsson.com>.\n";
             hh << "// SPDX-License-Identifier: BSL-1.0\n";
@@ -334,7 +334,7 @@ namespace snn::app
 
             // DB entry.
 
-            const strbuf indentation{container::fill, tail_ident.size() + 32, ' '};
+            const strbuf indentation{init::fill, tail_ident.size() + 32, ' '};
 
             hh << "    inline constexpr db::entry " << tail_ident << "{\"" << name << "\",\n";
             hh << indentation << "\"" << meta.comment << "\",\n";
@@ -702,7 +702,7 @@ namespace snn
 
         // world.hh
 
-        strbuf hh{container::reserve, 24'000};
+        strbuf hh{init::reserve, 24'000};
 
         hh << "// Copyright (c) 2022 Mikael Simonsson <https://mikaelsimonsson.com>.\n";
         hh << "// SPDX-License-Identifier: BSL-1.0\n";

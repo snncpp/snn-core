@@ -34,7 +34,7 @@ namespace snn
         // Test vectors from: https://www.rfc-editor.org/rfc/rfc2202.html
 
         {
-            crypto::mac::hmac<crypto::hash::sha1> h{str{container::fill, 20, '\x0b'}};
+            crypto::mac::hmac<crypto::hash::sha1> h{str{init::fill, 20, '\x0b'}};
             h << "Hi There";
             str mac = h.final_hex();
             snn_require(mac.size() == 40);
@@ -50,8 +50,8 @@ namespace snn
         }
 
         {
-            crypto::mac::hmac<crypto::hash::sha1> h{str{container::fill, 20, '\xaa'}};
-            h << str{container::fill, 50, '\xdd'};
+            crypto::mac::hmac<crypto::hash::sha1> h{str{init::fill, 20, '\xaa'}};
+            h << str{init::fill, 50, '\xdd'};
             str mac = h.final_hex();
             snn_require(mac.size() == 40);
             snn_require(mac == "125d7342b9ac11cd91a39af48aa17b4f63f175d3");
@@ -61,14 +61,14 @@ namespace snn
             crypto::mac::hmac<crypto::hash::sha1> h{"\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b"
                                                     "\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16"
                                                     "\x17\x18\x19"};
-            h << str{container::fill, 50, '\xcd'};
+            h << str{init::fill, 50, '\xcd'};
             str mac = h.final_hex();
             snn_require(mac.size() == 40);
             snn_require(mac == "4c9007f4026250c6bc8414f9bf50c86c2d7235da");
         }
 
         {
-            crypto::mac::hmac<crypto::hash::sha1> h{str{container::fill, 20, '\x0c'}};
+            crypto::mac::hmac<crypto::hash::sha1> h{str{init::fill, 20, '\x0c'}};
             h << "Test With Truncation";
             str mac = h.final_hex();
             snn_require(mac.size() == 40);
@@ -76,7 +76,7 @@ namespace snn
         }
 
         {
-            crypto::mac::hmac<crypto::hash::sha1> h{str{container::fill, 80, '\xaa'}};
+            crypto::mac::hmac<crypto::hash::sha1> h{str{init::fill, 80, '\xaa'}};
             h << "Test Using Larger Than Block-Size Key - Hash Key First";
             str mac = h.final_hex();
             snn_require(mac.size() == 40);
@@ -84,7 +84,7 @@ namespace snn
         }
 
         {
-            crypto::mac::hmac<crypto::hash::sha1> h{str{container::fill, 80, '\xaa'}};
+            crypto::mac::hmac<crypto::hash::sha1> h{str{init::fill, 80, '\xaa'}};
             h << "Test Using Larger Than Block-Size Key and Larger Than One Block-Size Data";
             str mac = h.final_hex();
             snn_require(mac.size() == 40);
@@ -95,7 +95,7 @@ namespace snn
         // Test vectors from: https://www.rfc-editor.org/rfc/rfc4231
 
         {
-            crypto::mac::hmac<crypto::hash::sha256> h{str{container::fill, 20, '\x0b'}};
+            crypto::mac::hmac<crypto::hash::sha256> h{str{init::fill, 20, '\x0b'}};
             h << "Hi There";
             str mac = h.final_hex();
             snn_require(mac.size() == 64);
@@ -111,8 +111,8 @@ namespace snn
         }
 
         {
-            crypto::mac::hmac<crypto::hash::sha256> h{str{container::fill, 20, '\xaa'}};
-            h << str{container::fill, 50, '\xdd'};
+            crypto::mac::hmac<crypto::hash::sha256> h{str{init::fill, 20, '\xaa'}};
+            h << str{init::fill, 50, '\xdd'};
             str mac = h.final_hex();
             snn_require(mac.size() == 64);
             snn_require(mac == "773ea91e36800e46854db8ebd09181a72959098b3ef8c122d9635514ced565fe");
@@ -122,7 +122,7 @@ namespace snn
             crypto::mac::hmac<crypto::hash::sha256> h{"\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a"
                                                       "\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14"
                                                       "\x15\x16\x17\x18\x19"};
-            h << str{container::fill, 50, '\xcd'};
+            h << str{init::fill, 50, '\xcd'};
             str mac = h.final_hex();
             snn_require(mac.size() == 64);
             snn_require(mac == "82558a389a443c0ea4cc819899f2083a85f0faa3e578f8077a2e3ff46729665b");
@@ -132,7 +132,7 @@ namespace snn
             crypto::mac::hmac<crypto::hash::sha256> h{"\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a"
                                                       "\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14"
                                                       "\x15\x16\x17\x18\x19"};
-            h << str{container::fill, 50, '\xcd'};
+            h << str{init::fill, 50, '\xcd'};
             str raw_mac = h.final();
             snn_require(raw_mac.size() == 32);
             snn_require(raw_mac == "\x82\x55\x8a\x38\x9a\x44\x3c\x0e\xa4\xcc\x81\x98\x99\xf2\x08"
@@ -144,7 +144,7 @@ namespace snn
             crypto::mac::hmac<crypto::hash::sha256> h{"\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a"
                                                       "\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14"
                                                       "\x15\x16\x17\x18\x19"};
-            h << str{container::fill, 50, '\xcd'};
+            h << str{init::fill, 50, '\xcd'};
             array<char, decltype(h)::output_size> digest;
             h.final(digest);
             snn_require(digest.view() == "\x82\x55\x8a\x38\x9a\x44\x3c\x0e\xa4\xcc\x81\x98\x99\xf2"
@@ -153,7 +153,7 @@ namespace snn
         }
 
         {
-            crypto::mac::hmac<crypto::hash::sha256> h{str{container::fill, 20, '\x0c'}};
+            crypto::mac::hmac<crypto::hash::sha256> h{str{init::fill, 20, '\x0c'}};
             h << "Test With Truncation";
             str mac = h.final_hex();
             snn_require(mac.size() == 64);
@@ -162,7 +162,7 @@ namespace snn
         }
 
         {
-            crypto::mac::hmac<crypto::hash::sha256> h{str{container::fill, 131, '\xaa'}};
+            crypto::mac::hmac<crypto::hash::sha256> h{str{init::fill, 131, '\xaa'}};
             h << "Test Using Larger Than Block-Size Key - Hash Key First";
             str mac = h.final_hex();
             snn_require(mac.size() == 64);
@@ -170,7 +170,7 @@ namespace snn
         }
 
         {
-            crypto::mac::hmac<crypto::hash::sha256> h{str{container::fill, 131, '\xaa'}};
+            crypto::mac::hmac<crypto::hash::sha256> h{str{init::fill, 131, '\xaa'}};
             h << "This is a test using a larger than block-size key"
               << " and a larger than block-size data. "
               << "The key needs to be hashed before being used by the HMAC algorithm.";

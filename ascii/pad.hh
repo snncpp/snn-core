@@ -22,7 +22,7 @@ namespace snn::ascii
     {
         const cstrview s = string.get();
 
-        Str padded{container::reserve, math::max(s.size(), size)};
+        Str padded{init::reserve, math::max(s.size(), size)};
         if (size > s.size())
         {
             const usize diff        = size - s.size();
@@ -51,7 +51,7 @@ namespace snn::ascii
             throw_or_abort(error::pad_string_can_not_be_empty);
         }
 
-        Str padded{container::reserve, math::max(s.size(), size)};
+        Str padded{init::reserve, math::max(s.size(), size)};
         if (size > s.size())
         {
             const usize diff        = size - s.size();
@@ -118,7 +118,7 @@ namespace snn::ascii
     {
         const cstrview s = string.get();
 
-        Str padded{container::reserve, math::max(s.size(), size)};
+        Str padded{init::reserve, math::max(s.size(), size)};
         if (size > s.size())
         {
             padded.append_for_overwrite(size - s.size()).fill(c);
@@ -139,7 +139,7 @@ namespace snn::ascii
             throw_or_abort(error::pad_string_can_not_be_empty);
         }
 
-        Str padded{container::reserve, math::max(s.size(), size)};
+        Str padded{init::reserve, math::max(s.size(), size)};
         if (size > s.size())
         {
             const usize fill_size = size - s.size();
@@ -191,7 +191,7 @@ namespace snn::ascii
     {
         const cstrview s = string.get();
 
-        Str padded{container::reserve, math::max(s.size(), size)};
+        Str padded{init::reserve, math::max(s.size(), size)};
         padded.append(s);
         if (size > s.size())
         {
@@ -212,7 +212,7 @@ namespace snn::ascii
             throw_or_abort(error::pad_string_can_not_be_empty);
         }
 
-        Str padded{container::reserve, math::max(s.size(), size)};
+        Str padded{init::reserve, math::max(s.size(), size)};
         padded.append(s);
         if (size > s.size())
         {

@@ -13,7 +13,7 @@ namespace snn
     void unittest()
     {
         {
-            strbuf buf{container::fill, 64, 'a'};
+            strbuf buf{init::fill, 64, 'a'};
             snn_require(buf.capacity() == 64);
             snn_require(buf.size() == 64);
             snn_require(buf.all(fn::is{fn::equal_to{}, 'a'}));

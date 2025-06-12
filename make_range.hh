@@ -20,21 +20,21 @@ namespace snn
     template <typename It>
     [[nodiscard]] constexpr auto make_range(It first, It last, std::forward_iterator_tag) noexcept
     {
-        return range::forward{meta::iterators, std::move(first), std::move(last)};
+        return range::forward{init::from, std::move(first), std::move(last)};
     }
 
     template <typename It>
     [[nodiscard]] constexpr auto make_range(It first, It last,
                                             std::bidirectional_iterator_tag) noexcept
     {
-        return range::bidirectional{meta::iterators, std::move(first), std::move(last)};
+        return range::bidirectional{init::from, std::move(first), std::move(last)};
     }
 
     template <typename It>
     [[nodiscard]] constexpr auto make_range(It first, It last,
                                             std::random_access_iterator_tag) noexcept
     {
-        return range::random_access{meta::iterators, std::move(first), std::move(last)};
+        return range::random_access{init::from, std::move(first), std::move(last)};
     }
 
     template <typename It>
@@ -47,7 +47,7 @@ namespace snn
     template <pointer Ptr>
     [[nodiscard]] constexpr auto make_range(Ptr first, Ptr last) noexcept
     {
-        return range::contiguous{meta::iterators, first, last};
+        return range::contiguous{init::from, first, last};
     }
 
     template <same_as<const char> ConstChar, usize N>

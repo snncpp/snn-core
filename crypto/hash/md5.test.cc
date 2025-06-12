@@ -81,7 +81,7 @@ namespace snn
 
         {
             crypto::hash::md5 h;
-            h << str{container::fill, 900'000, 'a'} << str{container::fill, 100'000, 'a'};
+            h << str{init::fill, 900'000, 'a'} << str{init::fill, 100'000, 'a'};
             auto s = h.final_hex<strbuf>();
             snn_require(s.size() == 32);
             snn_require(s == "7707d6ae4e027c70eea2a935c2296f21");

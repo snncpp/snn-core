@@ -30,7 +30,7 @@ namespace snn::app
         // Encodes 5 characters: < > & " '
         constexpr strbuf encode_ref(const cstrview s)
         {
-            strbuf enc{container::reserve, s.size()};
+            strbuf enc{init::reserve, s.size()};
             for (const char c : s)
             {
                 switch (c)
@@ -61,7 +61,7 @@ namespace snn::app
         // Encodes 3 characters: & " U+00A0
         constexpr strbuf encode_attribute_value_ref(const cstrview s)
         {
-            strbuf enc{container::reserve, s.size()};
+            strbuf enc{init::reserve, s.size()};
             auto rng = s.range();
             while (rng)
             {
@@ -99,7 +99,7 @@ namespace snn::app
         // Encodes 4 characters: < > & U+00A0
         constexpr strbuf encode_text_value_ref(const cstrview s)
         {
-            strbuf enc{container::reserve, s.size()};
+            strbuf enc{init::reserve, s.size()};
             auto rng = s.range();
             while (rng)
             {
@@ -188,7 +188,7 @@ namespace snn::app
             }
 
             {
-                strbuf s{container::reserve, 384};
+                strbuf s{init::reserve, 384};
                 snn_require(s.size() == 0);
                 snn_require(s.capacity() >= 384);
                 for (const auto b : range::integral<byte>{})

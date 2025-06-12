@@ -17,7 +17,7 @@ namespace snn::app
             deque.push_back(123);
             deque.push_back(456);
 
-            range::random_access rng{meta::iterators, deque.begin(), deque.end()};
+            range::random_access rng{init::from, deque.begin(), deque.end()};
 
             snn_require(rng);
             snn_require(!rng.is_empty());
@@ -73,7 +73,7 @@ namespace snn
         {
             std::deque<int> deque;
 
-            range::random_access rng{meta::iterators, deque.begin(), deque.end()};
+            range::random_access rng{init::from, deque.begin(), deque.end()};
             snn_require(deque.begin() == rng.begin());
             snn_require(deque.end() == rng.end());
 
@@ -97,7 +97,7 @@ namespace snn
             deque.push_back(123);
             deque.push_back(456);
 
-            range::random_access rng{meta::iterators, deque.begin(), deque.end()};
+            range::random_access rng{init::from, deque.begin(), deque.end()};
 
             snn_require(rng);
             snn_require(!rng.is_empty());
@@ -133,7 +133,7 @@ namespace snn
             deque.push_back(123);
             deque.push_back(456);
 
-            range::random_access rng{meta::iterators, deque.begin(), deque.end()};
+            range::random_access rng{init::from, deque.begin(), deque.end()};
 
             snn_require(rng);
             snn_require(!rng.is_empty());
@@ -169,7 +169,7 @@ namespace snn
             deque.push_back(123);
             deque.push_back(456);
 
-            range::random_access rng{meta::iterators, deque.begin(), deque.end()};
+            range::random_access rng{init::from, deque.begin(), deque.end()};
 
             snn_require(rng.count() == 2);
 

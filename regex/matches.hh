@@ -114,7 +114,7 @@ namespace snn::regex
 
         [[nodiscard]] auto range() const noexcept
         {
-            return snn::range::forward{meta::iterators, begin(), end()};
+            return snn::range::forward{init::from, begin(), end()};
         }
 
       protected:

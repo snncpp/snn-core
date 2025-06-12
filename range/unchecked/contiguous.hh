@@ -37,7 +37,7 @@ namespace snn::range::unchecked
 
         // #### Constructors
 
-        constexpr explicit contiguous(meta::iterators_t, const iterator first,
+        constexpr explicit contiguous(init::from_t, const iterator first,
                                       const iterator last) noexcept
             : first_{first},
               last_{last}
@@ -162,7 +162,7 @@ namespace snn::range::unchecked
             {
                 last_ = first_;
             }
-            return contiguous{meta::iterators, last_, last};
+            return contiguous{init::from, last_, last};
         }
 
         [[nodiscard]] constexpr reference pop_front(promise::not_empty_t) noexcept
@@ -182,7 +182,7 @@ namespace snn::range::unchecked
             {
                 first_ = last_;
             }
-            return contiguous{meta::iterators, first, first_};
+            return contiguous{init::from, first, first_};
         }
 
         SNN_DIAGNOSTIC_POP

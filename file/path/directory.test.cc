@@ -45,7 +45,7 @@ namespace snn
         snn_require(file::path::directory("abcdefghijklm/nopqrstuvwxyz/bbb.eee").value() ==
                     "abcdefghijklm/nopqrstuvwxyz/");
 
-        const str invalid{container::fill, PATH_MAX, 'a'};
+        const str invalid{init::fill, PATH_MAX, 'a'};
         auto res = file::path::directory(invalid);
         static_assert(std::is_same_v<decltype(res), result<str>>);
         snn_require(!res);

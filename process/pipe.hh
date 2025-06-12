@@ -43,7 +43,7 @@ namespace snn::process
             int fildes[2];
             if (::pipe2(fildes, O_CLOEXEC) == 0)
             {
-                return pipe{fildes, meta::internal};
+                return pipe{fildes, init::internal};
             }
             return error_code{errno, system::error_category};
         }
@@ -76,7 +76,7 @@ namespace snn::process
         file::descriptor reading_end_;
         file::descriptor writing_end_;
 
-        explicit pipe(const int (&fildes)[2], meta::internal_t) noexcept
+        explicit pipe(const int (&fildes)[2], init::internal_t) noexcept
             : reading_end_{fildes[0]},
               writing_end_{fildes[1]}
         {

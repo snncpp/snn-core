@@ -105,7 +105,7 @@ namespace snn::regex
             const cstrview s = subject.get();
             // std::regex_replace will pass the "regex replacement format string" as a
             // null-terminated c-string. Even if passed a std::string it will call c_str() on it.
-            Str result{container::reserve, s.size()};
+            Str result{init::reserve, s.size()};
             std::regex_replace(string::append_iterator{result}, s.begin(), s.end(), pat_,
                                replacement_format.null_terminated().get());
             return result;

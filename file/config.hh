@@ -24,7 +24,7 @@ namespace snn::file
     {
       public:
         config(const transient<null_term<const char*>> path)
-            : v_{container::reserve, 10}
+            : v_{init::reserve, 10}
         {
             parse_(path);
         }
@@ -71,7 +71,7 @@ namespace snn::file
         template <any_strcore Str>
         [[nodiscard]] Str to() const
         {
-            Str s{container::reserve, v_.count() * 30}; // Only an estimate.
+            Str s{init::reserve, v_.count() * 30}; // Only an estimate.
             for (const auto& kv : v_)
             {
                 s << kv.key << ": " << kv.value << '\n';

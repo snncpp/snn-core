@@ -503,7 +503,7 @@ namespace snn
         // Forward range (not necessarily contiguous).
         {
             static constexpr array a{'-', '1', '2', '9'};
-            constexpr range::forward rng{meta::iterators, a.begin(), a.end()};
+            constexpr range::forward rng{init::from, a.begin(), a.end()};
             static_assert(ascii::to_integral_prefix<i16>(rng) ==
                           pair::value_count<i16, usize>{-129, 4});
         }

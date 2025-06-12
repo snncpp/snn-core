@@ -271,7 +271,7 @@ namespace snn
         {
             // Generic container interface.
 
-            map::unsorted<str, int> m{container::reserve, 1'000};
+            map::unsorted<str, int> m{init::reserve, 1'000};
 
             snn_require(m.is_empty());
             snn_require(m.count() == 0);

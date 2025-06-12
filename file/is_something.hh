@@ -19,7 +19,7 @@ namespace snn::file
 
     [[nodiscard]] inline bool is_something(const transient<null_term<const char*>> path) noexcept
     {
-        file::info info{container::do_not_initialize};
+        file::info info{init::do_not_initialize};
         return ::lstat(path.get().get(), &info.internal()) == 0;
     }
 }

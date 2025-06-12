@@ -79,7 +79,7 @@ namespace snn
         }
 
         {
-            str last{container::fill, 8, 'a'};
+            str last{init::fill, 8, 'a'};
             snn_require(last.size() == 8);
             for (loop::count lc{10}; lc--;)
             {

@@ -31,7 +31,7 @@ namespace snn::file::dir
         // FreeBSD uses `MAXPATHLEN` with `getcwd`, but it is defined to `PATH_MAX`.
         static_assert(MAXPATHLEN == PATH_MAX);
 #endif
-        Str path{container::size_for_overwrite, PATH_MAX};
+        Str path{init::size_for_overwrite, PATH_MAX};
 
         if (::getcwd(path.begin(), path.size()) == nullptr)
         {

@@ -17,7 +17,7 @@ namespace snn::app
             list.push_front(456);
             list.push_front(123);
 
-            range::forward rng{meta::iterators, list.begin(), list.end()};
+            range::forward rng{init::from, list.begin(), list.end()};
 
             snn_require(rng);
             snn_require(!rng.is_empty());
@@ -54,7 +54,7 @@ namespace snn
         {
             std::forward_list<int> list;
 
-            range::forward rng{meta::iterators, list.begin(), list.end()};
+            range::forward rng{init::from, list.begin(), list.end()};
             snn_require(list.begin() == rng.begin());
             snn_require(list.end() == rng.end());
 
@@ -78,7 +78,7 @@ namespace snn
             list.push_front(456);
             list.push_front(123);
 
-            range::forward rng{meta::iterators, list.begin(), list.end()};
+            range::forward rng{init::from, list.begin(), list.end()};
 
             snn_require(rng);
             snn_require(!rng.is_empty());

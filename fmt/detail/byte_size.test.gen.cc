@@ -101,7 +101,7 @@ namespace snn
             (1023 * 1024) + 1023, // Four digit size, four digit remainder (powers of 1024).
         };
 
-        strbuf hh{container::reserve, 25 * constant::size::kibibyte<usize>};
+        strbuf hh{init::reserve, 25 * constant::size::kibibyte<usize>};
 
         hh << "// 1000 B,kB,MB,GB...\n";
         hh << "// 1000 B,k,M,G...\n";

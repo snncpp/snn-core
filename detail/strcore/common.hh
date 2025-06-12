@@ -125,7 +125,7 @@ namespace snn::detail::strcore
             init_();
         }
 
-        constexpr explicit buf(container::reserve_t, const usize capacity)
+        constexpr explicit buf(init::reserve_t, const usize capacity)
         {
             if (capacity)
             {
@@ -137,7 +137,7 @@ namespace snn::detail::strcore
             }
         }
 
-        constexpr explicit buf(container::size_for_overwrite_t, const usize size)
+        constexpr explicit buf(init::size_for_overwrite_t, const usize size)
         {
             if (size)
             {
@@ -188,7 +188,7 @@ namespace snn::detail::strcore
             }
         }
 
-        constexpr explicit buf(container::fill_t, const usize count, const char c)
+        constexpr explicit buf(init::fill_t, const usize count, const char c)
         {
             if (count)
             {
@@ -201,7 +201,7 @@ namespace snn::detail::strcore
             }
         }
 
-        constexpr explicit buf(meta::iterators_t, const char* const first, const char* const last)
+        constexpr explicit buf(init::from_t, const char* const first, const char* const last)
         {
             snn_should(first == last || (first != nullptr && last != nullptr && first < last));
             if (first != last)
@@ -587,7 +587,7 @@ namespace snn::detail::strcore
             init_();
         }
 
-        constexpr explicit sso(container::reserve_t, const usize capacity)
+        constexpr explicit sso(init::reserve_t, const usize capacity)
         {
             if (std::is_constant_evaluated())
             {
@@ -602,7 +602,7 @@ namespace snn::detail::strcore
             }
         }
 
-        constexpr explicit sso(container::size_for_overwrite_t, const usize size)
+        constexpr explicit sso(init::size_for_overwrite_t, const usize size)
         {
             init_(size);
         }
@@ -629,12 +629,12 @@ namespace snn::detail::strcore
             }
         }
 
-        constexpr explicit sso(container::fill_t, const usize count, const char c)
+        constexpr explicit sso(init::fill_t, const usize count, const char c)
         {
             mem::raw::fill(init_(count), byte_size{count}, to_byte(c));
         }
 
-        constexpr explicit sso(meta::iterators_t, const char* const first, const char* const last)
+        constexpr explicit sso(init::from_t, const char* const first, const char* const last)
         {
             snn_should(first == last || (first != nullptr && last != nullptr && first < last));
             if (first != last)

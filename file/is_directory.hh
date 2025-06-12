@@ -15,7 +15,7 @@ namespace snn::file
 
     [[nodiscard]] inline bool is_directory(const transient<null_term<const char*>> path) noexcept
     {
-        file::info info{container::do_not_initialize};
+        file::info info{init::do_not_initialize};
         if (file::status(path, info))
         {
             return info.is_directory();

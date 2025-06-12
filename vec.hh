@@ -57,14 +57,13 @@ namespace snn
 
         // #### Explicit constructors
 
-        constexpr explicit vec(container::reserve_t, const usize capacity)
+        constexpr explicit vec(init::reserve_t, const usize capacity)
             : vec{}
         {
             reserve(capacity);
         }
 
-        constexpr explicit vec(meta::iterators_t, const const_iterator first,
-                               const const_iterator last)
+        constexpr explicit vec(init::from_t, const const_iterator first, const const_iterator last)
             : vec{}
         {
             snn_should(first == last || (first != nullptr && last != nullptr && last > first));

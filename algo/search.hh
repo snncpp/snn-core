@@ -30,7 +30,7 @@ namespace snn::algo
         {
             const auto it = std::search(subject.begin(), subject.end(), needle.begin(),
                                         needle.end(), std::move(is_equal));
-            return SubjectRng{meta::iterators, it, subject.end()};
+            return SubjectRng{init::from, it, subject.end()};
         }
         else
         {

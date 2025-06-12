@@ -26,7 +26,7 @@ namespace snn::algo
                 return false;
             }
 
-            range::unchecked::forward usubject{meta::iterators, subject.begin(), subject.end()};
+            range::unchecked::forward usubject{init::from, subject.begin(), subject.end()};
             while (needle)
             {
                 if (!is_equal(usubject.front(promise::not_empty), needle.front(promise::not_empty)))

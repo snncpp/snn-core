@@ -321,7 +321,7 @@ namespace snn
 
         static constexpr error_category empty_category_{"", ""};
 
-        constexpr explicit error_code(meta::internal_t, const i32 value,
+        constexpr explicit error_code(init::internal_t, const i32 value,
                                       const error_category* category) noexcept
             : category_{category},
               value_{value}

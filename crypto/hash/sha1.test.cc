@@ -77,7 +77,7 @@ namespace snn
 
         {
             crypto::hash::sha1 h;
-            h << str{container::fill, 900'000, 'a'} << str{container::fill, 100'000, 'a'};
+            h << str{init::fill, 900'000, 'a'} << str{init::fill, 100'000, 'a'};
             auto s = h.final_hex<strbuf>();
             snn_require(s.size() == 40);
             snn_require(s == "34aa973cd4c4daa4f61eeb2bdbad27316534016f");

@@ -421,7 +421,7 @@ namespace snn
             };
             // clang-format on
 
-            strbuf s{container::reserve, 64};
+            strbuf s{init::reserve, 64};
             usize count = 0;
             for (const auto& date : dates)
             {
@@ -477,7 +477,7 @@ namespace snn
             };
             // clang-format on
 
-            strbuf s{container::reserve, 64};
+            strbuf s{init::reserve, 64};
 
             usize count = 0;
             for (const auto& date : dates)
@@ -545,7 +545,7 @@ namespace snn
             };
             // clang-format on
 
-            strbuf s{container::reserve, 64};
+            strbuf s{init::reserve, 64};
 
             usize count = 0;
             for (const auto& date : dates)
@@ -613,7 +613,7 @@ namespace snn
             };
             // clang-format on
 
-            strbuf s{container::reserve, 64};
+            strbuf s{init::reserve, 64};
 
             usize count = 0;
             for (const auto& date : dates)

@@ -251,7 +251,7 @@ namespace snn::json
 
         [[nodiscard]] constexpr range::forward<iterator> range() const noexcept
         {
-            return range::forward<iterator>{meta::iterators, cbegin(), cend()};
+            return range::forward<iterator>{init::from, cbegin(), cend()};
         }
 
         [[nodiscard]] constexpr cstrview view() const noexcept

@@ -949,7 +949,7 @@ namespace snn
             constexpr snn::error_code error_code() const noexcept
             {
                 snn_should(!has_value());
-                return snn::error_code{meta::internal, error_value_, error_category_};
+                return snn::error_code{init::internal, error_value_, error_category_};
             }
 
             constexpr bool has_value() const noexcept

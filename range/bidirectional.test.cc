@@ -17,7 +17,7 @@ namespace snn::app
             set.insert(456);
             set.insert(123);
 
-            range::bidirectional rng{meta::iterators, set.begin(), set.end()};
+            range::bidirectional rng{init::from, set.begin(), set.end()};
 
             snn_require(rng);
             snn_require(!rng.is_empty());
@@ -54,7 +54,7 @@ namespace snn
         {
             std::set<int> set;
 
-            range::bidirectional rng{meta::iterators, set.begin(), set.end()};
+            range::bidirectional rng{init::from, set.begin(), set.end()};
             snn_require(set.begin() == rng.begin());
             snn_require(set.end() == rng.end());
 
@@ -78,7 +78,7 @@ namespace snn
             set.insert(456);
             set.insert(123);
 
-            range::bidirectional rng{meta::iterators, set.begin(), set.end()};
+            range::bidirectional rng{init::from, set.begin(), set.end()};
 
             snn_require(rng);
             snn_require(!rng.is_empty());
@@ -114,7 +114,7 @@ namespace snn
             set.insert(456);
             set.insert(123);
 
-            range::bidirectional rng{meta::iterators, set.begin(), set.end()};
+            range::bidirectional rng{init::from, set.begin(), set.end()};
 
             snn_require(rng);
             snn_require(!rng.is_empty());

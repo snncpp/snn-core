@@ -23,7 +23,7 @@ namespace snn
             {"value", "count"},
         });
 
-        strbuf hh{container::reserve, 24 * constant::size::kibibyte<usize>};
+        strbuf hh{init::reserve, 24 * constant::size::kibibyte<usize>};
 
         hh << "// Copyright (c) 2022 Mikael Simonsson <https://mikaelsimonsson.com>.\n";
         hh << "// SPDX-License-Identifier: BSL-1.0\n";

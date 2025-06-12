@@ -150,7 +150,7 @@ namespace snn::app
             {
                 const array numbers{42, 9, 11};
                 auto rng = range::view::enumerate{
-                    range::forward{meta::iterators, numbers.begin(), numbers.end()}};
+                    range::forward{init::from, numbers.begin(), numbers.end()}};
 
                 // Concepts
                 static_assert(!contiguous_range<decltype(rng)>);

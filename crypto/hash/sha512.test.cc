@@ -89,7 +89,7 @@ namespace snn
 
         {
             crypto::hash::sha512 h;
-            h << str{container::fill, 1'000'000, 'a'};
+            h << str{init::fill, 1'000'000, 'a'};
             str s = h.final_hex();
             snn_require(s.size() == 128);
             snn_require(s == "e718483d0ce769644e2e42c7bc15b4638e1f98b13b2044285632a803afa973ebde0ff"
@@ -98,7 +98,7 @@ namespace snn
 
         {
             crypto::hash::sha512 h;
-            h << str{container::fill, 100'000, 'a'} << str{container::fill, 900'000, 'a'};
+            h << str{init::fill, 100'000, 'a'} << str{init::fill, 900'000, 'a'};
             auto s = h.final_hex<strbuf>();
             snn_require(s.size() == 128);
             snn_require(s == "e718483d0ce769644e2e42c7bc15b4638e1f98b13b2044285632a803afa973ebde0ff"

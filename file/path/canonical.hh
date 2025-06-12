@@ -26,7 +26,7 @@ namespace snn::file::path
         // "PATH_MAX - Maximum number of bytes the implementation will store as a pathname in a
         // user-supplied buffer of unspecified size, including the terminating null character."
         // https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/limits.h.html
-        Str buf{container::size_for_overwrite, PATH_MAX};
+        Str buf{init::size_for_overwrite, PATH_MAX};
         if (::realpath(path.get().get(), buf.begin()) != nullptr)
         {
             buf.truncate(buf.find('\0').value_or_npos());

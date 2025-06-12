@@ -136,7 +136,7 @@ namespace snn::map
 
         // Generic container interface.
 
-        explicit facade(container::reserve_t, const usize capacity)
+        explicit facade(init::reserve_t, const usize capacity)
         {
             reserve_if_supported_(capacity);
         }
@@ -347,22 +347,22 @@ namespace snn::map
 
         auto range_(std::forward_iterator_tag) noexcept
         {
-            return range::forward{meta::iterators, map_.begin(), map_.end()};
+            return range::forward{init::from, map_.begin(), map_.end()};
         }
 
         auto range_(std::forward_iterator_tag) const noexcept
         {
-            return range::forward{meta::iterators, map_.cbegin(), map_.cend()};
+            return range::forward{init::from, map_.cbegin(), map_.cend()};
         }
 
         auto range_(std::bidirectional_iterator_tag) noexcept
         {
-            return range::bidirectional{meta::iterators, map_.begin(), map_.end()};
+            return range::bidirectional{init::from, map_.begin(), map_.end()};
         }
 
         auto range_(std::bidirectional_iterator_tag) const noexcept
         {
-            return range::bidirectional{meta::iterators, map_.cbegin(), map_.cend()};
+            return range::bidirectional{init::from, map_.cbegin(), map_.cend()};
         }
 
         void reserve_if_supported_(const usize capacity)

@@ -40,8 +40,8 @@ namespace snn::app
         constexpr bool test_is_less()
         {
             auto is_less_without_count = [](cstrview a, cstrview b) {
-                auto ra = range::forward{meta::iterators, a.begin(), a.end()};
-                auto rb = range::forward{meta::iterators, b.begin(), b.end()};
+                auto ra = range::forward{init::from, a.begin(), a.end()};
+                auto rb = range::forward{init::from, b.begin(), b.end()};
                 static_assert(!has_count<decltype(ra)>);
                 return algo::is_less(ra, rb);
             };

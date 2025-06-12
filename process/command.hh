@@ -31,7 +31,7 @@ namespace snn::process
         constexpr void append_parameter(const transient<cstrview> s)
         {
             // The parameter can overlap, so use a temporary buffer (reserve minimum size).
-            str tmp{container::reserve, s.get().size() + 2};
+            str tmp{init::reserve, s.get().size() + 2};
 
             tmp.append('\''); // Open single quoted string.
 

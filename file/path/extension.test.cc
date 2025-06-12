@@ -45,7 +45,7 @@ namespace snn
         snn_require(file::path::extension("ppp/bbb.abcdefghijklmnopqrstuvwxyz").value() ==
                     ".abcdefghijklmnopqrstuvwxyz");
 
-        const str invalid{container::fill, PATH_MAX, 'a'};
+        const str invalid{init::fill, PATH_MAX, 'a'};
         auto res = file::path::extension(invalid);
         static_assert(std::is_same_v<decltype(res), result<str>>);
         snn_require(!res);

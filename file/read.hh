@@ -35,7 +35,7 @@ namespace snn::file
             return res.error_code();
         }
 
-        file::info info{container::do_not_initialize};
+        file::info info{init::do_not_initialize};
         if (const auto res = rw.status(info); !res)
         {
             return res.error_code();

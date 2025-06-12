@@ -50,10 +50,10 @@ namespace snn
         key = pbkdf2_hmac<sha1>("123456", "abcdefghijklmnop", 1'000).value();
         snn_require(hex::encode(key) == "3681fd29840b1317d7174675f571d49ae4fc7549");
 
-        key = pbkdf2_hmac<sha1>(str{container::fill, 30, 'a'}, "abcdefghijklmnop", 1'000).value();
+        key = pbkdf2_hmac<sha1>(str{init::fill, 30, 'a'}, "abcdefghijklmnop", 1'000).value();
         snn_require(hex::encode(key) == "3a08a286505f7d4afd1fc89bdaf0edc997bbde78");
 
-        key = pbkdf2_hmac<sha1>(str{container::fill, 200, 'a'}, "abcdefghijklmnop", 1'000).value();
+        key = pbkdf2_hmac<sha1>(str{init::fill, 200, 'a'}, "abcdefghijklmnop", 1'000).value();
         snn_require(hex::encode(key) == "b1354d64577dad2cea24f44e6f054c1cae72fa83");
 
         key = pbkdf2_hmac<sha1, str, 10>("x", "aaaaaaaa", 4'000).value();
@@ -65,12 +65,11 @@ namespace snn
         snn_require(hex::encode(key) ==
                     "41a8b2113c0ad72acb9d9dc01a443bdfb839da768ea279055d10ef6bd93eb6e6");
 
-        key = pbkdf2_hmac<sha256>(str{container::fill, 30, 'a'}, "abcdefghijklmnop", 1'000).value();
+        key = pbkdf2_hmac<sha256>(str{init::fill, 30, 'a'}, "abcdefghijklmnop", 1'000).value();
         snn_require(hex::encode(key) ==
                     "3c9be1c1d1355dea9441a5bf2d4964259b0293c765df605c9187ad06690591ef");
 
-        key =
-            pbkdf2_hmac<sha256>(str{container::fill, 200, 'a'}, "abcdefghijklmnop", 1'000).value();
+        key = pbkdf2_hmac<sha256>(str{init::fill, 200, 'a'}, "abcdefghijklmnop", 1'000).value();
         snn_require(hex::encode(key) ==
                     "1747615168b6c926e9bcb671593834e03b2305115879db4c74bbf79a8000c414");
 
@@ -84,14 +83,13 @@ namespace snn
                     "d3af5a1da474c608a7923101b159851ec7f08a785f295fb17b7c2901a7d253ffc99e500d409"
                     "8101887e09e3eb3998de7f4a7c67fecd599223c7af5ee6b7bb8d3");
 
-        key = pbkdf2_hmac<sha512>(str{container::fill, 30, 'a'}, "abcdefghijklmnop", 1'000).value();
+        key = pbkdf2_hmac<sha512>(str{init::fill, 30, 'a'}, "abcdefghijklmnop", 1'000).value();
         snn_require(
             hex::encode(key) ==
             "8896b7d63f66a1d779cd6e06ebbf832d9b020d61e9a7b5829b1fa4eb273e04f93a48e98345e430baa20"
             "d6bb80ca3144aead3cd647bb71393e5933edb40705795");
 
-        key =
-            pbkdf2_hmac<sha512>(str{container::fill, 200, 'a'}, "abcdefghijklmnop", 1'000).value();
+        key = pbkdf2_hmac<sha512>(str{init::fill, 200, 'a'}, "abcdefghijklmnop", 1'000).value();
         snn_require(
             hex::encode(key) ==
             "c170b08338d3b3aeaa100014fec5fe0bcb24279d661fc62c575eb4c0f9d47707db270ab3d7ff7521005"
@@ -109,14 +107,13 @@ namespace snn
 
         // Password size is invalid.
         snn_require_throws_code(
-            pbkdf2_hmac<sha1>(str{container::fill, 4097, 'a'}, "aaaaaaaa", 1'000).value(),
+            pbkdf2_hmac<sha1>(str{init::fill, 4097, 'a'}, "aaaaaaaa", 1'000).value(),
             make_error_code(crypto::error::invalid_password_size));
 
         // Salt size is invalid.
         snn_require_throws_code(pbkdf2_hmac<sha1>("abc", "aaaaaaa", 1'000).value(),
                                 make_error_code(crypto::error::invalid_salt_size));
-        snn_require_throws_code(
-            pbkdf2_hmac<sha1>("abc", str{container::fill, 33, 'a'}, 1'000).value(),
-            make_error_code(crypto::error::invalid_salt_size));
+        snn_require_throws_code(pbkdf2_hmac<sha1>("abc", str{init::fill, 33, 'a'}, 1'000).value(),
+                                make_error_code(crypto::error::invalid_salt_size));
     }
 }

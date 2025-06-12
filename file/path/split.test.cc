@@ -64,9 +64,9 @@ namespace snn
 
         static_assert(!app::splits_to("/a.b", "/", "a.", ".b"));
 
-        const str invalid{container::fill, PATH_MAX, 'a'};
+        const str invalid{init::fill, PATH_MAX, 'a'};
         snn_require(!file::path::split<cstrview>(invalid));
-        const str valid{container::fill, PATH_MAX - 1, 'a'};
+        const str valid{init::fill, PATH_MAX - 1, 'a'};
         snn_require(file::path::split<cstrview>(valid));
 
         snn_require(file::path::split<cstrview>("/one/two/three"));

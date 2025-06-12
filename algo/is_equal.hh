@@ -29,7 +29,7 @@ namespace snn::algo
                 return false;
             }
 
-            range::unchecked::forward ub{meta::iterators, b.begin(), b.end()};
+            range::unchecked::forward ub{init::from, b.begin(), b.end()};
             while (a)
             {
                 if (!is_equal(a.front(promise::not_empty), ub.front(promise::not_empty)))
@@ -63,7 +63,7 @@ namespace snn::algo
     [[nodiscard]] constexpr bool is_equal(Rng a, initializer_list<T> b,
                                           TwoArgPred is_equal = TwoArgPred{})
     {
-        return algo::is_equal(std::move(a), range::contiguous{meta::iterators, b.begin(), b.end()},
+        return algo::is_equal(std::move(a), range::contiguous{init::from, b.begin(), b.end()},
                               std::move(is_equal));
     }
 }

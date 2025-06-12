@@ -246,7 +246,7 @@ namespace snn::json::detail
                 {
                     snn_should((write_rng.end() - write_rng.begin()) >= 4);
                     return range::unchecked::contiguous<char*>{
-                        meta::iterators,
+                        init::from,
                         utf8::encode_up_to_4_bytes(cp, write_rng.begin(), promise::is_valid),
                         write_rng.end()};
                 }
@@ -369,7 +369,7 @@ namespace snn::json::detail
 
             rng_.pop_front_while(fn::_not{json::chr::is_special_string});
 
-            range::unchecked::contiguous write_rng{meta::iterators, rng_.begin(), rng_.end()};
+            range::unchecked::contiguous write_rng{init::from, rng_.begin(), rng_.end()};
             while (rng_)
             {
                 snn_should(rng_.has_front_if(json::chr::is_special_string));

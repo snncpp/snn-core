@@ -84,7 +84,7 @@ namespace snn::app
                 snn_require(s == "One2Three4");
             }
             {
-                str s{container::fill, 10, 'a'};
+                str s{init::fill, 10, 'a'};
                 snn_require(s == "aaaaaaaaaa");
             }
 
@@ -220,22 +220,22 @@ namespace snn::app
 
             using value_type = typename T::value_type;
 
-            // T(meta::iterators_t, ContiguousIt first, ContiguousIt last)
+            // T(init::from_t, ContiguousIt first, ContiguousIt last)
             {
                 const T src{""};
-                const T s{meta::iterators, src.cbegin(), src.cend()};
+                const T s{init::from, src.cbegin(), src.cend()};
                 snn_require(size_eq(s, 0));
                 snn_require(!size_eq(s, 1));
             }
             {
                 const T src{"One Two Three"};
-                const T s{meta::iterators, src.cend(), src.cend()};
+                const T s{init::from, src.cend(), src.cend()};
                 snn_require(size_eq(s, 0));
             }
             {
                 // Const iter.
                 const T src{"One Two Three"};
-                const T s{meta::iterators, src.view(4).cbegin(), src.cend()};
+                const T s{init::from, src.view(4).cbegin(), src.cend()};
                 snn_require(size_eq(s, 9));
                 snn_require(!size_eq(s, 0));
                 snn_require(!size_eq(s, 8));
@@ -246,7 +246,7 @@ namespace snn::app
                 T src{"One Two Three"};
                 const auto first = src.view(4).begin();
                 const auto last  = src.view(7).begin();
-                const T s{meta::iterators, first, last};
+                const T s{init::from, first, last};
                 snn_require(size_eq(s, 3));
                 snn_require(!size_eq(s, 2));
                 snn_require(s == "Two");
@@ -254,7 +254,7 @@ namespace snn::app
             {
                 const value_type* const first = nullptr;
                 const value_type* const last  = nullptr;
-                T s{meta::iterators, first, last};
+                T s{init::from, first, last};
                 snn_require(size_eq(s, 0));
             }
 
@@ -268,20 +268,20 @@ namespace snn::app
             {
                 const value_type* const first = nullptr;
                 const value_type* const last  = nullptr;
-                range::contiguous rng{meta::iterators, first, last};
+                range::contiguous rng{init::from, first, last};
                 T s{rng};
                 snn_require(size_eq(s, 0));
             }
             {
                 const char arr[] = {0x48, 0x65, 0x6c, 0x6c, 0x6f};
-                range::contiguous rng{meta::iterators, std::begin(arr), std::end(arr)};
+                range::contiguous rng{init::from, std::begin(arr), std::end(arr)};
                 T s{rng};
                 snn_require(size_eq(s, 5));
                 snn_require(s == "Hello");
             }
             {
                 const char arr[] = {0x48, 0x65, 0x6c, 0x6c, 0x6f};
-                range::contiguous rng{meta::iterators, std::end(arr), std::end(arr)};
+                range::contiguous rng{init::from, std::end(arr), std::end(arr)};
                 T s{rng};
                 snn_require(size_eq(s, 0));
             }
@@ -1193,45 +1193,45 @@ namespace snn::app
                 snn_require(s.capacity() == default_capacity);
             }
 
-            // T(container::reserve)
+            // T(init::reserve)
             {
-                T s{container::reserve, 0};
+                T s{init::reserve, 0};
                 snn_require(size_eq(s, 0));
                 snn_require(s.capacity() == default_capacity);
             }
             {
-                T s{container::reserve, min_capacity};
+                T s{init::reserve, min_capacity};
                 snn_require(size_eq(s, 0));
                 snn_require(s.capacity() == min_capacity);
             }
             {
-                T s{container::reserve, min_capacity + 1};
+                T s{init::reserve, min_capacity + 1};
                 snn_require(size_eq(s, 0));
                 snn_require(s.capacity() > min_capacity);
             }
             {
-                snn_require_throws_code((T{container::reserve, constant::npos}),
+                snn_require_throws_code((T{init::reserve, constant::npos}),
                                         generic::error::size_would_exceed_max_size);
             }
 
-            // T{container::size_for_overwrite, size}
+            // T{init::size_for_overwrite, size}
             {
-                T s{container::size_for_overwrite, 0};
+                T s{init::size_for_overwrite, 0};
                 snn_require(size_eq(s, 0));
                 snn_require(s.capacity() == default_capacity);
             }
             {
-                T s{container::size_for_overwrite, min_capacity};
+                T s{init::size_for_overwrite, min_capacity};
                 snn_require(size_eq(s, min_capacity));
                 snn_require(s.capacity() == min_capacity);
             }
             {
-                T s{container::size_for_overwrite, min_capacity + 1};
+                T s{init::size_for_overwrite, min_capacity + 1};
                 snn_require(size_eq(s, min_capacity + 1));
                 snn_require(s.capacity() > min_capacity);
             }
             {
-                snn_require_throws_code((T{container::size_for_overwrite, constant::npos}),
+                snn_require_throws_code((T{init::size_for_overwrite, constant::npos}),
                                         generic::error::size_would_exceed_max_size);
             }
 
@@ -1322,19 +1322,19 @@ namespace snn::app
                                  "9876543210_-<>()");
             }
 
-            // T(container::fill_t, usize, char)
+            // T(init::fill_t, usize, char)
             {
-                T s{container::fill, 10, 'a'}; // int to usize implicit conversion.
+                T s{init::fill, 10, 'a'}; // int to usize implicit conversion.
                 snn_require(size_eq(s, 10));
                 snn_require(s == "aaaaaaaaaa");
             }
 
             // T(not_null<const char*>, usize)
-            // T(container::fill_t, usize, char)
+            // T(init::fill_t, usize, char)
             {
                 for (const auto i : init_list<usize>{0, 1, 2, 15, 16, 17, 22, 23, 24, 58, 283})
                 {
-                    T s1{container::fill, i, 'a'};
+                    T s1{init::fill, i, 'a'};
                     snn_require(size_eq(s1, i));
                     T s2{s1.data(), s1.size()};
                     snn_require(size_eq(s2, i));
@@ -1365,7 +1365,7 @@ namespace snn::app
             {
                 snn_require_throws_code((T{not_null{""}, constant::npos}),
                                         generic::error::size_would_exceed_max_size);
-                snn_require_throws_code((T{container::fill, constant::npos, 'a'}),
+                snn_require_throws_code((T{init::fill, constant::npos, 'a'}),
                                         generic::error::size_would_exceed_max_size);
             }
 
@@ -1417,17 +1417,17 @@ namespace snn::app
                 snn_require(s == "abc");
             }
 
-            // T(meta::iterators_t, ContiguousIt first, ContiguousIt last)
+            // T(init::from_t, ContiguousIt first, ContiguousIt last)
             {
                 const cstrview p{""};
-                const T s{meta::iterators, p.cbegin(), p.cend()};
+                const T s{init::from, p.cbegin(), p.cend()};
                 snn_require(size_eq(s, 0));
                 snn_require(s.capacity() == default_capacity);
             }
             {
                 // Const iter.
                 const cstrview p{"One Two Three"};
-                const T s{meta::iterators, p.view(4).cbegin(), p.cend()};
+                const T s{init::from, p.view(4).cbegin(), p.cend()};
                 snn_require(size_eq(s, 9));
                 snn_require(s == "Two Three");
                 snn_require(s.capacity() == min_capacity);
@@ -1805,7 +1805,7 @@ namespace snn::app
                 snn_require(size_eq(s, 0));
             }
             {
-                T s{container::reserve, 127};
+                T s{init::reserve, 127};
                 snn_require(s.capacity() >= 127);
                 snn_require(size_eq(s, 0));
 
@@ -1815,7 +1815,7 @@ namespace snn::app
                 snn_require(size_eq(s, 0));
             }
             {
-                T s{container::fill, min_capacity, 'a'};
+                T s{init::fill, min_capacity, 'a'};
                 snn_require(size_eq(s, min_capacity));
                 snn_require(s.capacity() == min_capacity);
 
@@ -1841,7 +1841,7 @@ namespace snn::app
                 snn_require(s.capacity() > (min_capacity + 1));
             }
             {
-                T s{container::fill, min_capacity, 'a'};
+                T s{init::fill, min_capacity, 'a'};
                 snn_require(size_eq(s, min_capacity));
                 snn_require(s.capacity() == min_capacity);
 
@@ -1946,7 +1946,7 @@ namespace snn::app
 
             // drop_at (at capacity)
             {
-                T s{container::fill, min_capacity, 'a'};
+                T s{init::fill, min_capacity, 'a'};
                 snn_require(size_eq(s, min_capacity));
                 snn_require(s.capacity() == min_capacity);
                 snn_require(s.all(fn::is{fn::equal_to{}, 'a'}));
@@ -2008,7 +2008,7 @@ namespace snn::app
 
             // insert_at (at capacity)
             {
-                T s{container::fill, min_capacity - 8, 'a'};
+                T s{init::fill, min_capacity - 8, 'a'};
                 snn_require(size_eq(s, min_capacity - 8));
                 snn_require(s.capacity() == min_capacity);
                 snn_require(s.all(fn::is{fn::equal_to{}, 'a'}));
@@ -2068,7 +2068,7 @@ namespace snn::app
                 snn_require(size_eq(s, 13));
                 snn_require(s.capacity() == min_capacity);
 
-                T tmp{container::fill, min_capacity, '1'};
+                T tmp{init::fill, min_capacity, '1'};
                 s.replace_at(4, 3, tmp, promise::no_overlap);
                 snn_require(size_eq(s, min_capacity + 10));
                 snn_require(s.capacity() >= (min_capacity + 10));
@@ -2221,7 +2221,7 @@ namespace snn::app
                 snn_require(s2.capacity() == default_capacity);
             }
             {
-                T s{container::fill, min_capacity + 1, 'a'};
+                T s{init::fill, min_capacity + 1, 'a'};
                 snn_require(size_eq(s, min_capacity + 1));
                 snn_require(s.capacity() > min_capacity);
                 snn_require(s.all(fn::is{fn::equal_to{}, 'a'}));
@@ -2692,7 +2692,7 @@ namespace snn::app
                 }
             }
             {
-                T s{container::fill, min_capacity, 'a'};
+                T s{init::fill, min_capacity, 'a'};
                 snn_require(size_eq(s, min_capacity));
                 snn_require(s.capacity() == min_capacity);
 
@@ -2815,7 +2815,7 @@ namespace snn::app
                 snn_require(s == "abcXXXXnopqrstuvwxyz");
             }
             {
-                T s{container::fill, min_capacity, 'a'};
+                T s{init::fill, min_capacity, 'a'};
                 snn_require(size_eq(s, min_capacity));
                 snn_require(s.capacity() == min_capacity);
 

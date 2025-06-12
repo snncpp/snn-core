@@ -31,7 +31,7 @@ namespace snn::range
 
         // #### Constructor
 
-        constexpr explicit random_access(meta::iterators_t, iterator first, iterator last) noexcept
+        constexpr explicit random_access(init::from_t, iterator first, iterator last) noexcept
             : first_{std::move(first)},
               last_{std::move(last)}
         {

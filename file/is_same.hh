@@ -24,8 +24,8 @@ namespace snn::file
     [[nodiscard]] inline bool is_same(const transient<null_term<const char*>> path1,
                                       const transient<null_term<const char*>> path2) noexcept
     {
-        file::info info1{container::do_not_initialize};
-        file::info info2{container::do_not_initialize};
+        file::info info1{init::do_not_initialize};
+        file::info info2{init::do_not_initialize};
         if (file::status(path1, info1) && file::status(path2, info2))
         {
             return is_same(info1, info2);

@@ -21,8 +21,8 @@ namespace snn::algo
         if constexpr (random_access_range<FirstRng> && legacy_iterable<FirstRng> &&
                       random_access_range<SecondRng> && legacy_iterable<SecondRng>)
         {
-            range::unchecked::forward ua{meta::iterators, a.begin(), a.end()};
-            range::unchecked::forward ub{meta::iterators, b.begin(), b.end()};
+            range::unchecked::forward ua{init::from, a.begin(), a.end()};
+            range::unchecked::forward ub{init::from, b.begin(), b.end()};
             for (loop::count lc{math::min(a.count(), b.count())}; lc--;)
             {
                 const auto cmp = ua.front(promise::not_empty) <=> ub.front(promise::not_empty);

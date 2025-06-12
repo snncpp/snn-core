@@ -890,7 +890,7 @@ namespace snn
         {
         }
 
-        constexpr explicit array_view(meta::iterators_t, const iterator first,
+        constexpr explicit array_view(init::from_t, const iterator first,
                                       const iterator last) noexcept
             : data_{first},
               count_{to_usize(last - first)}
@@ -1189,12 +1189,12 @@ namespace snn
 
         [[nodiscard]] constexpr auto range() noexcept
         {
-            return range::contiguous<pointer>{meta::iterators, data_, data_ + count_};
+            return range::contiguous<pointer>{init::from, data_, data_ + count_};
         }
 
         [[nodiscard]] constexpr auto range() const noexcept
         {
-            return range::contiguous<const_pointer>{meta::iterators, data_, data_ + count_};
+            return range::contiguous<const_pointer>{init::from, data_, data_ + count_};
         }
 
         // #### Modifiers
@@ -1400,7 +1400,7 @@ namespace snn
         {
         }
 
-        constexpr explicit array_view(meta::iterators_t, const const_iterator first,
+        constexpr explicit array_view(init::from_t, const const_iterator first,
                                       const const_iterator last) noexcept
             : data_{replace_if_nullptr_(first)},
               count_{to_usize(last - first)}
@@ -1572,7 +1572,7 @@ namespace snn
                                               const usize count = constant::npos) const noexcept
         {
             const usize i = math::min(pos, count_);
-            return cstrview{meta::internal, data_ + i, math::min(count_ - i, count)};
+            return cstrview{init::internal, data_ + i, math::min(count_ - i, count)};
         }
 
         // #### View exactly
@@ -1615,7 +1615,7 @@ namespace snn
         template <strict_integral Int, math::base Base = math::base::decimal>
         [[nodiscard]] constexpr optional<Int> to() const noexcept
         {
-            return ascii::to_integral<Int, Base>(range::forward{meta::iterators, begin(), end()});
+            return ascii::to_integral<Int, Base>(range::forward{init::from, begin(), end()});
         }
 
         // #### To prefix
@@ -1625,7 +1625,7 @@ namespace snn
             ascii::leading_zeros policy = ascii::leading_zeros::disallow) const noexcept
         {
             return ascii::to_integral_prefix<Int, Base, MaxDigits>(
-                range::forward{meta::iterators, begin(), end()}, policy);
+                range::forward{init::from, begin(), end()}, policy);
         }
 
         // #### Modifiers
@@ -1786,7 +1786,7 @@ namespace snn
 
         friend class array_view<char>;
 
-        constexpr explicit array_view(meta::internal_t, const const_pointer data,
+        constexpr explicit array_view(init::internal_t, const const_pointer data,
                                       const usize count) noexcept
             : data_{data},
               count_{count}
@@ -1867,7 +1867,7 @@ namespace snn
         {
         }
 
-        constexpr explicit array_view(meta::iterators_t, const iterator first,
+        constexpr explicit array_view(init::from_t, const iterator first,
                                       const iterator last) noexcept
             : data_{replace_if_nullptr_(first)},
               count_{to_usize(last - first)}
@@ -2079,26 +2079,26 @@ namespace snn
 
         [[nodiscard]] constexpr strview view() noexcept
         {
-            return strview{meta::internal, data_, count_};
+            return strview{init::internal, data_, count_};
         }
 
         [[nodiscard]] constexpr cstrview view() const noexcept
         {
-            return cstrview{meta::internal, data_, count_};
+            return cstrview{init::internal, data_, count_};
         }
 
         [[nodiscard]] constexpr strview view(const usize pos,
                                              const usize count = constant::npos) noexcept
         {
             const usize i = math::min(pos, count_);
-            return strview{meta::internal, data_ + i, math::min(count_ - i, count)};
+            return strview{init::internal, data_ + i, math::min(count_ - i, count)};
         }
 
         [[nodiscard]] constexpr cstrview view(const usize pos,
                                               const usize count = constant::npos) const noexcept
         {
             const usize i = math::min(pos, count_);
-            return cstrview{meta::internal, data_ + i, math::min(count_ - i, count)};
+            return cstrview{init::internal, data_ + i, math::min(count_ - i, count)};
         }
 
         // #### View exactly
@@ -2168,7 +2168,7 @@ namespace snn
         template <strict_integral Int, math::base Base = math::base::decimal>
         [[nodiscard]] constexpr optional<Int> to() const noexcept
         {
-            return ascii::to_integral<Int, Base>(range::forward{meta::iterators, begin(), end()});
+            return ascii::to_integral<Int, Base>(range::forward{init::from, begin(), end()});
         }
 
         // #### To prefix
@@ -2178,7 +2178,7 @@ namespace snn
             ascii::leading_zeros policy = ascii::leading_zeros::disallow) const noexcept
         {
             return ascii::to_integral_prefix<Int, Base, MaxDigits>(
-                range::forward{meta::iterators, begin(), end()}, policy);
+                range::forward{init::from, begin(), end()}, policy);
         }
 
         // #### Modifiers
@@ -2285,7 +2285,7 @@ namespace snn
         pointer data_{&detail::array_view::single_char};
         usize count_{};
 
-        constexpr explicit array_view(meta::internal_t, const pointer data,
+        constexpr explicit array_view(init::internal_t, const pointer data,
                                       const usize count) noexcept
             : data_{data},
               count_{count}
@@ -2330,7 +2330,7 @@ namespace snn
     array_view(not_null<T*>, promise::null_terminated_t) -> array_view<T, constant::dynamic_count>;
 
     template <typename T>
-    array_view(meta::iterators_t, T*, T*) -> array_view<T, constant::dynamic_count>;
+    array_view(init::from_t, T*, T*) -> array_view<T, constant::dynamic_count>;
 
     // ## Functions
 

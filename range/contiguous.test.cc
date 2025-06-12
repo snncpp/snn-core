@@ -285,7 +285,7 @@ namespace snn
         {
             array<int, 0> a;
 
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
             snn_require(a.begin() == rng.begin());
             snn_require(a.end() == rng.end());
 
@@ -318,7 +318,7 @@ namespace snn
         {
             array a{123, 456};
 
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
 
             snn_require(rng);
             snn_require(!rng.is_empty());
@@ -355,7 +355,7 @@ namespace snn
         {
             array a{123, 456};
 
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
 
             snn_require(rng);
             snn_require(!rng.is_empty());
@@ -389,7 +389,7 @@ namespace snn
         {
             array a{123, 456};
 
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
 
             snn_require(rng.count() == 2);
 
@@ -423,7 +423,7 @@ namespace snn
         {
             array a{123, 456};
 
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
 
             snn_require(rng.count() == 2);
 
@@ -445,7 +445,7 @@ namespace snn
         {
             array a{123, 456};
 
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
 
             snn_require(rng.count() == 2);
 
@@ -466,7 +466,7 @@ namespace snn
         {
             array a{123, 456, 789};
 
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
 
             auto r = rng.pop_back_n(2);
 
@@ -476,7 +476,7 @@ namespace snn
         {
             array a{123, 456, 789};
 
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
 
             auto r = rng.pop_back_n(99);
 
@@ -486,7 +486,7 @@ namespace snn
         {
             array a{123, 456, 789};
 
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
 
             auto r = rng.pop_back_n(0);
 
@@ -498,7 +498,7 @@ namespace snn
         {
             array a{123, 456, 789};
 
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
 
             auto r = rng.pop_front_n(2);
 
@@ -508,7 +508,7 @@ namespace snn
         {
             array a{123, 456, 789};
 
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
 
             auto r = rng.pop_front_n(99);
 
@@ -518,7 +518,7 @@ namespace snn
         {
             array a{123, 456, 789};
 
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
 
             auto r = rng.pop_front_n(0);
 
@@ -530,7 +530,7 @@ namespace snn
         {
             array a{1, 3, 8, 10, 12};
 
-            const range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            const range::contiguous rng{init::from, a.begin(), a.end()};
             snn_require(algo::is_equal(rng, {1, 3, 8, 10, 12}));
 
             auto suffix = rng;
@@ -551,7 +551,7 @@ namespace snn
         {
             array a{1, 3, 8, 10, 12};
 
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
 
             snn_require(rng.count() == 5);
             snn_require(algo::is_equal(rng, {1, 3, 8, 10, 12}));
@@ -586,7 +586,7 @@ namespace snn
         // constexpr bool has_back(const V& value) const
         {
             array a{3, 8};
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
 
             snn_require(rng.has_front(3));
             snn_require(!rng.has_front(8));
@@ -612,7 +612,7 @@ namespace snn
         {
             array a{1, 3, 8, 10, 12};
 
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
 
             auto r = rng.pop_back_while(math::fn::is_even{});
 
@@ -624,7 +624,7 @@ namespace snn
         {
             array a{1, 3, 8, 10, 12};
 
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
 
             auto r = rng.pop_front_while(math::fn::is_odd{});
 
@@ -635,7 +635,7 @@ namespace snn
         // constexpr bool contains(const V& value) const
         {
             array a{1, 3};
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
             snn_require(rng.contains(1));
             snn_require(rng.contains(3));
             snn_require(!rng.contains(2));
@@ -644,7 +644,7 @@ namespace snn
         // constexpr void each(OneArgFn f)
         {
             array a{1, 3};
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
             rng.each([](int& i) { ++i; });
             snn_require(algo::is_equal(a.range(), {2, 4}));
         }
@@ -652,7 +652,7 @@ namespace snn
         // constexpr void each(OneArgFn f) const
         {
             array a{1, 3};
-            const range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            const range::contiguous rng{init::from, a.begin(), a.end()};
             int sum = 0;
             rng.each([&](int i) { sum += i; });
             snn_require(sum == 4);
@@ -694,7 +694,7 @@ namespace snn
         // constexpr void transform(OneArgOp op)
         {
             array a{1, 3};
-            range::contiguous rng{meta::iterators, a.begin(), a.end()};
+            range::contiguous rng{init::from, a.begin(), a.end()};
             rng.transform([](int i) { return i * i; });
             snn_require(algo::is_equal(a.range(), {1, 9}));
         }

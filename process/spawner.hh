@@ -381,7 +381,7 @@ namespace snn::process
                 return generic::error::unexpected_null_character;
             }
 
-            vec<char*> argv{container::reserve, arguments_.count() + 2};
+            vec<char*> argv{init::reserve, arguments_.count() + 2};
             argv.append(path_.writable().get());
             for (str& arg : arguments_)
             {

@@ -12,7 +12,7 @@ namespace snn
     void unittest()
     {
         {
-            file::info info{container::do_not_initialize};
+            file::info info{init::do_not_initialize};
             snn_require(file::status("/tmp", info));
             snn_require(info.is_directory());
             snn_require(!info.is_regular());

@@ -18,7 +18,7 @@ namespace snn::algo
     {
         if constexpr (random_access_range<BidirectionalRng> && legacy_iterable<BidirectionalRng>)
         {
-            range::unchecked::bidirectional urng{meta::iterators, rng.begin(), rng.end()};
+            range::unchecked::bidirectional urng{init::from, rng.begin(), rng.end()};
             // Do `count / 2` (truncated) swaps.
             // This loop can typically be unrolled by the optimizer.
             for (loop::count lc{rng.count() / 2}; lc--;)

@@ -32,7 +32,7 @@ namespace snn::regex
         {
             const std::csub_match& sub = matches_[index_];
             snn_should(sub.matched);
-            return cstrview{meta::iterators, sub.first, sub.second};
+            return cstrview{init::from, sub.first, sub.second};
         }
 
         [[nodiscard]] usize size() const

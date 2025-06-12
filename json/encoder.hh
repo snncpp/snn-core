@@ -32,7 +32,7 @@ namespace snn::json
         [[nodiscard]] constexpr Str encode(const document& doc,
                                            const usize reserve_capacity = default_reserve_capacity)
         {
-            Str append_to{container::reserve, reserve_capacity};
+            Str append_to{init::reserve, reserve_capacity};
             encode_(doc.root(), append_to);
             return append_to;
         }
@@ -49,7 +49,7 @@ namespace snn::json
         [[nodiscard]] constexpr Str pretty_encode(
             const document& doc, const usize reserve_capacity = default_reserve_capacity)
         {
-            Str append_to{container::reserve, reserve_capacity};
+            Str append_to{init::reserve, reserve_capacity};
             constexpr usize depth = 0;
             pretty_encode_(doc.root(), append_to, depth);
             return append_to;

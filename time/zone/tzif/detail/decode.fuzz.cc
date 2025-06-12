@@ -9,8 +9,8 @@ namespace snn
 {
     int fuzz(cstrview input)
     {
-        vec<time::zone::offset> offsets{container::reserve, 256};
-        vec<time::zone::transition> transitions{container::reserve, 2'000};
+        vec<time::zone::offset> offsets{init::reserve, 256};
+        vec<time::zone::transition> transitions{init::reserve, 2'000};
         str footer;
 
         const auto res = time::zone::tzif::decode(input.range(), offsets, transitions, footer);

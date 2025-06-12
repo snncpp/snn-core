@@ -31,7 +31,7 @@ namespace snn::range
 
         // #### Constructor
 
-        constexpr explicit forward(meta::iterators_t, iterator first, iterator last) noexcept
+        constexpr explicit forward(init::from_t, iterator first, iterator last) noexcept
             : first_{std::move(first)},
               last_{std::move(last)}
         {

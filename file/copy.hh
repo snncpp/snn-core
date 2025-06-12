@@ -40,7 +40,7 @@ namespace snn::file
             return r.error_code();
         }
 
-        file::info src_info{container::do_not_initialize};
+        file::info src_info{init::do_not_initialize};
         if (const auto r = src.status(src_info); !r)
         {
             // The only reasonable error here is `EIO`.
@@ -61,7 +61,7 @@ namespace snn::file
             return r.error_code();
         }
 
-        file::info dst_info{container::do_not_initialize};
+        file::info dst_info{init::do_not_initialize};
         if (const auto r = dst.status(dst_info); !r)
         {
             // The only reasonable error here is `EIO`.
@@ -118,7 +118,7 @@ namespace snn::file
                 math::min(src_size, math::clamp(buffer_size, buf_min_size, buf_max_size));
             snn_should(buf_size > 0);
 
-            strbuf buf{container::size_for_overwrite, buf_size};
+            strbuf buf{init::size_for_overwrite, buf_size};
 
             // Read & write loop.
 

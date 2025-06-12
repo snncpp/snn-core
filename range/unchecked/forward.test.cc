@@ -21,7 +21,7 @@ namespace snn
 
         {
             array<int, 4> arr{99, 23, 3, 8};
-            range::unchecked::forward rng{meta::iterators, arr.begin(), arr.end()};
+            range::unchecked::forward rng{init::from, arr.begin(), arr.end()};
 
             snn_require(rng);
 
@@ -52,7 +52,7 @@ namespace snn
             m.try_emplace("One", 1);
             m.try_emplace("Two", 22);
 
-            range::unchecked::forward rng{meta::iterators, m.begin(), m.end()};
+            range::unchecked::forward rng{init::from, m.begin(), m.end()};
 
             while (rng)
             {
@@ -68,7 +68,7 @@ namespace snn
                 rng.drop_front(promise::not_empty);
             }
 
-            rng = range::unchecked::forward{meta::iterators, m.begin(), m.end()};
+            rng = range::unchecked::forward{init::from, m.begin(), m.end()};
             str buf;
             while (rng)
             {

@@ -31,7 +31,7 @@ namespace snn::range
 
         // #### Constructor
 
-        constexpr explicit bidirectional(meta::iterators_t, iterator first, iterator last) noexcept
+        constexpr explicit bidirectional(init::from_t, iterator first, iterator last) noexcept
             : first_{std::move(first)},
               last_{std::move(last)}
         {

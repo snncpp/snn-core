@@ -23,7 +23,7 @@ namespace snn::app
             // snn_require(v.size() == 0); // Will not compile, `sizeof(str) != 1`.
 
             v.append("Hello");
-            v.append_inplace(container::fill, 8u, 'a');
+            v.append_inplace(init::fill, 8u, 'a');
 
             snn_require(v); // Not empty.
             snn_require(!v.is_empty());
@@ -116,12 +116,12 @@ namespace snn::app
 
             // Reserve constructor.
             {
-                Vec v{container::reserve, 0};
+                Vec v{init::reserve, 0};
                 snn_require(count_eq(v, 0));
                 snn_require(v.capacity() == v.default_capacity());
             }
             {
-                Vec v{container::reserve, 20};
+                Vec v{init::reserve, 20};
                 snn_require(count_eq(v, 0));
                 snn_require(v.capacity() >= 20);
             }
@@ -159,7 +159,7 @@ namespace snn::app
             // Iterator constructor.
             {
                 Vec v1;
-                Vec v2{meta::iterators, v1.begin(), v1.end()};
+                Vec v2{init::from, v1.begin(), v1.end()};
                 snn_require(count_eq(v2, 0));
             }
 
@@ -178,7 +178,7 @@ namespace snn::app
                 SNN_DIAGNOSTIC_PUSH
                 SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
 
-                Vec v2{meta::iterators, v1.begin() + 1, v1.end() - 1};
+                Vec v2{init::from, v1.begin() + 1, v1.end() - 1};
 
                 SNN_DIAGNOSTIC_POP
 

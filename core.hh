@@ -248,29 +248,6 @@ namespace snn
 
     namespace meta
     {
-        // ### Tags
-
-        // #### inplace
-
-        using inplace_t = std::in_place_t;
-        inline constexpr inplace_t inplace;
-
-        // #### internal
-
-        struct internal_t final
-        {
-            explicit internal_t() = default;
-        };
-        inline constexpr internal_t internal;
-
-        // #### iterators
-
-        struct iterators_t final
-        {
-            explicit iterators_t() = default;
-        };
-        inline constexpr iterators_t iterators;
-
         // ### Validation
 
         // #### all
@@ -340,15 +317,19 @@ namespace snn
         inline constexpr mask_t mask;
     }
 
-    // ## Container tags
+    // ## Initialization tags
 
-    namespace container
+    namespace init
     {
+        // ### `do_not_initialize`
+
         struct do_not_initialize_t final
         {
             explicit do_not_initialize_t() = default;
         };
         inline constexpr do_not_initialize_t do_not_initialize;
+
+        // ### `fill`
 
         struct fill_t final
         {
@@ -356,11 +337,36 @@ namespace snn
         };
         inline constexpr fill_t fill;
 
+        // ### `from`
+
+        struct from_t final
+        {
+            explicit from_t() = default;
+        };
+        inline constexpr from_t from;
+
+        // ### `inplace`
+
+        using inplace_t = std::in_place_t;
+        inline constexpr inplace_t inplace;
+
+        // ### `internal`
+
+        struct internal_t final
+        {
+            explicit internal_t() = default;
+        };
+        inline constexpr internal_t internal;
+
+        // ### `reserve`
+
         struct reserve_t final
         {
             explicit reserve_t() = default;
         };
         inline constexpr reserve_t reserve;
+
+        // ### `size_for_overwrite_t`
 
         struct size_for_overwrite_t final
         {
@@ -548,8 +554,7 @@ namespace snn
     // ### constructible_from_iterators
 
     template <typename T>
-    concept constructible_from_iterators =
-        requires(T& v) { T{meta::iterators, v.begin(), v.end()}; };
+    concept constructible_from_iterators = requires(T& v) { T{init::from, v.begin(), v.end()}; };
 
     // ### implicitly_default_constructible
 

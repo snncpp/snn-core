@@ -81,24 +81,24 @@ namespace snn
         {
         }
 
-        constexpr explicit strcore(container::reserve_t, const usize capacity)
-            : buf_{container::reserve, capacity}
+        constexpr explicit strcore(init::reserve_t, const usize capacity)
+            : buf_{init::reserve, capacity}
         {
         }
 
-        constexpr explicit strcore(container::size_for_overwrite_t, const usize size)
-            : buf_{container::size_for_overwrite, size}
+        constexpr explicit strcore(init::size_for_overwrite_t, const usize size)
+            : buf_{init::size_for_overwrite, size}
         {
         }
 
         template <character Char>
-        constexpr explicit strcore(container::fill_t, const usize count, const Char c)
-            : buf_{container::fill, count, c}
+        constexpr explicit strcore(init::fill_t, const usize count, const Char c)
+            : buf_{init::fill, count, c}
         {
         }
 
         template <character CharA, character CharB>
-        explicit strcore(container::fill_t, CharA, CharB) = delete; // Error-prone
+        explicit strcore(init::fill_t, CharA, CharB) = delete; // Error-prone
 
         constexpr explicit strcore(const not_null<const_pointer> data, const usize size)
             : buf_{data, size}
@@ -106,7 +106,7 @@ namespace snn
         }
 
         constexpr explicit strcore(const const_pointer s, promise::null_terminated_t)
-            : buf_{meta::iterators, s, s + string::size(s, promise::null_terminated)}
+            : buf_{init::from, s, s + string::size(s, promise::null_terminated)}
         {
         }
 
@@ -115,9 +115,9 @@ namespace snn
         {
         }
 
-        constexpr explicit strcore(meta::iterators_t, const const_pointer first,
+        constexpr explicit strcore(init::from_t, const const_pointer first,
                                    const const_pointer last)
-            : buf_{meta::iterators, first, last}
+            : buf_{init::from, first, last}
         {
         }
 
@@ -130,7 +130,7 @@ namespace snn
         }
 
         constexpr strcore(const init_list<char> l)
-            : buf_{meta::iterators, l.begin(), l.end()}
+            : buf_{init::from, l.begin(), l.end()}
         {
         }
 
@@ -974,7 +974,7 @@ namespace snn
                 const usize diff =
                     replacement.size() - math::min(needle.size(), replacement.size());
                 // Reserve for one replacement and an overflow here can't do any harm.
-                strcore tmp{container::reserve, subject.size() + diff};
+                strcore tmp{init::reserve, subject.size() + diff};
 
                 usize last_pos = 0;
 
@@ -1101,7 +1101,7 @@ namespace snn
     template <any_strcore Str = str, typename... Args>
     [[nodiscard]] constexpr Str concat(const Args&... args)
     {
-        Str s{container::reserve, (detail::concat::size(args) + ...)};
+        Str s{init::reserve, (detail::concat::size(args) + ...)};
         (s << ... << args);
         return s;
     }

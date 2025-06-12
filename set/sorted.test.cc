@@ -180,7 +180,7 @@ namespace snn
         {
             // Generic container interface.
 
-            set::sorted<str> set{container::reserve, 1'000};
+            set::sorted<str> set{init::reserve, 1'000};
 
             snn_require(set.is_empty());
             snn_require(set.count() == 0);

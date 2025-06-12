@@ -193,7 +193,7 @@ namespace snn
             // Create or append to file.
             snn_require(rw.open_for_appending(tmp_file));
 
-            file::info info{container::do_not_initialize};
+            file::info info{init::do_not_initialize};
 
             snn_require(rw.status(info));
             snn_require(info.is_regular());
@@ -248,7 +248,7 @@ namespace snn
                 snn_require(info.size() > 2'000);
             }
             {
-                file::info info{container::do_not_initialize};
+                file::info info{init::do_not_initialize};
                 snn_require(rw.status(info));
                 snn_require(info.is_regular());
                 snn_require(info.size() > 2'000);

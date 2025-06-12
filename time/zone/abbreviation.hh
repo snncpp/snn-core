@@ -130,14 +130,14 @@ namespace snn::time::zone
 
         [[nodiscard]] static consteval abbreviation utc() noexcept
         {
-            return abbreviation{meta::internal, 'U', 'T', 'C'};
+            return abbreviation{init::internal, 'U', 'T', 'C'};
         }
 
       private:
         array<char, max_size> buf_;
         u8 size_;
 
-        consteval abbreviation(meta::internal_t, const char a, const char b, const char c) noexcept
+        consteval abbreviation(init::internal_t, const char a, const char b, const char c) noexcept
             : buf_{a, b, c},
               size_{3}
         {

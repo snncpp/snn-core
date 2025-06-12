@@ -56,7 +56,7 @@ namespace snn::file
         {
         }
 
-        explicit info(container::do_not_initialize_t) noexcept
+        explicit info(init::do_not_initialize_t) noexcept
         {
         }
 

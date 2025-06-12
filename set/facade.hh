@@ -77,7 +77,7 @@ namespace snn::set
 
         // Generic container interface.
 
-        explicit facade(container::reserve_t, const usize capacity)
+        explicit facade(init::reserve_t, const usize capacity)
         {
             reserve_if_supported_(capacity);
         }
@@ -227,12 +227,12 @@ namespace snn::set
 
         auto range_(std::forward_iterator_tag) const noexcept
         {
-            return range::forward{meta::iterators, set_.cbegin(), set_.cend()};
+            return range::forward{init::from, set_.cbegin(), set_.cend()};
         }
 
         auto range_(std::bidirectional_iterator_tag) const noexcept
         {
-            return range::bidirectional{meta::iterators, set_.cbegin(), set_.cend()};
+            return range::bidirectional{init::from, set_.cbegin(), set_.cend()};
         }
 
         void reserve_if_supported_(const usize capacity)

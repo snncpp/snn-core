@@ -22,6 +22,6 @@ namespace snn::algo
         const auto first      = rng.begin();
         const auto last       = rng.end();
         const auto last_after = std::unique(first, last, std::move(is_equal));
-        return ForwardRng{meta::iterators, first, last_after};
+        return ForwardRng{init::from, first, last_after};
     }
 }

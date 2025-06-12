@@ -640,10 +640,10 @@ namespace snn::app
                 snn_require(s == "Hello");
             }
 
-            // strview(meta::iterators_t, ContiguousIt, ContiguousIt)
+            // strview(init::from_t, ContiguousIt, ContiguousIt)
             {
                 char* const data = nullptr;
-                strview s{meta::iterators, data, data};
+                strview s{init::from, data, data};
                 snn_require(s.data().get() != nullptr);
                 snn_require(s.count() == 0);
             }
@@ -657,10 +657,10 @@ namespace snn::app
                 snn_require(s == "b");
             }
 
-            // cstrview(meta::iterators_t, ContiguousIt, ContiguousIt)
+            // cstrview(init::from_t, ContiguousIt, ContiguousIt)
             {
                 const char* const data = nullptr;
-                cstrview s{meta::iterators, data, data};
+                cstrview s{init::from, data, data};
                 snn_require(s.data().get() != nullptr);
                 snn_require(s.count() == 0);
             }
@@ -680,7 +680,7 @@ namespace snn::app
                 snn_require(s == "Hello");
             }
             {
-                cstrrng rng{meta::iterators, nullptr, nullptr};
+                cstrrng rng{init::from, nullptr, nullptr};
                 cstrview s{rng};
                 snn_require(s.size() == 0);
                 snn_require(s == "");
@@ -798,10 +798,10 @@ namespace snn::app
                 snn_require(v.at(0).value() == 3);
             }
 
-            // array_view(meta::iterators_t, ContiguousIt, ContiguousIt)
+            // array_view(init::from_t, ContiguousIt, ContiguousIt)
             {
                 array<int, 3> arr{3, 8, 2};
-                array_view<int> v{meta::iterators, arr.begin(), arr.end()};
+                array_view<int> v{init::from, arr.begin(), arr.end()};
                 snn_require(v.count() == 3);
                 snn_require(!v.is_empty());
                 snn_require(v);
@@ -811,7 +811,7 @@ namespace snn::app
                 snn_require(v.at(2).value() == 2);
             }
             {
-                array_view<int> v{meta::iterators, nullptr, nullptr};
+                array_view<int> v{init::from, nullptr, nullptr};
                 snn_require(v.count() == 0);
                 snn_require(v.is_empty());
                 snn_require(!v);

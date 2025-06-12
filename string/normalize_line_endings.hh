@@ -27,7 +27,7 @@ namespace snn::string
 
             rng.pop_front_n(pos);
 
-            snn::range::unchecked::contiguous write_rng{meta::iterators, rng.begin(), rng.end()};
+            snn::range::unchecked::contiguous write_rng{init::from, rng.begin(), rng.end()};
             snn_should(write_rng && write_rng.front(promise::not_empty) == '\r');
 
             while (rng)

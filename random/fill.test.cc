@@ -49,12 +49,12 @@ namespace snn
             // Fill more than 256 bytes (some implementations will only provide 256 bytes of random
             // data at a time).
 
-            str s{container::fill, 300, '\0'};
+            str s{init::fill, 300, '\0'};
 
             snn_require(s.size() == 300);
             snn_require(s.all(fn::is_zero{}));
 
-            str needle{container::fill, 8, '\0'}; // 64-bit needle.
+            str needle{init::fill, 8, '\0'}; // 64-bit needle.
             snn_require(needle.size() == 8);
             snn_require(needle.all(fn::is_zero{}));
 
