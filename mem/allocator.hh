@@ -101,48 +101,61 @@ namespace snn::mem
                 return optional_allocation<T*>{nullptr};
             }
 
-            if (!std::is_constant_evaluated() && is_trivially_relocatable_v<T>)
-            {
-                void* const ptr = std::malloc(count.get() * sizeof(T));
-                return optional_allocation{static_cast<T*>(ptr)};
-            }
-            else
-            {
-                try
-                {
-                    std::allocator<T> stdalloc;
-                    T* const ptr = stdalloc.allocate(count.get());
-                    return optional_allocation{ptr};
-                }
-                catch (...)
-                {
-                    // Ignore
-                }
+            // Optimal path.
 
-                return optional_allocation<T*>{nullptr};
+            if constexpr (is_trivially_relocatable_v<T>)
+            {
+                if (!std::is_constant_evaluated())
+                {
+                    void* const ptr = std::malloc(count.get() * sizeof(T));
+                    return optional_allocation{static_cast<T*>(ptr)};
+                }
             }
+
+            // General path.
+
+            try
+            {
+                std::allocator<T> stdalloc;
+                T* const ptr = stdalloc.allocate(count.get());
+                return optional_allocation{ptr};
+            }
+            catch (...)
+            {
+                // Ignore
+            }
+
+            return optional_allocation<T*>{nullptr};
         }
 
         // Does nothing if `ptr` is null.
+
         constexpr void deallocate(T* const ptr, const usize initial_count) noexcept
         {
             snn_should(ptr != nullptr || initial_count == 0);
 
-            if (!std::is_constant_evaluated() && is_trivially_relocatable_v<T>)
+            // Optimal path.
+
+            if constexpr (is_trivially_relocatable_v<T>)
             {
-                std::free(ptr);
-            }
-            else
-            {
-                if (ptr != nullptr)
+                if (!std::is_constant_evaluated())
                 {
-                    std::allocator<T> stdalloc;
-                    stdalloc.deallocate(ptr, initial_count);
+                    std::free(ptr);
+                    return;
                 }
+            }
+
+            // General path.
+
+            if (ptr != nullptr)
+            {
+                std::allocator<T> stdalloc;
+                stdalloc.deallocate(ptr, initial_count);
             }
         }
 
         // If this fails the old memory is not deallocated.
+
         [[nodiscard]] constexpr optional_allocation<T*> reallocate(T* const old_ptr,
                                                                    const usize initial_count,
                                                                    const not_zero<usize> new_count,
