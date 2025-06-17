@@ -66,6 +66,9 @@ namespace snn
       private:
         not_null<Ptr> ptr_;
 
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
         constexpr usize count_() const noexcept
         {
             usize i = 0;
@@ -76,6 +79,8 @@ namespace snn
             }
             return i;
         }
+
+        SNN_DIAGNOSTIC_POP
     };
 
     // ### null_term<const char*> specialization
