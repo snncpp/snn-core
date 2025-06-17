@@ -1330,6 +1330,16 @@ namespace snn
         }
     };
 
+    namespace detail
+    {
+        template <typename T, typename Ptr>
+        concept std_contiguous_container_convertible_to = requires(T& v) {
+            requires unsigned_integral<typename T::size_type>;
+            { v.data() } -> convertible_to<Ptr>;
+            { v.size() } -> same_as<typename T::size_type>;
+        };
+    }
+
     // ### array_view<const char>
 
     // Dynamic count.
@@ -1399,6 +1409,15 @@ namespace snn
               count_{string::size(first, promise::null_terminated)}
         {
         }
+
+        template <detail::std_contiguous_container_convertible_to<const char*> StdContainer>
+        constexpr explicit array_view(init::from_t, const StdContainer& c) noexcept
+            : array_view{c.data(), c.size()}
+        {
+        }
+
+        template <typename StdContainer>
+        explicit array_view(init::from_t, const StdContainer&&) = delete;
 
         constexpr explicit array_view(init::from_t, const const_iterator first,
                                       const const_iterator last) noexcept
@@ -1611,6 +1630,13 @@ namespace snn
         }
 
         // #### To
+
+        template <brace_constructible_from<const_pointer, usize> T>
+        [[nodiscard]] constexpr T to() const noexcept(noexcept(T{const_pointer{}, usize{}}))
+        {
+            // Note: `data_` is never `nullptr` here.
+            return T{data_, count_};
+        }
 
         template <strict_integral Int, math::base Base = math::base::decimal>
         [[nodiscard]] constexpr optional<Int> to() const noexcept
@@ -1866,6 +1892,15 @@ namespace snn
               count_{string::size(first, promise::null_terminated)}
         {
         }
+
+        template <detail::std_contiguous_container_convertible_to<char*> StdContainer>
+        constexpr explicit array_view(init::from_t, StdContainer& c) noexcept
+            : array_view{c.data(), c.size()}
+        {
+        }
+
+        template <typename StdContainer>
+        explicit array_view(init::from_t, const StdContainer&&) = delete;
 
         constexpr explicit array_view(init::from_t, const iterator first,
                                       const iterator last) noexcept
@@ -2164,6 +2199,20 @@ namespace snn
         }
 
         // #### To
+
+        template <brace_constructible_from<pointer, usize> T>
+        [[nodiscard]] constexpr T to() noexcept(noexcept(T{pointer{}, usize{}}))
+        {
+            // Note: `data_` is never `nullptr` here.
+            return T{data_, count_};
+        }
+
+        template <brace_constructible_from<const_pointer, usize> T>
+        [[nodiscard]] constexpr T to() const noexcept(noexcept(T{const_pointer{}, usize{}}))
+        {
+            // Note: `data_` is never `nullptr` here.
+            return T{const_pointer{data_}, count_};
+        }
 
         template <strict_integral Int, math::base Base = math::base::decimal>
         [[nodiscard]] constexpr optional<Int> to() const noexcept

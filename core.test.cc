@@ -1139,13 +1139,18 @@ namespace snn::app
             snn_require(a.get() == src.begin());
 
             // Conversion
+
             const not_null<const char*> b{a};
             snn_require(b.get() == src.begin());
 
             // Deduction
+
             not_null c{src.begin()};
             static_assert(std::is_same_v<decltype(c), not_null<char*>>);
             snn_require(c.get() == src.begin());
+
+            not_null d{""};
+            static_assert(std::is_same_v<decltype(d), not_null<const char*>>);
 
             return true;
         }

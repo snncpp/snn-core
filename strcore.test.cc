@@ -91,6 +91,38 @@ namespace snn::app
             return true;
         }
 
+        template <typename T>
+        class string_like final
+        {
+          public:
+            using size_type = usize;
+
+            constexpr explicit string_like(T* const data, usize size) noexcept
+                : data_{data},
+                  size_{size}
+            {
+            }
+
+            [[nodiscard]] constexpr T* data() noexcept
+            {
+                return data_;
+            }
+
+            [[nodiscard]] constexpr const T* data() const noexcept
+            {
+                return data_;
+            }
+
+            [[nodiscard]] constexpr usize size() const noexcept
+            {
+                return size_;
+            }
+
+          private:
+            T* data_;
+            usize size_;
+        };
+
         constexpr bool test_append_array()
         {
             str s;
@@ -1329,6 +1361,7 @@ namespace snn::app
                 snn_require(s == "aaaaaaaaaa");
             }
 
+            // T(const char*, usize)
             // T(not_null<const char*>, usize)
             // T(init::fill_t, usize, char)
             {
@@ -1336,36 +1369,99 @@ namespace snn::app
                 {
                     T s1{init::fill, i, 'a'};
                     snn_require(size_eq(s1, i));
+
+                    static_assert(std::is_same_v<decltype(s1.data()), not_null<const char*>>);
                     T s2{s1.data(), s1.size()};
                     snn_require(size_eq(s2, i));
+
+                    static_assert(std::is_same_v<decltype(s1.data().get()), const char*>);
+                    T s3{s1.data().get(), s1.size()};
+                    snn_require(size_eq(s3, i));
 
                     if (i == 0)
                     {
                         snn_require(s1.capacity() == default_capacity);
                         snn_require(s2.capacity() == default_capacity);
+                        snn_require(s3.capacity() == default_capacity);
                     }
                     else if (i <= min_capacity)
                     {
                         snn_require(s1.capacity() == min_capacity);
                         snn_require(s2.capacity() == min_capacity);
+                        snn_require(s3.capacity() == min_capacity);
                     }
                     else
                     {
                         snn_require(s1.capacity() >= i);
                         snn_require(s2.capacity() >= i);
+                        snn_require(s3.capacity() >= i);
                     }
 
                     for (usize j = 0; j < i; ++j)
                     {
                         snn_require(s1.at(j).value() == 'a');
                         snn_require(s2.at(j).value() == 'a');
+                        snn_require(s3.at(j).value() == 'a');
                     }
                 }
             }
             {
+                T s{nullptr, 0};
+                snn_require(size_eq(s, 0));
+                snn_require(s.capacity() == default_capacity);
+            }
+            {
+                T s{"abcdef", 3};
+                snn_require(size_eq(s, 3));
+                snn_require(s.capacity() == min_capacity);
+                snn_require(s == "abc");
+            }
+            {
+                snn_require_throws_code((T{"", constant::npos}),
+                                        generic::error::size_would_exceed_max_size);
                 snn_require_throws_code((T{not_null{""}, constant::npos}),
                                         generic::error::size_would_exceed_max_size);
                 snn_require_throws_code((T{init::fill, constant::npos, 'a'}),
+                                        generic::error::size_would_exceed_max_size);
+            }
+
+            // T(init::from_t, const StdContainer&)
+            {
+                // The source container can be something like a `std::string[_view]`.
+                const string_like container{"abcdef", 3};
+
+                T s{init::from, container};
+                snn_require(size_eq(s, 3));
+                snn_require(s.capacity() == min_capacity);
+                snn_require(s == "abc");
+            }
+            {
+                string_like<char> container{nullptr, 0};
+                snn_require(container.data() == nullptr);
+                snn_require(container.size() == 0);
+
+                T s{init::from, container};
+                snn_require(size_eq(s, 0));
+            }
+            {
+                using sl  = string_like<char>;
+                using csl = string_like<const char>;
+
+                static_assert(constructible_from<T, init::from_t, sl&>);
+                static_assert(constructible_from<T, init::from_t, csl&>);
+                static_assert(constructible_from<T, init::from_t, const sl&>);
+                static_assert(constructible_from<T, init::from_t, const csl&>);
+                static_assert(constructible_from<T, init::from_t, sl&&>);
+                static_assert(constructible_from<T, init::from_t, csl&&>);
+                static_assert(constructible_from<T, init::from_t, const sl&&>);
+                static_assert(constructible_from<T, init::from_t, const csl&&>);
+
+                static_assert(!constructible_from<T, init::from_t, int&>);
+                static_assert(!constructible_from<T, init::from_t, not_null<char*>&>);
+            }
+            {
+                using csl = string_like<const char>;
+                snn_require_throws_code((T{init::from, csl{"", constant::npos}}),
                                         generic::error::size_would_exceed_max_size);
             }
 

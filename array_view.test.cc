@@ -68,6 +68,38 @@ namespace snn::app
         template <typename T, typename UInt>
         concept can_load_swap = requires(const T& t) { t.template load_swap<UInt>(); };
 
+        template <typename T>
+        class string_like final
+        {
+          public:
+            using size_type = usize;
+
+            constexpr explicit string_like(T* const data, usize size) noexcept
+                : data_{data},
+                  size_{size}
+            {
+            }
+
+            [[nodiscard]] constexpr T* data() noexcept
+            {
+                return data_;
+            }
+
+            [[nodiscard]] constexpr const T* data() const noexcept
+            {
+                return data_;
+            }
+
+            [[nodiscard]] constexpr usize size() const noexcept
+            {
+                return size_;
+            }
+
+          private:
+            T* data_;
+            usize size_;
+        };
+
         constexpr bool test_array_view()
         {
             static_assert(std::is_same_v<strview, array_view<char>>);
@@ -638,6 +670,86 @@ namespace snn::app
                 snn_require(s);
                 snn_require(s.size() == 5);
                 snn_require(s == "Hello");
+            }
+
+            // strview(init::from_t, Container)
+            {
+                array arr{'a', 'b', 'c'};
+
+                // The source container can be something like a `std::string`.
+                string_like container{arr.begin(), arr.size()};
+                snn_require(container.data() == arr.begin());
+                snn_require(container.size() == arr.size());
+
+                strview s{init::from, container};
+                snn_require(s.begin() == arr.begin());
+                snn_require(s.size() == arr.size());
+            }
+            {
+                string_like<char> container{nullptr, 0};
+                snn_require(container.data() == nullptr);
+                snn_require(container.size() == 0);
+
+                strview s{init::from, container};
+                snn_require(s.begin() != nullptr);
+                snn_require(s.size() == 0);
+            }
+            {
+                using sl  = string_like<char>;
+                using csl = string_like<const char>;
+
+                static_assert(constructible_from<strview, init::from_t, sl&>);
+
+                static_assert(!constructible_from<strview, init::from_t, csl&>);
+                static_assert(!constructible_from<strview, init::from_t, const sl&>);
+                static_assert(!constructible_from<strview, init::from_t, const csl&>);
+                static_assert(!constructible_from<strview, init::from_t, sl&&>);
+                static_assert(!constructible_from<strview, init::from_t, csl&&>);
+                static_assert(!constructible_from<strview, init::from_t, const sl&&>);
+                static_assert(!constructible_from<strview, init::from_t, const csl&&>);
+
+                static_assert(!constructible_from<strview, init::from_t, int&>);
+                static_assert(!constructible_from<strview, init::from_t, not_null<char*>&>);
+            }
+
+            // cstrview(init::from_t, Container)
+            {
+                const array arr{'a', 'b', 'c'};
+
+                // The source container can be something like a `std::string[_view]`.
+                const string_like container{arr.begin(), arr.size()};
+                snn_require(container.data() == arr.begin());
+                snn_require(container.size() == arr.size());
+
+                cstrview s{init::from, container};
+                snn_require(s.begin() == arr.begin());
+                snn_require(s.size() == arr.size());
+            }
+            {
+                string_like<char> container{nullptr, 0};
+                snn_require(container.data() == nullptr);
+                snn_require(container.size() == 0);
+
+                cstrview s{init::from, container};
+                snn_require(s.begin() != nullptr);
+                snn_require(s.size() == 0);
+            }
+            {
+                using sl  = string_like<char>;
+                using csl = string_like<const char>;
+
+                static_assert(constructible_from<cstrview, init::from_t, sl&>);
+                static_assert(constructible_from<cstrview, init::from_t, csl&>);
+                static_assert(constructible_from<cstrview, init::from_t, const sl&>);
+                static_assert(constructible_from<cstrview, init::from_t, const csl&>);
+
+                static_assert(!constructible_from<cstrview, init::from_t, sl&&>);
+                static_assert(!constructible_from<cstrview, init::from_t, csl&&>);
+                static_assert(!constructible_from<cstrview, init::from_t, const sl&&>);
+                static_assert(!constructible_from<cstrview, init::from_t, const csl&&>);
+
+                static_assert(!constructible_from<cstrview, init::from_t, int&>);
+                static_assert(!constructible_from<cstrview, init::from_t, not_null<char*>&>);
             }
 
             // strview(init::from_t, ContiguousIt, ContiguousIt)
@@ -2029,6 +2141,64 @@ namespace snn::app
 
             return true;
         }
+
+        constexpr bool test_to()
+        {
+            {
+                array arr{'a', 'b', 'c'};
+
+                strview s = arr.view();
+
+                auto p = s.to<pair::value_count<char*, usize>>();
+                snn_require(p.value == arr.begin());
+                snn_require(p.count == arr.size());
+            }
+            {
+                array arr{'a', 'b', 'c'};
+
+                const strview s = arr.view();
+
+                auto p = s.to<pair::value_count<const char*, usize>>();
+                snn_require(p.value == arr.begin());
+                snn_require(p.count == arr.size());
+            }
+            {
+                const array arr{'a', 'b', 'c'};
+
+                cstrview s = arr.view();
+
+                auto p = s.to<pair::value_count<const char*, usize>>();
+                snn_require(p.value == arr.begin());
+                snn_require(p.count == arr.size());
+            }
+            {
+                using plain_ptr_pair = pair::value_count<char*, usize>;
+                using const_ptr_pair = pair::value_count<const char*, usize>;
+
+                static_assert(has_to<strview, plain_ptr_pair>);
+                static_assert(has_to<strview, const_ptr_pair>);
+                static_assert(!has_to<const strview, plain_ptr_pair>);
+                static_assert(has_to<const strview, const_ptr_pair>);
+                static_assert(!has_to<cstrview, plain_ptr_pair>);
+                static_assert(has_to<cstrview, const_ptr_pair>);
+                static_assert(!has_to<const cstrview, plain_ptr_pair>);
+                static_assert(has_to<const cstrview, const_ptr_pair>);
+
+                static_assert(same_as<decltype(strview{}.to<plain_ptr_pair>()), plain_ptr_pair>);
+                static_assert(same_as<decltype(strview{}.to<const_ptr_pair>()), const_ptr_pair>);
+                static_assert(same_as<decltype(cstrview{}.to<const_ptr_pair>()), const_ptr_pair>);
+
+                static_assert(noexcept(strview{}.to<plain_ptr_pair>()));
+                static_assert(noexcept(std::declval<const strview>().to<const_ptr_pair>()));
+                static_assert(noexcept(cstrview{}.to<const_ptr_pair>()));
+
+                static_assert(!noexcept(strview{}.to<strbuf>()));
+                static_assert(!noexcept(std::declval<const strview>().to<strbuf>()));
+                static_assert(!noexcept(cstrview{}.to<strbuf>()));
+            }
+
+            return true;
+        }
     }
 }
 
@@ -2038,5 +2208,6 @@ namespace snn
     {
         snn_static_require(app::example());
         snn_static_require(app::test_array_view());
+        snn_static_require(app::test_to());
     }
 }

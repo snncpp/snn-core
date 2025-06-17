@@ -100,6 +100,12 @@ namespace snn
         template <character CharA, character CharB>
         explicit strcore(init::fill_t, CharA, CharB) = delete; // Error-prone
 
+        constexpr explicit strcore(const const_pointer data, const usize size)
+            : buf_{data != nullptr ? not_null{data} : not_null{""}, size}
+        {
+            snn_should(data != nullptr || size == 0);
+        }
+
         constexpr explicit strcore(const not_null<const_pointer> data, const usize size)
             : buf_{data, size}
         {
@@ -112,6 +118,12 @@ namespace snn
 
         constexpr explicit strcore(const not_null<const_pointer> s, promise::null_terminated_t)
             : buf_{s, string::size(s, promise::null_terminated)}
+        {
+        }
+
+        template <detail::std_contiguous_container_convertible_to<const char*> StdContainer>
+        constexpr explicit strcore(init::from_t, const StdContainer& c)
+            : strcore{c.data(), c.size()}
         {
         }
 
@@ -588,13 +600,15 @@ namespace snn
             return buf_.view().view(pos, size);
         }
 
-        // #### To integral
+        // #### To
 
         template <strict_integral Int, math::base Base = math::base::decimal>
         [[nodiscard]] constexpr optional<Int> to() const noexcept
         {
             return buf_.view().template to<Int, Base>();
         }
+
+        // #### To prefix
 
         template <strict_integral Int, math::base Base = math::base::decimal, usize MaxDigits = 0>
         [[nodiscard]] constexpr pair::value_count<Int, usize> to_prefix(
