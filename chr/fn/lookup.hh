@@ -18,11 +18,11 @@ namespace snn::chr::fn
     {
       public:
         constexpr explicit lookup(const array<Int, 256>& table) noexcept
-            : v_{table.template view<>()}
+            : v_{table}
         {
         }
 
-        lookup(const array<Int, 256>&&) = delete;
+        explicit lookup(const array<Int, 256>&&) = delete;
 
         [[nodiscard]] constexpr Int operator()(const char c) const noexcept
         {
