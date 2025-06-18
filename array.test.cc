@@ -971,6 +971,71 @@ namespace snn::app
 
             return true;
         }
+
+        constexpr bool test_can_overflow_count()
+        {
+            static_assert(detail::can_overflow_count<i8, 0>());
+            static_assert(detail::can_overflow_count<i16, 0>());
+            static_assert(detail::can_overflow_count<i32, 0>());
+            static_assert(detail::can_overflow_count<i64, 0>());
+
+            static_assert(detail::can_overflow_count<i8, 1>());
+            static_assert(detail::can_overflow_count<i16, 1>());
+            static_assert(detail::can_overflow_count<i32, 1>());
+            static_assert(detail::can_overflow_count<i64, 1>());
+
+            static_assert(detail::can_overflow_count<i8, 255>());
+            static_assert(detail::can_overflow_count<i16, 255>());
+            static_assert(detail::can_overflow_count<i32, 255>());
+            static_assert(detail::can_overflow_count<i64, 255>());
+
+            static_assert(detail::can_overflow_count<i8, 256>());
+            static_assert(detail::can_overflow_count<i16, 256>());
+            static_assert(detail::can_overflow_count<i32, 256>());
+            static_assert(detail::can_overflow_count<i64, 256>());
+
+            static_assert(detail::can_overflow_count<i8, 65535>());
+            static_assert(detail::can_overflow_count<i16, 65535>());
+            static_assert(detail::can_overflow_count<i32, 65535>());
+            static_assert(detail::can_overflow_count<i64, 65535>());
+
+            static_assert(detail::can_overflow_count<i8, 65536>());
+            static_assert(detail::can_overflow_count<i16, 65536>());
+            static_assert(detail::can_overflow_count<i32, 65536>());
+            static_assert(detail::can_overflow_count<i64, 65536>());
+
+            static_assert(detail::can_overflow_count<u8, 0>());
+            static_assert(detail::can_overflow_count<u16, 0>());
+            static_assert(detail::can_overflow_count<u32, 0>());
+            static_assert(detail::can_overflow_count<u64, 0>());
+
+            static_assert(detail::can_overflow_count<u8, 1>());
+            static_assert(detail::can_overflow_count<u16, 1>());
+            static_assert(detail::can_overflow_count<u32, 1>());
+            static_assert(detail::can_overflow_count<u64, 1>());
+
+            static_assert(detail::can_overflow_count<u8, 255>());
+            static_assert(detail::can_overflow_count<u16, 255>());
+            static_assert(detail::can_overflow_count<u32, 255>());
+            static_assert(detail::can_overflow_count<u64, 255>());
+
+            static_assert(!detail::can_overflow_count<u8, 256>());
+            static_assert(detail::can_overflow_count<u16, 256>());
+            static_assert(detail::can_overflow_count<u32, 256>());
+            static_assert(detail::can_overflow_count<u64, 256>());
+
+            static_assert(!detail::can_overflow_count<u8, 65535>());
+            static_assert(detail::can_overflow_count<u16, 65535>());
+            static_assert(detail::can_overflow_count<u32, 65535>());
+            static_assert(detail::can_overflow_count<u64, 65535>());
+
+            static_assert(!detail::can_overflow_count<u8, 65536>());
+            static_assert(!detail::can_overflow_count<u16, 65536>());
+            static_assert(detail::can_overflow_count<u32, 65536>());
+            static_assert(detail::can_overflow_count<u64, 65536>());
+
+            return true;
+        }
     }
 }
 
@@ -980,15 +1045,6 @@ namespace snn
     {
         snn_static_require(app::example());
         snn_static_require(app::test_array());
-
-        static_assert(detail::can_overflow_count<i8, 256>());
-        static_assert(detail::can_overflow_count<i16, 256>());
-        static_assert(detail::can_overflow_count<i32, 256>());
-        static_assert(detail::can_overflow_count<i64, 256>());
-        static_assert(detail::can_overflow_count<u8, 255>());
-        static_assert(!detail::can_overflow_count<u8, 256>());
-        static_assert(detail::can_overflow_count<u16, 256>());
-        static_assert(detail::can_overflow_count<u32, 256>());
-        static_assert(detail::can_overflow_count<u64, 256>());
+        static_assert(app::test_can_overflow_count());
     }
 }

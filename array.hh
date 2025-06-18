@@ -25,7 +25,7 @@ namespace snn
     namespace detail
     {
         template <typename Int, usize Count>
-        constexpr bool can_overflow_count() noexcept
+        consteval bool can_overflow_count() noexcept
         {
             return constant::limit<Int>::min < Int{} || constant::limit<Int>::max >= Count;
         }
