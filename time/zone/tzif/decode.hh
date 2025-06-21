@@ -127,8 +127,10 @@ namespace snn::time::zone::tzif
         static_assert(sizeof(header) == 44);
 
         template <signed_integral Int, typename Buf>
-        result<void> parse_extract(cstrrng rng, const counts& c, vec<zone::offset>& offsets,
-                                   vec<zone::transition>& transitions, strcore<Buf>& footer)
+        constexpr result<void> parse_extract(cstrrng rng, const counts& c,
+                                             vec<zone::offset>& offsets,
+                                             vec<zone::transition>& transitions,
+                                             strcore<Buf>& footer)
         {
             using UInt = std::make_unsigned_t<Int>;
 
@@ -256,8 +258,9 @@ namespace snn::time::zone::tzif
     }
 
     template <typename Buf>
-    [[nodiscard]] result<void> decode(cstrrng rng, vec<zone::offset>& offsets,
-                                      vec<zone::transition>& transitions, strcore<Buf>& footer)
+    [[nodiscard]] constexpr result<void> decode(cstrrng rng, vec<zone::offset>& offsets,
+                                                vec<zone::transition>& transitions,
+                                                strcore<Buf>& footer)
     {
         detail::header header;
 

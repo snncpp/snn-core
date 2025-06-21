@@ -9,7 +9,7 @@ namespace snn::app
 {
     namespace
     {
-        bool example()
+        constexpr bool example()
         {
             constexpr cstrview tzif_jp =
                 "\x54\x5A\x69\x66\x32\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
@@ -96,6 +96,6 @@ namespace snn
 {
     void unittest()
     {
-        snn_require(app::example());
+        snn_static_require(app::example());
     }
 }
