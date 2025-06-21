@@ -27,14 +27,45 @@
 
 namespace snn::range
 {
-    namespace detail::contiguous
-    {
-        // For `[const ]char*` specializations that never hold null pointers.
-        inline char single_char = '\xFF'; // Not null-terminated.
-    }
-
     SNN_DIAGNOSTIC_PUSH
     SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
+    namespace detail::contiguous
+    {
+        // For `contiguous<[const ]char*>` specializations that never hold null pointers.
+
+        inline char single_char = '\xFF'; // Not null-terminated.
+
+        // Helper functions for `contiguous<[const ]char*>::drop_front_read(...)`.
+
+        template <character Char, typename T>
+        constexpr void drop_front_read(Char*& first, Char* const last, T& obj) noexcept
+        {
+            snn_should(first != nullptr && last != nullptr);
+            snn_should(first < last && to_usize(last - first) >= sizeof(T));
+
+            if (std::is_constant_evaluated())
+            {
+                array<char, sizeof(T)> a;
+                a.fill_front(cstrview{init::from, first, last});
+                obj = std::bit_cast<T>(a);
+            }
+            else
+            {
+                mem::raw::move(not_null<const char*>{first}, not_null{&obj},
+                               snn::byte_size{sizeof(T)});
+            }
+
+            first += sizeof(T);
+        }
+
+        template <character Char, typename T, typename... Ts>
+        constexpr void drop_front_read(Char*& first, Char* const last, T& obj, Ts&... objs) noexcept
+        {
+            detail::contiguous::drop_front_read(first, last, obj);
+            detail::contiguous::drop_front_read(first, last, objs...);
+        }
+    }
 
     // ## Classes
 
@@ -427,20 +458,6 @@ namespace snn::range
         {
         }
 
-        template <typename T>
-        constexpr void drop_front_read_(T& obj) noexcept
-        {
-            mem::raw::move(not_null{first_}, not_null{&obj}, snn::byte_size{sizeof(T)});
-            first_ += sizeof(T);
-        }
-
-        template <typename T, typename... Ts>
-        constexpr void drop_front_read_(T& obj, Ts&... objs) noexcept
-        {
-            drop_front_read_(obj);
-            drop_front_read_(objs...);
-        }
-
       public:
         // #### Types
 
@@ -789,7 +806,7 @@ namespace snn::range
             constexpr usize TotalSize = (sizeof(T) + ... + sizeof(Ts));
             if (count() >= TotalSize)
             {
-                drop_front_read_(obj, objs...);
+                detail::contiguous::drop_front_read(first_, last_, obj, objs...);
                 return true;
             }
             return false;
@@ -972,21 +989,6 @@ namespace snn::range
             : first_{first},
               last_{last}
         {
-        }
-
-        template <typename T>
-        constexpr void drop_front_read_(T& obj) noexcept
-        {
-            mem::raw::move(not_null<const char*>{first_}, not_null{&obj},
-                           snn::byte_size{sizeof(T)});
-            first_ += sizeof(T);
-        }
-
-        template <typename T, typename... Ts>
-        constexpr void drop_front_read_(T& obj, Ts&... objs) noexcept
-        {
-            drop_front_read_(obj);
-            drop_front_read_(objs...);
         }
 
       public:
@@ -1379,7 +1381,7 @@ namespace snn::range
             constexpr usize TotalSize = (sizeof(T) + ... + sizeof(Ts));
             if (count() >= TotalSize)
             {
-                drop_front_read_(obj, objs...);
+                detail::contiguous::drop_front_read(first_, last_, obj, objs...);
                 return true;
             }
             return false;

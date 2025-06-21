@@ -181,7 +181,7 @@ namespace snn::app
         }
 
         template <typename strrng>
-        bool test_drop_front_read()
+        constexpr bool test_drop_front_read()
         {
             {
                 array src{'a', 'b', 'c', 'd', 'e', 'f'};
@@ -210,6 +210,10 @@ namespace snn::app
                 array<char, 4> a;
                 array<char, 2> b;
                 array<char, 1> c;
+
+                snn_require(a.all(fn::is_zero{}));
+                snn_require(b.all(fn::is_zero{}));
+                snn_require(c.all(fn::is_zero{}));
 
                 snn_require(rng.drop_front_read(a, b, c));
                 snn_require(rng.count() == 1);
@@ -264,8 +268,8 @@ namespace snn
         snn_static_require(app::drop_front_load_swap<strrng>());
         snn_static_require(app::drop_front_load_swap<cstrrng>());
 
-        snn_require(app::test_drop_front_read<strrng>());
-        snn_require(app::test_drop_front_read<cstrrng>());
+        snn_static_require(app::test_drop_front_read<strrng>());
+        snn_static_require(app::test_drop_front_read<cstrrng>());
 
         snn_static_require(app::test_drop_front_exactly_n<strrng>());
         snn_static_require(app::test_drop_front_exactly_n<cstrrng>());
