@@ -1621,6 +1621,37 @@ namespace snn::app
             return true;
         }
 
+        constexpr bool test_strict_signed_integral_min()
+        {
+            static_assert(strict_signed_integral_min<char, 8>);
+            static_assert(strict_signed_integral_min<int, 8>);
+            static_assert(strict_signed_integral_min<int, 16>);
+            static_assert(strict_signed_integral_min<const int, 16>);
+            static_assert(strict_signed_integral_min<i32, 32>);
+            static_assert(strict_signed_integral_min<i64, 32>);
+            static_assert(strict_signed_integral_min<i64, 64>);
+
+            static_assert(!strict_signed_integral_min<usize, 8>);
+            static_assert(!strict_signed_integral_min<usize, 16>);
+            static_assert(!strict_signed_integral_min<usize, 64>);
+            static_assert(!strict_signed_integral_min<char, 16>);
+            static_assert(!strict_signed_integral_min<char, 64>);
+            static_assert(!strict_signed_integral_min<int&, 16>);
+            static_assert(!strict_signed_integral_min<int, 64>);
+            static_assert(!strict_signed_integral_min<bool, 8>);
+            static_assert(!strict_signed_integral_min<float, 8>);
+            static_assert(!strict_signed_integral_min<cstrview, 8>);
+            static_assert(!strict_signed_integral_min<i64, 128>);
+            static_assert(!strict_signed_integral_min<u64, 128>);
+
+#if SNN_INT128_ENABLED
+            static_assert(strict_signed_integral_min<i128, 128>);
+            static_assert(!strict_signed_integral_min<u128, 128>);
+#endif
+
+            return true;
+        }
+
         constexpr bool test_strict_unsigned_integral()
         {
             static_assert(strict_unsigned_integral<u8>);
@@ -1953,6 +1984,7 @@ namespace snn
         snn_static_require(app::test_strict_integral());
         snn_static_require(app::test_strict_integral_min());
         snn_static_require(app::test_strict_signed_integral());
+        snn_static_require(app::test_strict_signed_integral_min());
         snn_static_require(app::test_strict_unsigned_integral());
         snn_static_require(app::test_string_size());
         snn_static_require(app::test_to_byte());

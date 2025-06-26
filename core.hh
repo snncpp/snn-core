@@ -619,6 +619,12 @@ namespace snn
     template <typename T>
     concept strict_signed_integral = signed_integral<T> && strict_integral<T>;
 
+    // ### `strict_signed_integral_min`
+
+    template <typename T, usize BitCount>
+    concept strict_signed_integral_min =
+        strict_signed_integral<T> && (sizeof(T) * __CHAR_BIT__) >= BitCount;
+
     // ### unsigned_integral
 
     template <typename T>
