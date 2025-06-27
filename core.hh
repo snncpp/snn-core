@@ -185,9 +185,9 @@ namespace snn
     using i128 = __int128_t;
 #endif
 
-    // ## Promises
+    // ## Assume tags
 
-    namespace promise
+    namespace assume
     {
         struct has_capacity_t final
         {
@@ -244,7 +244,9 @@ namespace snn
         inline constexpr within_bounds_t within_bounds;
     }
 
-    // ## Meta helpers & tags
+    namespace promise = assume; // Deprecated (only for backward compatibility).
+
+    // ## Meta helpers
 
     namespace meta
     {

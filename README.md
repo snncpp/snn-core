@@ -178,7 +178,7 @@ shows how to use [snn-core][snncore].
  * Views will not bind to temporaries by default.
  * String ranges (`c[strrng]`) make string parsing/validation safe and very efficient ([example](json/is_number.hh)).
  * Hidden undefined behavior (UB) is minimized, e.g. `.front()` returns an optional and
-   `.front(promise::not_empty)` explicitly shows that we know that the container is not empty.
+   `.front(assume::not_empty)` explicitly shows that we know that the container is not empty.
  * The use of operators like `*expr` (indirection/dereference), `expr->` (member access via pointer)
    and `expr[...]` (subscript) in user code should be rare.
  * No uninitialized containers (unless explicitly asked for).
@@ -189,30 +189,30 @@ shows how to use [snn-core][snncore].
  * No silent narrowing, e.g. `.value_or(...)`.
  * Consistent brace initialization.
 
-### Promises
+### Assume tags
 
-Promise tags are used to:
- * Prevent misuse and differentiate constructors, e.g. `promise::has_capacity`, `promise::is_sorted`
-   and `promise::null_terminated`.
- * Select a different overload, e.g. `.value()` throws and `.value(promise::has_value)` asserts.
- * Select a more performant overload, e.g. `promise::no_overlap`.
- * Bypass expensive checks, e.g. `promise::is_utf8`.
+Assume tags are used to:
+ * Prevent misuse and differentiate constructors, e.g. `assume::has_capacity`, `assume::is_sorted`
+   and `assume::null_terminated`.
+ * Select a different overload, e.g. `.value()` throws and `.value(assume::has_value)` asserts.
+ * Select a more performant overload, e.g. `assume::no_overlap`.
+ * Bypass expensive checks, e.g. `assume::is_utf8`.
 
-Promises are _not_ used when there is an implicit promise that can be checked with the
+Assume tags are _not_ used when there is an implicit assumption that can be checked with the
 `snn_should()` macro, for example:
  * Wrapping a pointer with `not_null`.
  * Wrapping an integral with `not_zero`.
  * Wrapping functions, e.g. `ascii::as_lower()` and `json::stream::as_*()`.
 
-Promises are _not_ used when the intent is clear and contained in a single statement, even if the
+Assume tags are _not_ used when the intent is clear and contained in a single statement, even if the
 arguments can't be validated, for example:
  * Constructing an object `T` from a data pointer and a size `T{data, size}`.
  * Copying memory with `mem::raw::copy(...)`.
  * Reading a fixed byte count from a pointer with `mem::raw::load<Int>(...)`.
 
-A promise is recommended when a static count is part of the type, e.g. `array_view<..., Count>`.
+An assume tag is recommended when a static count is part of the type, e.g. `array_view<..., Count>`.
 Here `T{data}` is error prone if the count isn't included in the statement, whereas
-`T{data, promise::has_capacity}` is less so.
+`T{data, assume::has_capacity}` is less so.
 
 ### Assertions
 
@@ -227,13 +227,13 @@ In non-optimized builds `snn_should()` is another name for `snn_assert()`.
 In optimized builds `snn_should()` does nothing.
 
 Checked with `snn_assert()`:
- * Promises where the check isn't expensive or is easily optimized away.
-   Example: `.at(index, promise::within_bounds)` or `.front(promise::not_empty)`.
+ * Assume tags where the check isn't expensive or is easily optimized away.
+   Example: `.at(index, assume::within_bounds)` or `.front(assume::not_empty)`.
 
 Checked in non-optimized builds with `snn_should()`:
- * Promises where the check is expensive or not easily optimized away.
+ * Assume tags where the check is expensive or not easily optimized away.
  * `not_null` & `not_zero` wrappers.
- * `as_*()` functions, where there is an implicit promise that the value is valid.
+ * `as_*()` functions, where there is an implicit assumption that the value is valid.
 
 Never checked:
  * Iterator invalidation.

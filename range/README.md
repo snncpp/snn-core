@@ -74,24 +74,24 @@ Ranges must have the following member functions:
    * `bool is_empty() const`
    * `... begin()`
    * `... end()`
-   * `... front(promise::not_empty_type)`
-   * `void drop_front(promise::not_empty_type)`
+   * `... front(assume::not_empty_type)`
+   * `void drop_front(assume::not_empty_type)`
  * Bidirectional
-   * `... back(promise::not_empty_type)`
-   * `void drop_back(promise::not_empty_type)`
+   * `... back(assume::not_empty_type)`
+   * `void drop_back(assume::not_empty_type)`
  * Random access
-   * `... at(usize, promise::within_bounds_type)`
+   * `... at(usize, assume::within_bounds_type)`
    * `usize count() const`
  * Contiguous
-   * `... pop_back(promise::not_empty_type)`
+   * `... pop_back(assume::not_empty_type)`
    * `... pop_back_n(usize)`
-   * `... pop_front(promise::not_empty_type)`
+   * `... pop_front(assume::not_empty_type)`
    * `... pop_front_n(usize)`
 
 The following member functions are recommended but not required:
 
  * Input
-   * `... front(promise::not_empty_type) const`
+   * `... front(assume::not_empty_type) const`
    * `optional<...> front()`
    * `optional<...> front() const`
  * Forward
@@ -100,11 +100,11 @@ The following member functions are recommended but not required:
    * `... cbegin() const`
    * `... cend() const`
  * Bidirectional
-   * `... back(promise::not_empty_type) const`
+   * `... back(assume::not_empty_type) const`
    * `optional<...> back()`
    * `optional<...> back() const`
  * Random access
-   * `... at(usize, promise::within_bounds_type) const`
+   * `... at(usize, assume::within_bounds_type) const`
    * `optional<...> at(usize)`
    * `optional<...> at(usize) const`
  * Contiguous
