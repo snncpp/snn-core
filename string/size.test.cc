@@ -29,26 +29,26 @@ namespace snn::app
             snn_require(string::size('a') == 1);
             snn_require(string::size('\0') == 1);
 
-            snn_require(string::size(nullptr, promise::null_terminated) == 0);
-            snn_require(string::size("", promise::null_terminated) == 0);
-            snn_require(string::size("a", promise::null_terminated) == 1);
-            snn_require(string::size("ab", promise::null_terminated) == 2);
-            snn_require(string::size("abc", promise::null_terminated) == 3);
-            snn_require(string::size("Å", promise::null_terminated) == 2);
-            snn_require(string::size("ÅÄÖ", promise::null_terminated) == 6);
-            snn_require(string::size("abc\0def", promise::null_terminated) == 3);
-            snn_require(string::size("\0", promise::null_terminated) == 0);
-            snn_require(string::size("\0\0\0", promise::null_terminated) == 0);
+            snn_require(string::size(nullptr, assume::null_terminated) == 0);
+            snn_require(string::size("", assume::null_terminated) == 0);
+            snn_require(string::size("a", assume::null_terminated) == 1);
+            snn_require(string::size("ab", assume::null_terminated) == 2);
+            snn_require(string::size("abc", assume::null_terminated) == 3);
+            snn_require(string::size("Å", assume::null_terminated) == 2);
+            snn_require(string::size("ÅÄÖ", assume::null_terminated) == 6);
+            snn_require(string::size("abc\0def", assume::null_terminated) == 3);
+            snn_require(string::size("\0", assume::null_terminated) == 0);
+            snn_require(string::size("\0\0\0", assume::null_terminated) == 0);
 
-            snn_require(string::size(not_null{""}, promise::null_terminated) == 0);
-            snn_require(string::size(not_null{"a"}, promise::null_terminated) == 1);
-            snn_require(string::size(not_null{"ab"}, promise::null_terminated) == 2);
-            snn_require(string::size(not_null{"abc"}, promise::null_terminated) == 3);
-            snn_require(string::size(not_null{"Å"}, promise::null_terminated) == 2);
-            snn_require(string::size(not_null{"ÅÄÖ"}, promise::null_terminated) == 6);
-            snn_require(string::size(not_null{"abc\0def"}, promise::null_terminated) == 3);
-            snn_require(string::size(not_null{"\0"}, promise::null_terminated) == 0);
-            snn_require(string::size(not_null{"\0\0\0"}, promise::null_terminated) == 0);
+            snn_require(string::size(not_null{""}, assume::null_terminated) == 0);
+            snn_require(string::size(not_null{"a"}, assume::null_terminated) == 1);
+            snn_require(string::size(not_null{"ab"}, assume::null_terminated) == 2);
+            snn_require(string::size(not_null{"abc"}, assume::null_terminated) == 3);
+            snn_require(string::size(not_null{"Å"}, assume::null_terminated) == 2);
+            snn_require(string::size(not_null{"ÅÄÖ"}, assume::null_terminated) == 6);
+            snn_require(string::size(not_null{"abc\0def"}, assume::null_terminated) == 3);
+            snn_require(string::size(not_null{"\0"}, assume::null_terminated) == 0);
+            snn_require(string::size(not_null{"\0\0\0"}, assume::null_terminated) == 0);
 
             return true;
         }

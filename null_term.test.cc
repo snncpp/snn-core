@@ -50,13 +50,13 @@ namespace snn::app
                 snn_require(nt.to<cstrview>() == "Foo");
             }
             {
-                null_term nt{not_null{"Foo\0Bar"}, promise::null_terminated};
+                null_term nt{not_null{"Foo\0Bar"}, assume::null_terminated};
                 static_assert(std::is_same_v<decltype(nt), null_term<const char*>>);
                 snn_require(nt.to<cstrview>() == "Foo");
             }
             {
                 array<const char*, 3> arr{"foo", "bar", nullptr};
-                null_term nt{arr.writable(), promise::null_terminated};
+                null_term nt{arr.writable(), assume::null_terminated};
                 static_assert(std::is_same_v<decltype(nt), null_term<const char**>>);
                 snn_require(nt.get() == arr.begin());
                 snn_require(nt.as_not_null().get() == arr.begin());

@@ -35,7 +35,7 @@ namespace snn
 
         // Construct with the explicit promise that the pointer is null-terminated.
 
-        constexpr explicit null_term(const not_null<Ptr> ptr, promise::null_terminated_t) noexcept
+        constexpr explicit null_term(const not_null<Ptr> ptr, assume::null_terminated_t) noexcept
             : null_term{ptr}
         {
         }
@@ -58,9 +58,9 @@ namespace snn
 
         template <typename Other>
         [[nodiscard]] constexpr Other to() const
-            noexcept(noexcept(Other{ptr_, promise::null_terminated}))
+            noexcept(noexcept(Other{ptr_, assume::null_terminated}))
         {
-            return Other{ptr_, promise::null_terminated};
+            return Other{ptr_, assume::null_terminated};
         }
 
       private:
@@ -98,14 +98,14 @@ namespace snn
         {
             if constexpr (SNN_ADDRESS_SANITIZER_ENABLED)
             {
-                snn_should(string::size(s, promise::null_terminated) < constant::limit<usize>::max);
+                snn_should(string::size(s, assume::null_terminated) < constant::limit<usize>::max);
             }
         }
 
         // Construct with the explicit promise that the pointer is null-terminated.
 
         constexpr explicit null_term(const not_null<const char*> s,
-                                     promise::null_terminated_t) noexcept
+                                     assume::null_terminated_t) noexcept
             : null_term{s}
         {
         }
@@ -147,9 +147,9 @@ namespace snn
 
         template <typename String>
         [[nodiscard]] constexpr String to() const
-            noexcept(noexcept(String{s_, promise::null_terminated}))
+            noexcept(noexcept(String{s_, assume::null_terminated}))
         {
-            return String{s_, promise::null_terminated};
+            return String{s_, assume::null_terminated};
         }
 
       private:

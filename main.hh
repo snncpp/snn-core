@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
     catch (const std::exception& e)
     {
         snn::file::standard::error{}
-            << "Error: " << snn::cstrview{e.what(), snn::promise::null_terminated} << "\n";
+            << "Error: " << snn::cstrview{e.what(), snn::assume::null_terminated} << "\n";
     }
     catch (...)
     {

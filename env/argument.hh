@@ -26,17 +26,17 @@ namespace snn::env
 
         template <typename String>
         [[nodiscard]] constexpr String to() const noexcept(
-            std::is_nothrow_constructible_v<String, const char*, promise::null_terminated_t>)
+            std::is_nothrow_constructible_v<String, const char*, assume::null_terminated_t>)
         {
             // `arg_` can be `nullptr`.
-            return String{arg_, promise::null_terminated};
+            return String{arg_, assume::null_terminated};
         }
 
         [[nodiscard]] constexpr null_term<const char*> null_terminated() const noexcept
         {
             if (arg_ != nullptr)
             {
-                return null_term<const char*>{not_null{arg_}, promise::null_terminated};
+                return null_term<const char*>{not_null{arg_}, assume::null_terminated};
             }
             return null_term<const char*>{""};
         }

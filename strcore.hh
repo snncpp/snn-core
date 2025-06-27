@@ -111,13 +111,13 @@ namespace snn
         {
         }
 
-        constexpr explicit strcore(const const_pointer s, promise::null_terminated_t)
-            : buf_{init::from, s, s + string::size(s, promise::null_terminated)}
+        constexpr explicit strcore(const const_pointer s, assume::null_terminated_t)
+            : buf_{init::from, s, s + string::size(s, assume::null_terminated)}
         {
         }
 
-        constexpr explicit strcore(const not_null<const_pointer> s, promise::null_terminated_t)
-            : buf_{s, string::size(s, promise::null_terminated)}
+        constexpr explicit strcore(const not_null<const_pointer> s, assume::null_terminated_t)
+            : buf_{s, string::size(s, assume::null_terminated)}
         {
         }
 
@@ -528,9 +528,9 @@ namespace snn
             requires(detail::strcore::is_null_terminated_v<Buffer>)
         {
             const auto s = view();
-            if (string::size(s.data(), promise::null_terminated) == s.size())
+            if (string::size(s.data(), assume::null_terminated) == s.size())
             {
-                return null_term<const char*>{s.data(), promise::null_terminated};
+                return null_term<const char*>{s.data(), assume::null_terminated};
             }
             throw_or_abort(generic::error::unexpected_null_character);
         }
@@ -542,8 +542,8 @@ namespace snn
             requires(detail::strcore::is_null_terminated_v<Buffer>)
         {
             const auto s = view();
-            snn_should(string::size(s.data(), promise::null_terminated) == s.size());
-            return null_term<const char*>{s.data(), promise::null_terminated};
+            snn_should(string::size(s.data(), assume::null_terminated) == s.size());
+            return null_term<const char*>{s.data(), assume::null_terminated};
         }
 
         // #### Raw data access

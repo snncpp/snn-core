@@ -31,9 +31,9 @@ namespace snn
         try
         {
             file::standard::error{}
-                << concat(cstrview{file, promise::null_terminated}, ':', as_num(line), ": ",
-                          cstrview{desc, promise::null_terminated}, " (",
-                          cstrview{expr, promise::null_terminated}, ")\n");
+                << concat(cstrview{file, assume::null_terminated}, ':', as_num(line), ": ",
+                          cstrview{desc, assume::null_terminated}, " (",
+                          cstrview{expr, assume::null_terminated}, ")\n");
         }
         catch (...)
         {

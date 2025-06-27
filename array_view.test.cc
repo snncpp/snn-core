@@ -569,58 +569,58 @@ namespace snn::app
                 snn_require(s == "abc");
             }
 
-            // cstrview(const char*, promise::null_terminated_t)
+            // cstrview(const char*, assume::null_terminated_t)
             {
                 const char* c_string = "Hello";
-                cstrview s{c_string, promise::null_terminated};
+                cstrview s{c_string, assume::null_terminated};
                 snn_require(s);
                 snn_require(s.size() == 5);
                 snn_require(s == "Hello");
             }
             {
                 const char* c_string = "abc\0def";
-                cstrview s{c_string, promise::null_terminated};
+                cstrview s{c_string, assume::null_terminated};
                 snn_require(s);
                 snn_require(s.size() == 3);
                 snn_require(s == "abc");
             }
             {
-                cstrview s{nullptr, promise::null_terminated};
+                cstrview s{nullptr, assume::null_terminated};
                 snn_require(!s);
                 snn_require(s.size() == 0);
                 snn_require(s.data().get() != nullptr);
                 snn_require(s == "");
             }
 
-            // cstrview(not_null<const char*>, promise::null_terminated_t)
+            // cstrview(not_null<const char*>, assume::null_terminated_t)
             {
                 const char* c_string = "Hello";
-                cstrview s{not_null{c_string}, promise::null_terminated};
+                cstrview s{not_null{c_string}, assume::null_terminated};
                 snn_require(s);
                 snn_require(s.size() == 5);
                 snn_require(s == "Hello");
             }
             {
                 const char* c_string = "abc\0def";
-                cstrview s{not_null{c_string}, promise::null_terminated};
+                cstrview s{not_null{c_string}, assume::null_terminated};
                 snn_require(s);
                 snn_require(s.size() == 3);
                 snn_require(s == "abc");
             }
             {
                 const char* c_string = "";
-                cstrview s{not_null{c_string}, promise::null_terminated};
+                cstrview s{not_null{c_string}, assume::null_terminated};
                 snn_require(!s);
                 snn_require(s.size() == 0);
                 snn_require(s.data().get() != nullptr);
                 snn_require(s == "");
             }
 
-            // array_view<const int>(const int*, promise::null_terminated_t)
+            // array_view<const int>(const int*, assume::null_terminated_t)
             {
                 const array arr{27, 11, 98, 0};
                 static_assert(std::is_same_v<decltype(arr.begin()), const int*>);
-                array_view v{arr.begin(), promise::null_terminated};
+                array_view v{arr.begin(), assume::null_terminated};
                 static_assert(std::is_same_v<decltype(v), array_view<const int>>);
                 snn_require(v);
                 snn_require(v.count() == 3);
@@ -628,16 +628,16 @@ namespace snn::app
                 snn_require(v.at(2) == 98);
             }
             {
-                constexpr array_view<const int> v{nullptr, promise::null_terminated};
+                constexpr array_view<const int> v{nullptr, assume::null_terminated};
                 snn_require(!v);
                 snn_require(v.count() == 0);
             }
 
-            // array_view<const int>(not_null<const int*>, promise::null_terminated_t)
+            // array_view<const int>(not_null<const int*>, assume::null_terminated_t)
             {
                 const array arr{27, 11, 98, 0};
                 static_assert(std::is_same_v<decltype(arr.data()), not_null<const int*>>);
-                const array_view v{arr.data(), promise::null_terminated};
+                const array_view v{arr.data(), assume::null_terminated};
                 static_assert(std::is_same_v<decltype(v), const array_view<const int>>);
                 snn_require(v);
                 snn_require(v.count() == 3);
@@ -645,28 +645,28 @@ namespace snn::app
                 snn_require(v.at(2) == 98);
             }
 
-            // strview(char*, promise::null_terminated_t)
+            // strview(char*, assume::null_terminated_t)
             {
                 array arr{'H', 'e', 'l', 'l', 'o', '\0', 'F', 'o', 'o'};
                 static_assert(std::is_same_v<decltype(arr.begin()), char*>);
-                strview s{arr.begin(), promise::null_terminated};
+                strview s{arr.begin(), assume::null_terminated};
                 snn_require(s);
                 snn_require(s.size() == 5);
                 snn_require(s == "Hello");
             }
             {
-                strview s{nullptr, promise::null_terminated};
+                strview s{nullptr, assume::null_terminated};
                 snn_require(!s);
                 snn_require(s.size() == 0);
                 snn_require(s.data().get() != nullptr);
                 snn_require(s == "");
             }
 
-            // strview(not_null<char*>, promise::null_terminated_t)
+            // strview(not_null<char*>, assume::null_terminated_t)
             {
                 array arr{'H', 'e', 'l', 'l', 'o', '\0', 'F', 'o', 'o'};
                 static_assert(std::is_same_v<decltype(arr.writable()), not_null<char*>>);
-                strview s{arr.writable(), promise::null_terminated};
+                strview s{arr.writable(), assume::null_terminated};
                 snn_require(s);
                 snn_require(s.size() == 5);
                 snn_require(s == "Hello");

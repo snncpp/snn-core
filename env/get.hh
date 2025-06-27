@@ -20,12 +20,12 @@ namespace snn::env
 
     template <typename String>
     [[nodiscard]] optional<String> get(const transient<null_term<const char*>> name) noexcept(
-        std::is_nothrow_constructible_v<String, not_null<const char*>, promise::null_terminated_t>)
+        std::is_nothrow_constructible_v<String, not_null<const char*>, assume::null_terminated_t>)
     {
         const char* const val = std::getenv(name.get().get());
         if (val != nullptr)
         {
-            return String{not_null{val}, promise::null_terminated};
+            return String{not_null{val}, assume::null_terminated};
         }
         return nullopt;
     }

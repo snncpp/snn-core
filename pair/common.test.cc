@@ -80,19 +80,19 @@ namespace snn::app
                 static_assert(implicitly_default_constructible<pair::first_second<const char*>>);
 
                 static_assert(std::is_default_constructible_v<
-                              pair::first_second<const char*, promise::null_terminated_t>>);
+                              pair::first_second<const char*, assume::null_terminated_t>>);
                 static_assert(!implicitly_default_constructible<
-                              pair::first_second<const char*, promise::null_terminated_t>>);
+                              pair::first_second<const char*, assume::null_terminated_t>>);
 
                 static_assert(std::is_default_constructible_v<
-                              pair::first_second<promise::null_terminated_t, const char*>>);
+                              pair::first_second<assume::null_terminated_t, const char*>>);
                 static_assert(!implicitly_default_constructible<
-                              pair::first_second<promise::null_terminated_t, const char*>>);
+                              pair::first_second<assume::null_terminated_t, const char*>>);
 
                 static_assert(std::is_default_constructible_v<
-                              pair::first_second<promise::null_terminated_t>>);
+                              pair::first_second<assume::null_terminated_t>>);
                 static_assert(!implicitly_default_constructible<
-                              pair::first_second<promise::null_terminated_t>>);
+                              pair::first_second<assume::null_terminated_t>>);
             }
 
             return true;

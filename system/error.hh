@@ -41,7 +41,7 @@ namespace snn::system
 
             if (message != nullptr)
             {
-                return null_term{not_null{message}, promise::null_terminated};
+                return null_term{not_null{message}, assume::null_terminated};
             }
 
             return null_term{""};

@@ -1465,9 +1465,9 @@ namespace snn::app
                                         generic::error::size_would_exceed_max_size);
             }
 
-            // T(const char* const s, promise::null_terminated_t)
+            // T(const char* const s, assume::null_terminated_t)
             {
-                T s{nullptr, promise::null_terminated};
+                T s{nullptr, assume::null_terminated};
                 snn_require(size_eq(s, 0));
                 s.append("abc");
                 snn_require(size_eq(s, 3));
@@ -1475,7 +1475,7 @@ namespace snn::app
             }
             {
                 const char* const c_string = "";
-                T s{c_string, promise::null_terminated};
+                T s{c_string, assume::null_terminated};
                 snn_require(size_eq(s, 0));
                 s.append("abc");
                 snn_require(size_eq(s, 3));
@@ -1483,32 +1483,32 @@ namespace snn::app
             }
             {
                 const char* const c_string = "Hello";
-                T s{c_string, promise::null_terminated};
+                T s{c_string, assume::null_terminated};
                 snn_require(size_eq(s, 5));
                 snn_require(s == "Hello");
             }
             {
                 const char* const c_string = "abc\0def";
-                T s{c_string, promise::null_terminated};
+                T s{c_string, assume::null_terminated};
                 snn_require(size_eq(s, 3));
                 snn_require(s == "abc");
             }
 
-            // T(const not_null<const_pointer> s, promise::null_terminated_t)
+            // T(const not_null<const_pointer> s, assume::null_terminated_t)
             {
                 const char* const c_string = "";
-                T s{not_null{c_string}, promise::null_terminated};
+                T s{not_null{c_string}, assume::null_terminated};
                 snn_require(size_eq(s, 0));
             }
             {
                 const char* const c_string = "Hello";
-                T s{not_null{c_string}, promise::null_terminated};
+                T s{not_null{c_string}, assume::null_terminated};
                 snn_require(size_eq(s, 5));
                 snn_require(s == "Hello");
             }
             {
                 const char* const c_string = "abc\0def";
-                T s{not_null{c_string}, promise::null_terminated};
+                T s{not_null{c_string}, assume::null_terminated};
                 snn_require(size_eq(s, 3));
                 snn_require(s == "abc");
             }

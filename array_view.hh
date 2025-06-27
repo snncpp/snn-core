@@ -877,14 +877,14 @@ namespace snn
         {
         }
 
-        constexpr explicit array_view(const pointer first, promise::null_terminated_t) noexcept
+        constexpr explicit array_view(const pointer first, assume::null_terminated_t) noexcept
             : data_{first},
               count_{count_null_terminated_(first)}
         {
         }
 
         constexpr explicit array_view(const not_null<pointer> first,
-                                      promise::null_terminated_t) noexcept
+                                      assume::null_terminated_t) noexcept
             : data_{first.get()},
               count_{count_null_terminated_(first.get())}
         {
@@ -1397,16 +1397,16 @@ namespace snn
         }
 
         constexpr explicit array_view(const const_pointer first,
-                                      promise::null_terminated_t) noexcept
+                                      assume::null_terminated_t) noexcept
             : data_{replace_if_nullptr_(first)},
-              count_{string::size(first, promise::null_terminated)}
+              count_{string::size(first, assume::null_terminated)}
         {
         }
 
         constexpr explicit array_view(const not_null<const_pointer> first,
-                                      promise::null_terminated_t) noexcept
+                                      assume::null_terminated_t) noexcept
             : data_{first.get()},
-              count_{string::size(first, promise::null_terminated)}
+              count_{string::size(first, assume::null_terminated)}
         {
         }
 
@@ -1880,16 +1880,16 @@ namespace snn
         {
         }
 
-        constexpr explicit array_view(const pointer first, promise::null_terminated_t) noexcept
+        constexpr explicit array_view(const pointer first, assume::null_terminated_t) noexcept
             : data_{replace_if_nullptr_(first)},
-              count_{string::size(first, promise::null_terminated)}
+              count_{string::size(first, assume::null_terminated)}
         {
         }
 
         constexpr explicit array_view(const not_null<pointer> first,
-                                      promise::null_terminated_t) noexcept
+                                      assume::null_terminated_t) noexcept
             : data_{first.get()},
-              count_{string::size(first, promise::null_terminated)}
+              count_{string::size(first, assume::null_terminated)}
         {
         }
 
@@ -2373,10 +2373,10 @@ namespace snn
     array_view(not_null<T*>, usize) -> array_view<T, constant::dynamic_count>;
 
     template <typename T>
-    array_view(T*, promise::null_terminated_t) -> array_view<T, constant::dynamic_count>;
+    array_view(T*, assume::null_terminated_t) -> array_view<T, constant::dynamic_count>;
 
     template <typename T>
-    array_view(not_null<T*>, promise::null_terminated_t) -> array_view<T, constant::dynamic_count>;
+    array_view(not_null<T*>, assume::null_terminated_t) -> array_view<T, constant::dynamic_count>;
 
     template <typename T>
     array_view(init::from_t, T*, T*) -> array_view<T, constant::dynamic_count>;

@@ -26,7 +26,7 @@ namespace snn::fmt
     template <typename Buf>
     void exception(const std::exception& e, strcore<Buf>& append_to)
     {
-        append_to << cstrview{e.what(), promise::null_terminated};
+        append_to << cstrview{e.what(), assume::null_terminated};
     }
 }
 

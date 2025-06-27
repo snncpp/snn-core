@@ -36,7 +36,7 @@ namespace snn::string
 
     // Null-terminated string size in bytes, excluding terminating null character.
 
-    [[nodiscard]] constexpr usize size(const char* const first, promise::null_terminated_t) noexcept
+    [[nodiscard]] constexpr usize size(const char* const first, assume::null_terminated_t) noexcept
     {
         if (first != nullptr)
         {
@@ -51,7 +51,7 @@ namespace snn::string
     }
 
     [[nodiscard]] constexpr usize size(const not_null<const char*> first,
-                                       promise::null_terminated_t) noexcept
+                                       assume::null_terminated_t) noexcept
     {
         SNN_DIAGNOSTIC_PUSH
         SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE_IN_LIBC_CALL

@@ -40,10 +40,10 @@ namespace snn
         snn_require(path.value().to<cstrview>().contains(':'));
 
         static_assert(std::is_nothrow_constructible_v<cstrview, not_null<const char*>,
-                                                      promise::null_terminated_t>);
+                                                      assume::null_terminated_t>);
         static_assert(!std::is_nothrow_constructible_v<str, not_null<const char*>,
-                                                       promise::null_terminated_t>);
+                                                       assume::null_terminated_t>);
         static_assert(std::is_nothrow_constructible_v<null_term<const char*>, not_null<const char*>,
-                                                      promise::null_terminated_t>);
+                                                      assume::null_terminated_t>);
     }
 }

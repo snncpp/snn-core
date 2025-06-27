@@ -33,7 +33,7 @@ namespace snn::file::dir
               name_size_maybe_{name_size},
               type_{type}
         {
-            snn_should(string::size(name_data_.as_not_null(), promise::null_terminated) ==
+            snn_should(string::size(name_data_.as_not_null(), assume::null_terminated) ==
                        name_size_maybe_);
         }
 
@@ -116,7 +116,7 @@ namespace snn::file::dir
                 return name_size_maybe_;
             }
 
-            return string::size(name_data_.as_not_null(), promise::null_terminated);
+            return string::size(name_data_.as_not_null(), assume::null_terminated);
         }
     };
 }
