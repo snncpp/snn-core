@@ -27,13 +27,13 @@ namespace snn::app
             {
                 array<char, 4> buffer;
                 // LATIN CAPITAL LETTER A
-                snn_require(utf8::encode(0x41, buffer, promise::is_valid) == "\x41");
+                snn_require(utf8::encode(0x41, buffer, assume::is_valid) == "\x41");
                 // COMBINING RING ABOVE
-                snn_require(utf8::encode(0x30A, buffer, promise::is_valid) == "\xCC\x8A");
+                snn_require(utf8::encode(0x30A, buffer, assume::is_valid) == "\xCC\x8A");
                 // EURO SIGN
-                snn_require(utf8::encode(0x20AC, buffer, promise::is_valid) == "\xE2\x82\xAC");
+                snn_require(utf8::encode(0x20AC, buffer, assume::is_valid) == "\xE2\x82\xAC");
                 // TANGERINE
-                snn_require(utf8::encode(0x1F34A, buffer, promise::is_valid) == "\xF0\x9F\x8D\x8A");
+                snn_require(utf8::encode(0x1F34A, buffer, assume::is_valid) == "\xF0\x9F\x8D\x8A");
             }
 
             {
@@ -46,13 +46,13 @@ namespace snn::app
 
             {
                 // LATIN CAPITAL LETTER A
-                snn_require(utf8::encode(0x41, promise::is_valid) == "\x41");
+                snn_require(utf8::encode(0x41, assume::is_valid) == "\x41");
                 // COMBINING RING ABOVE
-                snn_require(utf8::encode(0x30A, promise::is_valid) == "\xCC\x8A");
+                snn_require(utf8::encode(0x30A, assume::is_valid) == "\xCC\x8A");
                 // EURO SIGN
-                snn_require(utf8::encode(0x20AC, promise::is_valid) == "\xE2\x82\xAC");
+                snn_require(utf8::encode(0x20AC, assume::is_valid) == "\xE2\x82\xAC");
                 // TANGERINE
-                snn_require(utf8::encode(0x1F34A, promise::is_valid) == "\xF0\x9F\x8D\x8A");
+                snn_require(utf8::encode(0x1F34A, assume::is_valid) == "\xF0\x9F\x8D\x8A");
             }
 
             {
@@ -65,16 +65,16 @@ namespace snn::app
             {
                 str append_to;
                 // LATIN CAPITAL LETTER A
-                snn_require(utf8::encode(0x41, append_to, promise::is_valid) == "\x41");
+                snn_require(utf8::encode(0x41, append_to, assume::is_valid) == "\x41");
                 snn_require(append_to == "\x41");
                 // COMBINING RING ABOVE
-                snn_require(utf8::encode(0x30A, append_to, promise::is_valid) == "\xCC\x8A");
+                snn_require(utf8::encode(0x30A, append_to, assume::is_valid) == "\xCC\x8A");
                 snn_require(append_to == "\x41\xCC\x8A");
                 // EURO SIGN
-                snn_require(utf8::encode(0x20AC, append_to, promise::is_valid) == "\xE2\x82\xAC");
+                snn_require(utf8::encode(0x20AC, append_to, assume::is_valid) == "\xE2\x82\xAC");
                 snn_require(append_to == "\x41\xCC\x8A\xE2\x82\xAC");
                 // TANGERINE
-                snn_require(utf8::encode(0x1F34A, append_to, promise::is_valid) ==
+                snn_require(utf8::encode(0x1F34A, append_to, assume::is_valid) ==
                             "\xF0\x9F\x8D\x8A");
                 snn_require(append_to == "\x41\xCC\x8A\xE2\x82\xAC\xF0\x9F\x8D\x8A");
             }

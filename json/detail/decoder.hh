@@ -111,7 +111,7 @@ namespace snn::json::detail
                         if (rng_.drop_front("true"))
                         {
                             return make_node_(
-                                cstrview{initial_rng.without_suffix(rng_, promise::is_valid)},
+                                cstrview{initial_rng.without_suffix(rng_, assume::is_valid)},
                                 type::boolean_true);
                         }
                         break;
@@ -125,7 +125,7 @@ namespace snn::json::detail
                         if (rng_.drop_front("alse"))
                         {
                             return make_node_(
-                                cstrview{initial_rng.without_suffix(rng_, promise::is_valid)},
+                                cstrview{initial_rng.without_suffix(rng_, assume::is_valid)},
                                 type::boolean_false);
                         }
                         break;
@@ -138,7 +138,7 @@ namespace snn::json::detail
                         if (rng_.drop_front("null"))
                         {
                             return make_node_(
-                                cstrview{initial_rng.without_suffix(rng_, promise::is_valid)},
+                                cstrview{initial_rng.without_suffix(rng_, assume::is_valid)},
                                 type::null);
                         }
                         break;
@@ -247,7 +247,7 @@ namespace snn::json::detail
                     snn_should((write_rng.end() - write_rng.begin()) >= 4);
                     return range::unchecked::contiguous<char*>{
                         init::from,
-                        utf8::encode_up_to_4_bytes(cp, write_rng.begin(), promise::is_valid),
+                        utf8::encode_up_to_4_bytes(cp, write_rng.begin(), assume::is_valid),
                         write_rng.end()};
                 }
             }
@@ -296,7 +296,7 @@ namespace snn::json::detail
                     }
                 }
 
-                return make_node_(cstrview{initial_rng.without_suffix(rng_, promise::is_valid)}, t);
+                return make_node_(cstrview{initial_rng.without_suffix(rng_, assume::is_valid)}, t);
             }
 
             return eof_error_or_(error::invalid_number);
@@ -360,7 +360,7 @@ namespace snn::json::detail
 
             if (rng_.has_front('"'))
             {
-                const cstrview s{initial_rng.without_suffix(rng_, promise::is_valid)};
+                const cstrview s{initial_rng.without_suffix(rng_, assume::is_valid)};
                 rng_.drop_front(assume::not_empty);
                 return make_node_(s);
             }
@@ -387,7 +387,7 @@ namespace snn::json::detail
                 // Quotation mark.
                 if (c == '"')
                 {
-                    const cstrview s{initial_rng.without_suffix(write_rng, promise::is_valid)};
+                    const cstrview s{initial_rng.without_suffix(write_rng, assume::is_valid)};
                     if (utf8::is_valid(s))
                     {
                         return make_node_(s);

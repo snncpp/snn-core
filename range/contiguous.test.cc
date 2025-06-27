@@ -530,7 +530,7 @@ namespace snn
             snn_require(algo::is_equal(rng, {123, 456, 789}));
         }
 
-        // contiguous without_suffix(Rng suffix, promise::is_valid_t) const
+        // contiguous without_suffix(Rng suffix, assume::is_valid_t) const
         {
             array a{1, 3, 8, 10, 12};
 
@@ -545,7 +545,7 @@ namespace snn
 
             snn_require(algo::is_equal(suffix, {10, 12}));
 
-            auto r = rng.without_suffix(suffix, promise::is_valid);
+            auto r = rng.without_suffix(suffix, assume::is_valid);
 
             snn_require(algo::is_equal(r, {1, 3, 8}));
             snn_require(algo::is_equal(suffix, {10, 12}));
@@ -1453,7 +1453,7 @@ namespace snn
             snn_require(sub.count() == 6);
             snn_require(cstrview{sub} == "abc123");
 
-            auto r1 = rng.without_suffix(sub, promise::is_valid);
+            auto r1 = rng.without_suffix(sub, assume::is_valid);
             snn_require(r1.is_empty());
             snn_require(cstrview{r1} == "");
 
@@ -1464,7 +1464,7 @@ namespace snn
 
             sub.pop_front_n(3);
 
-            auto r2 = rng.without_suffix(sub, promise::is_valid);
+            auto r2 = rng.without_suffix(sub, assume::is_valid);
             snn_require(r2.count() == 3);
             snn_require(cstrview{r2} == "abc");
 

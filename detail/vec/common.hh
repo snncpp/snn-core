@@ -120,7 +120,7 @@ namespace snn::detail::vec
             --count_;
         }
 
-        void grow(const not_zero<usize> capacity, promise::is_valid_t)
+        void grow(const not_zero<usize> capacity, assume::is_valid_t)
         {
             snn_should(capacity.get() > capacity_ && capacity.get() <= vec::max_capacity<T>);
 
@@ -151,7 +151,7 @@ namespace snn::detail::vec
         }
 
         template <typename... Args>
-        void grow_append_inplace(const not_zero<usize> capacity, promise::is_valid_t,
+        void grow_append_inplace(const not_zero<usize> capacity, assume::is_valid_t,
                                  Args&&... args)
         {
             snn_should(count_ == capacity_);
@@ -307,7 +307,7 @@ namespace snn::detail::vec
             --count_;
         }
 
-        constexpr void grow(const not_zero<usize> capacity, promise::is_valid_t)
+        constexpr void grow(const not_zero<usize> capacity, assume::is_valid_t)
         {
             snn_should(capacity.get() > capacity_ && capacity.get() <= vec::max_capacity<T>);
 
@@ -323,7 +323,7 @@ namespace snn::detail::vec
         }
 
         template <typename... Args>
-        constexpr void grow_append_inplace(const not_zero<usize> capacity, promise::is_valid_t,
+        constexpr void grow_append_inplace(const not_zero<usize> capacity, assume::is_valid_t,
                                            Args&&... args)
         {
             snn_should(count_ == capacity_);

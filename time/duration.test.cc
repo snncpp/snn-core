@@ -67,7 +67,7 @@ namespace snn
             static_assert(d.nanoseconds() == 999'999'999);
         }
         {
-            constexpr time::duration d{8, 999'999'999, promise::is_valid};
+            constexpr time::duration d{8, 999'999'999, assume::is_valid};
             static_assert(d);
             static_assert(d.seconds() == 8);
             static_assert(d.nanoseconds() == 999'999'999);

@@ -88,7 +88,7 @@ namespace snn::detail::array_view
     // Uses a 256 byte lookup table on stack, so don't inline.
     __attribute__((noinline)) constexpr optional_index bmh(
         const char* const subject_data, const usize subject_size, const char* const needle_data,
-        const usize needle_size, const usize start_pos, promise::is_valid_t) noexcept
+        const usize needle_size, const usize start_pos, assume::is_valid_t) noexcept
     {
         snn_should(needle_size > 1 && needle_size < 256);
         snn_should(start_pos < subject_size && (subject_size - start_pos) >= needle_size);
@@ -232,7 +232,7 @@ namespace snn::detail::array_view
         if (remaining >= 1'000 && needle_size >= 4 && needle_size < 256)
         {
             return bmh(subject_data, subject_size, needle_data, needle_size, start_pos,
-                       promise::is_valid);
+                       assume::is_valid);
         }
 
         const usize needle_size_m_one = needle_size - 1;

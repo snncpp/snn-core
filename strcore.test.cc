@@ -2975,7 +2975,7 @@ namespace snn::app
                                         generic::error::unexpected_null_character);
 
                 s.view().fill('a');
-                nt = s.null_terminated(promise::is_valid);
+                nt = s.null_terminated(assume::is_valid);
                 snn_require(nt.to<cstrview>().size() == 3);
             }
 

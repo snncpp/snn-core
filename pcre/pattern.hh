@@ -112,7 +112,7 @@ namespace snn::pcre
                 matches ma{not_null{code_}, subject};
                 if (ma.is_valid())
                 {
-                    const not_null<pcre2_match_data_8*> match_data = ma.data(promise::is_valid);
+                    const not_null<pcre2_match_data_8*> match_data = ma.data(assume::is_valid);
 
                     constexpr usize start_offset             = 0;
                     constexpr u32 options                    = 0;

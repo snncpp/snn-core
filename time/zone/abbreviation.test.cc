@@ -40,9 +40,9 @@ namespace snn::app
             snn_require(time::zone::abbreviation{cstrview{"CEST"}}.view() == "CEST");
             snn_require(time::zone::abbreviation{cstrview{"+0945"}}.view() == "+0945");
             snn_require(time::zone::abbreviation{cstrview{"-01"}}.view() == "-01");
-            snn_require(time::zone::abbreviation{"CEST", promise::is_valid}.view() == "CEST");
-            snn_require(time::zone::abbreviation{"+0945", promise::is_valid}.view() == "+0945");
-            snn_require(time::zone::abbreviation{"-01", promise::is_valid}.view() == "-01");
+            snn_require(time::zone::abbreviation{"CEST", assume::is_valid}.view() == "CEST");
+            snn_require(time::zone::abbreviation{"+0945", assume::is_valid}.view() == "+0945");
+            snn_require(time::zone::abbreviation{"-01", assume::is_valid}.view() == "-01");
 
             // Alias
             static_assert(std::is_same_v<time::zone::abbr, time::zone::abbreviation>);

@@ -530,14 +530,14 @@ namespace snn::app
         {
             static_assert(implicitly_default_constructible<int>);
             static_assert(implicitly_default_constructible<str>);
-            static_assert(!implicitly_default_constructible<promise::is_valid_t>);
+            static_assert(!implicitly_default_constructible<assume::is_valid_t>);
 
             return true;
         }
 
         constexpr bool test_explicitly_default_constructible()
         {
-            static_assert(explicitly_default_constructible<promise::is_valid_t>);
+            static_assert(explicitly_default_constructible<assume::is_valid_t>);
             static_assert(!explicitly_default_constructible<int>);
             static_assert(!explicitly_default_constructible<str>);
 

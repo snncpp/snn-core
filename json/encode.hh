@@ -199,7 +199,7 @@ namespace snn::json
                                 }
                                 else
                                 {
-                                    utf8::encode(cp, append_to, promise::is_valid);
+                                    utf8::encode(cp, append_to, assume::is_valid);
                                 }
                             }
                             else

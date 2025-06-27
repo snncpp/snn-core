@@ -47,7 +47,7 @@ namespace snn::time
         }
 
         constexpr explicit duration(const i64 seconds, const u32 nanoseconds,
-                                    promise::is_valid_t) noexcept
+                                    assume::is_valid_t) noexcept
             : sec_{seconds},
               nano_{nanoseconds}
         {

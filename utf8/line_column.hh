@@ -45,7 +45,7 @@ namespace snn::utf8
                 }
             }
 
-            rng = initial_rng.without_suffix(rng, promise::is_valid);
+            rng = initial_rng.without_suffix(rng, assume::is_valid);
         }
 
         while (rng)

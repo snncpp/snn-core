@@ -167,7 +167,7 @@ namespace snn::time::zone::tzif
                     const auto abbr = abbreviations.view(abbr_pos, zero_pos - abbr_pos);
                     if (zone::abbr::is_valid(abbr))
                     {
-                        offsets.append({zone::abbr{abbr, promise::is_valid}, offset, is_dst});
+                        offsets.append({zone::abbr{abbr, assume::is_valid}, offset, is_dst});
                     }
                     else
                     {

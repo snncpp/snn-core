@@ -538,7 +538,7 @@ namespace snn
         // Non-throwing with promise.
 
         [[nodiscard]] constexpr null_term<const char*> null_terminated(
-            promise::is_valid_t) const noexcept
+            assume::is_valid_t) const noexcept
             requires(detail::strcore::is_null_terminated_v<Buffer>)
         {
             const auto s = view();

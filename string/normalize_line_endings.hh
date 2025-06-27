@@ -42,7 +42,7 @@ namespace snn::string
                 write_rng.pop_front(assume::not_empty) = c;
             }
 
-            return initial_rng.without_suffix(write_rng, promise::is_valid);
+            return initial_rng.without_suffix(write_rng, assume::is_valid);
         }
         return rng;
     }

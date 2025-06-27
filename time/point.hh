@@ -387,7 +387,7 @@ namespace snn::time
 
         constexpr point& add(const time::duration d) noexcept
         {
-            time::duration tmp{sec_, nano_, promise::is_valid};
+            time::duration tmp{sec_, nano_, assume::is_valid};
             tmp.add(d);
             sec_  = tmp.seconds();
             nano_ = tmp.nanoseconds();
@@ -430,7 +430,7 @@ namespace snn::time
 
         constexpr point& subtract(const time::duration d) noexcept
         {
-            time::duration tmp{sec_, nano_, promise::is_valid};
+            time::duration tmp{sec_, nano_, assume::is_valid};
             tmp.subtract(d);
             sec_  = tmp.seconds();
             nano_ = tmp.nanoseconds();
@@ -471,7 +471,7 @@ namespace snn::time
 
         [[nodiscard]] constexpr time::duration duration() const noexcept
         {
-            return time::duration{sec_ + internal_to_unix_, nano_, promise::is_valid};
+            return time::duration{sec_ + internal_to_unix_, nano_, assume::is_valid};
         }
 
         // ### Comparison

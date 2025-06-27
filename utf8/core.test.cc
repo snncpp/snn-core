@@ -222,22 +222,22 @@ namespace snn
         array<char, 8> buffer;
 
         // "LATIN CAPITAL LETTER A" (U+0041)
-        snn_require(utf8::encode_up_to_4_bytes(0x41, buffer.begin(), promise::is_valid) ==
+        snn_require(utf8::encode_up_to_4_bytes(0x41, buffer.begin(), assume::is_valid) ==
                     buffer.view(1).begin());
         snn_require(buffer.view() == "\x41\0\0\0\0\0\0\0");
 
         // "COMBINING RING ABOVE" (U+030A)
-        snn_require(utf8::encode_up_to_4_bytes(0x30A, buffer.begin(), promise::is_valid) ==
+        snn_require(utf8::encode_up_to_4_bytes(0x30A, buffer.begin(), assume::is_valid) ==
                     buffer.view(2).begin());
         snn_require(buffer.view() == "\xCC\x8A\0\0\0\0\0\0");
 
         // "EURO SIGN" (U+20AC)
-        snn_require(utf8::encode_up_to_4_bytes(0x20AC, buffer.begin(), promise::is_valid) ==
+        snn_require(utf8::encode_up_to_4_bytes(0x20AC, buffer.begin(), assume::is_valid) ==
                     buffer.view(3).begin());
         snn_require(buffer.view() == "\xE2\x82\xAC\0\0\0\0\0");
 
         // "TANGERINE" (U+1F34A)
-        snn_require(utf8::encode_up_to_4_bytes(0x1F34A, buffer.begin(), promise::is_valid) ==
+        snn_require(utf8::encode_up_to_4_bytes(0x1F34A, buffer.begin(), assume::is_valid) ==
                     buffer.view(4).begin());
         snn_require(buffer.view() == "\xF0\x9F\x8D\x8A\0\0\0\0");
     }

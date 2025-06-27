@@ -29,7 +29,7 @@ namespace snn::utf8
             {
                 const auto initial_rng = rng;
                 rng                    = utf8::skip(rng);
-                const auto skipped_rng = initial_rng.without_suffix(rng, promise::is_valid);
+                const auto skipped_rng = initial_rng.without_suffix(rng, assume::is_valid);
                 if (skipped_rng)
                 {
                     append_to.append(skipped_rng.view());

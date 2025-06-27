@@ -27,6 +27,6 @@ namespace snn::time::steady
         // structure is (tv_sec * 1^9 + tv_nsec) nanoseconds."
         // https://pubs.opengroup.org/onlinepubs/9699919799/functions/V2_chap02.html
 
-        return time::duration{ts.tv_sec, static_cast<u32>(ts.tv_nsec), promise::is_valid};
+        return time::duration{ts.tv_sec, static_cast<u32>(ts.tv_nsec), assume::is_valid};
     }
 }

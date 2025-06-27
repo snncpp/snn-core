@@ -348,7 +348,7 @@ namespace snn::time
                         --sec;
                         nano += 1'000'000'000;
                     }
-                    return time::duration{sec, to_u32(nano), promise::is_valid};
+                    return time::duration{sec, to_u32(nano), assume::is_valid};
                 }
                 else
                 {

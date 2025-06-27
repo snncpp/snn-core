@@ -211,7 +211,7 @@ namespace snn::utf8
 
     template <typename OutputIt>
     constexpr OutputIt encode_2_byte_sequence(const u32 cp, OutputIt dest,
-                                              promise::is_valid_t) noexcept
+                                              assume::is_valid_t) noexcept
     {
         snn_should(cp >= codepoint::first_in_2_byte_sequence &&
                    cp < codepoint::first_in_3_byte_sequence);
@@ -224,7 +224,7 @@ namespace snn::utf8
 
     template <typename OutputIt>
     constexpr OutputIt encode_3_byte_sequence(const u32 cp, OutputIt dest,
-                                              promise::is_valid_t) noexcept
+                                              assume::is_valid_t) noexcept
     {
         snn_should(cp >= codepoint::first_in_3_byte_sequence &&
                    cp < codepoint::first_in_4_byte_sequence);
@@ -238,7 +238,7 @@ namespace snn::utf8
 
     template <typename OutputIt>
     constexpr OutputIt encode_4_byte_sequence(const u32 cp, OutputIt dest,
-                                              promise::is_valid_t) noexcept
+                                              assume::is_valid_t) noexcept
     {
         snn_should(cp >= codepoint::first_in_4_byte_sequence && cp <= unicode::codepoint::max);
         // Binary UTF-8:        11110aaa 10bbbbbb 10cccccc 10dddddd
@@ -254,7 +254,7 @@ namespace snn::utf8
 
     template <typename OutputIt>
     [[nodiscard]] constexpr OutputIt encode_up_to_4_bytes(const u32 cp, OutputIt dest,
-                                                          promise::is_valid_t) noexcept
+                                                          assume::is_valid_t) noexcept
     {
         snn_should(is_valid(cp));
         if (cp < codepoint::first_in_2_byte_sequence)
@@ -264,13 +264,13 @@ namespace snn::utf8
         }
         if (cp < codepoint::first_in_3_byte_sequence)
         {
-            return encode_2_byte_sequence(cp, dest, promise::is_valid);
+            return encode_2_byte_sequence(cp, dest, assume::is_valid);
         }
         if (cp < codepoint::first_in_4_byte_sequence)
         {
-            return encode_3_byte_sequence(cp, dest, promise::is_valid);
+            return encode_3_byte_sequence(cp, dest, assume::is_valid);
         }
-        return encode_4_byte_sequence(cp, dest, promise::is_valid);
+        return encode_4_byte_sequence(cp, dest, assume::is_valid);
     }
 
     SNN_DIAGNOSTIC_POP

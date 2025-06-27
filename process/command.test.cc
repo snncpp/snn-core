@@ -35,19 +35,19 @@ namespace snn::app
                 str echo{"echo"};
 
                 cmd.clear();
-                cmd.append_command(echo, promise::is_valid);
+                cmd.append_command(echo, assume::is_valid);
                 cmd << " " << str{"One"} << " " << strbuf{} << " " << cstrview{"Three'''"};
                 snn_require(cmd.to<cstrview>() == R"(echo 'One' '' 'Three'\'\'\''')");
 
                 cmd.clear();
-                cmd.append_command(echo, promise::is_valid);
+                cmd.append_command(echo, assume::is_valid);
                 cmd << " " << cstrview{"'"};
                 cmd << " " << cstrview{"''"};
                 cmd << " " << cstrview{"'''"};
                 snn_require(cmd.to<cstrview>() == R"(echo ''\''' ''\'\''' ''\'\'\''')");
 
                 cmd.clear();
-                cmd.append_command(echo, promise::is_valid);
+                cmd.append_command(echo, assume::is_valid);
                 cmd << " " << cstrview{"a'b''c'''d"};
                 snn_require(cmd.to<cstrview>() == R"(echo 'a'\''b'\'\''c'\'\'\''d')");
 

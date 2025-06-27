@@ -193,7 +193,7 @@ namespace snn::app
                 snn_require(s.capacity() >= 384);
                 for (const auto b : range::integral<byte>{})
                 {
-                    utf8::encode(u32{b}, s, promise::is_valid);
+                    utf8::encode(u32{b}, s, assume::is_valid);
                 }
                 snn_require(s.size() == 384);
 

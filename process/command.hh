@@ -23,7 +23,7 @@ namespace snn::process
             cmd_.append(s);
         }
 
-        constexpr void append_command(const transient<cstrview> s, promise::is_valid_t)
+        constexpr void append_command(const transient<cstrview> s, assume::is_valid_t)
         {
             cmd_.append(s.get());
         }

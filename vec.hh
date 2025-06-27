@@ -287,7 +287,7 @@ namespace snn
         {
             if (buf_.count() == buf_.capacity()) [[unlikely]]
             {
-                buf_.grow(not_zero{check_capacity_(recommend_capacity_())}, promise::is_valid);
+                buf_.grow(not_zero{check_capacity_(recommend_capacity_())}, assume::is_valid);
             }
             mem::construct(not_null{buf_.end()}, std::move(value));
             buf_.increment_count(assume::has_capacity);
@@ -305,7 +305,7 @@ namespace snn
             {
                 // Arguments could come from within self, use slow grow path.
                 buf_.grow_append_inplace(not_zero{check_capacity_(recommend_capacity_())},
-                                         promise::is_valid, std::forward<Args>(args)...);
+                                         assume::is_valid, std::forward<Args>(args)...);
             }
         }
 
@@ -363,7 +363,7 @@ namespace snn
             if (capacity > buf_.capacity())
             {
                 buf_.grow(not_zero{check_capacity_(math::max(capacity, recommend_capacity_()))},
-                          promise::is_valid);
+                          assume::is_valid);
             }
         }
 
@@ -439,7 +439,7 @@ namespace snn
             {
                 if (buf_.count() == buf_.capacity()) [[unlikely]]
                 {
-                    buf_.grow(not_zero{check_capacity_(recommend_capacity_())}, promise::is_valid);
+                    buf_.grow(not_zero{check_capacity_(recommend_capacity_())}, assume::is_valid);
                 }
 
                 SNN_DIAGNOSTIC_PUSH

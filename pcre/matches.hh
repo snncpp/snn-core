@@ -127,7 +127,7 @@ namespace snn::pcre
 
         // #### Data
 
-        [[nodiscard]] not_null<pcre2_match_data_8*> data(promise::is_valid_t) const noexcept
+        [[nodiscard]] not_null<pcre2_match_data_8*> data(assume::is_valid_t) const noexcept
         {
             snn_assert(is_valid());
             return not_null{match_data_};
