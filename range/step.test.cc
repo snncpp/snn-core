@@ -47,14 +47,14 @@ namespace snn::app
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.front(promise::not_empty) == time::point{2021, 12, 1});
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == time::point{2021, 12, 1});
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.front(promise::not_empty) == time::point{2021, 12, 3});
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == time::point{2021, 12, 3});
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());

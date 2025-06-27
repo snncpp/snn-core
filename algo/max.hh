@@ -17,21 +17,21 @@ namespace snn::algo
 
     template <input_range Rng, typename TwoArgPred = fn::less_than>
     [[nodiscard]] constexpr auto max(Rng rng, TwoArgPred is_less = TwoArgPred{})
-        -> optional<result_compat_t<decltype(rng.front(promise::not_empty))>>
+        -> optional<result_compat_t<decltype(rng.front(assume::not_empty))>>
     {
         if (rng)
         {
-            val_or_ref max{rng.front(promise::not_empty)};
-            rng.drop_front(promise::not_empty);
+            val_or_ref max{rng.front(assume::not_empty)};
+            rng.drop_front(assume::not_empty);
 
             while (rng)
             {
-                decltype(auto) e = rng.front(promise::not_empty);
+                decltype(auto) e = rng.front(assume::not_empty);
                 if (is_less(std::as_const(max.get()), std::as_const(e)))
                 {
                     max.assign_or_rebind(std::forward<decltype(e)>(e));
                 }
-                rng.drop_front(promise::not_empty);
+                rng.drop_front(assume::not_empty);
             }
 
             return std::move(max).get();

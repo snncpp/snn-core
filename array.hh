@@ -211,13 +211,13 @@ namespace snn
             return optional<R>::default_error_code();
         }
 
-        [[nodiscard]] constexpr reference back(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr reference back(assume::not_empty_t) noexcept
             requires(Count > 0)
         {
             return priv_buf_[Count - 1];
         }
 
-        [[nodiscard]] constexpr const_reference back(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr const_reference back(assume::not_empty_t) const noexcept
             requires(Count > 0)
         {
             return priv_buf_[Count - 1];
@@ -245,13 +245,13 @@ namespace snn
             return optional<R>::default_error_code();
         }
 
-        [[nodiscard]] constexpr reference front(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr reference front(assume::not_empty_t) noexcept
             requires(Count > 0)
         {
             return priv_buf_[0];
         }
 
-        [[nodiscard]] constexpr const_reference front(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr const_reference front(assume::not_empty_t) const noexcept
             requires(Count > 0)
         {
             return priv_buf_[0];

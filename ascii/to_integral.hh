@@ -21,17 +21,17 @@ namespace snn::ascii
         requires same_as<front_value_t<Rng&>, char>
     [[nodiscard]] constexpr optional<UInt> to_integral(Rng rng) noexcept
     {
-        if (rng && chr::is_base<Base>(rng.front(promise::not_empty)))
+        if (rng && chr::is_base<Base>(rng.front(assume::not_empty)))
         {
-            UInt val = chr::decode_base<Base>(rng.front(promise::not_empty)); // Can't overflow.
-            rng.drop_front(promise::not_empty);
+            UInt val = chr::decode_base<Base>(rng.front(assume::not_empty)); // Can't overflow.
+            rng.drop_front(assume::not_empty);
 
             if (val || rng.is_empty()) // Not a leading zero or the only digit?
             {
                 while (rng)
                 {
-                    const char c = rng.front(promise::not_empty);
-                    rng.drop_front(promise::not_empty);
+                    const char c = rng.front(assume::not_empty);
+                    rng.drop_front(assume::not_empty);
 
                     if (!chr::is_base<Base>(c))
                     {
@@ -72,9 +72,9 @@ namespace snn::ascii
 
         if (rng)
         {
-            if (rng.front(promise::not_empty) == '-')
+            if (rng.front(assume::not_empty) == '-')
             {
-                rng.drop_front(promise::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 const auto u = to_integral<UInt, Base>(rng).value_or(constant::limit<UInt>::max);
 

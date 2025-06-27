@@ -22,14 +22,14 @@ namespace snn::app
             snn_require(!rng.is_empty());
 
             // Values are not cached (`range::view::cache` can be used if caching is needed).
-            snn_require(rng.front(promise::not_empty) == 0);
-            snn_require(rng.front(promise::not_empty) == 1);
-            snn_require(rng.front(promise::not_empty) == 2);
+            snn_require(rng.front(assume::not_empty) == 0);
+            snn_require(rng.front(assume::not_empty) == 1);
+            snn_require(rng.front(assume::not_empty) == 2);
 
-            rng.drop_front(promise::not_empty); // Does nothing.
+            rng.drop_front(assume::not_empty); // Does nothing.
 
-            snn_require(rng.front(promise::not_empty) == 3);
-            snn_require(rng.front(promise::not_empty) == 4);
+            snn_require(rng.front(assume::not_empty) == 3);
+            snn_require(rng.front(assume::not_empty) == 4);
 
             // `range::generate` is never empty.
             snn_require(rng);

@@ -46,23 +46,23 @@ namespace snn::app
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.front(promise::not_empty) == 3);
-            snn_require(rng.back(promise::not_empty) == 47);
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == 3);
+            snn_require(rng.back(assume::not_empty) == 47);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.front(promise::not_empty) == 7);
-            snn_require(rng.back(promise::not_empty) == 47);
-            rng.drop_back(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == 7);
+            snn_require(rng.back(assume::not_empty) == 47);
+            rng.drop_back(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.front(promise::not_empty) == 7);
-            snn_require(rng.back(promise::not_empty) == 7);
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == 7);
+            snn_require(rng.back(assume::not_empty) == 7);
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());
@@ -70,8 +70,8 @@ namespace snn::app
             // Types
             using range_type = range::view::drop_last<range::contiguous<int*>>;
             static_assert(std::is_same_v<decltype(rng), range_type>);
-            static_assert(std::is_same_v<decltype(rng.front(promise::not_empty)), int&>);
-            static_assert(std::is_same_v<decltype(rng.back(promise::not_empty)), int&>);
+            static_assert(std::is_same_v<decltype(rng.front(assume::not_empty)), int&>);
+            static_assert(std::is_same_v<decltype(rng.back(assume::not_empty)), int&>);
             static_assert(std::is_same_v<decltype(rng.begin()), range::iter::forward<range_type>>);
             static_assert(std::is_same_v<decltype(rng.end()), range::iter::forward_end>);
 

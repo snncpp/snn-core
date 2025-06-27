@@ -106,7 +106,7 @@ namespace snn::pool
 
         // #### Single element access
 
-        [[nodiscard]] constexpr T& back(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr T& back(assume::not_empty_t) noexcept
         {
             snn_assert(!is_empty());
             snn_should(back_ != nullptr);
@@ -182,7 +182,7 @@ namespace snn::pool
                 // Current block (last block).
                 if (rng)
                 {
-                    T* const block = rng.pop_back(promise::not_empty);
+                    T* const block = rng.pop_back(assume::not_empty);
                     while (next_ > block)
                     {
                         --next_;                        // Step back to the last element.
@@ -195,7 +195,7 @@ namespace snn::pool
                 // Remaining blocks.
                 while (rng)
                 {
-                    T* const block = rng.pop_back(promise::not_empty);
+                    T* const block = rng.pop_back(assume::not_empty);
                     next_          = block + elements_per_block_.get();
                     do
                     {

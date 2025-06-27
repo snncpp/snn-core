@@ -31,12 +31,12 @@ namespace snn::range::iter
 
         constexpr decltype(auto) operator*()
         {
-            return rng_.back(promise::not_empty);
+            return rng_.back(assume::not_empty);
         }
 
         constexpr reverse& operator++()
         {
-            rng_.drop_back(promise::not_empty);
+            rng_.drop_back(assume::not_empty);
             return *this;
         }
 

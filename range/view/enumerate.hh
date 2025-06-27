@@ -46,16 +46,16 @@ namespace snn::range::view
             return iter::forward_end{};
         }
 
-        constexpr void drop_front(promise::not_empty_t)
+        constexpr void drop_front(assume::not_empty_t)
         {
-            rng_.drop_front(promise::not_empty);
+            rng_.drop_front(assume::not_empty);
             ++index_;
         }
 
-        [[nodiscard]] constexpr auto front(promise::not_empty_t)
+        [[nodiscard]] constexpr auto front(assume::not_empty_t)
         {
-            using iv = snn::pair::index_value<usize, decltype(rng_.front(promise::not_empty))>;
-            return iv{index_, rng_.front(promise::not_empty)};
+            using iv = snn::pair::index_value<usize, decltype(rng_.front(assume::not_empty))>;
+            return iv{index_, rng_.front(assume::not_empty)};
         }
 
         [[nodiscard]] constexpr bool is_empty() const
@@ -94,28 +94,28 @@ namespace snn::range::view
             return iter::forward_end{};
         }
 
-        constexpr void drop_front(promise::not_empty_t)
+        constexpr void drop_front(assume::not_empty_t)
         {
-            rng_.drop_front(promise::not_empty);
+            rng_.drop_front(assume::not_empty);
             ++front_index_;
         }
 
-        constexpr void drop_back(promise::not_empty_t)
+        constexpr void drop_back(assume::not_empty_t)
         {
-            rng_.drop_back(promise::not_empty);
+            rng_.drop_back(assume::not_empty);
             --end_index_;
         }
 
-        [[nodiscard]] constexpr auto front(promise::not_empty_t)
+        [[nodiscard]] constexpr auto front(assume::not_empty_t)
         {
-            using iv = snn::pair::index_value<usize, decltype(rng_.front(promise::not_empty))>;
-            return iv{front_index_, rng_.front(promise::not_empty)};
+            using iv = snn::pair::index_value<usize, decltype(rng_.front(assume::not_empty))>;
+            return iv{front_index_, rng_.front(assume::not_empty)};
         }
 
-        [[nodiscard]] constexpr auto back(promise::not_empty_t)
+        [[nodiscard]] constexpr auto back(assume::not_empty_t)
         {
-            using iv = snn::pair::index_value<usize, decltype(rng_.back(promise::not_empty))>;
-            return iv{end_index_ - 1, rng_.back(promise::not_empty)};
+            using iv = snn::pair::index_value<usize, decltype(rng_.back(assume::not_empty))>;
+            return iv{end_index_ - 1, rng_.back(assume::not_empty)};
         }
 
         [[nodiscard]] constexpr bool is_empty() const

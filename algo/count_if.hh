@@ -19,12 +19,12 @@ namespace snn::algo
         usize count = 0;
         while (rng)
         {
-            const auto& e = rng.front(promise::not_empty);
+            const auto& e = rng.front(assume::not_empty);
             if (p(e))
             {
                 ++count;
             }
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
         }
         return count;
     }

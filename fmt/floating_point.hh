@@ -190,8 +190,8 @@ namespace snn
 
             snn_should(format_string.size() < fmt_buf.size());
             fmt_buf.fill_front(format_string);
-            snn_should(fmt_buf.back(promise::not_empty) == '\0');
-            fmt_buf.back(promise::not_empty) = '\0'; // Redundant, just to be absolutely safe.
+            snn_should(fmt_buf.back(assume::not_empty) == '\0');
+            fmt_buf.back(assume::not_empty) = '\0'; // Redundant, just to be absolutely safe.
 
             array<char, 64> fixed_buf;
 

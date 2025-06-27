@@ -20,12 +20,12 @@ namespace snn::algo
         while (rng)
         {
             --index;
-            const auto& e = rng.back(promise::not_empty);
+            const auto& e = rng.back(assume::not_empty);
             if (p(e))
             {
                 return index;
             }
-            rng.drop_back(promise::not_empty);
+            rng.drop_back(assume::not_empty);
         }
         return constant::npos;
     }

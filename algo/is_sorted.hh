@@ -19,13 +19,13 @@ namespace snn::algo
     {
         if (rng)
         {
-            val_or_ref prev{rng.front(promise::not_empty)};
-            rng.drop_front(promise::not_empty);
+            val_or_ref prev{rng.front(assume::not_empty)};
+            rng.drop_front(assume::not_empty);
 
             while (rng)
             {
-                val_or_ref cur{rng.front(promise::not_empty)};
-                rng.drop_front(promise::not_empty);
+                val_or_ref cur{rng.front(assume::not_empty)};
+                rng.drop_front(assume::not_empty);
 
                 if (is_less(std::as_const(cur.get()), std::as_const(prev.get())))
                 {

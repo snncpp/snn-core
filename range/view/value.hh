@@ -52,15 +52,15 @@ namespace snn::range::view
             return iter::forward_end{};
         }
 
-        constexpr void drop_front(promise::not_empty_t)
+        constexpr void drop_front(assume::not_empty_t)
         {
-            rng_.drop_front(promise::not_empty);
+            rng_.drop_front(assume::not_empty);
         }
 
-        [[nodiscard]] constexpr auto front(promise::not_empty_t)
-            -> remove_cv_rvalue_ref_t<decltype(rng_.front(promise::not_empty).value())>
+        [[nodiscard]] constexpr auto front(assume::not_empty_t)
+            -> remove_cv_rvalue_ref_t<decltype(rng_.front(assume::not_empty).value())>
         {
-            return rng_.front(promise::not_empty).value();
+            return rng_.front(assume::not_empty).value();
         }
 
         [[nodiscard]] constexpr bool is_empty() const

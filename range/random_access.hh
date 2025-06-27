@@ -74,7 +74,7 @@ namespace snn::range
 
         // #### Forward
 
-        constexpr void drop_front(promise::not_empty_t)
+        constexpr void drop_front(assume::not_empty_t)
         {
             snn_assert(first_ != last_);
             ++first_;
@@ -98,13 +98,13 @@ namespace snn::range
             return nullopt;
         }
 
-        [[nodiscard]] constexpr dereference_type front(promise::not_empty_t)
+        [[nodiscard]] constexpr dereference_type front(assume::not_empty_t)
         {
             snn_assert(first_ != last_);
             return *first_;
         }
 
-        [[nodiscard]] constexpr const_dereference_type front(promise::not_empty_t) const
+        [[nodiscard]] constexpr const_dereference_type front(assume::not_empty_t) const
         {
             snn_assert(first_ != last_);
             return *first_;
@@ -130,19 +130,19 @@ namespace snn::range
             return nullopt;
         }
 
-        [[nodiscard]] constexpr dereference_type back(promise::not_empty_t)
+        [[nodiscard]] constexpr dereference_type back(assume::not_empty_t)
         {
             snn_assert(first_ != last_);
             return *(last_ - 1);
         }
 
-        [[nodiscard]] constexpr const_dereference_type back(promise::not_empty_t) const
+        [[nodiscard]] constexpr const_dereference_type back(assume::not_empty_t) const
         {
             snn_assert(first_ != last_);
             return *(last_ - 1);
         }
 
-        constexpr void drop_back(promise::not_empty_t)
+        constexpr void drop_back(assume::not_empty_t)
         {
             snn_assert(first_ != last_);
             --last_;

@@ -38,7 +38,7 @@ namespace snn::app
             snn_require(combined.count() == schemes.count());
 
             snn_require(combined);
-            const auto unknown = combined.front(promise::not_empty);
+            const auto unknown = combined.front(assume::not_empty);
             snn_require(unknown.first == encoding::scheme::unknown);
             snn_require(unknown.second == "Unknown");
 

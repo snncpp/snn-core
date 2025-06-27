@@ -32,12 +32,12 @@ namespace snn::algo
             range::unchecked::forward ub{init::from, b.begin(), b.end()};
             while (a)
             {
-                if (!is_equal(a.front(promise::not_empty), ub.front(promise::not_empty)))
+                if (!is_equal(a.front(assume::not_empty), ub.front(assume::not_empty)))
                 {
                     return false;
                 }
-                a.drop_front(promise::not_empty);
-                ub.drop_front(promise::not_empty);
+                a.drop_front(assume::not_empty);
+                ub.drop_front(assume::not_empty);
             }
 
             return true;
@@ -46,12 +46,12 @@ namespace snn::algo
         {
             while (a && b)
             {
-                if (!is_equal(a.front(promise::not_empty), b.front(promise::not_empty)))
+                if (!is_equal(a.front(assume::not_empty), b.front(assume::not_empty)))
                 {
                     return false;
                 }
-                a.drop_front(promise::not_empty);
-                b.drop_front(promise::not_empty);
+                a.drop_front(assume::not_empty);
+                b.drop_front(assume::not_empty);
             }
             return a.is_empty() && b.is_empty();
         }

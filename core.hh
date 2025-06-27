@@ -704,12 +704,12 @@ namespace snn
     // ### has_drop_back
 
     template <typename T>
-    concept has_drop_back = requires(T& v) { v.drop_back(promise::not_empty); };
+    concept has_drop_back = requires(T& v) { v.drop_back(assume::not_empty); };
 
     // ### has_drop_front
 
     template <typename T>
-    concept has_drop_front = requires(T& v) { v.drop_front(promise::not_empty); };
+    concept has_drop_front = requires(T& v) { v.drop_front(assume::not_empty); };
 
     // ### has_to
 
@@ -760,7 +760,7 @@ namespace snn
     template <typename T>
     struct front_value
     {
-        using type = std::remove_cvref_t<decltype(std::declval<T>().front(promise::not_empty))>;
+        using type = std::remove_cvref_t<decltype(std::declval<T>().front(assume::not_empty))>;
     };
 
     template <typename T>

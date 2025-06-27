@@ -18,8 +18,8 @@ namespace snn::algo
     {
         while (rng)
         {
-            f(rng.front(promise::not_empty));
-            rng.drop_front(promise::not_empty);
+            f(rng.front(assume::not_empty));
+            rng.drop_front(assume::not_empty);
         }
     }
 }

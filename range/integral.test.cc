@@ -21,16 +21,16 @@ namespace snn::app
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.front(promise::not_empty) == 0);
-            snn_require(rng.back(promise::not_empty) == 4294967295);
+            snn_require(rng.front(assume::not_empty) == 0);
+            snn_require(rng.back(assume::not_empty) == 4294967295);
 
-            rng.drop_front(promise::not_empty);
-            snn_require(rng.front(promise::not_empty) == 1);
-            snn_require(rng.back(promise::not_empty) == 4294967295);
+            rng.drop_front(assume::not_empty);
+            snn_require(rng.front(assume::not_empty) == 1);
+            snn_require(rng.back(assume::not_empty) == 4294967295);
 
-            rng.drop_back(promise::not_empty);
-            snn_require(rng.front(promise::not_empty) == 1);
-            snn_require(rng.back(promise::not_empty) == 4294967294);
+            rng.drop_back(assume::not_empty);
+            snn_require(rng.front(assume::not_empty) == 1);
+            snn_require(rng.back(assume::not_empty) == 4294967294);
 
             return true;
         }
@@ -43,8 +43,8 @@ namespace snn::app
                 snn_require(rng);
                 snn_require(!rng.is_empty());
 
-                snn_require(rng.front(promise::not_empty) == -2147483648);
-                snn_require(rng.back(promise::not_empty) == 2147483647);
+                snn_require(rng.front(assume::not_empty) == -2147483648);
+                snn_require(rng.back(assume::not_empty) == 2147483647);
             }
 
             {
@@ -59,24 +59,24 @@ namespace snn::app
                 snn_require(rng);
                 snn_require(!rng.is_empty());
 
-                snn_require(rng.front(promise::not_empty) == -128);
-                snn_require(rng.back(promise::not_empty) == 127);
+                snn_require(rng.front(assume::not_empty) == -128);
+                snn_require(rng.back(assume::not_empty) == 127);
 
-                rng.drop_front(promise::not_empty);
-
-                snn_require(rng);
-                snn_require(!rng.is_empty());
-
-                snn_require(rng.front(promise::not_empty) == -127);
-                snn_require(rng.back(promise::not_empty) == 127);
-
-                rng.drop_back(promise::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(rng);
                 snn_require(!rng.is_empty());
 
-                snn_require(rng.front(promise::not_empty) == -127);
-                snn_require(rng.back(promise::not_empty) == 126);
+                snn_require(rng.front(assume::not_empty) == -127);
+                snn_require(rng.back(assume::not_empty) == 127);
+
+                rng.drop_back(assume::not_empty);
+
+                snn_require(rng);
+                snn_require(!rng.is_empty());
+
+                snn_require(rng.front(assume::not_empty) == -127);
+                snn_require(rng.back(assume::not_empty) == 126);
 
                 // Iterator types.
                 static_assert(std::is_same_v<decltype(rng.begin()),

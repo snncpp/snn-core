@@ -37,14 +37,14 @@ namespace snn::range::view
             return iter::reverse_end{};
         }
 
-        constexpr void drop_front(promise::not_empty_t)
+        constexpr void drop_front(assume::not_empty_t)
         {
-            rng_.drop_back(promise::not_empty);
+            rng_.drop_back(assume::not_empty);
         }
 
-        [[nodiscard]] constexpr decltype(auto) front(promise::not_empty_t)
+        [[nodiscard]] constexpr decltype(auto) front(assume::not_empty_t)
         {
-            return rng_.back(promise::not_empty);
+            return rng_.back(assume::not_empty);
         }
 
         [[nodiscard]] constexpr bool is_empty() const

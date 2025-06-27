@@ -20,7 +20,7 @@ namespace snn::utf8
     namespace detail
     {
         constexpr usize pad_fill_size(const usize count, const cstrview pad_string,
-                                      promise::not_empty_t)
+                                      assume::not_empty_t)
         {
             snn_should(!pad_string.is_empty());
 
@@ -120,9 +120,9 @@ namespace snn::utf8
             const usize left_count  = fill_count / 2;
             const usize right_count = fill_count - left_count;
 
-            const usize left_fill_size = detail::pad_fill_size(left_count, ps, promise::not_empty);
+            const usize left_fill_size = detail::pad_fill_size(left_count, ps, assume::not_empty);
             const usize right_fill_size =
-                detail::pad_fill_size(right_count, ps, promise::not_empty);
+                detail::pad_fill_size(right_count, ps, assume::not_empty);
 
             // An overflow here is harmless.
             s.reserve_append(left_fill_size + right_fill_size);
@@ -180,7 +180,7 @@ namespace snn::utf8
         if (count > current_count)
         {
             const usize fill_count = count - current_count;
-            const usize fill_size  = detail::pad_fill_size(fill_count, ps, promise::not_empty);
+            const usize fill_size  = detail::pad_fill_size(fill_count, ps, assume::not_empty);
             s.insert_for_overwrite(0, fill_size).fill(ps);
         }
     }
@@ -233,7 +233,7 @@ namespace snn::utf8
         if (count > current_count)
         {
             const usize fill_count = count - current_count;
-            const usize fill_size  = detail::pad_fill_size(fill_count, ps, promise::not_empty);
+            const usize fill_size  = detail::pad_fill_size(fill_count, ps, assume::not_empty);
             s.append_for_overwrite(fill_size).fill(ps);
         }
     }

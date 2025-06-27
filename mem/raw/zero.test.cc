@@ -25,8 +25,8 @@ namespace snn
             mem::raw::zero(buf.writable(), byte_size{1});
             snn_require(buf.size() == 64);
             snn_require(buf == "\0aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            snn_require(buf.front(promise::not_empty) == '\0');
-            snn_require(buf.back(promise::not_empty) == 'a');
+            snn_require(buf.front(assume::not_empty) == '\0');
+            snn_require(buf.back(assume::not_empty) == 'a');
 
             buf.at(0).value() = 'a';
             snn_require(buf.size() == 64);
@@ -49,12 +49,12 @@ namespace snn
 
             v.append(123);
             v.append(456);
-            snn_require(v.front(promise::not_empty) == 123);
-            snn_require(v.back(promise::not_empty) == 456);
+            snn_require(v.front(assume::not_empty) == 123);
+            snn_require(v.back(assume::not_empty) == 456);
 
             mem::raw::zero(v);
-            snn_require(v.front(promise::not_empty) == 0);
-            snn_require(v.back(promise::not_empty) == 0);
+            snn_require(v.front(assume::not_empty) == 0);
+            snn_require(v.back(assume::not_empty) == 0);
         }
     }
 }

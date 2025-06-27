@@ -308,40 +308,40 @@ namespace snn
         snn_static_require(app::example());
         snn_static_require(app::test_pad());
 
-        static_assert(utf8::detail::pad_fill_size(0, "a", promise::not_empty) == 0);
-        static_assert(utf8::detail::pad_fill_size(1, "a", promise::not_empty) == 1);
-        static_assert(utf8::detail::pad_fill_size(2, "a", promise::not_empty) == 2);
-        static_assert(utf8::detail::pad_fill_size(3, "a", promise::not_empty) == 3);
-        static_assert(utf8::detail::pad_fill_size(4, "a", promise::not_empty) == 4);
+        static_assert(utf8::detail::pad_fill_size(0, "a", assume::not_empty) == 0);
+        static_assert(utf8::detail::pad_fill_size(1, "a", assume::not_empty) == 1);
+        static_assert(utf8::detail::pad_fill_size(2, "a", assume::not_empty) == 2);
+        static_assert(utf8::detail::pad_fill_size(3, "a", assume::not_empty) == 3);
+        static_assert(utf8::detail::pad_fill_size(4, "a", assume::not_empty) == 4);
 
-        static_assert(utf8::detail::pad_fill_size(0, "abc", promise::not_empty) == 0);
-        static_assert(utf8::detail::pad_fill_size(1, "abc", promise::not_empty) == 1);
-        static_assert(utf8::detail::pad_fill_size(2, "abc", promise::not_empty) == 2);
-        static_assert(utf8::detail::pad_fill_size(3, "abc", promise::not_empty) == 3);
-        static_assert(utf8::detail::pad_fill_size(4, "abc", promise::not_empty) == 4);
+        static_assert(utf8::detail::pad_fill_size(0, "abc", assume::not_empty) == 0);
+        static_assert(utf8::detail::pad_fill_size(1, "abc", assume::not_empty) == 1);
+        static_assert(utf8::detail::pad_fill_size(2, "abc", assume::not_empty) == 2);
+        static_assert(utf8::detail::pad_fill_size(3, "abc", assume::not_empty) == 3);
+        static_assert(utf8::detail::pad_fill_size(4, "abc", assume::not_empty) == 4);
 
-        static_assert(utf8::detail::pad_fill_size(0, "ä", promise::not_empty) == 0);
-        static_assert(utf8::detail::pad_fill_size(1, "ä", promise::not_empty) == 2);
-        static_assert(utf8::detail::pad_fill_size(2, "ä", promise::not_empty) == 4);
-        static_assert(utf8::detail::pad_fill_size(3, "ä", promise::not_empty) == 6);
-        static_assert(utf8::detail::pad_fill_size(4, "ä", promise::not_empty) == 8);
+        static_assert(utf8::detail::pad_fill_size(0, "ä", assume::not_empty) == 0);
+        static_assert(utf8::detail::pad_fill_size(1, "ä", assume::not_empty) == 2);
+        static_assert(utf8::detail::pad_fill_size(2, "ä", assume::not_empty) == 4);
+        static_assert(utf8::detail::pad_fill_size(3, "ä", assume::not_empty) == 6);
+        static_assert(utf8::detail::pad_fill_size(4, "ä", assume::not_empty) == 8);
 
-        static_assert(utf8::detail::pad_fill_size(0, "oä", promise::not_empty) == 0);
-        static_assert(utf8::detail::pad_fill_size(1, "oä", promise::not_empty) == 1);
-        static_assert(utf8::detail::pad_fill_size(2, "oä", promise::not_empty) == 3);
-        static_assert(utf8::detail::pad_fill_size(3, "oä", promise::not_empty) == 4);
-        static_assert(utf8::detail::pad_fill_size(4, "oä", promise::not_empty) == 6);
+        static_assert(utf8::detail::pad_fill_size(0, "oä", assume::not_empty) == 0);
+        static_assert(utf8::detail::pad_fill_size(1, "oä", assume::not_empty) == 1);
+        static_assert(utf8::detail::pad_fill_size(2, "oä", assume::not_empty) == 3);
+        static_assert(utf8::detail::pad_fill_size(3, "oä", assume::not_empty) == 4);
+        static_assert(utf8::detail::pad_fill_size(4, "oä", assume::not_empty) == 6);
 
-        static_assert(utf8::detail::pad_fill_size(0, "äo", promise::not_empty) == 0);
-        static_assert(utf8::detail::pad_fill_size(1, "äo", promise::not_empty) == 2);
-        static_assert(utf8::detail::pad_fill_size(2, "äo", promise::not_empty) == 3);
-        static_assert(utf8::detail::pad_fill_size(3, "äo", promise::not_empty) == 5);
-        static_assert(utf8::detail::pad_fill_size(4, "äo", promise::not_empty) == 6);
+        static_assert(utf8::detail::pad_fill_size(0, "äo", assume::not_empty) == 0);
+        static_assert(utf8::detail::pad_fill_size(1, "äo", assume::not_empty) == 2);
+        static_assert(utf8::detail::pad_fill_size(2, "äo", assume::not_empty) == 3);
+        static_assert(utf8::detail::pad_fill_size(3, "äo", assume::not_empty) == 5);
+        static_assert(utf8::detail::pad_fill_size(4, "äo", assume::not_empty) == 6);
 
-        static_assert(utf8::detail::pad_fill_size(0, "äö", promise::not_empty) == 0);
-        static_assert(utf8::detail::pad_fill_size(1, "äö", promise::not_empty) == 2);
-        static_assert(utf8::detail::pad_fill_size(2, "äö", promise::not_empty) == 4);
-        static_assert(utf8::detail::pad_fill_size(3, "äö", promise::not_empty) == 6);
-        static_assert(utf8::detail::pad_fill_size(4, "äö", promise::not_empty) == 8);
+        static_assert(utf8::detail::pad_fill_size(0, "äö", assume::not_empty) == 0);
+        static_assert(utf8::detail::pad_fill_size(1, "äö", assume::not_empty) == 2);
+        static_assert(utf8::detail::pad_fill_size(2, "äö", assume::not_empty) == 4);
+        static_assert(utf8::detail::pad_fill_size(3, "äö", assume::not_empty) == 6);
+        static_assert(utf8::detail::pad_fill_size(4, "äö", assume::not_empty) == 8);
     }
 }

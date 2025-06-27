@@ -46,8 +46,8 @@ namespace snn::app
             snn_require(rng.view() == "f");
 
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty) == 'f');
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == 'f');
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());
@@ -314,11 +314,11 @@ namespace snn
 
         // constexpr explicit operator bool() const
         // constexpr bool is_empty() const
-        // constexpr void drop_front(promise::not_empty_t)
+        // constexpr void drop_front(assume::not_empty_t)
         // constexpr optional<dereference_type> front()
         // constexpr optional<const_dereference_type> front() const
-        // constexpr dereference_type front(promise::not_empty_t)
-        // constexpr const_dereference_type front(promise::not_empty_t) const
+        // constexpr dereference_type front(assume::not_empty_t)
+        // constexpr const_dereference_type front(assume::not_empty_t) const
         {
             array a{123, 456};
 
@@ -330,19 +330,19 @@ namespace snn
             snn_require(rng.count() == 2);
             snn_require(rng.byte_size().get() == 8);
 
-            snn_require(rng.front(promise::not_empty) == 123);
+            snn_require(rng.front(assume::not_empty) == 123);
             snn_require(rng.front().value() == 123);
-            snn_require(std::as_const(rng).front(promise::not_empty) == 123);
+            snn_require(std::as_const(rng).front(assume::not_empty) == 123);
             snn_require(std::as_const(rng).front().value() == 123);
 
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.front(promise::not_empty) == 456);
+            snn_require(rng.front(assume::not_empty) == 456);
 
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());
@@ -353,9 +353,9 @@ namespace snn
 
         // constexpr optional<dereference_type> back()
         // constexpr optional<const_dereference_type> back() const
-        // constexpr dereference_type back(promise::not_empty_t)
-        // constexpr const_dereference_type back(promise::not_empty_t) const
-        // constexpr void drop_back(promise::not_empty_t)
+        // constexpr dereference_type back(assume::not_empty_t)
+        // constexpr const_dereference_type back(assume::not_empty_t) const
+        // constexpr void drop_back(assume::not_empty_t)
         {
             array a{123, 456};
 
@@ -364,19 +364,19 @@ namespace snn
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.back(promise::not_empty) == 456);
+            snn_require(rng.back(assume::not_empty) == 456);
             snn_require(rng.back().value() == 456);
-            snn_require(std::as_const(rng).back(promise::not_empty) == 456);
+            snn_require(std::as_const(rng).back(assume::not_empty) == 456);
             snn_require(std::as_const(rng).back().value() == 456);
 
-            rng.drop_back(promise::not_empty);
+            rng.drop_back(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.back(promise::not_empty) == 123);
+            snn_require(rng.back(assume::not_empty) == 123);
 
-            rng.drop_back(promise::not_empty);
+            rng.drop_back(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());
@@ -407,11 +407,11 @@ namespace snn
             snn_require(std::as_const(rng).at(1, assume::within_bounds) == 456);
             snn_require(std::as_const(rng).at(1).value() == 456);
 
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng.count() == 1);
 
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng.count() == 0);
 
@@ -423,7 +423,7 @@ namespace snn
         }
 
         // constexpr optional<dereference_type> pop_back() noexcept
-        // constexpr dereference_type pop_back(promise::not_empty_t) noexcept
+        // constexpr dereference_type pop_back(assume::not_empty_t) noexcept
         {
             array a{123, 456};
 
@@ -431,7 +431,7 @@ namespace snn
 
             snn_require(rng.count() == 2);
 
-            snn_require(rng.pop_back(promise::not_empty) == 456);
+            snn_require(rng.pop_back(assume::not_empty) == 456);
 
             snn_require(rng.count() == 1);
 
@@ -445,7 +445,7 @@ namespace snn
         }
 
         // constexpr optional<dereference_type> pop_front() noexcept
-        // constexpr dereference_type pop_front(promise::not_empty_t) noexcept
+        // constexpr dereference_type pop_front(assume::not_empty_t) noexcept
         {
             array a{123, 456};
 
@@ -453,7 +453,7 @@ namespace snn
 
             snn_require(rng.count() == 2);
 
-            snn_require(rng.pop_front(promise::not_empty) == 123);
+            snn_require(rng.pop_front(assume::not_empty) == 123);
 
             snn_require(rng.count() == 1);
 
@@ -597,7 +597,7 @@ namespace snn
             snn_require(rng.has_back(8));
             snn_require(!rng.has_back(3));
 
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
             snn_require(rng.count() == 1);
 
             snn_require(rng.has_front(8));
@@ -605,7 +605,7 @@ namespace snn
             snn_require(rng.has_back(8));
             snn_require(!rng.has_back(3));
 
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
             snn_require(rng.is_empty());
 
             snn_require(!rng.has_front(8));
@@ -740,34 +740,34 @@ namespace snn
             static_assert(!rng.none(math::fn::is_odd{}));
         }
 
-        // void drop_front(promise::not_empty_t)
+        // void drop_front(assume::not_empty_t)
         {
             range::contiguous rng{"abcdef"};
 
             snn_require(rng.count() == 6);
-            snn_require(rng.front(promise::not_empty) == 'a');
-            snn_require(rng.back(promise::not_empty) == 'f');
+            snn_require(rng.front(assume::not_empty) == 'a');
+            snn_require(rng.back(assume::not_empty) == 'f');
 
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng.count() == 5);
-            snn_require(rng.front(promise::not_empty) == 'b');
-            snn_require(rng.back(promise::not_empty) == 'f');
+            snn_require(rng.front(assume::not_empty) == 'b');
+            snn_require(rng.back(assume::not_empty) == 'f');
         }
 
-        // void drop_back(promise::not_empty_t)
+        // void drop_back(assume::not_empty_t)
         {
             range::contiguous rng{"abcdef"};
 
             snn_require(rng.count() == 6);
-            snn_require(rng.front(promise::not_empty) == 'a');
-            snn_require(rng.back(promise::not_empty) == 'f');
+            snn_require(rng.front(assume::not_empty) == 'a');
+            snn_require(rng.back(assume::not_empty) == 'f');
 
-            rng.drop_back(promise::not_empty);
+            rng.drop_back(assume::not_empty);
 
             snn_require(rng.count() == 5);
-            snn_require(rng.front(promise::not_empty) == 'a');
-            snn_require(rng.back(promise::not_empty) == 'e');
+            snn_require(rng.front(assume::not_empty) == 'a');
+            snn_require(rng.back(assume::not_empty) == 'e');
         }
 
         // contiguous pop_back_n(const usize count)
@@ -783,17 +783,17 @@ namespace snn
 
             r = rng.pop_back_n(2);
             snn_require(r.count() == 2);
-            snn_require(r.front(promise::not_empty) == 'e');
-            snn_require(r.back(promise::not_empty) == 'f');
+            snn_require(r.front(assume::not_empty) == 'e');
+            snn_require(r.back(assume::not_empty) == 'f');
 
             snn_require(rng.count() == 4);
-            snn_require(rng.front(promise::not_empty) == 'a');
-            snn_require(rng.back(promise::not_empty) == 'd');
+            snn_require(rng.front(assume::not_empty) == 'a');
+            snn_require(rng.back(assume::not_empty) == 'd');
 
             r = rng.pop_back_n(5);
             snn_require(r.count() == 4);
-            snn_require(r.front(promise::not_empty) == 'a');
-            snn_require(r.back(promise::not_empty) == 'd');
+            snn_require(r.front(assume::not_empty) == 'a');
+            snn_require(r.back(assume::not_empty) == 'd');
 
             snn_require(rng.is_empty());
             snn_require(rng.begin() == rng.end());
@@ -809,8 +809,8 @@ namespace snn
 
             auto r = rng.pop_back_n(6);
             snn_require(r.count() == 6);
-            snn_require(r.front(promise::not_empty) == 'a');
-            snn_require(r.back(promise::not_empty) == 'f');
+            snn_require(r.front(assume::not_empty) == 'a');
+            snn_require(r.back(assume::not_empty) == 'f');
 
             snn_require(rng.is_empty());
             snn_require(rng.begin() == rng.end());
@@ -828,10 +828,10 @@ namespace snn
             snn_require(rng.at(25, assume::within_bounds) == 'z');
             snn_require(!rng.at(26).has_value());
 
-            snn_require(rng.back(promise::not_empty) == 'z');
-            snn_require(rng.pop_back(promise::not_empty) == 'z');
+            snn_require(rng.back(assume::not_empty) == 'z');
+            snn_require(rng.pop_back(assume::not_empty) == 'z');
             snn_require(rng.count() == 25);
-            snn_require(rng.back(promise::not_empty) == 'y');
+            snn_require(rng.back(assume::not_empty) == 'y');
             snn_require(rng.back().value() == 'y');
 
             snn_require(rng.has_front('a'));
@@ -940,9 +940,9 @@ namespace snn
             static_assert(rng.has_front("abcdef"));
             static_assert(rng.has_front<4>("efg"));
             static_assert(!rng.has_front<4>("eeg"));
-            static_assert(rng.front(promise::not_empty) == 'a');
+            static_assert(rng.front(assume::not_empty) == 'a');
             static_assert(rng.front().value() == 'a');
-            static_assert(rng.back(promise::not_empty) == 'z');
+            static_assert(rng.back(assume::not_empty) == 'z');
             static_assert(rng.back().value() == 'z');
             static_assert(rng.at(1, assume::within_bounds) == 'b');
             static_assert(rng.at(1).value() == 'b');
@@ -1047,9 +1047,9 @@ namespace snn
             range::contiguous rng{".,abc123ghi000456"};
             snn_require(rng.count() == 17);
 
-            snn_require(rng.front(promise::not_empty) == '.');
+            snn_require(rng.front(assume::not_empty) == '.');
             snn_require(rng.count() == 17);
-            snn_require(rng.pop_front(promise::not_empty) == '.');
+            snn_require(rng.pop_front(assume::not_empty) == '.');
             snn_require(rng.count() == 16);
 
             snn_require(rng.front().value() == ',');
@@ -1347,7 +1347,7 @@ namespace snn
         {
             range::contiguous rng{"a123"};
             snn_require(rng.count() == 4);
-            snn_require(rng.back(promise::not_empty) == '3');
+            snn_require(rng.back(assume::not_empty) == '3');
             {
                 auto r = rng.pop_back_while(chr::is_alpha_lower);
                 snn_require(r.count() == 0);
@@ -1355,7 +1355,7 @@ namespace snn
                 snn_require(r.begin() == rng.end());
             }
             snn_require(rng.count() == 4);
-            snn_require(rng.back(promise::not_empty) == '3');
+            snn_require(rng.back(assume::not_empty) == '3');
             {
                 auto r = rng.pop_back_while(chr::is_digit);
                 snn_require(r.count() == 3);
@@ -1364,7 +1364,7 @@ namespace snn
                 snn_require(r.begin() == rng.end());
             }
             snn_require(rng.count() == 1);
-            snn_require(rng.back(promise::not_empty) == 'a');
+            snn_require(rng.back(assume::not_empty) == 'a');
             {
                 auto r = rng.pop_back_while(chr::is_alpha_lower);
                 snn_require(r.count() == 1);

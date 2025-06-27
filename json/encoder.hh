@@ -138,8 +138,8 @@ namespace snn::json
             auto rng = node_parent.range();
             if (rng)
             {
-                const node& node_first = rng.front(promise::not_empty);
-                rng.drop_front(promise::not_empty);
+                const node& node_first = rng.front(assume::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 encode_(node_first, append_to);
 
@@ -159,8 +159,8 @@ namespace snn::json
             auto rng = node_parent.range();
             if (rng)
             {
-                const node& node_first = rng.front(promise::not_empty);
-                rng.drop_front(promise::not_empty);
+                const node& node_first = rng.front(assume::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 append_to << "[\n";
                 ++depth;
@@ -194,8 +194,8 @@ namespace snn::json
             auto rng = node_parent.range();
             if (rng)
             {
-                const node& node_first = rng.front(promise::not_empty);
-                rng.drop_front(promise::not_empty);
+                const node& node_first = rng.front(assume::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 // Key
                 json::encode(node_first.to<cstrview>(), options_, append_to, assume::no_overlap);
@@ -223,8 +223,8 @@ namespace snn::json
             auto rng = node_parent.range();
             if (rng)
             {
-                const node& node_first = rng.front(promise::not_empty);
-                rng.drop_front(promise::not_empty);
+                const node& node_first = rng.front(assume::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 append_to << "{\n";
                 ++depth;

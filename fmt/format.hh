@@ -465,10 +465,10 @@ namespace snn::fmt
                 // Alignment
                 if (rng)
                 {
-                    align = to_alignment(rng.front(promise::not_empty));
+                    align = to_alignment(rng.front(assume::not_empty));
                     if (align != alignment::none)
                     {
-                        rng.drop_front(promise::not_empty);
+                        rng.drop_front(assume::not_empty);
 
                         // Fill
                         if (rng.drop_front('{'))

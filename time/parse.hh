@@ -264,7 +264,7 @@ namespace snn::time
         auto rng = s.range();
         while (rng)
         {
-            const char c = rng.front(promise::not_empty);
+            const char c = rng.front(assume::not_empty);
 
             constexpr ascii::leading_zeros allow_leading_zeros = ascii::leading_zeros::allow;
             constexpr math::base dec                           = math::base::decimal;
@@ -282,7 +282,7 @@ namespace snn::time
                     i32 year_multiplier = 1;
                     if (c == '-')
                     {
-                        rng.drop_front(promise::not_empty);
+                        rng.drop_front(assume::not_empty);
                         year_multiplier = -1;
                     }
 
@@ -307,7 +307,7 @@ namespace snn::time
                 {
                     if (c == '-')
                     {
-                        rng.drop_front(promise::not_empty);
+                        rng.drop_front(assume::not_empty);
                         const auto p = rng.pop_front_integral<u8, dec, 2>(allow_leading_zeros);
                         if (p.count == 2 && !rng.has_front_if(chr::is_digit))
                         {
@@ -324,7 +324,7 @@ namespace snn::time
                 {
                     if (c == '-')
                     {
-                        rng.drop_front(promise::not_empty);
+                        rng.drop_front(assume::not_empty);
                         const auto p = rng.pop_front_integral<u8, dec, 2>(allow_leading_zeros);
                         if (p.count == 2 && !rng.has_front_if(chr::is_digit))
                         {
@@ -341,7 +341,7 @@ namespace snn::time
                 {
                     if (c == ' ' || c == 'T' || c == 't')
                     {
-                        rng.drop_front(promise::not_empty);
+                        rng.drop_front(assume::not_empty);
                         const auto p = rng.pop_front_integral<u8, dec, 2>(allow_leading_zeros);
                         if (p.count == 2 && !rng.has_front_if(chr::is_digit))
                         {
@@ -358,7 +358,7 @@ namespace snn::time
                 {
                     if (c == ':')
                     {
-                        rng.drop_front(promise::not_empty);
+                        rng.drop_front(assume::not_empty);
                         const auto p = rng.pop_front_integral<u8, dec, 2>(allow_leading_zeros);
                         if (p.count == 2 && !rng.has_front_if(chr::is_digit))
                         {
@@ -376,7 +376,7 @@ namespace snn::time
                     // Seconds are optional.
                     if (c == ':')
                     {
-                        rng.drop_front(promise::not_empty);
+                        rng.drop_front(assume::not_empty);
                         const auto p = rng.pop_front_integral<u8, dec, 2>(allow_leading_zeros);
                         if (p.count == 2 && !rng.has_front_if(chr::is_digit))
                         {
@@ -397,7 +397,7 @@ namespace snn::time
                     // Fraction is optional.
                     if (c == '.')
                     {
-                        rng.drop_front(promise::not_empty);
+                        rng.drop_front(assume::not_empty);
                         const auto p = rng.pop_front_integral<u32, dec, 9>(allow_leading_zeros);
                         if (p.count > 0 && !rng.has_front_if(chr::is_digit))
                         {
@@ -422,7 +422,7 @@ namespace snn::time
                     // Skip optional space.
                     if (c == ' ')
                     {
-                        rng.drop_front(promise::not_empty);
+                        rng.drop_front(assume::not_empty);
                     }
 
                     if (rng)
@@ -497,7 +497,7 @@ namespace snn::time
                 {
                     if (c == ':')
                     {
-                        rng.drop_front(promise::not_empty);
+                        rng.drop_front(assume::not_empty);
                         const auto p = rng.pop_front_integral<u8, dec, 2>(allow_leading_zeros);
                         if (p.count == 2 && !rng.has_front_if(chr::is_digit))
                         {
@@ -530,7 +530,7 @@ namespace snn::time
                     // Optional comma.
                     if (c == ',')
                     {
-                        rng.drop_front(promise::not_empty);
+                        rng.drop_front(assume::not_empty);
                     }
 
                     if (rng.drop_front(' '))
@@ -552,7 +552,7 @@ namespace snn::time
                     if (c == ' ' || c == '-')
                     {
                         date_separator = c;
-                        rng.drop_front(promise::not_empty);
+                        rng.drop_front(assume::not_empty);
                         const auto name_rng = rng.pop_front_while(chr::is_alpha);
                         if (name_rng)
                         {
@@ -572,7 +572,7 @@ namespace snn::time
                 {
                     if (c == date_separator)
                     {
-                        rng.drop_front(promise::not_empty);
+                        rng.drop_front(assume::not_empty);
 
                         i16 year_multiplier = 1;
                         if (rng.drop_front('-'))

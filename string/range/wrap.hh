@@ -45,7 +45,7 @@ namespace snn::string::range
             return snn::range::iter::forward_end{};
         }
 
-        constexpr void drop_front(promise::not_empty_t) noexcept
+        constexpr void drop_front(assume::not_empty_t) noexcept
         {
             snn_should(!is_empty());
             subject_.drop_front_n(current_size_ + 1);
@@ -53,7 +53,7 @@ namespace snn::string::range
         }
 
         [[nodiscard]] constexpr pair::first_second<cstrview> front(
-            promise::not_empty_t) const noexcept
+            assume::not_empty_t) const noexcept
         {
             snn_should(!is_empty());
             return {subject_.view(0, current_size_), current_delim_};
@@ -63,7 +63,7 @@ namespace snn::string::range
         {
             if (!is_empty())
             {
-                return front(promise::not_empty);
+                return front(assume::not_empty);
             }
             return nullopt;
         }

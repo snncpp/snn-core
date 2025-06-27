@@ -335,7 +335,7 @@ namespace snn::app
                 count    = 0;
                 while (rng)
                 {
-                    const auto& val = rng.front(promise::not_empty);
+                    const auto& val = rng.front(assume::not_empty);
 
                     snn_require(val.is_string());
                     if (count == 0)
@@ -348,7 +348,7 @@ namespace snn::app
                     }
                     ++count;
 
-                    rng.drop_front(promise::not_empty);
+                    rng.drop_front(assume::not_empty);
                 }
                 snn_require(count == 2);
             }

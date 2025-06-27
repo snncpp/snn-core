@@ -43,17 +43,17 @@ namespace snn::app
             using range_type = decltype(rng);
             static_assert(std::is_same_v<decltype(rng.begin()), range::iter::forward<range_type>>);
 
-            static_assert(std::is_same_v<decltype(rng.front(promise::not_empty)), int&>);
+            static_assert(std::is_same_v<decltype(rng.front(assume::not_empty)), int&>);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty) == 123);
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == 123);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty) == 456);
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == 456);
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());

@@ -18,7 +18,7 @@ namespace snn::algo
         requires legacy_iterable<RandomAccessRng>
     constexpr void sort(RandomAccessRng rng, TwoArgPred is_less)
     {
-        using front_type = decltype(rng.front(promise::not_empty));
+        using front_type = decltype(rng.front(assume::not_empty));
         static_assert(std::is_reference_v<front_type>, "Range must be non-generating.");
         static_assert(!std::is_const_v<std::remove_reference_t<front_type>>,
                       "Range must be non-const.");

@@ -82,9 +82,9 @@ namespace snn
             static_assert(rng);
             static_assert(!rng.is_empty());
             static_assert(rng.count() == 3);
-            static_assert(rng.front(promise::not_empty) == 'a');
+            static_assert(rng.front(assume::not_empty) == 'a');
             static_assert(rng.at(1, assume::within_bounds) == 'b');
-            static_assert(rng.back(promise::not_empty) == 'c');
+            static_assert(rng.back(assume::not_empty) == 'c');
         }
     }
 }

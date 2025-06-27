@@ -114,7 +114,7 @@ namespace snn::detail::vec
             return count_;
         }
 
-        void decrement_count(promise::not_empty_t) noexcept
+        void decrement_count(assume::not_empty_t) noexcept
         {
             snn_should(count_ > 0);
             --count_;
@@ -301,7 +301,7 @@ namespace snn::detail::vec
             return count_;
         }
 
-        constexpr void decrement_count(promise::not_empty_t) noexcept
+        constexpr void decrement_count(assume::not_empty_t) noexcept
         {
             snn_should(count_ > 0);
             --count_;

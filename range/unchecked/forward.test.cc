@@ -25,19 +25,19 @@ namespace snn
 
             snn_require(rng);
 
-            snn_require(rng.front(promise::not_empty) == 99);
+            snn_require(rng.front(assume::not_empty) == 99);
 
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
 
-            snn_require(rng.front(promise::not_empty) == 23);
+            snn_require(rng.front(assume::not_empty) == 23);
 
             while (rng)
             {
-                auto& i = rng.front(promise::not_empty);
+                auto& i = rng.front(assume::not_empty);
                 i       = i * 2;
-                rng.drop_front(promise::not_empty);
+                rng.drop_front(assume::not_empty);
             }
 
             snn_require(arr.at(0).value() == 99);
@@ -56,7 +56,7 @@ namespace snn
 
             while (rng)
             {
-                auto& p = rng.front(promise::not_empty);
+                auto& p = rng.front(assume::not_empty);
                 if (p.first == "One")
                 {
                     p.second = 11;
@@ -65,16 +65,16 @@ namespace snn
                 {
                     p.second = 2222;
                 }
-                rng.drop_front(promise::not_empty);
+                rng.drop_front(assume::not_empty);
             }
 
             rng = range::unchecked::forward{init::from, m.begin(), m.end()};
             str buf;
             while (rng)
             {
-                auto& p = rng.front(promise::not_empty);
+                auto& p = rng.front(assume::not_empty);
                 buf << p.first << ':' << as_num(p.second) << '\n';
-                rng.drop_front(promise::not_empty);
+                rng.drop_front(assume::not_empty);
             }
             snn_require(buf.size() == 16);
             snn_require(buf.contains("One:11\n"));

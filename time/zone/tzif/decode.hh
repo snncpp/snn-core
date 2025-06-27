@@ -195,7 +195,7 @@ namespace snn::time::zone::tzif
                 if (offset_indexes_rng)
                 {
                     const auto offset_index =
-                        to_byte(offset_indexes_rng.pop_front(promise::not_empty));
+                        to_byte(offset_indexes_rng.pop_front(assume::not_empty));
                     if (offset_index < c.offset_count &&
                         time::zone::transition::is_valid(offset_index, when))
                     {

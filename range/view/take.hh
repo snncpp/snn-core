@@ -45,17 +45,17 @@ namespace snn::range::view
             return iter::forward_end{};
         }
 
-        constexpr void drop_front(promise::not_empty_t)
+        constexpr void drop_front(assume::not_empty_t)
         {
             snn_should(count_ > 0);
-            rng_.drop_front(promise::not_empty);
+            rng_.drop_front(assume::not_empty);
             --count_;
         }
 
-        [[nodiscard]] constexpr decltype(auto) front(promise::not_empty_t)
+        [[nodiscard]] constexpr decltype(auto) front(assume::not_empty_t)
         {
             snn_should(count_ > 0);
-            return rng_.front(promise::not_empty);
+            return rng_.front(assume::not_empty);
         }
 
         [[nodiscard]] constexpr bool is_empty() const

@@ -49,8 +49,8 @@ namespace snn::app
             snn_require(a.back().value() == 'x');
             snn_require(a.front<char>().value() == 'a');
             snn_require(a.back<char>().value() == 'x');
-            snn_require(a.front(promise::not_empty) == 'a');
-            snn_require(a.back(promise::not_empty) == 'x');
+            snn_require(a.front(assume::not_empty) == 'a');
+            snn_require(a.back(assume::not_empty) == 'x');
 
             snn_require(a.get<0>() == 'a');
             snn_require(a.get<1>() == '1');

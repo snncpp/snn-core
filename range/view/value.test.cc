@@ -25,8 +25,8 @@ namespace snn::app
             auto plain_rng = arr.range();
             auto value_rng = range::view::value{plain_rng};
 
-            using plain_rng_front_type = decltype(plain_rng.front(promise::not_empty));
-            using value_rng_front_type = decltype(value_rng.front(promise::not_empty));
+            using plain_rng_front_type = decltype(plain_rng.front(assume::not_empty));
+            using value_rng_front_type = decltype(value_rng.front(assume::not_empty));
 
             static_assert(std::is_same_v<plain_rng_front_type, num::safe<int>&>);
             static_assert(std::is_same_v<value_rng_front_type, int>);
@@ -55,16 +55,16 @@ namespace snn::app
                 snn_require(rng);
                 snn_require(!rng.is_empty());
 
-                snn_require(rng.front(promise::not_empty) == 9);
-                rng.front(promise::not_empty) = 123;
-                rng.drop_front(promise::not_empty);
+                snn_require(rng.front(assume::not_empty) == 9);
+                rng.front(assume::not_empty) = 123;
+                rng.drop_front(assume::not_empty);
 
                 snn_require(rng);
                 snn_require(!rng.is_empty());
 
-                snn_require(rng.front(promise::not_empty) == 21);
-                rng.front(promise::not_empty) = 456;
-                rng.drop_front(promise::not_empty);
+                snn_require(rng.front(assume::not_empty) == 21);
+                rng.front(assume::not_empty) = 456;
+                rng.drop_front(assume::not_empty);
 
                 snn_require(!rng);
                 snn_require(rng.is_empty());
@@ -78,7 +78,7 @@ namespace snn::app
 
                 static_assert(std::is_same_v<decltype(rng), range_type>);
 
-                static_assert(std::is_same_v<decltype(rng.front(promise::not_empty)), int&>);
+                static_assert(std::is_same_v<decltype(rng.front(assume::not_empty)), int&>);
 
                 static_assert(
                     std::is_same_v<decltype(rng.begin()), range::iter::forward<range_type>>);
@@ -98,19 +98,19 @@ namespace snn::app
                 snn_require(gen_rng);
                 snn_require(!gen_rng.is_empty());
 
-                decltype(auto) opt = gen_rng.front(promise::not_empty);
+                decltype(auto) opt = gen_rng.front(assume::not_empty);
                 static_assert(std::is_same_v<decltype(opt), optional<int>>);
                 snn_require(opt.value() == 0);
 
                 static_assert(
-                    std::is_same_v<decltype(gen_rng.front(promise::not_empty).value()), int&&>);
+                    std::is_same_v<decltype(gen_rng.front(assume::not_empty).value()), int&&>);
 
                 range::view::value rng{gen_rng};
 
                 // If `range::view::value` did not drop rvalue references this would result in "read
                 // of temporary whose lifetime has ended".
 
-                decltype(auto) one = rng.front(promise::not_empty);
+                decltype(auto) one = rng.front(assume::not_empty);
                 static_assert(std::is_same_v<decltype(one), int>);
                 snn_require(one == 1);
             }

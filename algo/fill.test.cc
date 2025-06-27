@@ -25,8 +25,8 @@ namespace snn::app
                 auto rng = s.range();
 
                 snn_require(rng.count() == 4);
-                snn_require(rng.pop_front(promise::not_empty) == 'a');
-                snn_require(rng.pop_back(promise::not_empty) == 'z');
+                snn_require(rng.pop_front(assume::not_empty) == 'a');
+                snn_require(rng.pop_back(assume::not_empty) == 'z');
                 snn_require(rng.count() == 2);
 
                 algo::fill(rng, '-');

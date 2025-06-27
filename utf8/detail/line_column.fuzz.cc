@@ -11,7 +11,7 @@ namespace snn
     {
         if (input)
         {
-            const usize byte_position = to_byte(input.front(promise::not_empty));
+            const usize byte_position = to_byte(input.front(assume::not_empty));
             input.drop_front_n(1);
 
             const auto p    = utf8::line_column(input, byte_position);

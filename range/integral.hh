@@ -83,13 +83,13 @@ namespace snn::range
 
         // #### Single element access
 
-        [[nodiscard]] constexpr Int front(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr Int front(assume::not_empty_t) const noexcept
         {
             snn_should(!is_empty());
             return static_cast<Int>(front_);
         }
 
-        [[nodiscard]] constexpr Int back(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr Int back(assume::not_empty_t) const noexcept
         {
             snn_should(!is_empty());
             return static_cast<Int>(back_);
@@ -97,13 +97,13 @@ namespace snn::range
 
         // #### Operations
 
-        constexpr void drop_front(promise::not_empty_t) noexcept
+        constexpr void drop_front(assume::not_empty_t) noexcept
         {
             snn_should(!is_empty());
             ++front_;
         }
 
-        constexpr void drop_back(promise::not_empty_t) noexcept
+        constexpr void drop_back(assume::not_empty_t) noexcept
         {
             snn_should(!is_empty());
             --back_;

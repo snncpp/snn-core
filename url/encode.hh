@@ -55,7 +55,7 @@ namespace snn::url
 
                 if (rng)
                 {
-                    const char c = rng.pop_front(promise::not_empty);
+                    const char c = rng.pop_front(assume::not_empty);
                     snn_should(!is_unreserved(c));
 
                     const auto b = to_byte(c);

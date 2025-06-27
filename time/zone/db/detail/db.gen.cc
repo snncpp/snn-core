@@ -350,7 +350,7 @@ namespace snn::app
             {
                 snn_assert(source_identifiers.count() >= 2);
                 auto src_rng          = source_identifiers.range();
-                const str& src_tail   = src_rng.pop_back(promise::not_empty);
+                const str& src_tail   = src_rng.pop_back(assume::not_empty);
                 const auto src_prefix = algo::join<str>(src_rng, "::");
                 hh << indentation << src_prefix << "::detail::" << src_tail << "::offsets,\n";
                 hh << indentation << src_prefix << "::detail::" << src_tail << "::transitions};\n";

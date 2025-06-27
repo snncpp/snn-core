@@ -185,7 +185,7 @@ namespace snn::app
                 snn_require(match0.size() == 3);
                 snn_require(match0.view() == "two");
 
-                rng.drop_front(promise::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(!rng);
                 snn_require(rng.is_empty());
@@ -290,7 +290,7 @@ namespace snn::app
                 snn_require(match0.size() == 4);
                 snn_require(match0.view() == "1two");
 
-                rng.drop_front(promise::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(!rng);
                 snn_require(rng.is_empty());

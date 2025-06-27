@@ -38,16 +38,16 @@ namespace snn::range::view
                 return !is_empty();
             }
 
-            constexpr void drop_front(promise::not_empty_t)
+            constexpr void drop_front(assume::not_empty_t)
             {
                 snn_should(!is_empty());
                 for (usize count = count_; count > 0 && !rng_.is_empty(); --count)
                 {
-                    rng_.drop_front(promise::not_empty);
+                    rng_.drop_front(assume::not_empty);
                 }
             }
 
-            [[nodiscard]] constexpr auto front(promise::not_empty_t) const
+            [[nodiscard]] constexpr auto front(assume::not_empty_t) const
             {
                 snn_should(!is_empty());
                 return range::view::take{rng_, count_};
@@ -79,13 +79,13 @@ namespace snn::range::view
                 return !is_empty();
             }
 
-            constexpr void drop_front(promise::not_empty_t)
+            constexpr void drop_front(assume::not_empty_t)
             {
                 snn_should(!is_empty());
                 rng_.pop_front_n(count_);
             }
 
-            [[nodiscard]] constexpr decltype(auto) front(promise::not_empty_t) const
+            [[nodiscard]] constexpr decltype(auto) front(assume::not_empty_t) const
             {
                 snn_should(!is_empty());
                 auto cpy = rng_;

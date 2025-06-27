@@ -31,12 +31,12 @@ namespace snn::range::iter
 
         constexpr decltype(auto) operator*()
         {
-            return rng_.front(promise::not_empty);
+            return rng_.front(assume::not_empty);
         }
 
         constexpr forward& operator++()
         {
-            rng_.drop_front(promise::not_empty);
+            rng_.drop_front(assume::not_empty);
             return *this;
         }
 
@@ -65,12 +65,12 @@ namespace snn::range::iter
 
         constexpr decltype(auto) operator*()
         {
-            return rng_.front(promise::not_empty);
+            return rng_.front(assume::not_empty);
         }
 
         constexpr forward_reference& operator++()
         {
-            rng_.drop_front(promise::not_empty);
+            rng_.drop_front(assume::not_empty);
             return *this;
         }
 

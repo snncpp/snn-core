@@ -33,19 +33,19 @@ namespace snn::range::view
                 return !is_empty();
             }
 
-            constexpr void drop_front(promise::not_empty_t)
+            constexpr void drop_front(assume::not_empty_t)
             {
-                first_.drop_front(promise::not_empty);
-                second_.drop_front(promise::not_empty);
+                first_.drop_front(assume::not_empty);
+                second_.drop_front(assume::not_empty);
             }
 
-            [[nodiscard]] constexpr auto front(promise::not_empty_t)
+            [[nodiscard]] constexpr auto front(assume::not_empty_t)
             {
                 using pair_type =
-                    snn::pair::first_second<decltype(first_.front(promise::not_empty)),
-                                            decltype(second_.front(promise::not_empty))>;
-                return pair_type{first_.front(promise::not_empty),
-                                 second_.front(promise::not_empty)};
+                    snn::pair::first_second<decltype(first_.front(assume::not_empty)),
+                                            decltype(second_.front(assume::not_empty))>;
+                return pair_type{first_.front(assume::not_empty),
+                                 second_.front(assume::not_empty)};
             }
 
             [[nodiscard]] constexpr bool is_empty() const
@@ -80,7 +80,7 @@ namespace snn::range::view
                 return count_;
             }
 
-            constexpr void drop_front(promise::not_empty_t)
+            constexpr void drop_front(assume::not_empty_t)
             {
                 SNN_DIAGNOSTIC_PUSH
                 SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
@@ -93,7 +93,7 @@ namespace snn::range::view
                 SNN_DIAGNOSTIC_POP
             }
 
-            [[nodiscard]] constexpr auto front(promise::not_empty_t) const
+            [[nodiscard]] constexpr auto front(assume::not_empty_t) const
             {
                 snn_assert(count_ > 0);
                 using pair_type = snn::pair::first_second<decltype(*first_), decltype(*second_)>;

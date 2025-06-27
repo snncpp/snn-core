@@ -20,14 +20,14 @@ namespace snn::app
             range::view::cache rng{range::generate{fn::incrementing{0}}};
 
             snn_require(rng);
-            snn_require(rng.front(promise::not_empty) == 0); // Cached
-            snn_require(rng.front(promise::not_empty) == 0); // Cached
+            snn_require(rng.front(assume::not_empty) == 0); // Cached
+            snn_require(rng.front(assume::not_empty) == 0); // Cached
 
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
-            snn_require(rng.front(promise::not_empty) == 1); // Cached
-            snn_require(rng.front(promise::not_empty) == 1); // Cached
+            snn_require(rng.front(assume::not_empty) == 1); // Cached
+            snn_require(rng.front(assume::not_empty) == 1); // Cached
 
             // INCORRECT result without cache.
             snn_require(algo::is_equal(range::generate{fn::incrementing{0}} |

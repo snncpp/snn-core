@@ -25,8 +25,8 @@ namespace snn::algo
             range::unchecked::forward ub{init::from, b.begin(), b.end()};
             for (loop::count lc{math::min(a.count(), b.count())}; lc--;)
             {
-                const auto& e1 = ua.front(promise::not_empty);
-                const auto& e2 = ub.front(promise::not_empty);
+                const auto& e1 = ua.front(assume::not_empty);
+                const auto& e2 = ub.front(assume::not_empty);
                 if (is_less(e1, e2))
                 {
                     return true;
@@ -35,8 +35,8 @@ namespace snn::algo
                 {
                     return false;
                 }
-                ua.drop_front(promise::not_empty);
-                ub.drop_front(promise::not_empty);
+                ua.drop_front(assume::not_empty);
+                ub.drop_front(assume::not_empty);
             }
             return a.count() < b.count();
         }
@@ -44,8 +44,8 @@ namespace snn::algo
         {
             while (a && b)
             {
-                const auto& e1 = a.front(promise::not_empty);
-                const auto& e2 = b.front(promise::not_empty);
+                const auto& e1 = a.front(assume::not_empty);
+                const auto& e2 = b.front(assume::not_empty);
                 if (is_less(e1, e2))
                 {
                     return true;
@@ -54,8 +54,8 @@ namespace snn::algo
                 {
                     return false;
                 }
-                a.drop_front(promise::not_empty);
-                b.drop_front(promise::not_empty);
+                a.drop_front(assume::not_empty);
+                b.drop_front(assume::not_empty);
             }
             return a.is_empty() && !b.is_empty();
         }

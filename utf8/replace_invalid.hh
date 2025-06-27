@@ -38,7 +38,7 @@ namespace snn::utf8
                 if (rng)
                 {
                     // Invalid
-                    rng.drop_front(promise::not_empty);
+                    rng.drop_front(assume::not_empty);
                     append_to.append(utf8::replacement_string());
                 }
             }

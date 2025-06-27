@@ -391,18 +391,18 @@ namespace snn::app
             // front/back
             {
                 const T s{"123"};
-                snn_require(s.front(promise::not_empty) == '1');
-                snn_require(s.back(promise::not_empty) == '3');
+                snn_require(s.front(assume::not_empty) == '1');
+                snn_require(s.back(assume::not_empty) == '3');
             }
             {
                 const T s{"4"};
-                snn_require(s.front(promise::not_empty) == '4');
-                snn_require(s.back(promise::not_empty) == '4');
+                snn_require(s.front(assume::not_empty) == '4');
+                snn_require(s.back(assume::not_empty) == '4');
             }
             {
                 const T s{"abcdefghijklmnopqrstuvwxyz"};
-                snn_require(s.front(promise::not_empty) == 'a');
-                snn_require(s.back(promise::not_empty) == 'z');
+                snn_require(s.front(assume::not_empty) == 'a');
+                snn_require(s.back(assume::not_empty) == 'z');
             }
 
             // drop_back_n
@@ -1953,21 +1953,21 @@ namespace snn::app
             // front/back
             {
                 T s{"123"};
-                snn_require(s.front(promise::not_empty) == '1');
-                snn_require(s.back(promise::not_empty) == '3');
+                snn_require(s.front(assume::not_empty) == '1');
+                snn_require(s.back(assume::not_empty) == '3');
                 snn_require(s == "123");
 
-                s.front(promise::not_empty) = 'a';
-                s.back(promise::not_empty)  = 'c';
+                s.front(assume::not_empty) = 'a';
+                s.back(assume::not_empty)  = 'c';
                 snn_require(s == "a2c");
             }
             {
                 T s{"abcdefghijklmnopqrstuvwxyz"};
-                snn_require(s.front(promise::not_empty) == 'a');
-                snn_require(s.back(promise::not_empty) == 'z');
+                snn_require(s.front(assume::not_empty) == 'a');
+                snn_require(s.back(assume::not_empty) == 'z');
 
-                s.front(promise::not_empty) = 'A';
-                s.back(promise::not_empty)  = 'Z';
+                s.front(assume::not_empty) = 'A';
+                s.back(assume::not_empty)  = 'Z';
                 snn_require(s == "AbcdefghijklmnopqrstuvwxyZ");
             }
 

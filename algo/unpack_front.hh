@@ -27,8 +27,8 @@ namespace snn::algo
 
         if (rng)
         {
-            t = rng.front(promise::not_empty);
-            rng.drop_front(promise::not_empty);
+            t = rng.front(assume::not_empty);
+            rng.drop_front(assume::not_empty);
 
             return unpack_front(std::move(rng), args...);
         }

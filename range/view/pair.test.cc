@@ -29,7 +29,7 @@ namespace snn::app
             snn_require(algo::is_equal(combined,
                                        init_list<pair::first_second<int>>{{2, 1}, {5, 3}}));
 
-            static_assert(std::is_same_v<decltype(combined.front(promise::not_empty)),
+            static_assert(std::is_same_v<decltype(combined.front(assume::not_empty)),
                                          pair::first_second<int&, int&>>);
 
             return true;
@@ -61,8 +61,8 @@ namespace snn::app
                 snn_require(rng);
                 snn_require(!rng.is_empty());
 
-                auto p = rng.front(promise::not_empty);
-                rng.drop_front(promise::not_empty);
+                auto p = rng.front(assume::not_empty);
+                rng.drop_front(assume::not_empty);
                 static_assert(std::is_same_v<decltype(p), pair::first_second<int&, int>>);
                 snn_require(p.first == 2);
                 snn_require(p.second == 1);
@@ -92,7 +92,7 @@ namespace snn::app
 
                 snn_require(rng.count() == 4);
 
-                auto p = rng.front(promise::not_empty);
+                auto p = rng.front(assume::not_empty);
                 static_assert(std::is_same_v<decltype(p), pair::first_second<str&, const usize&>>);
             }
 

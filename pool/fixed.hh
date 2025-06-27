@@ -126,13 +126,13 @@ namespace snn::pool
             return data_[pos];
         }
 
-        [[nodiscard]] constexpr T& back(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr T& back(assume::not_empty_t) noexcept
         {
             snn_assert(count_ > 0);
             return data_[count_ - 1];
         }
 
-        [[nodiscard]] constexpr T& front(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr T& front(assume::not_empty_t) noexcept
         {
             snn_assert(count_ > 0);
             return data_[0];
@@ -200,7 +200,7 @@ namespace snn::pool
             throw_or_abort(generic::error::insufficient_capacity);
         }
 
-        constexpr void drop_back(promise::not_empty_t) noexcept
+        constexpr void drop_back(assume::not_empty_t) noexcept
         {
             snn_assert(count_ > 0);
             --count_;

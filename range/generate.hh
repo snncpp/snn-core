@@ -46,16 +46,16 @@ namespace snn::range
             return iter::forward_end{};
         }
 
-        constexpr void drop_front(promise::not_empty_t) noexcept
+        constexpr void drop_front(assume::not_empty_t) noexcept
         {
         }
 
-        [[nodiscard]] constexpr decltype(auto) front(promise::not_empty_t)
+        [[nodiscard]] constexpr decltype(auto) front(assume::not_empty_t)
         {
             return f_();
         }
 
-        [[nodiscard]] constexpr decltype(auto) front(promise::not_empty_t) const
+        [[nodiscard]] constexpr decltype(auto) front(assume::not_empty_t) const
         {
             return f_();
         }

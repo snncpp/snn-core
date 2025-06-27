@@ -280,13 +280,13 @@ namespace snn
             return nullopt;
         }
 
-        [[nodiscard]] constexpr reference back(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr reference back(assume::not_empty_t) noexcept
             requires(Count > 0)
         {
             return data_[Count - 1];
         }
 
-        [[nodiscard]] constexpr const_reference back(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr const_reference back(assume::not_empty_t) const noexcept
             requires(Count > 0)
         {
             return data_[Count - 1];
@@ -314,13 +314,13 @@ namespace snn
             return nullopt;
         }
 
-        [[nodiscard]] constexpr reference front(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr reference front(assume::not_empty_t) noexcept
             requires(Count > 0)
         {
             return data_[0];
         }
 
-        [[nodiscard]] constexpr const_reference front(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr const_reference front(assume::not_empty_t) const noexcept
             requires(Count > 0)
         {
             return data_[0];
@@ -1066,13 +1066,13 @@ namespace snn
             return nullopt;
         }
 
-        [[nodiscard]] constexpr reference back(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr reference back(assume::not_empty_t) noexcept
         {
             snn_assert(count_ != 0);
             return data_[count_ - 1];
         }
 
-        [[nodiscard]] constexpr const_reference back(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr const_reference back(assume::not_empty_t) const noexcept
         {
             snn_assert(count_ != 0);
             return data_[count_ - 1];
@@ -1100,13 +1100,13 @@ namespace snn
             return nullopt;
         }
 
-        [[nodiscard]] constexpr reference front(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr reference front(assume::not_empty_t) noexcept
         {
             snn_assert(count_ != 0);
             return data_[0];
         }
 
-        [[nodiscard]] constexpr const_reference front(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr const_reference front(assume::not_empty_t) const noexcept
         {
             snn_assert(count_ != 0);
             return data_[0];
@@ -1558,7 +1558,7 @@ namespace snn
             return nullopt;
         }
 
-        [[nodiscard]] constexpr const_reference back(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr const_reference back(assume::not_empty_t) const noexcept
         {
             snn_assert(count_ != 0);
             return data_[count_ - 1];
@@ -1574,7 +1574,7 @@ namespace snn
             return nullopt;
         }
 
-        [[nodiscard]] constexpr const_reference front(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr const_reference front(assume::not_empty_t) const noexcept
         {
             snn_assert(count_ != 0);
             return data_[0];
@@ -2066,13 +2066,13 @@ namespace snn
             return nullopt;
         }
 
-        [[nodiscard]] constexpr reference back(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr reference back(assume::not_empty_t) noexcept
         {
             snn_assert(count_ != 0);
             return data_[count_ - 1];
         }
 
-        [[nodiscard]] constexpr const_reference back(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr const_reference back(assume::not_empty_t) const noexcept
         {
             snn_assert(count_ != 0);
             return data_[count_ - 1];
@@ -2098,13 +2098,13 @@ namespace snn
             return nullopt;
         }
 
-        [[nodiscard]] constexpr reference front(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr reference front(assume::not_empty_t) noexcept
         {
             snn_assert(count_ != 0);
             return data_[0];
         }
 
-        [[nodiscard]] constexpr const_reference front(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr const_reference front(assume::not_empty_t) const noexcept
         {
             snn_assert(count_ != 0);
             return data_[0];
@@ -2299,7 +2299,7 @@ namespace snn
             }
             else if (sv)
             {
-                fill(sv.front(promise::not_empty));
+                fill(sv.front(assume::not_empty));
             }
         }
 
@@ -2439,7 +2439,7 @@ namespace snn
     template <typename A, usize Ca, typename B, usize Cb>
         requires(std::is_same_v<const A, const B>)
     constexpr auto operator<=>(const array_view<A, Ca> left, const array_view<B, Cb> right)
-        -> decltype(left.front(promise::not_empty) <=> right.front(promise::not_empty))
+        -> decltype(left.front(assume::not_empty) <=> right.front(assume::not_empty))
     {
         const usize min_count = math::min(left.count(), right.count());
         if constexpr (left.is_dynamic() && right.is_dynamic() &&

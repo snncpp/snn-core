@@ -56,13 +56,13 @@ namespace snn::range::view
             return iter::forward_end{};
         }
 
-        constexpr void drop_front(promise::not_empty_t)
+        constexpr void drop_front(assume::not_empty_t)
         {
-            rng_.drop_front(promise::not_empty);
+            rng_.drop_front(assume::not_empty);
             cached_ = front_maybe_();
         }
 
-        [[nodiscard]] constexpr decltype(auto) front(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr decltype(auto) front(assume::not_empty_t) noexcept
         {
             return cached_.value(promise::has_value);
         }
@@ -75,13 +75,13 @@ namespace snn::range::view
 
       private:
         Rng rng_;
-        optional<result_compat_t<decltype(rng_.front(promise::not_empty))>> cached_;
+        optional<result_compat_t<decltype(rng_.front(assume::not_empty))>> cached_;
 
         constexpr decltype(cached_) front_maybe_()
         {
             if (rng_)
             {
-                return rng_.front(promise::not_empty);
+                return rng_.front(assume::not_empty);
             }
             return nullopt;
         }

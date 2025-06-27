@@ -50,7 +50,7 @@ namespace snn::string::range
             return snn::range::iter::forward_end{};
         }
 
-        constexpr void drop_front(promise::not_empty_t) noexcept
+        constexpr void drop_front(assume::not_empty_t) noexcept
         {
             find_next_();
         }
@@ -59,12 +59,12 @@ namespace snn::string::range
         {
             if (!is_empty())
             {
-                return front(promise::not_empty);
+                return front(assume::not_empty);
             }
             return nullopt;
         }
 
-        [[nodiscard]] constexpr cstrview front(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr cstrview front(assume::not_empty_t) const noexcept
         {
             snn_should(!is_empty());
             snn_should(front_pos_ <= delimiter_pos_);
@@ -80,16 +80,16 @@ namespace snn::string::range
         {
             if (!is_empty())
             {
-                const cstrview s = front(promise::not_empty);
+                const cstrview s = front(assume::not_empty);
                 find_next_();
                 return s;
             }
             return nullopt;
         }
 
-        [[nodiscard]] constexpr cstrview pop_front(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr cstrview pop_front(assume::not_empty_t) noexcept
         {
-            const cstrview s = front(promise::not_empty);
+            const cstrview s = front(assume::not_empty);
             find_next_();
             return s;
         }

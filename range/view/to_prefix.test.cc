@@ -57,18 +57,18 @@ namespace snn::app
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty) == pair::value_count<int, usize>{12, 2});
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == pair::value_count<int, usize>{12, 2});
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty) == pair::value_count<int, usize>{456, 3});
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == pair::value_count<int, usize>{456, 3});
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty) == pair::value_count<int, usize>{9, 1});
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == pair::value_count<int, usize>{9, 1});
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());

@@ -596,7 +596,7 @@ namespace snn::time
             auto rng = string.range();
             while (rng)
             {
-                const char c = rng.pop_front(promise::not_empty);
+                const char c = rng.pop_front(assume::not_empty);
 
                 const bool is_alpha = chr::is_alpha(c);
                 usize repeat_count  = 1;
@@ -657,7 +657,7 @@ namespace snn::time
                     case '\\':
                         if (rng)
                         {
-                            const char escaped = rng.pop_front(promise::not_empty);
+                            const char escaped = rng.pop_front(assume::not_empty);
                             append_to.append(escaped);
                         }
                         break;

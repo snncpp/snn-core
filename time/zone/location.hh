@@ -67,7 +67,7 @@ namespace snn::time::zone
                 return offsets.at(cache_offset_index_, assume::within_bounds);
             }
 
-            const auto first_transition = transitions.front(promise::not_empty);
+            const auto first_transition = transitions.front(assume::not_empty);
 
             if (timestamp < first_transition.when) [[unlikely]]
             {

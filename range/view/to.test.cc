@@ -55,18 +55,18 @@ namespace snn::app
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty) == "ab");
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == "ab");
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty) == "Cd");
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == "Cd");
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty) == "e");
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == "e");
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());

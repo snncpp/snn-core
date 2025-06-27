@@ -20,18 +20,18 @@ namespace snn::app
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty).view() == "ab");
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty).view() == "ab");
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty).view() == "cd");
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty).view() == "cd");
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty).view() == "e");
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty).view() == "e");
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());
@@ -92,23 +92,23 @@ namespace snn
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(algo::is_equal(rng.front(promise::not_empty), init_list<int>{10, 11, 12}));
-            rng.drop_front(promise::not_empty);
+            snn_require(algo::is_equal(rng.front(assume::not_empty), init_list<int>{10, 11, 12}));
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(algo::is_equal(rng.front(promise::not_empty), init_list<int>{13, 14, 15}));
-            rng.drop_front(promise::not_empty);
+            snn_require(algo::is_equal(rng.front(assume::not_empty), init_list<int>{13, 14, 15}));
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(algo::is_equal(rng.front(promise::not_empty), init_list<int>{16, 17, 18}));
-            rng.drop_front(promise::not_empty);
+            snn_require(algo::is_equal(rng.front(assume::not_empty), init_list<int>{16, 17, 18}));
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(algo::is_equal(rng.front(promise::not_empty), init_list<int>{19}));
-            rng.drop_front(promise::not_empty);
+            snn_require(algo::is_equal(rng.front(assume::not_empty), init_list<int>{19}));
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());
@@ -149,18 +149,18 @@ namespace snn
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(cstrview{rng.front(promise::not_empty)} == "ab");
-            rng.drop_front(promise::not_empty);
+            snn_require(cstrview{rng.front(assume::not_empty)} == "ab");
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(cstrview{rng.front(promise::not_empty)} == "cd");
-            rng.drop_front(promise::not_empty);
+            snn_require(cstrview{rng.front(assume::not_empty)} == "cd");
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(cstrview{rng.front(promise::not_empty)} == "e");
-            rng.drop_front(promise::not_empty);
+            snn_require(cstrview{rng.front(assume::not_empty)} == "e");
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());

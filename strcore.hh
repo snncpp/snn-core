@@ -322,14 +322,14 @@ namespace snn
             return view().template back<R>();
         }
 
-        [[nodiscard]] constexpr reference back(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr reference back(assume::not_empty_t) noexcept
         {
             // Don't use view(), it makes it harder for the optimizer to remove the assert.
             snn_assert(count() > 0);
             return begin()[count() - 1];
         }
 
-        [[nodiscard]] constexpr const_reference back(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr const_reference back(assume::not_empty_t) const noexcept
         {
             // Don't use view(), it makes it harder for the optimizer to remove the assert.
             snn_assert(count() > 0);
@@ -348,14 +348,14 @@ namespace snn
             return view().template front<R>();
         }
 
-        [[nodiscard]] constexpr reference front(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr reference front(assume::not_empty_t) noexcept
         {
             // Don't use view(), it makes it harder for the optimizer to remove the assert.
             snn_assert(count() > 0);
             return begin()[0];
         }
 
-        [[nodiscard]] constexpr const_reference front(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr const_reference front(assume::not_empty_t) const noexcept
         {
             // Don't use view(), it makes it harder for the optimizer to remove the assert.
             snn_assert(count() > 0);

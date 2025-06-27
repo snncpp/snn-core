@@ -64,26 +64,26 @@ namespace snn
             snn_require(rng);
             snn_require(!rng.is_empty());
             {
-                const auto i = rng.front(promise::not_empty);
+                const auto i = rng.front(assume::not_empty);
                 snn_require(i == 11);
             }
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
             {
-                const auto i = rng.front(promise::not_empty);
+                const auto i = rng.front(assume::not_empty);
                 snn_require(i == 9);
             }
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
             {
-                const auto i = rng.front(promise::not_empty);
+                const auto i = rng.front(assume::not_empty);
                 snn_require(i == 42);
             }
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());

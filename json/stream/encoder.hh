@@ -186,7 +186,7 @@ namespace snn::json::stream
         {
             if (append_to_.has_back(','))
             {
-                append_to_.back(promise::not_empty) = c;
+                append_to_.back(assume::not_empty) = c;
                 return *this;
             }
 

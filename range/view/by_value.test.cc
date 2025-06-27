@@ -24,8 +24,8 @@ namespace snn::app
 
             snn_require(algo::is_equal(ref_rng, val_rng));
 
-            using ref_rng_front_type = decltype(ref_rng.front(promise::not_empty));
-            using val_rng_front_type = decltype(val_rng.front(promise::not_empty));
+            using ref_rng_front_type = decltype(ref_rng.front(assume::not_empty));
+            using val_rng_front_type = decltype(val_rng.front(assume::not_empty));
 
             static_assert(std::is_same_v<ref_rng_front_type, int&>);
             static_assert(std::is_same_v<val_rng_front_type, int>);
@@ -50,14 +50,14 @@ namespace snn::app
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.front(promise::not_empty) == 9);
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == 9);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.front(promise::not_empty) == 21);
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == 21);
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());
@@ -65,7 +65,7 @@ namespace snn::app
             // Types
             using range_type = range::view::by_value<range::contiguous<const int*>>;
             static_assert(std::is_same_v<decltype(rng), range_type>);
-            static_assert(std::is_same_v<decltype(rng.front(promise::not_empty)), int>);
+            static_assert(std::is_same_v<decltype(rng.front(assume::not_empty)), int>);
             static_assert(std::is_same_v<decltype(rng.begin()), range::iter::forward<range_type>>);
             static_assert(std::is_same_v<decltype(rng.end()), range::iter::forward_end>);
 

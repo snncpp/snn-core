@@ -61,18 +61,18 @@ namespace snn
 
             using cstrview_pair = pair::first_second<cstrview>;
 
-            snn_require(rng.front(promise::not_empty) == cstrview_pair{"one", "-"});
+            snn_require(rng.front(assume::not_empty) == cstrview_pair{"one", "-"});
             snn_require(rng.front().value() == cstrview_pair{"one", "-"});
 
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.front(promise::not_empty) == cstrview_pair{"two", "\n"});
+            snn_require(rng.front(assume::not_empty) == cstrview_pair{"two", "\n"});
             snn_require(rng.front().value() == cstrview_pair{"two", "\n"});
 
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());

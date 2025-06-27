@@ -69,7 +69,7 @@ namespace snn::app
             constexpr trivial(const char (&s)[5])
                 : trivial{s[0], s[1], s[2], s[3]}
             {
-                if (s_.front(promise::not_empty) == 'Z')
+                if (s_.front(assume::not_empty) == 'Z')
                 {
                     throw_or_abort(generic::error::invalid_value);
                 }
@@ -308,7 +308,7 @@ namespace snn::app
                     v.append(x);
                 }
                 // Append from self at capacity.
-                v.append(v.back(promise::not_empty));
+                v.append(v.back(assume::not_empty));
             }
 
             // append(vec)
@@ -483,30 +483,30 @@ namespace snn::app
 
                 v.append(x);
                 snn_require(count_eq(v, 1));
-                snn_require(v.front(promise::not_empty) == x);
-                snn_require(v.back(promise::not_empty) == x);
+                snn_require(v.front(assume::not_empty) == x);
+                snn_require(v.back(assume::not_empty) == x);
                 snn_require(v.front().value() == x);
                 snn_require(v.back().value() == x);
 
                 v.append(y);
                 snn_require(count_eq(v, 2));
-                snn_require(v.front(promise::not_empty) == x);
-                snn_require(v.back(promise::not_empty) == y);
+                snn_require(v.front(assume::not_empty) == x);
+                snn_require(v.back(assume::not_empty) == y);
                 snn_require(v.front().value() == x);
                 snn_require(v.back().value() == y);
 
                 const Vec v2 = v;
                 snn_require(v == v2);
 
-                v.back(promise::not_empty) = x;
+                v.back(assume::not_empty) = x;
                 snn_require(count_eq(v, 2));
-                snn_require(v.back(promise::not_empty) == x);
+                snn_require(v.back(assume::not_empty) == x);
 
                 snn_require(v != v2);
 
                 snn_require(count_eq(v2, 2));
-                snn_require(v2.front(promise::not_empty) == x);
-                snn_require(v2.back(promise::not_empty) == y);
+                snn_require(v2.front(assume::not_empty) == x);
+                snn_require(v2.back(assume::not_empty) == y);
             }
 
             // capacity
@@ -544,11 +544,11 @@ namespace snn::app
                 snn_require(v.contains(x));
                 snn_require(v.contains(y));
 
-                v.drop_back(promise::not_empty);
+                v.drop_back(assume::not_empty);
                 snn_require(v.contains(x));
                 snn_require(!v.contains(y));
 
-                v.drop_back(promise::not_empty);
+                v.drop_back(assume::not_empty);
                 snn_require(!v.contains(x));
                 snn_require(!v.contains(y));
             }
@@ -605,9 +605,9 @@ namespace snn::app
                     v.insert_at(1, x);
                 }
                 snn_require(v.count() == v.capacity());
-                snn_require(v.back(promise::not_empty) == x);
+                snn_require(v.back(assume::not_empty) == x);
                 v.insert_at(v.count(), y);
-                snn_require(v.back(promise::not_empty) == y);
+                snn_require(v.back(assume::not_empty) == y);
             }
 
             // find
@@ -927,16 +927,16 @@ namespace snn::app
                 v.append(y);
                 snn_require(count_eq(v, 2));
 
-                v.drop_back(promise::not_empty);
-                v.drop_back(promise::not_empty);
+                v.drop_back(assume::not_empty);
+                v.drop_back(assume::not_empty);
                 snn_require(count_eq(v, 0));
 
                 v.append(y);
                 v.append(x);
                 snn_require(count_eq(v, 2));
 
-                v.drop_back(promise::not_empty);
-                v.drop_back(promise::not_empty);
+                v.drop_back(assume::not_empty);
+                v.drop_back(assume::not_empty);
                 snn_require(count_eq(v, 0));
             }
 

@@ -18,9 +18,9 @@ namespace snn::algo
     {
         while (rng)
         {
-            const auto& e = rng.front(promise::not_empty);
+            const auto& e = rng.front(assume::not_empty);
             initial_value = op(std::move(initial_value), e);
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
         }
         return initial_value;
     }

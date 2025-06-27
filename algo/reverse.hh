@@ -24,23 +24,23 @@ namespace snn::algo
             for (loop::count lc{rng.count() / 2}; lc--;)
             {
                 using std::swap;
-                swap(urng.front(promise::not_empty), urng.back(promise::not_empty));
+                swap(urng.front(assume::not_empty), urng.back(assume::not_empty));
 
-                urng.drop_front(promise::not_empty);
-                urng.drop_back(promise::not_empty);
+                urng.drop_front(assume::not_empty);
+                urng.drop_back(assume::not_empty);
             }
         }
         else
         {
             while (rng)
             {
-                decltype(auto) front_elem = rng.front(promise::not_empty);
-                rng.drop_front(promise::not_empty);
+                decltype(auto) front_elem = rng.front(assume::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 if (rng)
                 {
-                    decltype(auto) back_elem = rng.back(promise::not_empty);
-                    rng.drop_back(promise::not_empty);
+                    decltype(auto) back_elem = rng.back(assume::not_empty);
+                    rng.drop_back(assume::not_empty);
 
                     static_assert(std::is_lvalue_reference_v<decltype(front_elem)>);
                     static_assert(std::is_lvalue_reference_v<decltype(back_elem)>);

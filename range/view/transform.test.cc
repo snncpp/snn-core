@@ -48,18 +48,18 @@ namespace snn
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty) == 17);
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == 17);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty) == 21);
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == 21);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty) == 24);
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == 24);
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());

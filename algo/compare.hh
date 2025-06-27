@@ -16,7 +16,7 @@ namespace snn::algo
 
     template <input_range FirstRng, input_range SecondRng>
     [[nodiscard]] constexpr auto compare(FirstRng a, SecondRng b) //
-        -> decltype(a.front(promise::not_empty) <=> b.front(promise::not_empty))
+        -> decltype(a.front(assume::not_empty) <=> b.front(assume::not_empty))
     {
         if constexpr (random_access_range<FirstRng> && legacy_iterable<FirstRng> &&
                       random_access_range<SecondRng> && legacy_iterable<SecondRng>)
@@ -25,13 +25,13 @@ namespace snn::algo
             range::unchecked::forward ub{init::from, b.begin(), b.end()};
             for (loop::count lc{math::min(a.count(), b.count())}; lc--;)
             {
-                const auto cmp = ua.front(promise::not_empty) <=> ub.front(promise::not_empty);
+                const auto cmp = ua.front(assume::not_empty) <=> ub.front(assume::not_empty);
                 if (cmp != 0)
                 {
                     return cmp;
                 }
-                ua.drop_front(promise::not_empty);
-                ub.drop_front(promise::not_empty);
+                ua.drop_front(assume::not_empty);
+                ub.drop_front(assume::not_empty);
             }
             return a.count() <=> b.count();
         }
@@ -39,13 +39,13 @@ namespace snn::algo
         {
             while (a && b)
             {
-                const auto cmp = a.front(promise::not_empty) <=> b.front(promise::not_empty);
+                const auto cmp = a.front(assume::not_empty) <=> b.front(assume::not_empty);
                 if (cmp != 0)
                 {
                     return cmp;
                 }
-                a.drop_front(promise::not_empty);
-                b.drop_front(promise::not_empty);
+                a.drop_front(assume::not_empty);
+                b.drop_front(assume::not_empty);
             }
             return !a.is_empty() <=> !b.is_empty();
         }

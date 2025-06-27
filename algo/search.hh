@@ -36,23 +36,23 @@ namespace snn::algo
         {
             if (needle)
             {
-                const val_or_ref needle_front{needle.front(promise::not_empty)};
-                needle.drop_front(promise::not_empty);
+                const val_or_ref needle_front{needle.front(assume::not_empty)};
+                needle.drop_front(assume::not_empty);
 
                 while (true)
                 {
                     // Search for needle_front.
                     while (subject &&
-                           !is_equal(subject.front(promise::not_empty), needle_front.get()))
+                           !is_equal(subject.front(assume::not_empty), needle_front.get()))
                     {
-                        subject.drop_front(promise::not_empty);
+                        subject.drop_front(assume::not_empty);
                     }
 
                     const auto remaining = subject;
                     if (subject)
                     {
                         // Drop element that matched "needle_front".
-                        subject.drop_front(promise::not_empty);
+                        subject.drop_front(assume::not_empty);
 
                         if (starts_with(subject, needle, is_equal))
                         {

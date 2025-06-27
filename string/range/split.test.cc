@@ -57,19 +57,19 @@ namespace snn
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty) == "one");
+            snn_require(rng.front(assume::not_empty) == "one");
             snn_require(rng.front().value() == "one");
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
             snn_require(rng.front().value() == "two");
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
-            snn_require(rng.front(promise::not_empty) == "three");
-            rng.drop_front(promise::not_empty);
+            snn_require(rng.front(assume::not_empty) == "three");
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());
@@ -78,7 +78,7 @@ namespace snn
         {
             string::range::split rng{"one two three", ' '};
 
-            snn_require(rng.pop_front(promise::not_empty) == "one");
+            snn_require(rng.pop_front(assume::not_empty) == "one");
             snn_require(rng.pop_front().value() == "two");
             snn_require(rng.pop_front().value() == "three");
 

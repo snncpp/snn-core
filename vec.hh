@@ -229,14 +229,14 @@ namespace snn
             return nullopt;
         }
 
-        [[nodiscard]] constexpr reference back(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr reference back(assume::not_empty_t) noexcept
         {
             // Don't use view(), it makes it harder for the optimizer to remove the assert.
             snn_assert(buf_.count() > 0);
             return buf_.begin()[buf_.count() - 1];
         }
 
-        [[nodiscard]] constexpr const_reference back(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr const_reference back(assume::not_empty_t) const noexcept
         {
             // Don't use view(), it makes it harder for the optimizer to remove the assert.
             snn_assert(buf_.count() > 0);
@@ -265,14 +265,14 @@ namespace snn
             return nullopt;
         }
 
-        [[nodiscard]] constexpr reference front(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr reference front(assume::not_empty_t) noexcept
         {
             // Don't use view(), it makes it harder for the optimizer to remove the assert.
             snn_assert(buf_.count() > 0);
             return buf_.begin()[0];
         }
 
-        [[nodiscard]] constexpr const_reference front(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr const_reference front(assume::not_empty_t) const noexcept
         {
             // Don't use view(), it makes it harder for the optimizer to remove the assert.
             snn_assert(buf_.count() > 0);
@@ -472,10 +472,10 @@ namespace snn
             }
         }
 
-        constexpr void drop_back(promise::not_empty_t) noexcept
+        constexpr void drop_back(assume::not_empty_t) noexcept
         {
             snn_assert(buf_.count() > 0);
-            buf_.decrement_count(promise::not_empty);
+            buf_.decrement_count(assume::not_empty);
             mem::destruct(not_null{buf_.end()});
         }
 

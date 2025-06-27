@@ -26,7 +26,7 @@ namespace snn::utf8
         usize cp_count = 0;
         while (rng)
         {
-            const char c = rng.front(promise::not_empty);
+            const char c = rng.front(assume::not_empty);
             if (chr::is_ascii(c))
             {
                 cp_count += rng.count();

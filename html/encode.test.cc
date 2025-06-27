@@ -65,7 +65,7 @@ namespace snn::app
             auto rng = s.range();
             while (rng)
             {
-                const char c = rng.pop_front(promise::not_empty);
+                const char c = rng.pop_front(assume::not_empty);
 
                 switch (c)
                 {
@@ -103,7 +103,7 @@ namespace snn::app
             auto rng = s.range();
             while (rng)
             {
-                const char c = rng.pop_front(promise::not_empty);
+                const char c = rng.pop_front(assume::not_empty);
 
                 switch (c)
                 {

@@ -100,7 +100,7 @@ namespace snn::json::detail
 
             if (rng_)
             {
-                const char c = rng_.front(promise::not_empty);
+                const char c = rng_.front(assume::not_empty);
 
                 switch (c)
                 {
@@ -121,7 +121,7 @@ namespace snn::json::detail
                     case 'f':
                     {
                         const auto initial_rng = rng_;
-                        rng_.drop_front(promise::not_empty);
+                        rng_.drop_front(assume::not_empty);
                         if (rng_.drop_front("alse"))
                         {
                             return make_node_(
@@ -146,17 +146,17 @@ namespace snn::json::detail
 
                     // String
                     case '"':
-                        rng_.drop_front(promise::not_empty);
+                        rng_.drop_front(assume::not_empty);
                         return decode_string_();
 
                     // Array
                     case '[':
-                        rng_.drop_front(promise::not_empty);
+                        rng_.drop_front(assume::not_empty);
                         return decode_array_(depth);
 
                     // Object
                     case '{':
-                        rng_.drop_front(promise::not_empty);
+                        rng_.drop_front(assume::not_empty);
                         return decode_object_(depth);
 
                     // Number
@@ -361,7 +361,7 @@ namespace snn::json::detail
             if (rng_.has_front('"'))
             {
                 const cstrview s{initial_rng.without_suffix(rng_, promise::is_valid)};
-                rng_.drop_front(promise::not_empty);
+                rng_.drop_front(assume::not_empty);
                 return make_node_(s);
             }
 
@@ -374,7 +374,7 @@ namespace snn::json::detail
             {
                 snn_should(rng_.has_front_if(json::chr::is_special_string));
 
-                const char c = rng_.pop_front(promise::not_empty);
+                const char c = rng_.pop_front(assume::not_empty);
 
                 if (to_byte(c) < ' ') [[unlikely]]
                 {
@@ -398,34 +398,34 @@ namespace snn::json::detail
                 // Backslash
                 if (rng_)
                 {
-                    const char escaped = rng_.pop_front(promise::not_empty);
+                    const char escaped = rng_.pop_front(assume::not_empty);
 
                     switch (escaped)
                     {
                         case '"':
                         case '\\':
                         case '/':
-                            write_rng.pop_front(promise::not_empty) = escaped;
+                            write_rng.pop_front(assume::not_empty) = escaped;
                             break;
 
                         case 'b':
-                            write_rng.pop_front(promise::not_empty) = '\b';
+                            write_rng.pop_front(assume::not_empty) = '\b';
                             break;
 
                         case 'f':
-                            write_rng.pop_front(promise::not_empty) = '\f';
+                            write_rng.pop_front(assume::not_empty) = '\f';
                             break;
 
                         case 'n':
-                            write_rng.pop_front(promise::not_empty) = '\n';
+                            write_rng.pop_front(assume::not_empty) = '\n';
                             break;
 
                         case 'r':
-                            write_rng.pop_front(promise::not_empty) = '\r';
+                            write_rng.pop_front(assume::not_empty) = '\r';
                             break;
 
                         case 't':
-                            write_rng.pop_front(promise::not_empty) = '\t';
+                            write_rng.pop_front(assume::not_empty) = '\t';
                             break;
 
                         case 'u':
@@ -453,7 +453,7 @@ namespace snn::json::detail
 
                 rng_.pop_front_while(fn::_not{json::chr::is_special_string},
                                      [&write_rng](const char non_special) {
-                                         write_rng.pop_front(promise::not_empty) = non_special;
+                                         write_rng.pop_front(assume::not_empty) = non_special;
                                      });
             }
 

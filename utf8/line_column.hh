@@ -34,7 +34,7 @@ namespace snn::utf8
             // Include all bytes for the character at byte position.
             if (rng)
             {
-                const char c = rng.pop_front(promise::not_empty);
+                const char c = rng.pop_front(assume::not_empty);
                 if (!chr::is_ascii(c))
                 {
                     int skip_at_most = 3;
@@ -50,11 +50,11 @@ namespace snn::utf8
 
         while (rng)
         {
-            const char c = rng.front(promise::not_empty);
+            const char c = rng.front(assume::not_empty);
 
             if (chr::is_ascii(c))
             {
-                rng.drop_front(promise::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 if (c == '\n')
                 {

@@ -39,13 +39,13 @@ namespace snn::utf8::range
             return snn::range::iter::forward_end{};
         }
 
-        constexpr void drop_front(promise::not_empty_t) noexcept
+        constexpr void drop_front(assume::not_empty_t) noexcept
         {
             snn_should(!is_empty());
             next_();
         }
 
-        [[nodiscard]] constexpr pair::value_count<u32> front(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr pair::value_count<u32> front(assume::not_empty_t) const noexcept
         {
             snn_should(!is_empty());
             return current_;
@@ -55,7 +55,7 @@ namespace snn::utf8::range
         {
             if (!is_empty())
             {
-                return front(promise::not_empty);
+                return front(assume::not_empty);
             }
             return nullopt;
         }

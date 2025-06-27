@@ -47,11 +47,11 @@ namespace snn::app
             snn_require_throws_code(pool.append(7), generic::error::insufficient_capacity);
             snn_require_throws_code(pool.append_inplace(7), generic::error::insufficient_capacity);
 
-            snn_require(pool.front(promise::not_empty) == 112233);
+            snn_require(pool.front(assume::not_empty) == 112233);
             snn_require(pool.at(2, assume::within_bounds) == 23);
-            snn_require(pool.back(promise::not_empty) == 123456789);
+            snn_require(pool.back(assume::not_empty) == 123456789);
 
-            pool.drop_back(promise::not_empty);
+            pool.drop_back(assume::not_empty);
 
             snn_require(pool);
             snn_require(!pool.is_empty());
@@ -104,8 +104,8 @@ namespace snn::app
 
             auto& t1 = pool.append_inplace("abcd");
             snn_require(t1.first() == 'a');
-            snn_require(pool.back(promise::not_empty).first() == 'a');
-            snn_require(pool.front(promise::not_empty).first() == 'a');
+            snn_require(pool.back(assume::not_empty).first() == 'a');
+            snn_require(pool.front(assume::not_empty).first() == 'a');
             snn_require(pool.count() == 1);
             snn_require(pool);
             snn_require(!pool.is_empty());
@@ -114,8 +114,8 @@ namespace snn::app
 
             auto& t2 = pool.append(trivial{"efgh"});
             snn_require(t2.first() == 'e');
-            snn_require(&pool.back(promise::not_empty) == &t2);
-            snn_require(&pool.front(promise::not_empty) == &t1);
+            snn_require(&pool.back(assume::not_empty) == &t2);
+            snn_require(&pool.front(assume::not_empty) == &t1);
             snn_require(pool.count() == 2);
             snn_require(pool);
             snn_require(!pool.is_empty());
@@ -161,10 +161,10 @@ namespace snn::app
                 snn_require(c == 6);
             }
 
-            pool.drop_back(promise::not_empty);
+            pool.drop_back(assume::not_empty);
 
-            snn_require(&pool.back(promise::not_empty) == &t5);
-            snn_require(pool.back(promise::not_empty).first() == 'q');
+            snn_require(&pool.back(assume::not_empty) == &t5);
+            snn_require(pool.back(assume::not_empty).first() == 'q');
             snn_require(pool.count() == 5);
             snn_require(pool);
             snn_require(!pool.is_empty());
@@ -198,8 +198,8 @@ namespace snn::app
 
                 auto& t1 = pool.append_inplace("abcd");
                 snn_require(t1.first() == 'a');
-                snn_require(pool.back(promise::not_empty).first() == 'a');
-                snn_require(pool.front(promise::not_empty).first() == 'a');
+                snn_require(pool.back(assume::not_empty).first() == 'a');
+                snn_require(pool.front(assume::not_empty).first() == 'a');
                 snn_require(pool.count() == 1);
                 snn_require(pool);
                 snn_require(!pool.is_empty());
@@ -208,8 +208,8 @@ namespace snn::app
 
                 auto& t2 = pool.append(trivial{"efgh"});
                 snn_require(t2.first() == 'e');
-                snn_require(&pool.back(promise::not_empty) == &t2);
-                snn_require(&pool.front(promise::not_empty) == &t1);
+                snn_require(&pool.back(assume::not_empty) == &t2);
+                snn_require(&pool.front(assume::not_empty) == &t1);
                 snn_require(pool.count() == 2);
                 snn_require(pool);
                 snn_require(!pool.is_empty());
@@ -269,10 +269,10 @@ namespace snn::app
                     snn_require(c == 6);
                 }
 
-                pool.drop_back(promise::not_empty);
+                pool.drop_back(assume::not_empty);
 
-                snn_require(&pool.back(promise::not_empty) == &t5);
-                snn_require(pool.back(promise::not_empty).first() == 'q');
+                snn_require(&pool.back(assume::not_empty) == &t5);
+                snn_require(pool.back(assume::not_empty).first() == 'q');
                 snn_require(pool.count() == 5);
                 snn_require(pool);
                 snn_require(!pool.is_empty());
@@ -313,12 +313,12 @@ namespace snn::app
                 snn_require(!pool.is_empty());
                 snn_require(pool.is_full());
 
-                pool.drop_back(promise::not_empty);
+                pool.drop_back(assume::not_empty);
                 snn_require(pool.count() == 1);
                 snn_require(!pool.is_empty());
                 snn_require(!pool.is_full());
 
-                pool.drop_back(promise::not_empty);
+                pool.drop_back(assume::not_empty);
                 snn_require(pool.count() == 0);
                 snn_require(pool.is_empty());
                 snn_require(!pool.is_full());

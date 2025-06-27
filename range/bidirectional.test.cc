@@ -22,17 +22,17 @@ namespace snn::app
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.front(promise::not_empty) == 123);
+            snn_require(rng.front(assume::not_empty) == 123);
             snn_require(rng.front().value() == 123);
 
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.front(promise::not_empty) == 456);
+            snn_require(rng.front(assume::not_empty) == 456);
 
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());
@@ -68,11 +68,11 @@ namespace snn
 
         // constexpr explicit operator bool() const
         // constexpr bool is_empty() const
-        // constexpr void drop_front(promise::not_empty_t)
+        // constexpr void drop_front(assume::not_empty_t)
         // constexpr optional<dereference_type> front()
         // constexpr optional<const_dereference_type> front() const
-        // constexpr dereference_type front(promise::not_empty_t)
-        // constexpr const_dereference_type front(promise::not_empty_t) const
+        // constexpr dereference_type front(assume::not_empty_t)
+        // constexpr const_dereference_type front(assume::not_empty_t) const
         {
             std::set<int> set;
             set.insert(456);
@@ -83,19 +83,19 @@ namespace snn
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.front(promise::not_empty) == 123);
+            snn_require(rng.front(assume::not_empty) == 123);
             snn_require(rng.front().value() == 123);
-            snn_require(std::as_const(rng).front(promise::not_empty) == 123);
+            snn_require(std::as_const(rng).front(assume::not_empty) == 123);
             snn_require(std::as_const(rng).front().value() == 123);
 
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.front(promise::not_empty) == 456);
+            snn_require(rng.front(assume::not_empty) == 456);
 
-            rng.drop_front(promise::not_empty);
+            rng.drop_front(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());
@@ -106,9 +106,9 @@ namespace snn
 
         // constexpr optional<dereference_type> back()
         // constexpr optional<const_dereference_type> back() const
-        // constexpr dereference_type back(promise::not_empty_t)
-        // constexpr const_dereference_type back(promise::not_empty_t) const
-        // constexpr void drop_back(promise::not_empty_t)
+        // constexpr dereference_type back(assume::not_empty_t)
+        // constexpr const_dereference_type back(assume::not_empty_t) const
+        // constexpr void drop_back(assume::not_empty_t)
         {
             std::set<int> set;
             set.insert(456);
@@ -119,19 +119,19 @@ namespace snn
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.back(promise::not_empty) == 456);
+            snn_require(rng.back(assume::not_empty) == 456);
             snn_require(rng.back().value() == 456);
-            snn_require(std::as_const(rng).back(promise::not_empty) == 456);
+            snn_require(std::as_const(rng).back(assume::not_empty) == 456);
             snn_require(std::as_const(rng).back().value() == 456);
 
-            rng.drop_back(promise::not_empty);
+            rng.drop_back(assume::not_empty);
 
             snn_require(rng);
             snn_require(!rng.is_empty());
 
-            snn_require(rng.back(promise::not_empty) == 123);
+            snn_require(rng.back(assume::not_empty) == 123);
 
-            rng.drop_back(promise::not_empty);
+            rng.drop_back(assume::not_empty);
 
             snn_require(!rng);
             snn_require(rng.is_empty());

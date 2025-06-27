@@ -54,14 +54,14 @@ namespace snn::regex::range
             return snn::range::iter::forward_end{};
         }
 
-        void drop_front(promise::not_empty_t)
+        void drop_front(assume::not_empty_t)
         {
             // A `snn_assert` here can not be not be optimized away by Clang 13.0.0.
             snn_should(!is_empty());
             ++first_;
         }
 
-        [[nodiscard]] matches_view front(promise::not_empty_t) const
+        [[nodiscard]] matches_view front(assume::not_empty_t) const
         {
             // A `snn_assert` here can not be not be optimized away by Clang 13.0.0.
             snn_should(!is_empty());

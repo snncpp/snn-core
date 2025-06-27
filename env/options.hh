@@ -290,14 +290,14 @@ namespace snn::env
         {
             if (args_)
             {
-                program_name_ = args_.front(promise::not_empty).to<cstrview>();
+                program_name_ = args_.front(assume::not_empty).to<cstrview>();
                 args_.drop_front_n(1);
             }
 
             auto rng = args_.range();
             while (rng)
             {
-                auto arg = rng.pop_front(promise::not_empty).to<cstrview>();
+                auto arg = rng.pop_front(assume::not_empty).to<cstrview>();
 
                 if (!arg.has_front('-') || arg == "-")
                 {
@@ -328,7 +328,7 @@ namespace snn::env
                             if (rng)
                             {
                                 // The next argument is the value.
-                                o.add_value(rng.pop_front(promise::not_empty).to<cstrview>());
+                                o.add_value(rng.pop_front(assume::not_empty).to<cstrview>());
                                 args_.drop_front_n(1);
                             }
                             else
@@ -353,7 +353,7 @@ namespace snn::env
                     // Every character is a potential flag.
                     while (arg)
                     {
-                        const char c = arg.front(promise::not_empty);
+                        const char c = arg.front(assume::not_empty);
                         arg.drop_front_n(1);
 
                         if (auto opt = get(c))
@@ -371,7 +371,7 @@ namespace snn::env
                                 else if (rng)
                                 {
                                     // The next argument is the value.
-                                    o.add_value(rng.pop_front(promise::not_empty).to<cstrview>());
+                                    o.add_value(rng.pop_front(assume::not_empty).to<cstrview>());
                                     args_.drop_front_n(1);
                                 }
                                 else

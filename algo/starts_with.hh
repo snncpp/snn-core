@@ -29,12 +29,12 @@ namespace snn::algo
             range::unchecked::forward usubject{init::from, subject.begin(), subject.end()};
             while (needle)
             {
-                if (!is_equal(usubject.front(promise::not_empty), needle.front(promise::not_empty)))
+                if (!is_equal(usubject.front(assume::not_empty), needle.front(assume::not_empty)))
                 {
                     return false;
                 }
-                usubject.drop_front(promise::not_empty);
-                needle.drop_front(promise::not_empty);
+                usubject.drop_front(assume::not_empty);
+                needle.drop_front(assume::not_empty);
             }
 
             return true;
@@ -43,12 +43,12 @@ namespace snn::algo
         {
             while (subject && needle)
             {
-                if (!is_equal(subject.front(promise::not_empty), needle.front(promise::not_empty)))
+                if (!is_equal(subject.front(assume::not_empty), needle.front(assume::not_empty)))
                 {
                     return false;
                 }
-                subject.drop_front(promise::not_empty);
-                needle.drop_front(promise::not_empty);
+                subject.drop_front(assume::not_empty);
+                needle.drop_front(assume::not_empty);
             }
             return needle.is_empty();
         }

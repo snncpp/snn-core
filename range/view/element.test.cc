@@ -40,17 +40,17 @@ namespace snn::app
                 snn_require(rng);
                 snn_require(!rng.is_empty());
 
-                decltype(auto) key1 = rng.front(promise::not_empty);
+                decltype(auto) key1 = rng.front(assume::not_empty);
                 static_assert(std::is_same_v<decltype(key1), str&>);
                 snn_require(key1 == "abc");
 
-                rng.drop_front(promise::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(rng);
                 snn_require(!rng.is_empty());
 
-                decltype(auto) key2 = rng.front(promise::not_empty);
-                rng.drop_front(promise::not_empty);
+                decltype(auto) key2 = rng.front(assume::not_empty);
+                rng.drop_front(assume::not_empty);
                 static_assert(std::is_same_v<decltype(key2), str&>);
                 snn_require(key2 == "def");
 
@@ -83,13 +83,13 @@ namespace snn::app
 
                 snn_require(rng);
                 snn_require(!rng.is_empty());
-                snn_require(rng.front(promise::not_empty) == 246);
-                rng.drop_front(promise::not_empty);
+                snn_require(rng.front(assume::not_empty) == 246);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(rng);
                 snn_require(!rng.is_empty());
-                snn_require(rng.front(promise::not_empty) == 912);
-                rng.drop_front(promise::not_empty);
+                snn_require(rng.front(assume::not_empty) == 912);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(!rng);
                 snn_require(rng.is_empty());

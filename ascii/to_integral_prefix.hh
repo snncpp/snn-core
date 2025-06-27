@@ -35,8 +35,8 @@ namespace snn::ascii
         usize count = 0;
         if (rng)
         {
-            char c = rng.front(promise::not_empty);
-            rng.drop_front(promise::not_empty);
+            char c = rng.front(assume::not_empty);
+            rng.drop_front(assume::not_empty);
             if (chr::is_base<Base>(c))
             {
                 val   = chr::decode_base<Base>(c); // First digit can't overflow.
@@ -47,8 +47,8 @@ namespace snn::ascii
                     {
                         while (rng && count < MaxDigits)
                         {
-                            c = rng.front(promise::not_empty);
-                            rng.drop_front(promise::not_empty);
+                            c = rng.front(assume::not_empty);
+                            rng.drop_front(assume::not_empty);
 
                             if (!chr::is_base<Base>(c))
                             {
@@ -65,8 +65,8 @@ namespace snn::ascii
                     {
                         while (rng)
                         {
-                            c = rng.front(promise::not_empty);
-                            rng.drop_front(promise::not_empty);
+                            c = rng.front(assume::not_empty);
+                            rng.drop_front(assume::not_empty);
 
                             if (!chr::is_base<Base>(c))
                             {
@@ -120,9 +120,9 @@ namespace snn::ascii
 
             bool negative = false;
 
-            if (rng.front(promise::not_empty) == '-')
+            if (rng.front(assume::not_empty) == '-')
             {
-                rng.drop_front(promise::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 negative = true;
             }

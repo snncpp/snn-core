@@ -54,7 +54,7 @@ namespace snn::fmt
                 {
                     if (group_separator.size() == 1) [[likely]]
                     {
-                        *(--cur) = group_separator.front(promise::not_empty);
+                        *(--cur) = group_separator.front(assume::not_empty);
                     }
                     else
                     {

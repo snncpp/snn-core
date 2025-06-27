@@ -84,19 +84,19 @@ namespace snn::range::unchecked
 
         // #### Forward
 
-        constexpr void drop_front(promise::not_empty_t) noexcept
+        constexpr void drop_front(assume::not_empty_t) noexcept
         {
             snn_should(first_ != last_);
             ++first_;
         }
 
-        [[nodiscard]] constexpr reference front(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr reference front(assume::not_empty_t) noexcept
         {
             snn_should(first_ != last_);
             return *first_;
         }
 
-        [[nodiscard]] constexpr const_reference front(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr const_reference front(assume::not_empty_t) const noexcept
         {
             snn_should(first_ != last_);
             return *first_;
@@ -104,19 +104,19 @@ namespace snn::range::unchecked
 
         // #### Bidirectional
 
-        [[nodiscard]] constexpr reference back(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr reference back(assume::not_empty_t) noexcept
         {
             snn_should(first_ != last_);
             return *(last_ - 1);
         }
 
-        [[nodiscard]] constexpr const_reference back(promise::not_empty_t) const noexcept
+        [[nodiscard]] constexpr const_reference back(assume::not_empty_t) const noexcept
         {
             snn_should(first_ != last_);
             return *(last_ - 1);
         }
 
-        constexpr void drop_back(promise::not_empty_t) noexcept
+        constexpr void drop_back(assume::not_empty_t) noexcept
         {
             snn_should(first_ != last_);
             --last_;
@@ -145,7 +145,7 @@ namespace snn::range::unchecked
 
         // #### Contiguous
 
-        [[nodiscard]] constexpr reference pop_back(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr reference pop_back(assume::not_empty_t) noexcept
         {
             snn_should(first_ != last_);
             return *(--last_);
@@ -165,7 +165,7 @@ namespace snn::range::unchecked
             return contiguous{init::from, last_, last};
         }
 
-        [[nodiscard]] constexpr reference pop_front(promise::not_empty_t) noexcept
+        [[nodiscard]] constexpr reference pop_front(assume::not_empty_t) noexcept
         {
             snn_should(first_ != last_);
             return *(first_++);

@@ -64,7 +64,7 @@ namespace snn
         if (arguments)
         {
             // Change directory to that of the executable (invoked as).
-            auto rng = arguments.front(promise::not_empty).to<cstrview>().range();
+            auto rng = arguments.front(assume::not_empty).to<cstrview>().range();
             rng.pop_back_while(fn::is{fn::not_equal_to{}, '/'});
             if (rng)
             {

@@ -41,18 +41,18 @@ namespace snn::app
 
                 snn_require(rng);
                 snn_require(!rng.is_empty());
-                snn_require(rng.front(promise::not_empty) == 7);
-                rng.drop_front(promise::not_empty);
+                snn_require(rng.front(assume::not_empty) == 7);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(rng);
                 snn_require(!rng.is_empty());
-                snn_require(rng.front(promise::not_empty) == 6);
-                rng.drop_front(promise::not_empty);
+                snn_require(rng.front(assume::not_empty) == 6);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(rng);
                 snn_require(!rng.is_empty());
-                snn_require(rng.front(promise::not_empty) == 42);
-                rng.drop_front(promise::not_empty);
+                snn_require(rng.front(assume::not_empty) == 42);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(!rng);
                 snn_require(rng.is_empty());
@@ -63,16 +63,16 @@ namespace snn::app
                 auto rng = numbers.range() | range::v::take{3};
 
                 snn_require(!rng.is_empty());
-                snn_require(rng.front(promise::not_empty) == 7);
-                rng.drop_front(promise::not_empty);
+                snn_require(rng.front(assume::not_empty) == 7);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(!rng.is_empty());
-                snn_require(rng.front(promise::not_empty) == 6);
-                rng.drop_front(promise::not_empty);
+                snn_require(rng.front(assume::not_empty) == 6);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(!rng.is_empty());
-                snn_require(rng.front(promise::not_empty) == 42);
-                rng.drop_front(promise::not_empty);
+                snn_require(rng.front(assume::not_empty) == 42);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(!rng);
                 snn_require(rng.is_empty());

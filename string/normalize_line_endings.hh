@@ -28,18 +28,18 @@ namespace snn::string
             rng.pop_front_n(pos);
 
             snn::range::unchecked::contiguous write_rng{init::from, rng.begin(), rng.end()};
-            snn_should(write_rng && write_rng.front(promise::not_empty) == '\r');
+            snn_should(write_rng && write_rng.front(assume::not_empty) == '\r');
 
             while (rng)
             {
-                char c = rng.pop_front(promise::not_empty);
+                char c = rng.pop_front(assume::not_empty);
                 if (c == '\r')
                 {
                     c = '\n';
                     rng.drop_front('\n'); // Skip '\n' in "\r\n" if any.
                 }
 
-                write_rng.pop_front(promise::not_empty) = c;
+                write_rng.pop_front(assume::not_empty) = c;
             }
 
             return initial_rng.without_suffix(write_rng, promise::is_valid);

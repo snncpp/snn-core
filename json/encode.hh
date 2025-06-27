@@ -107,10 +107,10 @@ namespace snn::json
 
                 if (rng)
                 {
-                    const char c = rng.front(promise::not_empty);
+                    const char c = rng.front(assume::not_empty);
                     if (snn::chr::is_ascii(c))
                     {
-                        rng.drop_front(promise::not_empty);
+                        rng.drop_front(assume::not_empty);
                         switch (c)
                         {
                             case '\b':

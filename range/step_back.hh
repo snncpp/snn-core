@@ -73,7 +73,7 @@ namespace snn::range
 
         // #### Single element access
 
-        [[nodiscard]] constexpr T front(promise::not_empty_t) const
+        [[nodiscard]] constexpr T front(assume::not_empty_t) const
         {
             snn_should(!is_empty());
             return current_;
@@ -81,7 +81,7 @@ namespace snn::range
 
         // #### Operations
 
-        constexpr void drop_front(promise::not_empty_t)
+        constexpr void drop_front(assume::not_empty_t)
         {
             snn_should(!is_empty());
             current_ -= by_;

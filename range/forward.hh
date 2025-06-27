@@ -76,7 +76,7 @@ namespace snn::range
         SNN_DIAGNOSTIC_PUSH
         SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
 
-        constexpr void drop_front(promise::not_empty_t)
+        constexpr void drop_front(assume::not_empty_t)
         {
             snn_assert(first_ != last_);
             ++first_;
@@ -100,13 +100,13 @@ namespace snn::range
             return nullopt;
         }
 
-        [[nodiscard]] constexpr dereference_type front(promise::not_empty_t)
+        [[nodiscard]] constexpr dereference_type front(assume::not_empty_t)
         {
             snn_assert(first_ != last_);
             return *first_;
         }
 
-        [[nodiscard]] constexpr const_dereference_type front(promise::not_empty_t) const
+        [[nodiscard]] constexpr const_dereference_type front(assume::not_empty_t) const
         {
             snn_assert(first_ != last_);
             return *first_;

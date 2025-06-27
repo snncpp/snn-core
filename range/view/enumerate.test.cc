@@ -34,11 +34,11 @@ namespace snn::app
                 snn_require(rng);
                 snn_require(!rng.is_empty());
 
-                auto front_pair = rng.front(promise::not_empty);
+                auto front_pair = rng.front(assume::not_empty);
                 snn_require(front_pair.index == 0);
                 snn_require(front_pair.value == 7);
 
-                auto back_pair = rng.back(promise::not_empty);
+                auto back_pair = rng.back(assume::not_empty);
                 snn_require(back_pair.index == 5);
                 snn_require(back_pair.value == 8);
 
@@ -77,29 +77,29 @@ namespace snn::app
                 snn_require(rng);
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.front(promise::not_empty);
+                    const auto p = rng.front(assume::not_empty);
                     snn_require(p.index == 0);
                     snn_require(p.value == 42);
                 }
-                rng.drop_front(promise::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(rng);
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.front(promise::not_empty);
+                    const auto p = rng.front(assume::not_empty);
                     snn_require(p.index == 1);
                     snn_require(p.value == 9);
                 }
-                rng.drop_front(promise::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(rng);
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.front(promise::not_empty);
+                    const auto p = rng.front(assume::not_empty);
                     snn_require(p.index == 2);
                     snn_require(p.value == 11);
                 }
-                rng.drop_front(promise::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(!rng);
                 snn_require(rng.is_empty());
@@ -118,29 +118,29 @@ namespace snn::app
                 snn_require(rng);
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.back(promise::not_empty);
+                    const auto p = rng.back(assume::not_empty);
                     snn_require(p.index == 2);
                     snn_require(p.value == 11);
                 }
-                rng.drop_back(promise::not_empty);
+                rng.drop_back(assume::not_empty);
 
                 snn_require(rng);
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.back(promise::not_empty);
+                    const auto p = rng.back(assume::not_empty);
                     snn_require(p.index == 1);
                     snn_require(p.value == 9);
                 }
-                rng.drop_back(promise::not_empty);
+                rng.drop_back(assume::not_empty);
 
                 snn_require(rng);
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.back(promise::not_empty);
+                    const auto p = rng.back(assume::not_empty);
                     snn_require(p.index == 0);
                     snn_require(p.value == 42);
                 }
-                rng.drop_back(promise::not_empty);
+                rng.drop_back(assume::not_empty);
 
                 snn_require(!rng);
                 snn_require(rng.is_empty());
@@ -162,29 +162,29 @@ namespace snn::app
                 snn_require(rng);
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.front(promise::not_empty);
+                    const auto p = rng.front(assume::not_empty);
                     snn_require(p.index == 0);
                     snn_require(p.value == 42);
                 }
-                rng.drop_front(promise::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(rng);
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.front(promise::not_empty);
+                    const auto p = rng.front(assume::not_empty);
                     snn_require(p.index == 1);
                     snn_require(p.value == 9);
                 }
-                rng.drop_front(promise::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(rng);
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.front(promise::not_empty);
+                    const auto p = rng.front(assume::not_empty);
                     snn_require(p.index == 2);
                     snn_require(p.value == 11);
                 }
-                rng.drop_front(promise::not_empty);
+                rng.drop_front(assume::not_empty);
 
                 snn_require(!rng);
                 snn_require(rng.is_empty());
@@ -196,22 +196,22 @@ namespace snn::app
 
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.front(promise::not_empty);
-                    rng.drop_front(promise::not_empty);
+                    const auto p = rng.front(assume::not_empty);
+                    rng.drop_front(assume::not_empty);
                     snn_require(p.index == 0);
                     snn_require(p.value == 42);
                 }
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.front(promise::not_empty);
-                    rng.drop_front(promise::not_empty);
+                    const auto p = rng.front(assume::not_empty);
+                    rng.drop_front(assume::not_empty);
                     snn_require(p.index == 1);
                     snn_require(p.value == 9);
                 }
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.front(promise::not_empty);
-                    rng.drop_front(promise::not_empty);
+                    const auto p = rng.front(assume::not_empty);
+                    rng.drop_front(assume::not_empty);
                     snn_require(p.index == 2);
                     snn_require(p.value == 11);
                 }
@@ -225,22 +225,22 @@ namespace snn::app
 
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.front(promise::not_empty);
-                    rng.drop_front(promise::not_empty);
+                    const auto p = rng.front(assume::not_empty);
+                    rng.drop_front(assume::not_empty);
                     snn_require(p.index == 5);
                     snn_require(p.value == 42);
                 }
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.front(promise::not_empty);
-                    rng.drop_front(promise::not_empty);
+                    const auto p = rng.front(assume::not_empty);
+                    rng.drop_front(assume::not_empty);
                     snn_require(p.index == 6);
                     snn_require(p.value == 9);
                 }
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.front(promise::not_empty);
-                    rng.drop_front(promise::not_empty);
+                    const auto p = rng.front(assume::not_empty);
+                    rng.drop_front(assume::not_empty);
                     snn_require(p.index == 7);
                     snn_require(p.value == 11);
                 }
@@ -254,22 +254,22 @@ namespace snn::app
 
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.back(promise::not_empty);
-                    rng.drop_back(promise::not_empty);
+                    const auto p = rng.back(assume::not_empty);
+                    rng.drop_back(assume::not_empty);
                     snn_require(p.index == 7);
                     snn_require(p.value == 11);
                 }
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.back(promise::not_empty);
-                    rng.drop_back(promise::not_empty);
+                    const auto p = rng.back(assume::not_empty);
+                    rng.drop_back(assume::not_empty);
                     snn_require(p.index == 6);
                     snn_require(p.value == 9);
                 }
                 snn_require(!rng.is_empty());
                 {
-                    const auto p = rng.back(promise::not_empty);
-                    rng.drop_back(promise::not_empty);
+                    const auto p = rng.back(assume::not_empty);
+                    rng.drop_back(assume::not_empty);
                     snn_require(p.index == 5);
                     snn_require(p.value == 42);
                 }

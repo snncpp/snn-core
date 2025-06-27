@@ -21,8 +21,8 @@ namespace snn::algo
         // Note: There is no easy way to check if rng overlap append_to.
         while (rng)
         {
-            append_to << rng.front(promise::not_empty);
-            rng.drop_front(promise::not_empty);
+            append_to << rng.front(assume::not_empty);
+            rng.drop_front(assume::not_empty);
         }
     }
 
@@ -42,13 +42,13 @@ namespace snn::algo
         // Note: There is no easy way to check if rng or delimiter overlap append_to.
         if (rng)
         {
-            append_to << rng.front(promise::not_empty);
-            rng.drop_front(promise::not_empty);
+            append_to << rng.front(assume::not_empty);
+            rng.drop_front(assume::not_empty);
 
             while (rng)
             {
-                append_to << delimiter << rng.front(promise::not_empty);
-                rng.drop_front(promise::not_empty);
+                append_to << delimiter << rng.front(assume::not_empty);
+                rng.drop_front(assume::not_empty);
             }
         }
     }
