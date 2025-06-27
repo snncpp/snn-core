@@ -457,7 +457,7 @@ namespace snn::time
                     const auto opt = parse_rfc822_zone_name(name);
                     if (opt)
                     {
-                        offset = opt.value(promise::has_value);
+                        offset = opt.value(assume::has_value);
                         if (offset < 0)
                         {
                             offset *= -1;

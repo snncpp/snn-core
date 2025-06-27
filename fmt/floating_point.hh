@@ -59,7 +59,7 @@ namespace snn::fmt
 
         if (thousands_separator)
         {
-            fmt::integral(rounded, thousands_separator.value(promise::has_value), append_to);
+            fmt::integral(rounded, thousands_separator.value(assume::has_value), append_to);
         }
         else
         {

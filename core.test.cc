@@ -74,7 +74,7 @@ namespace snn::app
             static_assert(constructible_from<int, i64>);
             static_assert(constructible_from_iterators<str>);
             static_assert(convertible_to<int, i64>);
-            static_assert(explicitly_default_constructible<promise::has_value_t>);
+            static_assert(explicitly_default_constructible<assume::has_value_t>);
             static_assert(floating_point<float>);
             static_assert(implicitly_default_constructible<str>);
             static_assert(legacy_iterable<str>);

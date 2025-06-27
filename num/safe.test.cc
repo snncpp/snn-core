@@ -54,8 +54,8 @@ namespace snn::app
                 snn_require(b.value() == 99);
                 snn_require(a.value_or(123) == 0);
                 snn_require(b.value_or(123) == 99);
-                snn_require(a.value(promise::has_value) == 0);
-                snn_require(b.value(promise::has_value) == 99);
+                snn_require(a.value(assume::has_value) == 0);
+                snn_require(b.value(assume::has_value) == 99);
             }
 
             // value()

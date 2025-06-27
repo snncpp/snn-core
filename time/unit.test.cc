@@ -16,7 +16,7 @@ namespace snn::app
                 snn_require(sec);
                 snn_require(sec.has_value());
                 snn_require(sec.value() == 123);
-                snn_require(sec.value(promise::has_value) == 123);
+                snn_require(sec.value(assume::has_value) == 123);
                 snn_require(sec.value_or(-1) == 123);
             }
             {
@@ -24,7 +24,7 @@ namespace snn::app
                 snn_require(!sec);
                 snn_require(sec.has_value());
                 snn_require(sec.value() == 0);
-                snn_require(sec.value(promise::has_value) == 0);
+                snn_require(sec.value(assume::has_value) == 0);
                 snn_require(sec.value_or(-1) == 0);
             }
             {

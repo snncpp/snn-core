@@ -42,7 +42,7 @@ namespace snn
             snn_require(sock);
             snn_require(sock.has_value());
             snn_require(sock.value() > 0);
-            snn_require(sock.value(promise::has_value) > 0);
+            snn_require(sock.value(assume::has_value) > 0);
             snn_require(sock.value_or(-1) > 0);
         }
 
@@ -52,7 +52,7 @@ namespace snn
                 file::descriptor sock{::socket(PF_INET, SOCK_DGRAM, 0)};
                 snn_require(sock);
                 snn_require(sock.has_value());
-                desc = sock.value(promise::has_value);
+                desc = sock.value(assume::has_value);
                 // ::close() will be called on the descriptor here.
             }
             // The following code is only for this single-threaded unit test, never close a
@@ -66,7 +66,7 @@ namespace snn
             file::descriptor sock{::socket(PF_INET, SOCK_DGRAM, 0)};
             snn_require(sock);
             snn_require(sock.has_value());
-            const int desc = sock.value(promise::has_value);
+            const int desc = sock.value(assume::has_value);
             snn_require(desc > 0);
 
             file::descriptor s2{std::move(sock)};
@@ -74,7 +74,7 @@ namespace snn
             snn_require(s2.has_value());
             snn_require(!sock);
             snn_require(!sock.has_value());
-            snn_require(s2.value(promise::has_value) == desc);
+            snn_require(s2.value(assume::has_value) == desc);
 
             file::descriptor s3;
             snn_require(!s3);
@@ -84,7 +84,7 @@ namespace snn
             snn_require(s3.has_value());
             snn_require(!s2);
             snn_require(!s2.has_value());
-            snn_require(s3.value(promise::has_value) == desc);
+            snn_require(s3.value(assume::has_value) == desc);
 
             sock.swap(s3);
             snn_require(!s3);

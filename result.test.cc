@@ -18,7 +18,7 @@ namespace snn::app
                 snn_require(res);
                 snn_require(res.has_value());
                 snn_require(res.value() == 123);
-                snn_require(res.value(promise::has_value) == 123);
+                snn_require(res.value(assume::has_value) == 123);
                 snn_require(res.value_or(-1) == 123);
             }
             {
@@ -36,7 +36,7 @@ namespace snn::app
                 snn_require(res.has_value());
                 snn_require(res.value() == 123);
                 snn_require(std::addressof(res.value()) == std::addressof(i));
-                snn_require(res.value(promise::has_value) == 123);
+                snn_require(res.value(assume::has_value) == 123);
                 snn_require(res.value_or(-1) == 123); // Returns by value.
             }
             {
@@ -789,7 +789,7 @@ namespace snn::app
                 static_assert(r);
                 static_assert(r.has_value());
                 static_assert(r.value() == 382);
-                static_assert(r.value(promise::has_value) == 382);
+                static_assert(r.value(assume::has_value) == 382);
 
                 static_assert(test_int_success().value() == 382);
 
@@ -900,9 +900,9 @@ namespace snn::app
                 snn_require(r);
                 snn_require(r.has_value());
                 snn_require(r.value() == "A long string, which goes on the heap.");
-                snn_require(r.value(promise::has_value) ==
+                snn_require(r.value(assume::has_value) ==
                             "A long string, which goes on the heap.");
-                snn_require(r.value(promise::has_value).size() == 38);
+                snn_require(r.value(assume::has_value).size() == 38);
 
                 auto ec = r.error_code();
                 snn_require(!ec);
@@ -1013,28 +1013,28 @@ namespace snn::app
                 snn_require(r);
                 snn_require(r.has_value());
                 snn_require(r.value() == "This should go on the heap.");
-                snn_require(r.value(promise::has_value) == "This should go on the heap.");
-                snn_require(r.value(promise::has_value).size() == 27);
+                snn_require(r.value(assume::has_value) == "This should go on the heap.");
+                snn_require(r.value(assume::has_value).size() == 27);
 
                 auto ec = r.error_code();
                 snn_require(!ec);
 
-                auto& s = r.value(promise::has_value);
+                auto& s = r.value(assume::has_value);
                 s.append(" This should trigger another memory allocation.");
 
                 auto r2 = cont.get();
                 snn_require(r2);
                 snn_require(r2.has_value());
-                snn_require(&r.value(promise::has_value) == &r2.value(promise::has_value));
-                snn_require(r2.value(promise::has_value) ==
+                snn_require(&r.value(assume::has_value) == &r2.value(assume::has_value));
+                snn_require(r2.value(assume::has_value) ==
                             "This should go on the heap."
                             " This should trigger another memory allocation.");
-                snn_require(r2.value(promise::has_value).size() == 74);
+                snn_require(r2.value(assume::has_value).size() == 74);
 
                 auto r3 = r2;
                 snn_require(r3);
                 snn_require(r3.has_value());
-                snn_require(r3.value(promise::has_value) ==
+                snn_require(r3.value(assume::has_value) ==
                             "This should go on the heap."
                             " This should trigger another memory allocation.");
             }
@@ -1054,16 +1054,16 @@ namespace snn::app
                 snn_require(r);
                 snn_require(r.has_value());
                 snn_require(r.value() == "This should go on the heap.");
-                snn_require(r.value(promise::has_value) == "This should go on the heap.");
-                snn_require(r.value(promise::has_value).size() == 27);
+                snn_require(r.value(assume::has_value) == "This should go on the heap.");
+                snn_require(r.value(assume::has_value).size() == 27);
 
                 auto r2 = cont.get();
                 snn_require(r2);
                 snn_require(r2.has_value());
                 snn_require(r2.value() == "This should go on the heap.");
-                snn_require(r2.value(promise::has_value) == "This should go on the heap.");
-                snn_require(r2.value(promise::has_value).size() == 27);
-                snn_require(&r.value(promise::has_value) == &r2.value(promise::has_value));
+                snn_require(r2.value(assume::has_value) == "This should go on the heap.");
+                snn_require(r2.value(assume::has_value).size() == 27);
+                snn_require(&r.value(assume::has_value) == &r2.value(assume::has_value));
             }
 
             // An `error_code` with a value of 0 (no error) should not be passed to a `result`, but

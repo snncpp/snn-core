@@ -37,7 +37,7 @@ namespace snn::json
             byte_position_     = d.byte_position();
             if (root)
             {
-                return document{std::move(pool), root.value(promise::has_value)};
+                return document{std::move(pool), root.value(assume::has_value)};
             }
             return root.error_code();
         }

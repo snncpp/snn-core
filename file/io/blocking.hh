@@ -55,7 +55,7 @@ namespace snn::file::io
                 const result<usize> res = read_some(fd, buffer);
                 if (res)
                 {
-                    const usize bytes_read = res.value(promise::has_value);
+                    const usize bytes_read = res.value(assume::has_value);
                     if (bytes_read > 0)
                     {
                         buffer.drop_front_n(bytes_read);
@@ -106,7 +106,7 @@ namespace snn::file::io
                 const result<usize> res = write_some(fd, buf);
                 if (res)
                 {
-                    buf.drop_front_n(res.value(promise::has_value));
+                    buf.drop_front_n(res.value(assume::has_value));
                 }
                 else
                 {

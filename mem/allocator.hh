@@ -48,7 +48,7 @@ namespace snn::mem
             throw_or_abort(generic::error::memory_allocation_failure);
         }
 
-        [[nodiscard]] constexpr Ptr value(promise::has_value_t) const noexcept
+        [[nodiscard]] constexpr Ptr value(assume::has_value_t) const noexcept
         {
             snn_assert(ptr_ != nullptr);
             return ptr_;

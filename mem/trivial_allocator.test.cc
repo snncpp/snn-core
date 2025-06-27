@@ -109,7 +109,7 @@ namespace snn::app
                 snn_require(opt);
                 snn_require(opt.has_value());
                 snn_require(opt.value() != nullptr);
-                snn_require(opt.value(promise::has_value) != nullptr);
+                snn_require(opt.value(assume::has_value) != nullptr);
                 snn_require(opt.value_or(nullptr) != nullptr);
                 snn_require(opt.value_or_nullptr() != nullptr);
 

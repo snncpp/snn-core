@@ -51,7 +51,7 @@ namespace snn::env
                 throw_or_abort(env::error::invalid_flag_name);
             }
 
-            if (short_flag_ && !is_valid_short_flag_name(short_flag_.value(promise::has_value)))
+            if (short_flag_ && !is_valid_short_flag_name(short_flag_.value(assume::has_value)))
             {
                 throw_or_abort(env::error::invalid_flag_name);
             }
@@ -248,7 +248,7 @@ namespace snn::env
             auto opt = get(short_flag);
             if (opt)
             {
-                return opt.value(promise::has_value);
+                return opt.value(assume::has_value);
             }
             throw_or_abort(env::error::unknown_option);
         }
@@ -258,7 +258,7 @@ namespace snn::env
             auto opt = get(long_flag);
             if (opt)
             {
-                return opt.value(promise::has_value);
+                return opt.value(assume::has_value);
             }
             throw_or_abort(env::error::unknown_option);
         }
@@ -321,7 +321,7 @@ namespace snn::env
 
                     if (auto opt = get(arg))
                     {
-                        auto& o = opt.value(promise::has_value);
+                        auto& o = opt.value(assume::has_value);
                         o.increment_count();
                         if (!o.is_boolean())
                         {
@@ -358,7 +358,7 @@ namespace snn::env
 
                         if (auto opt = get(c))
                         {
-                            auto& o = opt.value(promise::has_value);
+                            auto& o = opt.value(assume::has_value);
                             o.increment_count();
                             if (!o.is_boolean())
                             {

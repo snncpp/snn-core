@@ -123,7 +123,7 @@ namespace snn::file::dir
         const optional<cstrview> tmpdir = env::get<cstrview>("TMPDIR");
         if (tmpdir)
         {
-            path = tmpdir.value(promise::has_value);
+            path = tmpdir.value(assume::has_value);
         }
 
         if (path.is_empty())

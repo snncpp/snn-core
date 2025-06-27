@@ -84,9 +84,9 @@ namespace snn::time
             return safe_.value();
         }
 
-        [[nodiscard]] constexpr i64 value(promise::has_value_t) const noexcept
+        [[nodiscard]] constexpr i64 value(assume::has_value_t) const noexcept
         {
-            return safe_.value(promise::has_value);
+            return safe_.value(assume::has_value);
         }
 
         [[nodiscard]] constexpr i64 value_or(const i64 alt) const noexcept
@@ -329,7 +329,7 @@ namespace snn::time
         {
             if (safe_.has_value())
             {
-                const i64 v = safe_.value(promise::has_value);
+                const i64 v = safe_.value(assume::has_value);
 
                 if constexpr (Num == 1 && Den == 1)
                 {
@@ -411,22 +411,22 @@ namespace snn::time
                 if constexpr (is_smaller_than<Unit>())
                 {
                     // Left is smaller, convert right.
-                    const i64 left_value     = value(promise::has_value);
+                    const i64 left_value     = value(assume::has_value);
                     const auto right_smaller = u.template to<unit>();
                     if (right_smaller.has_value())
                     {
-                        return left_value == right_smaller.value(promise::has_value);
+                        return left_value == right_smaller.value(assume::has_value);
                     }
                     return false; // Overflow, can't be equal.
                 }
                 else
                 {
                     // Right is smaller, convert left.
-                    const i64 right_value   = u.value(promise::has_value);
+                    const i64 right_value   = u.value(assume::has_value);
                     const auto left_smaller = to<Unit>();
                     if (left_smaller.has_value())
                     {
-                        return left_smaller.value(promise::has_value) == right_value;
+                        return left_smaller.value(assume::has_value) == right_value;
                     }
                     return false; // Overflow, can't be equal.
                 }
@@ -449,22 +449,22 @@ namespace snn::time
                 if constexpr (is_smaller_than<Unit>())
                 {
                     // Left is smaller, convert right.
-                    const i64 left_value     = value(promise::has_value);
+                    const i64 left_value     = value(assume::has_value);
                     const auto right_smaller = u.template to<unit>();
                     if (right_smaller.has_value())
                     {
-                        return left_value <=> right_smaller.value(promise::has_value);
+                        return left_value <=> right_smaller.value(assume::has_value);
                     }
                     return std::strong_ordering::less; // Right overflowed, left must be less.
                 }
                 else
                 {
                     // Right is smaller, convert left.
-                    const i64 right_value   = u.value(promise::has_value);
+                    const i64 right_value   = u.value(assume::has_value);
                     const auto left_smaller = to<Unit>();
                     if (left_smaller.has_value())
                     {
-                        return left_smaller.value(promise::has_value) <=> right_value;
+                        return left_smaller.value(assume::has_value) <=> right_value;
                     }
                     return std::strong_ordering::greater; // Left overflowed, left must be greater.
                 }

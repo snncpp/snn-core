@@ -20,7 +20,7 @@ namespace snn::app
                 snn_require(opt); // Has value.
                 snn_require(opt.has_value());
                 snn_require(opt.value() == 456);
-                snn_require(opt.value(promise::has_value) == 456);
+                snn_require(opt.value(assume::has_value) == 456);
                 snn_require(opt.value_or(-1) == 456);
             }
             {
@@ -145,8 +145,8 @@ namespace snn
             snn_require(opt.has_value());
             snn_require(opt.value() == 472);
             snn_require(&opt.value() == &i);
-            snn_require(opt.value(promise::has_value) == 472);
-            snn_require(&opt.value(promise::has_value) == &i);
+            snn_require(opt.value(assume::has_value) == 472);
+            snn_require(&opt.value(assume::has_value) == &i);
 
             auto ec = opt.error_code();
             snn_require(!ec);
@@ -160,7 +160,7 @@ namespace snn
             static_assert(opt);
             static_assert(opt.has_value());
             static_assert(opt.value() == 382);
-            static_assert(opt.value(promise::has_value) == 382);
+            static_assert(opt.value(assume::has_value) == 382);
 
             constexpr auto ec = opt.error_code();
             static_assert(!ec);

@@ -96,7 +96,7 @@ namespace snn
             snn_require(handle);
             snn_require(handle.has_value());
             snn_require(handle.value() > 0);
-            snn_require(handle.value(promise::has_value) > 0);
+            snn_require(handle.value(assume::has_value) > 0);
             snn_require(handle.value_or(-1) > 0);
 
             auto pid = handle.value();

@@ -50,7 +50,7 @@ namespace snn::json::detail
 
             auto r = decode_recursive_(depth);
             if (!r) return r.error_code();
-            node& root = r.value(promise::has_value);
+            node& root = r.value(assume::has_value);
 
             rng_.pop_front_while(json::chr::is_whitespace);
             if (rng_.is_empty())
@@ -182,7 +182,7 @@ namespace snn::json::detail
         {
             auto p = make_node_(type::array);
             if (!p) return p.error_code();
-            node& parent = p.value(promise::has_value);
+            node& parent = p.value(assume::has_value);
 
             rng_.pop_front_while(json::chr::is_whitespace);
 
@@ -195,7 +195,7 @@ namespace snn::json::detail
             {
                 auto n = decode_recursive_(depth + 1);
                 if (!n) return n.error_code();
-                parent.append(n.value(promise::has_value));
+                parent.append(n.value(assume::has_value));
 
                 rng_.pop_front_while(json::chr::is_whitespace);
             } while (rng_.drop_front(','));
@@ -306,7 +306,7 @@ namespace snn::json::detail
         {
             auto p = make_node_(type::object);
             if (!p) return p.error_code();
-            node& parent = p.value(promise::has_value);
+            node& parent = p.value(assume::has_value);
 
             rng_.pop_front_while(json::chr::is_whitespace);
 
@@ -321,7 +321,7 @@ namespace snn::json::detail
                 {
                     auto k = decode_string_();
                     if (!k) return k.error_code();
-                    node& key = k.value(promise::has_value);
+                    node& key = k.value(assume::has_value);
 
                     rng_.pop_front_while(json::chr::is_whitespace);
 
@@ -329,7 +329,7 @@ namespace snn::json::detail
                     {
                         auto v = decode_recursive_(depth + 1);
                         if (!v) return v.error_code();
-                        parent.append(key, v.value(promise::has_value));
+                        parent.append(key, v.value(assume::has_value));
 
                         rng_.pop_front_while(json::chr::is_whitespace);
 
@@ -433,7 +433,7 @@ namespace snn::json::detail
                             auto r = decode_codepoint_(write_rng);
                             if (r)
                             {
-                                write_rng = r.value(promise::has_value);
+                                write_rng = r.value(assume::has_value);
                             }
                             else
                             {

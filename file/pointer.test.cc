@@ -41,7 +41,7 @@ namespace snn
             snn_require(fp);
             snn_require(fp.has_value());
             snn_require(fp.value() != nullptr);
-            snn_require(fp.value(promise::has_value) != nullptr);
+            snn_require(fp.value(assume::has_value) != nullptr);
             snn_require(fp.value_or(nullptr) != nullptr);
 
             snn_require(fp.integer_descriptor().has_value());
@@ -74,7 +74,7 @@ namespace snn
             file::pointer fp2{std::move(fp)};
             snn_require(fp2);
             snn_require(fp2.has_value());
-            snn_require(fp2.value(promise::has_value) == ptr);
+            snn_require(fp2.value(assume::has_value) == ptr);
             snn_require(!fp);
             snn_require(!fp.has_value());
 
@@ -84,7 +84,7 @@ namespace snn
             fp3 = std::move(fp2);
             snn_require(fp3);
             snn_require(fp3.has_value());
-            snn_require(fp3.value(promise::has_value) == ptr);
+            snn_require(fp3.value(assume::has_value) == ptr);
             snn_require(!fp2);
             snn_require(!fp2.has_value());
 
@@ -93,7 +93,7 @@ namespace snn
             snn_require(!fp3.has_value());
             snn_require(fp);
             snn_require(fp.has_value());
-            snn_require(fp.value(promise::has_value) == ptr);
+            snn_require(fp.value(assume::has_value) == ptr);
 
             snn_require(fp.close());
             snn_require(!fp);

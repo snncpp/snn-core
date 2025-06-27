@@ -458,7 +458,7 @@ namespace snn::detail::strcore
                     auto opt = alloc.reallocate(buf_, cap_, cap, size_);
                     if (opt)
                     {
-                        buf_ = opt.value(promise::has_value);
+                        buf_ = opt.value(assume::has_value);
                         cap_ = cap.get();
                     }
                 }
@@ -1302,7 +1302,7 @@ namespace snn::detail::strcore
                                                 cur_size + 1); // + 1 for zero.
                     if (opt)
                     {
-                        set_large_(opt.value(promise::has_value), sug_cap_incl_zero);
+                        set_large_(opt.value(assume::has_value), sug_cap_incl_zero);
                     }
                 }
             }

@@ -21,7 +21,7 @@ namespace snn::app
                 // Non-throwing alternative.
                 auto res = process::pipe::make();
                 snn_require(res);
-                process::pipe& pipe = res.value(promise::has_value);
+                process::pipe& pipe = res.value(assume::has_value);
                 snn_require(pipe.reading_end().value_or(-1) > 0);
                 snn_require(pipe.writing_end().value_or(-1) > 0);
             }

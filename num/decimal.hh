@@ -177,9 +177,9 @@ namespace snn::num
             return i_.value();
         }
 
-        [[nodiscard]] constexpr Int value(promise::has_value_t) const noexcept
+        [[nodiscard]] constexpr Int value(assume::has_value_t) const noexcept
         {
-            return i_.value(promise::has_value);
+            return i_.value(assume::has_value);
         }
 
         template <typename Buf>
@@ -230,7 +230,7 @@ namespace snn::num
 
             if (thousands_separator)
             {
-                fmt::integral(base, thousands_separator.value(promise::has_value), append_to);
+                fmt::integral(base, thousands_separator.value(assume::has_value), append_to);
             }
             else
             {
@@ -296,7 +296,7 @@ namespace snn::num
         {
             if (i_.has_value())
             {
-                const auto i = i_.value(promise::has_value);
+                const auto i = i_.value(assume::has_value);
                 if (math::fp::is_within_bounds<Fp>(i))
                 {
                     const u64 denom = denominator();

@@ -73,7 +73,7 @@ namespace snn::stream
                 const auto res = stream_.read_some(buffer_.resize_for_overwrite(read_size_));
                 if (res)
                 {
-                    buffer_.truncate(res.value(promise::has_value));
+                    buffer_.truncate(res.value(assume::has_value));
                     offset_ = 0;
                 }
                 else
@@ -111,7 +111,7 @@ namespace snn::stream
             const auto res = read<cstrview>(buffer.size());
             if (res)
             {
-                const cstrview chunk = res.value(promise::has_value);
+                const cstrview chunk = res.value(assume::has_value);
                 snn_should(chunk.size() <= buffer.size());
                 mem::raw::copy(chunk.data(), buffer.writable(), chunk.byte_size(),
                                assume::no_overlap);
@@ -198,7 +198,7 @@ namespace snn::stream
                 const auto res = stream_.read_some(buffer_.append_for_overwrite(read_size_));
                 if (res)
                 {
-                    const usize appended_size = res.value(promise::has_value);
+                    const usize appended_size = res.value(assume::has_value);
 
                     buffer_.truncate(prior_size + appended_size);
 

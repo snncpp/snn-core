@@ -551,19 +551,19 @@ namespace snn
 
         void value() const&& = delete;
 
-        [[nodiscard]] constexpr T& value(promise::has_value_t) & noexcept
+        [[nodiscard]] constexpr T& value(assume::has_value_t) & noexcept
         {
             snn_assert(has_value());
             return storage_.get();
         }
 
-        [[nodiscard]] constexpr const T& value(promise::has_value_t) const& noexcept
+        [[nodiscard]] constexpr const T& value(assume::has_value_t) const& noexcept
         {
             snn_assert(has_value());
             return storage_.get();
         }
 
-        void value(promise::has_value_t) const&& = delete;
+        void value(assume::has_value_t) const&& = delete;
 
         [[nodiscard]] constexpr T value_or(const T alt) const noexcept
             requires(std::is_arithmetic_v<T>)
@@ -849,19 +849,19 @@ namespace snn
             throw_or_abort(storage_.error_code());
         }
 
-        [[nodiscard]] constexpr T& value(promise::has_value_t) & noexcept
+        [[nodiscard]] constexpr T& value(assume::has_value_t) & noexcept
         {
             snn_assert(has_value());
             return storage_.get();
         }
 
-        [[nodiscard]] constexpr const T& value(promise::has_value_t) const& noexcept
+        [[nodiscard]] constexpr const T& value(assume::has_value_t) const& noexcept
         {
             snn_assert(has_value());
             return storage_.get();
         }
 
-        void value(promise::has_value_t) const&& = delete;
+        void value(assume::has_value_t) const&& = delete;
 
         [[nodiscard]] constexpr value_type value_or(const value_type alt) const noexcept
             requires(std::is_arithmetic_v<value_type>)
@@ -1087,7 +1087,7 @@ namespace snn
     {
         if (left.has_value() && right.has_value()) [[likely]]
         {
-            return left.value(promise::has_value) == right.value(promise::has_value);
+            return left.value(assume::has_value) == right.value(assume::has_value);
         }
         if (!left.has_value() && !right.has_value())
         {
@@ -1112,11 +1112,11 @@ namespace snn
 
     template <typename T, typename Err, typename U, typename E>
     constexpr auto operator<=>(const result<T, Err>& left, const result<U, E>& right)
-        -> decltype(left.value(promise::has_value) <=> right.value(promise::has_value))
+        -> decltype(left.value(assume::has_value) <=> right.value(assume::has_value))
     {
         if (left.has_value() && right.has_value()) [[likely]]
         {
-            return left.value(promise::has_value) <=> right.value(promise::has_value);
+            return left.value(assume::has_value) <=> right.value(assume::has_value);
         }
         if (!left.has_value() && !right.has_value())
         {
@@ -1156,7 +1156,7 @@ namespace snn
     {
         if (left.has_value())
         {
-            return left.value(promise::has_value) == right;
+            return left.value(assume::has_value) == right;
         }
         return false;
     }
@@ -1164,11 +1164,11 @@ namespace snn
     template <typename T, typename Err, typename V>
         requires(!is_result_v<V>)
     constexpr auto operator<=>(const result<T, Err>& left, const V& right) //
-        -> decltype(left.value(promise::has_value) <=> right)
+        -> decltype(left.value(assume::has_value) <=> right)
     {
         if (left.has_value())
         {
-            return left.value(promise::has_value) <=> right;
+            return left.value(assume::has_value) <=> right;
         }
         return std::strong_ordering::less;
     }

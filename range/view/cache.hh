@@ -64,7 +64,7 @@ namespace snn::range::view
 
         [[nodiscard]] constexpr decltype(auto) front(assume::not_empty_t) noexcept
         {
-            return cached_.value(promise::has_value);
+            return cached_.value(assume::has_value);
         }
 
         [[nodiscard]] constexpr bool is_empty() const

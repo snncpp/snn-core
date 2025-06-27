@@ -16,7 +16,7 @@ namespace snn::app
                 snn_require(idx); // Has value.
                 snn_require(idx.has_value());
                 snn_require(idx.value() == 123);
-                snn_require(idx.value(promise::has_value) == 123);
+                snn_require(idx.value(assume::has_value) == 123);
                 snn_require(idx.value_or(99) == 123);
                 snn_require(idx.value_or_npos() == 123);
             }
@@ -53,7 +53,7 @@ namespace snn
             snn_require(idx);
             snn_require(idx.has_value());
             snn_require(idx.value() == 456);
-            snn_require(idx.value(promise::has_value) == 456);
+            snn_require(idx.value(assume::has_value) == 456);
             snn_require(idx.value_or(99) == 456);
             snn_require(idx.value_or_npos() == 456);
         }

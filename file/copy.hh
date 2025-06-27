@@ -127,7 +127,7 @@ namespace snn::file
                 const auto res = src.read_some(buf.view());
                 if (res)
                 {
-                    const usize read_size = res.value(promise::has_value);
+                    const usize read_size = res.value(assume::has_value);
                     if (read_size > 0)
                     {
                         if (const auto r = dst.write_all(buf.view(0, read_size)); !r)

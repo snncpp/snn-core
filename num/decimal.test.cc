@@ -53,8 +53,8 @@ namespace snn::app
                 static_assert(b.has_value());
                 static_assert(a.value() == 0);
                 static_assert(b.value() == 99);
-                static_assert(a.value(promise::has_value) == 0);
-                static_assert(b.value(promise::has_value) == 99);
+                static_assert(a.value(assume::has_value) == 0);
+                static_assert(b.value(assume::has_value) == 99);
                 static_assert(a.denominator() == 10000);
                 static_assert(b.denominator() == 10000);
                 static_assert(a.scale() == 4);

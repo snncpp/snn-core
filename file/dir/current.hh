@@ -53,7 +53,7 @@ namespace snn::file::dir
     {
         if (auto pwd_maybe = env::get<null_term<const char*>>("PWD"))
         {
-            const auto pwd  = pwd_maybe.value(promise::has_value);
+            const auto pwd  = pwd_maybe.value(assume::has_value);
             const auto path = pwd.to<cstrview>();
             if (file::path::looks_canonical(path))
             {

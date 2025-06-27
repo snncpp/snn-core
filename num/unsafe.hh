@@ -57,7 +57,7 @@ namespace snn::num
             return i_;
         }
 
-        [[nodiscard]] constexpr Int value(promise::has_value_t) const noexcept
+        [[nodiscard]] constexpr Int value(assume::has_value_t) const noexcept
         {
             return i_;
         }

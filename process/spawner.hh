@@ -134,7 +134,7 @@ namespace snn::process
             throw_or_abort(generic::error::no_value);
         }
 
-        [[nodiscard]] pid_t value(promise::has_value_t) const noexcept
+        [[nodiscard]] pid_t value(assume::has_value_t) const noexcept
         {
             snn_should(has_value());
             return pid_;
@@ -314,7 +314,7 @@ namespace snn::process
 
             if (standard_in_)
             {
-                const int fd    = standard_in_.value(promise::has_value);
+                const int fd    = standard_in_.value(assume::has_value);
                 const int newfd = STDIN_FILENO;
                 snn_should(fact != nullptr);
                 if (const int err = ::posix_spawn_file_actions_adddup2(fact, fd, newfd); err != 0)
@@ -325,7 +325,7 @@ namespace snn::process
 
             if (standard_out_)
             {
-                const int fd    = standard_out_.value(promise::has_value);
+                const int fd    = standard_out_.value(assume::has_value);
                 const int newfd = STDOUT_FILENO;
                 snn_should(fact != nullptr);
                 if (const int err = ::posix_spawn_file_actions_adddup2(fact, fd, newfd); err != 0)
@@ -336,7 +336,7 @@ namespace snn::process
 
             if (standard_error_)
             {
-                const int fd    = standard_error_.value(promise::has_value);
+                const int fd    = standard_error_.value(assume::has_value);
                 const int newfd = STDERR_FILENO;
                 snn_should(fact != nullptr);
                 if (const int err = ::posix_spawn_file_actions_adddup2(fact, fd, newfd); err != 0)

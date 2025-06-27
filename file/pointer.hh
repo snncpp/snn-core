@@ -123,7 +123,7 @@ namespace snn::file
             throw_or_abort(generic::error::no_value);
         }
 
-        [[nodiscard]] std::FILE* value(promise::has_value_t) const noexcept
+        [[nodiscard]] std::FILE* value(assume::has_value_t) const noexcept
         {
             snn_should(has_value());
             return fp_;

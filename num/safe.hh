@@ -60,7 +60,7 @@ namespace snn::num
             throw_or_abort(error::overflow_or_divide_by_zero);
         }
 
-        [[nodiscard]] constexpr Int value(promise::has_value_t) const noexcept
+        [[nodiscard]] constexpr Int value(assume::has_value_t) const noexcept
         {
             snn_assert(has_value_);
             return i_;

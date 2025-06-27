@@ -46,7 +46,7 @@ namespace snn
             throw_or_abort(generic::error::no_value);
         }
 
-        [[nodiscard]] constexpr usize value(promise::has_value_t) const noexcept
+        [[nodiscard]] constexpr usize value(assume::has_value_t) const noexcept
         {
             snn_assert(has_value());
             return index_;

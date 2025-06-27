@@ -36,7 +36,7 @@ namespace snn
             const auto res = file::tty::dimensions(STDOUT_FILENO);
             if (res)
             {
-                const auto dimensions = res.value(promise::has_value);
+                const auto dimensions = res.value(assume::has_value);
                 snn_require(dimensions.character_height() > 0);
                 snn_require(dimensions.character_width() > 0);
             }
