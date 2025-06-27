@@ -29,7 +29,7 @@ namespace snn::time::zone::db
 
         const usize index =
             algo::find_greater_than_or_equal_to(db::locations.range(), n,
-                                                ascii::fn::less_than_icase{}, promise::is_sorted)
+                                                ascii::fn::less_than_icase{}, assume::is_sorted)
                 .value_or_npos();
 
         if (index < db::entries.count())

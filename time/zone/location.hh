@@ -80,7 +80,7 @@ namespace snn::time::zone
             // Find the first transition that is greater than timestamp.
             usize index = algo::find_greater_than(
                               transitions.range(), timestamp,
-                              [](auto time, auto t) { return time < t.when; }, promise::is_sorted)
+                              [](auto time, auto t) { return time < t.when; }, assume::is_sorted)
                               .value_or_npos();
 
             // The first transition can't be returned at this point.

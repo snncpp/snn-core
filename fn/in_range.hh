@@ -21,26 +21,26 @@ namespace snn::fn
     class in_range final
     {
       public:
-        constexpr explicit in_range(RandomAccessRng rng, promise::is_sorted_t) noexcept
+        constexpr explicit in_range(RandomAccessRng rng, assume::is_sorted_t) noexcept
             : rng_{std::move(rng)}
         {
         }
 
         template <typename T, usize Count>
-        constexpr explicit in_range(const array<T, Count>& arr, promise::is_sorted_t) noexcept
+        constexpr explicit in_range(const array<T, Count>& arr, assume::is_sorted_t) noexcept
             : rng_{arr.range()}
         {
         }
 
         template <typename T, usize Count>
         explicit in_range(const array<T, Count>&&,
-                          promise::is_sorted_t) = delete; // Temporary, use range() if safe.
+                          assume::is_sorted_t) = delete; // Temporary, use range() if safe.
 
         template <typename V>
         [[nodiscard]] constexpr bool operator()(const V& v) const
         {
             const usize index =
-                algo::find_greater_than_or_equal_to(rng_, v, promise::is_sorted).value_or_npos();
+                algo::find_greater_than_or_equal_to(rng_, v, assume::is_sorted).value_or_npos();
             if (index < rng_.count())
             {
                 return rng_.at(index, promise::within_bounds) == v;
@@ -54,5 +54,5 @@ namespace snn::fn
 
     // Deduction guides.
     template <typename T, usize Count>
-    in_range(const array<T, Count>&, promise::is_sorted_t) -> in_range<range::contiguous<const T*>>;
+    in_range(const array<T, Count>&, assume::is_sorted_t) -> in_range<range::contiguous<const T*>>;
 }

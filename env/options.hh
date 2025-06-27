@@ -167,7 +167,7 @@ namespace snn::env
         }
 
         constexpr options(const array_view<const env::argument> arguments,
-                          const init_list<env::option> options, promise::is_sorted_t)
+                          const init_list<env::option> options, assume::is_sorted_t)
             : options_{options},
               args_{arguments}
         {
@@ -228,7 +228,7 @@ namespace snn::env
         [[nodiscard]] constexpr optional<env::option&> get(const cstrview long_flag) noexcept
         {
             const usize pos =
-                algo::find_greater_than_or_equal_to(options_.range(), long_flag, promise::is_sorted)
+                algo::find_greater_than_or_equal_to(options_.range(), long_flag, assume::is_sorted)
                     .value_or_npos();
             if (pos < options_.count())
             {

@@ -19,7 +19,7 @@ namespace snn::algo
         requires legacy_iterable<RandomAccessRng>
     [[nodiscard]] constexpr optional_index find_greater_than(RandomAccessRng rng, const T& value,
                                                              TwoArgPred is_less,
-                                                             promise::is_sorted_t)
+                                                             assume::is_sorted_t)
     {
         const auto first = rng.begin();
         const auto last  = rng.end();
@@ -34,8 +34,8 @@ namespace snn::algo
     template <random_access_range RandomAccessRng, typename T>
         requires legacy_iterable<RandomAccessRng>
     [[nodiscard]] constexpr optional_index find_greater_than(RandomAccessRng rng, const T& value,
-                                                             promise::is_sorted_t)
+                                                             assume::is_sorted_t)
     {
-        return find_greater_than(std::move(rng), value, fn::less_than{}, promise::is_sorted);
+        return find_greater_than(std::move(rng), value, fn::less_than{}, assume::is_sorted);
     }
 }
