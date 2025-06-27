@@ -6,7 +6,7 @@
 // A wrapper around `memcpy`:
 //  * Byte size is explicit.
 //  * Will not implicitly cast non-const pointer to const pointer.
-//  * A `no_overlap` promise is required.
+//  * A `no_overlap` assume tag is required.
 
 #pragma once
 

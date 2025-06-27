@@ -22,7 +22,7 @@ namespace snn
       public:
         // #### Explicit constructors
 
-        // Construct with the implicit promise that the pointer is null-terminated.
+        // Construct with the implicit assumption that the pointer is null-terminated.
 
         constexpr explicit null_term(const not_null<Ptr> ptr) noexcept
             : ptr_{ptr}
@@ -33,7 +33,7 @@ namespace snn
             }
         }
 
-        // Construct with the explicit promise that the pointer is null-terminated.
+        // Construct with the explicit assumption that the pointer is null-terminated.
 
         constexpr explicit null_term(const not_null<Ptr> ptr, assume::null_terminated_t) noexcept
             : null_term{ptr}
@@ -91,7 +91,7 @@ namespace snn
       public:
         // #### Explicit constructors
 
-        // Construct with the implicit promise that the pointer is null-terminated.
+        // Construct with the implicit assumption that the pointer is null-terminated.
 
         constexpr explicit null_term(const not_null<const char*> s) noexcept
             : s_{s}
@@ -102,7 +102,7 @@ namespace snn
             }
         }
 
-        // Construct with the explicit promise that the pointer is null-terminated.
+        // Construct with the explicit assumption that the pointer is null-terminated.
 
         constexpr explicit null_term(const not_null<const char*> s,
                                      assume::null_terminated_t) noexcept

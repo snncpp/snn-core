@@ -535,7 +535,7 @@ namespace snn
             throw_or_abort(generic::error::unexpected_null_character);
         }
 
-        // Non-throwing with promise.
+        // Non-throwing with assume tag.
 
         [[nodiscard]] constexpr null_term<const char*> null_terminated(
             assume::is_valid_t) const noexcept
