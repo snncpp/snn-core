@@ -103,7 +103,7 @@ namespace snn::detail::array_view
         // Set skip count for all bytes in needle except the last byte.
         for (usize i = 0; i < needle_size_m_one; ++i)
         {
-            skip_table.at(to_byte(needle_data[i]), promise::within_bounds) =
+            skip_table.at(to_byte(needle_data[i]), assume::within_bounds) =
                 static_cast<u8>(needle_size_m_one - i);
         }
 
@@ -128,7 +128,7 @@ namespace snn::detail::array_view
                 }
             }
 
-            pos += skip_table.at(to_byte(subject_data[pos]), promise::within_bounds);
+            pos += skip_table.at(to_byte(subject_data[pos]), assume::within_bounds);
         }
 
         return constant::npos;

@@ -29,7 +29,7 @@ namespace snn::app
                  string::range::split{subject, std::forward<Delimiter>(delimiter)})
             {
                 if (index >= expected_rng.count() ||
-                    expected_rng.at(index, promise::within_bounds) != s)
+                    expected_rng.at(index, assume::within_bounds) != s)
                 {
                     return false;
                 }

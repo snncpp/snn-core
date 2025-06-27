@@ -26,7 +26,7 @@ namespace snn
 
         if (input.size() >= 4)
         {
-            const auto prefix = input.view_exactly<0, 4>(promise::within_bounds);
+            const auto prefix = input.view_exactly<0, 4>(assume::within_bounds);
             input.drop_front_n(4);
 
             constexpr usize mask = 0b0001'1111'1111;

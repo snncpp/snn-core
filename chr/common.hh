@@ -101,7 +101,7 @@ namespace snn::chr
 
     [[nodiscard]] constexpr bool is_alpha(const char c) noexcept
     {
-        return static_cast<bool>(detail::property_lookup.at(to_byte(c), promise::within_bounds) &
+        return static_cast<bool>(detail::property_lookup.at(to_byte(c), assume::within_bounds) &
                                  0b1000'0000u);
     }
 
@@ -117,19 +117,19 @@ namespace snn::chr
 
     [[nodiscard]] constexpr bool is_alphanumeric(const char c) noexcept
     {
-        return static_cast<bool>(detail::property_lookup.at(to_byte(c), promise::within_bounds) &
+        return static_cast<bool>(detail::property_lookup.at(to_byte(c), assume::within_bounds) &
                                  0b0100'0000u);
     }
 
     [[nodiscard]] constexpr bool is_alphanumeric_lower(const char c) noexcept
     {
-        return static_cast<bool>(detail::property_lookup.at(to_byte(c), promise::within_bounds) &
+        return static_cast<bool>(detail::property_lookup.at(to_byte(c), assume::within_bounds) &
                                  0b0010'0000u);
     }
 
     [[nodiscard]] constexpr bool is_alphanumeric_upper(const char c) noexcept
     {
-        return static_cast<bool>(detail::property_lookup.at(to_byte(c), promise::within_bounds) &
+        return static_cast<bool>(detail::property_lookup.at(to_byte(c), assume::within_bounds) &
                                  0b0001'0000u);
     }
 
@@ -141,7 +141,7 @@ namespace snn::chr
     [[nodiscard]] constexpr bool is_ascii_control(const char c) noexcept
     {
         // 0x00-0x1f (inclusive) or 0x7f.
-        return static_cast<bool>(detail::property_lookup.at(to_byte(c), promise::within_bounds) &
+        return static_cast<bool>(detail::property_lookup.at(to_byte(c), assume::within_bounds) &
                                  0b0000'1000u);
     }
 
@@ -173,7 +173,7 @@ namespace snn::chr
 
     [[nodiscard]] constexpr bool is_hex(const char c) noexcept
     {
-        return detail::hex_lookup.at(to_byte(c), promise::within_bounds) != chr::invalid;
+        return detail::hex_lookup.at(to_byte(c), assume::within_bounds) != chr::invalid;
     }
 
     template <math::base Base>
@@ -225,7 +225,7 @@ namespace snn::chr
     [[nodiscard]] constexpr u8 decode_hex(const char c) noexcept
     {
         // Returns "chr::invalid" for invalid characters.
-        return detail::hex_lookup.at(to_byte(c), promise::within_bounds);
+        return detail::hex_lookup.at(to_byte(c), assume::within_bounds);
     }
 
     template <math::base Base>
@@ -245,7 +245,7 @@ namespace snn::chr
     [[nodiscard]] constexpr char to_alpha_lower(const char c) noexcept
     {
         // Safe for all characters, non-alpha will pass through unchanged.
-        return to_char(detail::lowercase_lookup.at(to_byte(c), promise::within_bounds));
+        return to_char(detail::lowercase_lookup.at(to_byte(c), assume::within_bounds));
     }
 
     constexpr void to_alpha_lower_inplace(char& c) noexcept
@@ -256,7 +256,7 @@ namespace snn::chr
     [[nodiscard]] constexpr char to_alpha_upper(const char c) noexcept
     {
         // Safe for all characters, non-alpha will pass through unchanged.
-        return to_char(detail::uppercase_lookup.at(to_byte(c), promise::within_bounds));
+        return to_char(detail::uppercase_lookup.at(to_byte(c), assume::within_bounds));
     }
 
     constexpr void to_alpha_upper_inplace(char& c) noexcept

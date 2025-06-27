@@ -124,14 +124,14 @@ namespace snn::range::unchecked
 
         // #### Random access
 
-        [[nodiscard]] constexpr reference at(const usize pos, promise::within_bounds_t) noexcept
+        [[nodiscard]] constexpr reference at(const usize pos, assume::within_bounds_t) noexcept
         {
             snn_should(pos < count());
             return *(first_ + pos);
         }
 
         [[nodiscard]] constexpr const_reference at(const usize pos,
-                                                   promise::within_bounds_t) const noexcept
+                                                   assume::within_bounds_t) const noexcept
         {
             snn_should(pos < count());
             return *(first_ + pos);

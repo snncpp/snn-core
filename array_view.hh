@@ -226,7 +226,7 @@ namespace snn
         }
 
         [[nodiscard]] constexpr reference at(const strict_integral auto pos,
-                                             promise::within_bounds_t) noexcept
+                                             assume::within_bounds_t) noexcept
         {
             if constexpr (detail::can_overflow_count<decltype(pos), Count>())
             {
@@ -236,7 +236,7 @@ namespace snn
         }
 
         [[nodiscard]] constexpr const_reference at(const strict_integral auto pos,
-                                                   promise::within_bounds_t) const noexcept
+                                                   assume::within_bounds_t) const noexcept
         {
             if constexpr (detail::can_overflow_count<decltype(pos), Count>())
             {
@@ -425,14 +425,14 @@ namespace snn
         }
 
         template <usize Pos, usize C>
-        [[nodiscard]] constexpr auto view_exactly(promise::within_bounds_t) noexcept
+        [[nodiscard]] constexpr auto view_exactly(assume::within_bounds_t) noexcept
         {
             static_assert(Pos <= Count && (Count - Pos) >= C);
             return array_view<T, C>{data_ + Pos, assume::has_capacity};
         }
 
         template <usize Pos, usize C>
-        [[nodiscard]] constexpr auto view_exactly(promise::within_bounds_t) const noexcept
+        [[nodiscard]] constexpr auto view_exactly(assume::within_bounds_t) const noexcept
         {
             static_assert(Pos <= Count && (Count - Pos) >= C);
             return array_view<const T, C>{data_ + Pos, assume::has_capacity};
@@ -1032,14 +1032,14 @@ namespace snn
             return nullopt;
         }
 
-        [[nodiscard]] constexpr reference at(const usize pos, promise::within_bounds_t) noexcept
+        [[nodiscard]] constexpr reference at(const usize pos, assume::within_bounds_t) noexcept
         {
             snn_assert(pos < count_);
             return data_[pos];
         }
 
         [[nodiscard]] constexpr const_reference at(const usize pos,
-                                                   promise::within_bounds_t) const noexcept
+                                                   assume::within_bounds_t) const noexcept
         {
             snn_assert(pos < count_);
             return data_[pos];
@@ -1141,7 +1141,7 @@ namespace snn
         // #### View exactly
 
         template <usize Pos, usize Count>
-        [[nodiscard]] constexpr auto view_exactly(promise::within_bounds_t) noexcept
+        [[nodiscard]] constexpr auto view_exactly(assume::within_bounds_t) noexcept
         {
             static_assert(Count != constant::dynamic_count);
             snn_assert(Pos <= count_ && (count_ - Pos) >= Count);
@@ -1149,7 +1149,7 @@ namespace snn
         }
 
         template <usize Pos, usize Count>
-        [[nodiscard]] constexpr auto view_exactly(promise::within_bounds_t) const noexcept
+        [[nodiscard]] constexpr auto view_exactly(assume::within_bounds_t) const noexcept
         {
             static_assert(Count != constant::dynamic_count);
             snn_assert(Pos <= count_ && (count_ - Pos) >= Count);
@@ -1542,7 +1542,7 @@ namespace snn
         }
 
         [[nodiscard]] constexpr const_reference at(const usize pos,
-                                                   promise::within_bounds_t) const noexcept
+                                                   assume::within_bounds_t) const noexcept
         {
             snn_assert(pos < count_);
             return data_[pos];
@@ -1597,7 +1597,7 @@ namespace snn
         // #### View exactly
 
         template <usize Pos, usize Count>
-        [[nodiscard]] constexpr auto view_exactly(promise::within_bounds_t) const noexcept
+        [[nodiscard]] constexpr auto view_exactly(assume::within_bounds_t) const noexcept
         {
             static_assert(Count != constant::dynamic_count);
             snn_assert(Pos <= count_ && (count_ - Pos) >= Count);
@@ -2033,14 +2033,14 @@ namespace snn
             return nullopt;
         }
 
-        [[nodiscard]] constexpr reference at(const usize pos, promise::within_bounds_t) noexcept
+        [[nodiscard]] constexpr reference at(const usize pos, assume::within_bounds_t) noexcept
         {
             snn_assert(pos < count_);
             return data_[pos];
         }
 
         [[nodiscard]] constexpr const_reference at(const usize pos,
-                                                   promise::within_bounds_t) const noexcept
+                                                   assume::within_bounds_t) const noexcept
         {
             snn_assert(pos < count_);
             return data_[pos];
@@ -2139,7 +2139,7 @@ namespace snn
         // #### View exactly
 
         template <usize Pos, usize Count>
-        [[nodiscard]] constexpr auto view_exactly(promise::within_bounds_t) noexcept
+        [[nodiscard]] constexpr auto view_exactly(assume::within_bounds_t) noexcept
         {
             static_assert(Count != constant::dynamic_count);
             snn_assert(Pos <= count_ && (count_ - Pos) >= Count);
@@ -2147,7 +2147,7 @@ namespace snn
         }
 
         template <usize Pos, usize Count>
-        [[nodiscard]] constexpr auto view_exactly(promise::within_bounds_t) const noexcept
+        [[nodiscard]] constexpr auto view_exactly(assume::within_bounds_t) const noexcept
         {
             static_assert(Count != constant::dynamic_count);
             snn_assert(Pos <= count_ && (count_ - Pos) >= Count);

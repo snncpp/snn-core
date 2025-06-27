@@ -39,7 +39,7 @@ namespace snn::app
 
             snn_require(s.all(chr::is_ascii));
 
-            auto v = s.view_exactly<0, 3>(promise::within_bounds);
+            auto v = s.view_exactly<0, 3>(assume::within_bounds);
             static_assert(std::is_same_v<decltype(v), array_view<char, 3>>);
             snn_require(v == "One");
 
@@ -312,12 +312,12 @@ namespace snn::app
             str s;
 
             {
-                auto v = s.view_exactly<0, 0>(promise::within_bounds);
+                auto v = s.view_exactly<0, 0>(assume::within_bounds);
                 static_assert(std::is_same_v<decltype(v), array_view<char, 0>>);
                 snn_require(v.begin() == s.begin());
             }
             {
-                auto v = std::as_const(s).view_exactly<0, 0>(promise::within_bounds);
+                auto v = std::as_const(s).view_exactly<0, 0>(assume::within_bounds);
                 static_assert(std::is_same_v<decltype(v), array_view<const char, 0>>);
                 snn_require(v.begin() == s.begin());
             }
@@ -325,17 +325,17 @@ namespace snn::app
             s = "abcdef";
 
             {
-                auto v = s.view_exactly<0, 3>(promise::within_bounds);
+                auto v = s.view_exactly<0, 3>(assume::within_bounds);
                 static_assert(std::is_same_v<decltype(v), array_view<char, 3>>);
                 snn_require(v == "abc");
             }
             {
-                auto v = s.view_exactly<0, 6>(promise::within_bounds);
+                auto v = s.view_exactly<0, 6>(assume::within_bounds);
                 static_assert(std::is_same_v<decltype(v), array_view<char, 6>>);
                 snn_require(v == "abcdef");
             }
             {
-                auto v = std::as_const(s).view_exactly<1, 4>(promise::within_bounds);
+                auto v = std::as_const(s).view_exactly<1, 4>(assume::within_bounds);
                 static_assert(std::is_same_v<decltype(v), array_view<const char, 4>>);
                 snn_require(v == "bcde");
             }

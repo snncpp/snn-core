@@ -154,7 +154,7 @@ namespace snn::time::zone::tzif
             while (offsets_rng.size() >= offset_size)
             {
                 const auto sub_rng = offsets_rng.pop_front_n(offset_size);
-                const auto v       = sub_rng.view_exactly<0, offset_size>(promise::within_bounds);
+                const auto v       = sub_rng.view_exactly<0, offset_size>(assume::within_bounds);
 
                 const auto offset    = to_i32(v.load_swap<u32>());
                 const bool is_dst    = static_cast<bool>(v.get<4>());
@@ -186,7 +186,7 @@ namespace snn::time::zone::tzif
             while (transitions_rng.size() >= transition_size)
             {
                 const auto sub_rng = transitions_rng.pop_front_n(transition_size);
-                const auto v = sub_rng.view_exactly<0, transition_size>(promise::within_bounds);
+                const auto v = sub_rng.view_exactly<0, transition_size>(assume::within_bounds);
 
                 const auto when = static_cast<Int>(v.template load_swap<UInt>());
 

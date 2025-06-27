@@ -433,7 +433,7 @@ namespace snn::app
                 snn_require(count == 2);
             }
 
-            // at(pos, promise::within_bounds_t)
+            // at(pos, assume::within_bounds_t)
             {
                 const T x{std::forward<Args>(args)...};
                 const T y{};
@@ -456,8 +456,8 @@ namespace snn::app
 
                 for (usize i = 0; i < v.count(); ++i)
                 {
-                    snn_require(v.at(i, promise::within_bounds) == x);
-                    v.at(i, promise::within_bounds) = y;
+                    snn_require(v.at(i, assume::within_bounds) == x);
+                    v.at(i, assume::within_bounds) = y;
                 }
 
                 const Vec v2 = v;
@@ -465,7 +465,7 @@ namespace snn::app
 
                 for (usize i = 0; i < v2.count(); ++i)
                 {
-                    snn_require(v2.at(i, promise::within_bounds) == y);
+                    snn_require(v2.at(i, assume::within_bounds) == y);
                 }
             }
 

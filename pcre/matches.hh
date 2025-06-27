@@ -77,12 +77,12 @@ namespace snn::pcre
         {
             if (pos < count())
             {
-                return at(pos, promise::within_bounds);
+                return at(pos, assume::within_bounds);
             }
             return nullopt;
         }
 
-        [[nodiscard]] match_view at(const usize pos, promise::within_bounds_t) const noexcept
+        [[nodiscard]] match_view at(const usize pos, assume::within_bounds_t) const noexcept
         {
             snn_assert(pos < count());
             const usize* const ovector = ::pcre2_get_ovector_pointer_8(match_data_);

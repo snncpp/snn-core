@@ -172,14 +172,14 @@ namespace snn::range
             return nullopt;
         }
 
-        [[nodiscard]] constexpr dereference_type at(const usize pos, promise::within_bounds_t)
+        [[nodiscard]] constexpr dereference_type at(const usize pos, assume::within_bounds_t)
         {
             snn_assert(pos < count());
             return *(first_ + to_isize(pos));
         }
 
         [[nodiscard]] constexpr const_dereference_type at(const usize pos,
-                                                          promise::within_bounds_t) const
+                                                          assume::within_bounds_t) const
         {
             snn_assert(pos < count());
             return *(first_ + to_isize(pos));

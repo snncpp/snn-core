@@ -34,7 +34,7 @@ namespace snn::time::zone::db
 
         if (index < db::entries.count())
         {
-            const db::entry* e = db::entries.at(index, promise::within_bounds);
+            const db::entry* e = db::entries.at(index, assume::within_bounds);
             if (ascii::is_equal_icase(e->name, n))
             {
                 return *e;

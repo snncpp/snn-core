@@ -113,14 +113,14 @@ namespace snn::pool
         SNN_DIAGNOSTIC_PUSH
         SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
 
-        [[nodiscard]] constexpr T& at(const usize pos, promise::within_bounds_t) noexcept
+        [[nodiscard]] constexpr T& at(const usize pos, assume::within_bounds_t) noexcept
         {
             snn_assert(pos < count_);
             return data_[pos];
         }
 
         [[nodiscard]] constexpr const T& at(const usize pos,
-                                            promise::within_bounds_t) const noexcept
+                                            assume::within_bounds_t) const noexcept
         {
             snn_assert(pos < count_);
             return data_[pos];

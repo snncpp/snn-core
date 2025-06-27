@@ -25,9 +25,9 @@ namespace snn::time
         const cstrview s = name.get();
         if (s.size() >= string_size("May") && s.size() <= string_size("September"))
         {
-            const char c0 = chr::to_alpha_lower(s.at(0, promise::within_bounds));
-            const char c1 = chr::to_alpha_lower(s.at(1, promise::within_bounds));
-            const char c2 = chr::to_alpha_lower(s.at(2, promise::within_bounds));
+            const char c0 = chr::to_alpha_lower(s.at(0, assume::within_bounds));
+            const char c1 = chr::to_alpha_lower(s.at(1, assume::within_bounds));
+            const char c2 = chr::to_alpha_lower(s.at(2, assume::within_bounds));
 
             switch (c0)
             {
@@ -121,7 +121,7 @@ namespace snn::time
         const cstrview s = name.get();
         if (s.size() == 1)
         {
-            const char c0 = s.at(0, promise::within_bounds);
+            const char c0 = s.at(0, assume::within_bounds);
             if (c0 == 'Z' || c0 == 'z')
             {
                 return 0; // Z
@@ -129,9 +129,9 @@ namespace snn::time
         }
         else if (s.size() == 3)
         {
-            const char c0 = chr::to_alpha_lower(s.at(0, promise::within_bounds));
-            const char c1 = chr::to_alpha_lower(s.at(1, promise::within_bounds));
-            const char c2 = chr::to_alpha_lower(s.at(2, promise::within_bounds));
+            const char c0 = chr::to_alpha_lower(s.at(0, assume::within_bounds));
+            const char c1 = chr::to_alpha_lower(s.at(1, assume::within_bounds));
+            const char c2 = chr::to_alpha_lower(s.at(2, assume::within_bounds));
 
             switch (c0)
             {
@@ -199,8 +199,8 @@ namespace snn::time
         }
         else if (s.size() == 2)
         {
-            const char c0 = chr::to_alpha_lower(s.at(0, promise::within_bounds));
-            const char c1 = chr::to_alpha_lower(s.at(1, promise::within_bounds));
+            const char c0 = chr::to_alpha_lower(s.at(0, assume::within_bounds));
+            const char c1 = chr::to_alpha_lower(s.at(1, assume::within_bounds));
             if (c0 == 'u' && c1 == 't')
             {
                 return 0; // UT

@@ -1245,10 +1245,10 @@ namespace snn
             snn_require(v.capacity() >= 20);
 
             snn_require(v.count() == 4);
-            snn_require(v.at(0, promise::within_bounds).error_code() == app::error::first);
-            snn_require(v.at(1, promise::within_bounds) == "abcdefghijklmnopqrstuvwxyz");
-            snn_require(v.at(2, promise::within_bounds) == "123");
-            snn_require(v.at(3, promise::within_bounds).error_code() == app::error::second);
+            snn_require(v.at(0, assume::within_bounds).error_code() == app::error::first);
+            snn_require(v.at(1, assume::within_bounds) == "abcdefghijklmnopqrstuvwxyz");
+            snn_require(v.at(2, assume::within_bounds) == "123");
+            snn_require(v.at(3, assume::within_bounds).error_code() == app::error::second);
         }
     }
 }

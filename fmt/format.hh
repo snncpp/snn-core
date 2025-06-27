@@ -440,7 +440,7 @@ namespace snn::fmt
                     const usize width_index = pop_index(rng, position_index);
                     if (width_index < arguments.count())
                     {
-                        const auto& arg = arguments.at(width_index, promise::within_bounds);
+                        const auto& arg = arguments.at(width_index, assume::within_bounds);
                         width           = arg.unsigned_integral(max_width);
                     }
                     else
@@ -476,7 +476,7 @@ namespace snn::fmt
                             const usize fill_index = pop_index(rng, position_index);
                             if (fill_index < arguments.count())
                             {
-                                const auto& arg = arguments.at(fill_index, promise::within_bounds);
+                                const auto& arg = arguments.at(fill_index, assume::within_bounds);
                                 fill_string     = arg.string();
                             }
                             else
@@ -505,7 +505,7 @@ namespace snn::fmt
                     const usize format_index = pop_index(rng, position_index);
                     if (format_index < arguments.count())
                     {
-                        const auto& arg = arguments.at(format_index, promise::within_bounds);
+                        const auto& arg = arguments.at(format_index, assume::within_bounds);
                         format_string   = arg.string();
                     }
                     else
@@ -523,7 +523,7 @@ namespace snn::fmt
             {
                 if (index < arguments.count())
                 {
-                    const auto& arg = arguments.at(index, promise::within_bounds);
+                    const auto& arg = arguments.at(index, assume::within_bounds);
 
                     if (width == 0)
                     {
@@ -604,7 +604,7 @@ namespace snn::fmt
                 {
                     if (position_index < arguments.count())
                     {
-                        const auto& arg = arguments.at(position_index, promise::within_bounds);
+                        const auto& arg = arguments.at(position_index, assume::within_bounds);
                         arg.format("", ctx, append_to, assume::no_overlap);
                     }
                     else

@@ -80,7 +80,7 @@ namespace snn::regex
             return nullopt;
         }
 
-        [[nodiscard]] match_view at(const usize pos, promise::within_bounds_t) const noexcept
+        [[nodiscard]] match_view at(const usize pos, assume::within_bounds_t) const noexcept
         {
             snn_assert(pos < count());
             return match_view{cmatch_(), pos};

@@ -30,9 +30,9 @@ namespace snn::app
             snn_require(v.at(1).value() == 'b');
             snn_require(v.at<char>(2).value() == 'c');
 
-            snn_require(v.at(0, promise::within_bounds) == 'a');
-            snn_require(v.at(1, promise::within_bounds) == 'b');
-            snn_require(v.at(2, promise::within_bounds) == 'c');
+            snn_require(v.at(0, assume::within_bounds) == 'a');
+            snn_require(v.at(1, assume::within_bounds) == 'b');
+            snn_require(v.at(2, assume::within_bounds) == 'c');
 
             decltype(auto) opt = v.at(99);
             static_assert(std::is_same_v<decltype(opt), optional<char&>>);
@@ -1185,14 +1185,14 @@ namespace snn::app
                     snn_require(bytes.size() == 8);
 
                     // Little-endian
-                    snn_require(bytes.at(0, promise::within_bounds) == 11);
-                    snn_require(bytes.at(1, promise::within_bounds) == 0);
-                    snn_require(bytes.at(2, promise::within_bounds) == 0);
-                    snn_require(bytes.at(3, promise::within_bounds) == 0);
-                    snn_require(bytes.at(4, promise::within_bounds) == 22);
-                    snn_require(bytes.at(5, promise::within_bounds) == 0);
-                    snn_require(bytes.at(6, promise::within_bounds) == 0);
-                    snn_require(bytes.at(7, promise::within_bounds) == 0);
+                    snn_require(bytes.at(0, assume::within_bounds) == 11);
+                    snn_require(bytes.at(1, assume::within_bounds) == 0);
+                    snn_require(bytes.at(2, assume::within_bounds) == 0);
+                    snn_require(bytes.at(3, assume::within_bounds) == 0);
+                    snn_require(bytes.at(4, assume::within_bounds) == 22);
+                    snn_require(bytes.at(5, assume::within_bounds) == 0);
+                    snn_require(bytes.at(6, assume::within_bounds) == 0);
+                    snn_require(bytes.at(7, assume::within_bounds) == 0);
                 }
             }
             {
@@ -1209,14 +1209,14 @@ namespace snn::app
                     snn_require(bytes.size() == 8);
 
                     // Little-endian
-                    snn_require(bytes.at(0, promise::within_bounds) == 11);
-                    snn_require(bytes.at(1, promise::within_bounds) == 0);
-                    snn_require(bytes.at(2, promise::within_bounds) == 0);
-                    snn_require(bytes.at(3, promise::within_bounds) == 0);
-                    snn_require(bytes.at(4, promise::within_bounds) == 22);
-                    snn_require(bytes.at(5, promise::within_bounds) == 0);
-                    snn_require(bytes.at(6, promise::within_bounds) == 0);
-                    snn_require(bytes.at(7, promise::within_bounds) == 0);
+                    snn_require(bytes.at(0, assume::within_bounds) == 11);
+                    snn_require(bytes.at(1, assume::within_bounds) == 0);
+                    snn_require(bytes.at(2, assume::within_bounds) == 0);
+                    snn_require(bytes.at(3, assume::within_bounds) == 0);
+                    snn_require(bytes.at(4, assume::within_bounds) == 22);
+                    snn_require(bytes.at(5, assume::within_bounds) == 0);
+                    snn_require(bytes.at(6, assume::within_bounds) == 0);
+                    snn_require(bytes.at(7, assume::within_bounds) == 0);
                 }
             }
             {
@@ -1254,21 +1254,21 @@ namespace snn::app
                     snn_require(bytes.size() == 8);
 
                     // Little-endian
-                    snn_require(bytes.at(0, promise::within_bounds) == 11);
-                    snn_require(bytes.at(1, promise::within_bounds) == 0);
-                    snn_require(bytes.at(2, promise::within_bounds) == 0);
-                    snn_require(bytes.at(3, promise::within_bounds) == 0);
-                    snn_require(bytes.at(4, promise::within_bounds) == 22);
-                    snn_require(bytes.at(5, promise::within_bounds) == 0);
-                    snn_require(bytes.at(6, promise::within_bounds) == 0);
-                    snn_require(bytes.at(7, promise::within_bounds) == 0);
+                    snn_require(bytes.at(0, assume::within_bounds) == 11);
+                    snn_require(bytes.at(1, assume::within_bounds) == 0);
+                    snn_require(bytes.at(2, assume::within_bounds) == 0);
+                    snn_require(bytes.at(3, assume::within_bounds) == 0);
+                    snn_require(bytes.at(4, assume::within_bounds) == 22);
+                    snn_require(bytes.at(5, assume::within_bounds) == 0);
+                    snn_require(bytes.at(6, assume::within_bounds) == 0);
+                    snn_require(bytes.at(7, assume::within_bounds) == 0);
 
                     auto const_bytes = std::as_const(v).as_bytes();
                     static_assert(std::is_same_v<decltype(const_bytes), array_view<const byte>>);
                     snn_require(const_bytes.size() == 8);
 
-                    snn_require(const_bytes.at(0, promise::within_bounds) == 11);
-                    snn_require(const_bytes.at(7, promise::within_bounds) == 0);
+                    snn_require(const_bytes.at(0, assume::within_bounds) == 11);
+                    snn_require(const_bytes.at(7, assume::within_bounds) == 0);
                 }
             }
             {
@@ -1285,21 +1285,21 @@ namespace snn::app
                     snn_require(bytes.size() == 8);
 
                     // Little-endian
-                    snn_require(bytes.at(0, promise::within_bounds) == 11);
-                    snn_require(bytes.at(1, promise::within_bounds) == 0);
-                    snn_require(bytes.at(2, promise::within_bounds) == 0);
-                    snn_require(bytes.at(3, promise::within_bounds) == 0);
-                    snn_require(bytes.at(4, promise::within_bounds) == 22);
-                    snn_require(bytes.at(5, promise::within_bounds) == 0);
-                    snn_require(bytes.at(6, promise::within_bounds) == 0);
-                    snn_require(bytes.at(7, promise::within_bounds) == 0);
+                    snn_require(bytes.at(0, assume::within_bounds) == 11);
+                    snn_require(bytes.at(1, assume::within_bounds) == 0);
+                    snn_require(bytes.at(2, assume::within_bounds) == 0);
+                    snn_require(bytes.at(3, assume::within_bounds) == 0);
+                    snn_require(bytes.at(4, assume::within_bounds) == 22);
+                    snn_require(bytes.at(5, assume::within_bounds) == 0);
+                    snn_require(bytes.at(6, assume::within_bounds) == 0);
+                    snn_require(bytes.at(7, assume::within_bounds) == 0);
 
                     auto const_bytes = std::as_const(v).as_bytes();
                     static_assert(std::is_same_v<decltype(const_bytes), array_view<const byte>>);
                     snn_require(const_bytes.size() == 8);
 
-                    snn_require(const_bytes.at(0, promise::within_bounds) == 11);
-                    snn_require(const_bytes.at(7, promise::within_bounds) == 0);
+                    snn_require(const_bytes.at(0, assume::within_bounds) == 11);
+                    snn_require(const_bytes.at(7, assume::within_bounds) == 0);
                 }
             }
             {
@@ -1315,9 +1315,9 @@ namespace snn::app
                     static_assert(std::is_same_v<decltype(bytes), array_view<const byte>>);
                     snn_require(bytes.size() == 3);
 
-                    snn_require(bytes.at(0, promise::within_bounds) == 97);
-                    snn_require(bytes.at(1, promise::within_bounds) == 98);
-                    snn_require(bytes.at(2, promise::within_bounds) == 99);
+                    snn_require(bytes.at(0, assume::within_bounds) == 97);
+                    snn_require(bytes.at(1, assume::within_bounds) == 98);
+                    snn_require(bytes.at(2, assume::within_bounds) == 99);
                 }
             }
             {
@@ -1333,17 +1333,17 @@ namespace snn::app
                     static_assert(std::is_same_v<decltype(bytes), array_view<byte>>);
                     snn_require(bytes.size() == 3);
 
-                    snn_require(bytes.at(0, promise::within_bounds) == 97);
-                    snn_require(bytes.at(1, promise::within_bounds) == 98);
-                    snn_require(bytes.at(2, promise::within_bounds) == 99);
+                    snn_require(bytes.at(0, assume::within_bounds) == 97);
+                    snn_require(bytes.at(1, assume::within_bounds) == 98);
+                    snn_require(bytes.at(2, assume::within_bounds) == 99);
 
                     auto const_bytes = std::as_const(v).as_bytes();
                     static_assert(std::is_same_v<decltype(const_bytes), array_view<const byte>>);
                     snn_require(const_bytes.size() == 3);
 
-                    snn_require(const_bytes.at(0, promise::within_bounds) == 97);
-                    snn_require(const_bytes.at(1, promise::within_bounds) == 98);
-                    snn_require(const_bytes.at(2, promise::within_bounds) == 99);
+                    snn_require(const_bytes.at(0, assume::within_bounds) == 97);
+                    snn_require(const_bytes.at(1, assume::within_bounds) == 98);
+                    snn_require(const_bytes.at(2, assume::within_bounds) == 99);
                 }
             }
 
@@ -1601,17 +1601,17 @@ namespace snn::app
                     snn_require(v == "cdef");
                 }
                 {
-                    auto v = src.view_exactly<0, 6>(promise::within_bounds);
+                    auto v = src.view_exactly<0, 6>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<char, 6>>);
                     snn_require(v == "abcdef");
                 }
                 {
-                    auto v = src.view_exactly<2, 4>(promise::within_bounds);
+                    auto v = src.view_exactly<2, 4>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<char, 4>>);
                     snn_require(v == "cdef");
                 }
                 {
-                    auto v = std::as_const(src).view_exactly<2, 4>(promise::within_bounds);
+                    auto v = std::as_const(src).view_exactly<2, 4>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<const char, 4>>);
                     snn_require(v == "cdef");
                 }
@@ -1625,25 +1625,25 @@ namespace snn::app
                 static_assert(std::is_same_v<decltype(src), array_view<int>>);
 
                 {
-                    auto v = src.view_exactly<0, 4>(promise::within_bounds);
+                    auto v = src.view_exactly<0, 4>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<int, 4>>);
                     snn_require(v.begin() == a.begin());
                     snn_require(v.end() == a.end());
                 }
                 {
-                    auto v = std::as_const(src).view_exactly<0, 4>(promise::within_bounds);
+                    auto v = std::as_const(src).view_exactly<0, 4>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<const int, 4>>);
                     snn_require(v.begin() == a.begin());
                     snn_require(v.end() == a.end());
                 }
                 {
-                    auto v = src.view_exactly<1, 3>(promise::within_bounds);
+                    auto v = src.view_exactly<1, 3>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<int, 3>>);
                     snn_require(v.begin() == a.view_exactly<1, 1>().begin());
                     snn_require(v.end() == a.end());
                 }
                 {
-                    auto v = std::as_const(src).view_exactly<1, 3>(promise::within_bounds);
+                    auto v = std::as_const(src).view_exactly<1, 3>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<const int, 3>>);
                     snn_require(v.begin() == a.view_exactly<1, 1>().begin());
                     snn_require(v.end() == a.end());
@@ -1658,25 +1658,25 @@ namespace snn::app
                 static_assert(std::is_same_v<decltype(src), cstrview>);
 
                 {
-                    auto v = src.view_exactly<0, 4>(promise::within_bounds);
+                    auto v = src.view_exactly<0, 4>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<const char, 4>>);
                     snn_require(v.begin() == a.begin());
                     snn_require(v.end() == a.end());
                 }
                 {
-                    auto v = std::as_const(src).view_exactly<0, 4>(promise::within_bounds);
+                    auto v = std::as_const(src).view_exactly<0, 4>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<const char, 4>>);
                     snn_require(v.begin() == a.begin());
                     snn_require(v.end() == a.end());
                 }
                 {
-                    auto v = src.view_exactly<1, 3>(promise::within_bounds);
+                    auto v = src.view_exactly<1, 3>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<const char, 3>>);
                     snn_require(v.begin() == a.view_exactly<1, 1>().begin());
                     snn_require(v.end() == a.end());
                 }
                 {
-                    auto v = std::as_const(src).view_exactly<1, 3>(promise::within_bounds);
+                    auto v = std::as_const(src).view_exactly<1, 3>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<const char, 3>>);
                     snn_require(v.begin() == a.view_exactly<1, 1>().begin());
                     snn_require(v.end() == a.end());
@@ -1691,25 +1691,25 @@ namespace snn::app
                 static_assert(std::is_same_v<decltype(src), strview>);
 
                 {
-                    auto v = src.view_exactly<0, 4>(promise::within_bounds);
+                    auto v = src.view_exactly<0, 4>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<char, 4>>);
                     snn_require(v.begin() == a.begin());
                     snn_require(v.end() == a.end());
                 }
                 {
-                    auto v = std::as_const(src).view_exactly<0, 4>(promise::within_bounds);
+                    auto v = std::as_const(src).view_exactly<0, 4>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<const char, 4>>);
                     snn_require(v.begin() == a.begin());
                     snn_require(v.end() == a.end());
                 }
                 {
-                    auto v = src.view_exactly<1, 3>(promise::within_bounds);
+                    auto v = src.view_exactly<1, 3>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<char, 3>>);
                     snn_require(v.begin() == a.view_exactly<1, 1>().begin());
                     snn_require(v.end() == a.end());
                 }
                 {
-                    auto v = std::as_const(src).view_exactly<1, 3>(promise::within_bounds);
+                    auto v = std::as_const(src).view_exactly<1, 3>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<const char, 3>>);
                     snn_require(v.begin() == a.view_exactly<1, 1>().begin());
                     snn_require(v.end() == a.end());
@@ -2132,10 +2132,10 @@ namespace snn::app
                     snn_require(v.size() == 4);
 
                     // Little-endian
-                    snn_require(v.at(0, promise::within_bounds) == 144);
-                    snn_require(v.at(1, promise::within_bounds) == 31);
-                    snn_require(v.at(2, promise::within_bounds) == 0);
-                    snn_require(v.at(3, promise::within_bounds) == 0);
+                    snn_require(v.at(0, assume::within_bounds) == 144);
+                    snn_require(v.at(1, assume::within_bounds) == 31);
+                    snn_require(v.at(2, assume::within_bounds) == 0);
+                    snn_require(v.at(3, assume::within_bounds) == 0);
                 }
             }
 

@@ -75,10 +75,10 @@ namespace snn::base64
                 do
                 {
                     // Look up Base64 values for each byte in the block.
-                    const u8 val1 = lookup.at(to_byte(*(cur++)), promise::within_bounds);
-                    const u8 val2 = lookup.at(to_byte(*(cur++)), promise::within_bounds);
-                    const u8 val3 = lookup.at(to_byte(*(cur++)), promise::within_bounds);
-                    const u8 val4 = lookup.at(to_byte(*(cur++)), promise::within_bounds);
+                    const u8 val1 = lookup.at(to_byte(*(cur++)), assume::within_bounds);
+                    const u8 val2 = lookup.at(to_byte(*(cur++)), assume::within_bounds);
+                    const u8 val3 = lookup.at(to_byte(*(cur++)), assume::within_bounds);
+                    const u8 val4 = lookup.at(to_byte(*(cur++)), assume::within_bounds);
 
                     // Check if any of the values are invalid.
                     static_assert(base64::table::decode::invalid == 0b1111'1111);
@@ -106,8 +106,8 @@ namespace snn::base64
             {
                 // First 2 bytes can't be padding.
 
-                const u8 val1 = lookup.at(to_byte(*(cur++)), promise::within_bounds);
-                const u8 val2 = lookup.at(to_byte(*(cur++)), promise::within_bounds);
+                const u8 val1 = lookup.at(to_byte(*(cur++)), assume::within_bounds);
+                const u8 val2 = lookup.at(to_byte(*(cur++)), assume::within_bounds);
 
                 if ((val1 | val2) == base64::table::decode::invalid) [[unlikely]]
                 {
@@ -137,8 +137,8 @@ namespace snn::base64
                 if (raw4 != pad_byte)
                 {
                     // Both bytes used.
-                    const u8 val3 = lookup.at(raw3, promise::within_bounds);
-                    const u8 val4 = lookup.at(raw4, promise::within_bounds);
+                    const u8 val3 = lookup.at(raw3, assume::within_bounds);
+                    const u8 val4 = lookup.at(raw4, assume::within_bounds);
 
                     if ((val3 | val4) == base64::table::decode::invalid) [[unlikely]]
                     {
@@ -153,7 +153,7 @@ namespace snn::base64
                 else if (raw3 != pad_byte)
                 {
                     // 3rd byte used.
-                    const u8 val3 = lookup.at(raw3, promise::within_bounds);
+                    const u8 val3 = lookup.at(raw3, assume::within_bounds);
 
                     if (val3 == base64::table::decode::invalid) [[unlikely]]
                     {

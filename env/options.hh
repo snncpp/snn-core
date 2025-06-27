@@ -232,7 +232,7 @@ namespace snn::env
                     .value_or_npos();
             if (pos < options_.count())
             {
-                auto& o = options_.at(pos, promise::within_bounds);
+                auto& o = options_.at(pos, assume::within_bounds);
                 if (o.long_flag() == long_flag)
                 {
                     return o;

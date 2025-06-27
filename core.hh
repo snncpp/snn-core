@@ -685,7 +685,7 @@ namespace snn
     // ### has_at
 
     template <typename T>
-    concept has_at = requires(T& v) { v.at(usize{}, promise::within_bounds); };
+    concept has_at = requires(T& v) { v.at(usize{}, assume::within_bounds); };
 
     // ### has_contiguous_iterator
 

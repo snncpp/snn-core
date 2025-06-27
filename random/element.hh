@@ -16,12 +16,12 @@ namespace snn::random
 
     template <typename Container>
     [[nodiscard]] auto element(Container& container) //
-        -> optional<decltype(container.at(usize{}, promise::within_bounds))>
+        -> optional<decltype(container.at(usize{}, assume::within_bounds))>
     {
         const auto random_index = random::number<usize>(0, container.count());
         if (random_index < container.count())
         {
-            return container.at(random_index, promise::within_bounds);
+            return container.at(random_index, assume::within_bounds);
         }
         snn_should(container.count() == 0);
         return nullopt;

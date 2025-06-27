@@ -48,7 +48,7 @@ namespace snn::app
             snn_require_throws_code(pool.append_inplace(7), generic::error::insufficient_capacity);
 
             snn_require(pool.front(promise::not_empty) == 112233);
-            snn_require(pool.at(2, promise::within_bounds) == 23);
+            snn_require(pool.at(2, assume::within_bounds) == 23);
             snn_require(pool.back(promise::not_empty) == 123456789);
 
             pool.drop_back(promise::not_empty);
@@ -110,7 +110,7 @@ namespace snn::app
             snn_require(pool);
             snn_require(!pool.is_empty());
             snn_require(!pool.is_full());
-            snn_require(&pool.at(0, promise::within_bounds) == &t1);
+            snn_require(&pool.at(0, assume::within_bounds) == &t1);
 
             auto& t2 = pool.append(trivial{"efgh"});
             snn_require(t2.first() == 'e');
@@ -120,7 +120,7 @@ namespace snn::app
             snn_require(pool);
             snn_require(!pool.is_empty());
             snn_require(!pool.is_full());
-            snn_require(&pool.at(1, promise::within_bounds) == &t2);
+            snn_require(&pool.at(1, assume::within_bounds) == &t2);
 
             auto& t3 = pool.append(trivial{"ijkl"});
             snn_require(t3.first() == 'i');
@@ -149,7 +149,7 @@ namespace snn::app
             snn_require(pool);
             snn_require(!pool.is_empty());
             snn_require(pool.is_full());
-            snn_require(&pool.at(5, promise::within_bounds) == &t6);
+            snn_require(&pool.at(5, assume::within_bounds) == &t6);
 
             {
                 usize c = 0;
@@ -204,7 +204,7 @@ namespace snn::app
                 snn_require(pool);
                 snn_require(!pool.is_empty());
                 snn_require(!pool.is_full());
-                snn_require(&pool.at(0, promise::within_bounds) == &t1);
+                snn_require(&pool.at(0, assume::within_bounds) == &t1);
 
                 auto& t2 = pool.append(trivial{"efgh"});
                 snn_require(t2.first() == 'e');
@@ -214,7 +214,7 @@ namespace snn::app
                 snn_require(pool);
                 snn_require(!pool.is_empty());
                 snn_require(!pool.is_full());
-                snn_require(&pool.at(1, promise::within_bounds) == &t2);
+                snn_require(&pool.at(1, assume::within_bounds) == &t2);
 
                 auto& t3 = pool.append(trivial{"ijkl"});
                 snn_require(t3.first() == 'i');
@@ -243,7 +243,7 @@ namespace snn::app
                 snn_require(pool);
                 snn_require(!pool.is_empty());
                 snn_require(pool.is_full());
-                snn_require(&pool.at(5, promise::within_bounds) == &t6);
+                snn_require(&pool.at(5, assume::within_bounds) == &t6);
 
                 snn_require_throws_code(pool.append(trivial{"uvwx"}),
                                         generic::error::insufficient_capacity);

@@ -62,15 +62,15 @@ namespace snn
         // #### View exactly
 
         template <usize Pos, usize Count>
-        [[nodiscard]] constexpr auto view_exactly(promise::within_bounds_t) noexcept
+        [[nodiscard]] constexpr auto view_exactly(assume::within_bounds_t) noexcept
         {
-            return derived_().view().template view_exactly<Pos, Count>(promise::within_bounds);
+            return derived_().view().template view_exactly<Pos, Count>(assume::within_bounds);
         }
 
         template <usize Pos, usize Count>
-        [[nodiscard]] constexpr auto view_exactly(promise::within_bounds_t) const noexcept
+        [[nodiscard]] constexpr auto view_exactly(assume::within_bounds_t) const noexcept
         {
-            return derived_().view().template view_exactly<Pos, Count>(promise::within_bounds);
+            return derived_().view().template view_exactly<Pos, Count>(assume::within_bounds);
         }
 
         // #### View offset

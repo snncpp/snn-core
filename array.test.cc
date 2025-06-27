@@ -32,9 +32,9 @@ namespace snn::app
             snn_require(a.at(1).value() == '1');
             snn_require(a.at<char>(2).value() == 'x');
 
-            snn_require(a.at(0, promise::within_bounds) == 'a');
-            snn_require(a.at(1, promise::within_bounds) == '1');
-            snn_require(a.at(2, promise::within_bounds) == 'x');
+            snn_require(a.at(0, assume::within_bounds) == 'a');
+            snn_require(a.at(1, assume::within_bounds) == '1');
+            snn_require(a.at(2, assume::within_bounds) == 'x');
 
             decltype(auto) opt = a.at(3);
             static_assert(std::is_same_v<decltype(opt), optional<char&>>);
@@ -110,9 +110,9 @@ namespace snn::app
                 static_assert(a.count() == 2);
                 static_assert(a.byte_size().get() == 2);
                 static_assert(a.at(0).value() == '\0');                 // Value-initialized.
-                static_assert(a.at(0, promise::within_bounds) == '\0'); // Value-initialized.
+                static_assert(a.at(0, assume::within_bounds) == '\0'); // Value-initialized.
                 static_assert(a.at(1).value() == '\0');                 // Value-initialized.
-                static_assert(a.at(1, promise::within_bounds) == '\0'); // Value-initialized.
+                static_assert(a.at(1, assume::within_bounds) == '\0'); // Value-initialized.
             }
 
             {
@@ -197,7 +197,7 @@ namespace snn::app
                 static_assert(a.size() == 1);
                 static_assert(a.byte_size().get() == 1);
                 static_assert(a.at(0).value() == 'a');
-                static_assert(a.at(0, promise::within_bounds) == 'a');
+                static_assert(a.at(0, assume::within_bounds) == 'a');
                 static_assert(a.at(0, bounds::mask) == 'a');
                 static_assert(a.at(192, bounds::mask) == 'a');
                 static_assert(!a.at(1).has_value());
@@ -220,8 +220,8 @@ namespace snn::app
                 static_assert(a.byte_size().get() == 2);
                 static_assert(a.at(0).value() == 'a');
                 static_assert(a.at(1).value() == '1');
-                static_assert(a.at(0, promise::within_bounds) == 'a');
-                static_assert(a.at(1, promise::within_bounds) == '1');
+                static_assert(a.at(0, assume::within_bounds) == 'a');
+                static_assert(a.at(1, assume::within_bounds) == '1');
                 static_assert(a.at(0, bounds::mask) == 'a');
                 static_assert(a.at(1, bounds::mask) == '1');
                 static_assert(a.at(192, bounds::mask) == 'a');
@@ -246,7 +246,7 @@ namespace snn::app
                 static_assert(a.count() == 1);
                 static_assert(a.byte_size().get() == 16);
                 static_assert(a.at(0).value() == "abc");
-                static_assert(a.at(0, promise::within_bounds) == "abc");
+                static_assert(a.at(0, assume::within_bounds) == "abc");
             }
             {
                 constexpr array a{"ab", "cdef", "ghijkl"};
@@ -258,7 +258,7 @@ namespace snn::app
                 static_assert(a.count() == 3);
                 static_assert(a.byte_size().get() == 48);
                 static_assert(a.at(0).value() == "ab");
-                static_assert(a.at(1, promise::within_bounds) == "cdef");
+                static_assert(a.at(1, assume::within_bounds) == "cdef");
                 static_assert(a.at(2).value() == "ghijkl");
                 static_assert(!a.at(3).has_value());
                 static_assert(a.is_sorted());
@@ -471,12 +471,12 @@ namespace snn::app
                     snn_require(v == "cdef");
                 }
                 {
-                    auto v = a.view_exactly<0, 6>(promise::within_bounds);
+                    auto v = a.view_exactly<0, 6>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<const char, 6>>);
                     snn_require(v == "abcdef");
                 }
                 {
-                    auto v = a.view_exactly<2, 4>(promise::within_bounds);
+                    auto v = a.view_exactly<2, 4>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<const char, 4>>);
                     snn_require(v == "cdef");
                 }
@@ -504,12 +504,12 @@ namespace snn::app
                     snn_require(v == "cdef");
                 }
                 {
-                    auto v = a.view_exactly<0, 6>(promise::within_bounds);
+                    auto v = a.view_exactly<0, 6>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<char, 6>>);
                     snn_require(v == "abcdef");
                 }
                 {
-                    auto v = a.view_exactly<2, 4>(promise::within_bounds);
+                    auto v = a.view_exactly<2, 4>(assume::within_bounds);
                     static_assert(std::is_same_v<decltype(v), array_view<char, 4>>);
                     snn_require(v == "cdef");
                 }

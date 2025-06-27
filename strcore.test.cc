@@ -345,12 +345,12 @@ namespace snn::app
                 snn_require(count == 3);
             }
 
-            // at(pos, promise::within_bounds_t)
+            // at(pos, assume::within_bounds_t)
             {
                 const T s{"One"};
-                snn_require(s.at(0, promise::within_bounds) == 'O');
-                snn_require(s.at(1, promise::within_bounds) == 'n');
-                snn_require(s.at(2, promise::within_bounds) == 'e');
+                snn_require(s.at(0, assume::within_bounds) == 'O');
+                snn_require(s.at(1, assume::within_bounds) == 'n');
+                snn_require(s.at(2, assume::within_bounds) == 'e');
             }
 
             // at
@@ -1154,9 +1154,9 @@ namespace snn::app
 
                 arr.sort();
 
-                snn_require(arr.at(0, promise::within_bounds) == "Bar");
-                snn_require(arr.at(1, promise::within_bounds) == "Bar+");
-                snn_require(arr.at(2, promise::within_bounds) == "Foo");
+                snn_require(arr.at(0, assume::within_bounds) == "Bar");
+                snn_require(arr.at(1, assume::within_bounds) == "Bar+");
+                snn_require(arr.at(2, assume::within_bounds) == "Foo");
             }
 
             // operator>
@@ -1195,9 +1195,9 @@ namespace snn::app
 
                 arr.sort(fn::greater_than{});
 
-                snn_require(arr.at(0, promise::within_bounds) == "Foo");
-                snn_require(arr.at(1, promise::within_bounds) == "Bar+");
-                snn_require(arr.at(2, promise::within_bounds) == "Bar");
+                snn_require(arr.at(0, assume::within_bounds) == "Foo");
+                snn_require(arr.at(1, assume::within_bounds) == "Bar+");
+                snn_require(arr.at(2, assume::within_bounds) == "Bar");
             }
 
             return true;
@@ -2564,19 +2564,19 @@ namespace snn::app
                 // s = {{}, {}};
             }
 
-            // at(pos, promise::within_bounds_t)
+            // at(pos, assume::within_bounds_t)
             {
                 T s{"One Two Three"};
 
-                s.at(0, promise::within_bounds) = 'o';
+                s.at(0, assume::within_bounds) = 'o';
                 snn_require(s == "one Two Three");
 
-                s.at(4, promise::within_bounds) = 't';
-                s.at(8, promise::within_bounds) = 't';
+                s.at(4, assume::within_bounds) = 't';
+                s.at(8, assume::within_bounds) = 't';
                 snn_require(s == "one two three");
 
-                snn_require(s.at(1, promise::within_bounds) == 'n');
-                snn_require(s.at(8, promise::within_bounds) == 't');
+                snn_require(s.at(1, assume::within_bounds) == 'n');
+                snn_require(s.at(8, assume::within_bounds) == 't');
             }
 
             // at

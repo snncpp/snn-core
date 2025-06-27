@@ -29,10 +29,10 @@ namespace snn::app
             snn_require(rng.back(promise::not_empty) == 456);
             snn_require(rng.back().value() == 456);
 
-            snn_require(rng.at(0, promise::within_bounds) == 123);
+            snn_require(rng.at(0, assume::within_bounds) == 123);
             snn_require(rng.at(0).value() == 123);
 
-            snn_require(rng.at(1, promise::within_bounds) == 456);
+            snn_require(rng.at(1, assume::within_bounds) == 456);
             snn_require(rng.at(1).value() == 456);
 
             rng.drop_front(promise::not_empty);
@@ -47,7 +47,7 @@ namespace snn::app
             snn_require(rng.back(promise::not_empty) == 456);
             snn_require(rng.back().value() == 456);
 
-            snn_require(rng.at(0, promise::within_bounds) == 456);
+            snn_require(rng.at(0, assume::within_bounds) == 456);
             snn_require(rng.at(0).value() == 456);
 
             rng.drop_back(promise::not_empty);
@@ -161,8 +161,8 @@ namespace snn
 
         // constexpr optional<dereference_type> at(const usize pos)
         // constexpr optional<const_dereference_type> at(const usize pos) const
-        // constexpr dereference_type at(const usize pos, promise::within_bounds_t)
-        // constexpr const_dereference_type at(const usize pos, promise::within_bounds_t) const
+        // constexpr dereference_type at(const usize pos, assume::within_bounds_t)
+        // constexpr const_dereference_type at(const usize pos, assume::within_bounds_t) const
         // constexpr usize count() const
         {
             std::deque<int> deque;
@@ -173,14 +173,14 @@ namespace snn
 
             snn_require(rng.count() == 2);
 
-            snn_require(rng.at(0, promise::within_bounds) == 123);
+            snn_require(rng.at(0, assume::within_bounds) == 123);
             snn_require(rng.at(0).value() == 123);
-            snn_require(std::as_const(rng).at(0, promise::within_bounds) == 123);
+            snn_require(std::as_const(rng).at(0, assume::within_bounds) == 123);
             snn_require(std::as_const(rng).at(0).value() == 123);
 
-            snn_require(rng.at(1, promise::within_bounds) == 456);
+            snn_require(rng.at(1, assume::within_bounds) == 456);
             snn_require(rng.at(1).value() == 456);
-            snn_require(std::as_const(rng).at(1, promise::within_bounds) == 456);
+            snn_require(std::as_const(rng).at(1, assume::within_bounds) == 456);
             snn_require(std::as_const(rng).at(1).value() == 456);
 
             rng.drop_front(promise::not_empty);

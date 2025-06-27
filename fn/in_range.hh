@@ -43,7 +43,7 @@ namespace snn::fn
                 algo::find_greater_than_or_equal_to(rng_, v, assume::is_sorted).value_or_npos();
             if (index < rng_.count())
             {
-                return rng_.at(index, promise::within_bounds) == v;
+                return rng_.at(index, assume::within_bounds) == v;
             }
             return false;
         }

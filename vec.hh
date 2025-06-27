@@ -191,7 +191,7 @@ namespace snn
             return nullopt;
         }
 
-        [[nodiscard]] constexpr reference at(const usize pos, promise::within_bounds_t) noexcept
+        [[nodiscard]] constexpr reference at(const usize pos, assume::within_bounds_t) noexcept
         {
             // Don't use view(), it makes it harder for the optimizer to remove the assert.
             snn_assert(pos < buf_.count());
@@ -199,7 +199,7 @@ namespace snn
         }
 
         [[nodiscard]] constexpr const_reference at(const usize pos,
-                                                   promise::within_bounds_t) const noexcept
+                                                   assume::within_bounds_t) const noexcept
         {
             // Don't use view(), it makes it harder for the optimizer to remove the assert.
             snn_assert(pos < buf_.count());

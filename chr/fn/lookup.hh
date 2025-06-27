@@ -26,7 +26,7 @@ namespace snn::chr::fn
 
         [[nodiscard]] constexpr Int operator()(const char c) const noexcept
         {
-            return v_.at(to_byte(c), promise::within_bounds);
+            return v_.at(to_byte(c), assume::within_bounds);
         }
 
       private:

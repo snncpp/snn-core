@@ -41,7 +41,7 @@ namespace snn::json::chr
 
     [[nodiscard]] constexpr bool is_non_special_ascii_string(const char c) noexcept
     {
-        return static_cast<bool>(detail::property_lookup.at(to_byte(c), promise::within_bounds) &
+        return static_cast<bool>(detail::property_lookup.at(to_byte(c), assume::within_bounds) &
                                  0b0000'0001);
     }
 
@@ -49,7 +49,7 @@ namespace snn::json::chr
 
     [[nodiscard]] constexpr bool is_special_string(const char c) noexcept
     {
-        return static_cast<bool>(detail::property_lookup.at(to_byte(c), promise::within_bounds) &
+        return static_cast<bool>(detail::property_lookup.at(to_byte(c), assume::within_bounds) &
                                  0b0000'0010);
     }
 
@@ -57,7 +57,7 @@ namespace snn::json::chr
 
     [[nodiscard]] constexpr bool is_whitespace(const char c) noexcept
     {
-        return static_cast<bool>(detail::property_lookup.at(to_byte(c), promise::within_bounds) &
+        return static_cast<bool>(detail::property_lookup.at(to_byte(c), assume::within_bounds) &
                                  0b0000'0100);
     }
 }

@@ -56,7 +56,7 @@ namespace snn::time::zone
 
             if (timestamp >= cache_when_ && timestamp < cache_next_) [[likely]]
             {
-                return offsets.at(cache_offset_index_, promise::within_bounds);
+                return offsets.at(cache_offset_index_, assume::within_bounds);
             }
 
             if (transitions.is_empty()) [[unlikely]]
@@ -64,7 +64,7 @@ namespace snn::time::zone
                 cache_when_         = constant::limit<i64>::min;
                 cache_next_         = constant::limit<i64>::max;
                 cache_offset_index_ = 0; // First offset is the fallback from tzdb-2018f and later.
-                return offsets.at(cache_offset_index_, promise::within_bounds);
+                return offsets.at(cache_offset_index_, assume::within_bounds);
             }
 
             const auto first_transition = transitions.front(promise::not_empty);
@@ -74,7 +74,7 @@ namespace snn::time::zone
                 cache_when_         = constant::limit<i64>::min;
                 cache_next_         = first_transition.when;
                 cache_offset_index_ = 0; // First offset is the fallback from tzdb-2018f and later.
-                return offsets.at(cache_offset_index_, promise::within_bounds);
+                return offsets.at(cache_offset_index_, assume::within_bounds);
             }
 
             // Find the first transition that is greater than timestamp.
@@ -88,7 +88,7 @@ namespace snn::time::zone
 
             if (index < transitions.count())
             {
-                cache_next_ = transitions.at(index, promise::within_bounds).when;
+                cache_next_ = transitions.at(index, assume::within_bounds).when;
             }
             else
             {
@@ -97,10 +97,10 @@ namespace snn::time::zone
             }
 
             --index; // Step back to the transition that will be in effect.
-            const auto t        = transitions.at(index, promise::within_bounds);
+            const auto t        = transitions.at(index, assume::within_bounds);
             cache_when_         = t.when;
             cache_offset_index_ = t.offset_index;
-            return offsets.at(cache_offset_index_, promise::within_bounds);
+            return offsets.at(cache_offset_index_, assume::within_bounds);
         }
 
         [[nodiscard]] static constexpr bool is_valid_name(const transient<cstrview> name) noexcept
