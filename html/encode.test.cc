@@ -181,9 +181,9 @@ namespace snn::app
             {
                 const cstrview all{"<\"&'>\xC2\xA0"};
                 snn_require(html::encode(all) == "&lt;&quot;&amp;&#39;&gt;\xC2\xA0");
-                snn_require(html::encode_attribute_value(all, promise::is_utf8) ==
+                snn_require(html::encode_attribute_value(all, assume::is_utf8) ==
                             "<&quot;&amp;'>&nbsp;");
-                snn_require(html::encode_text_value(all, promise::is_utf8) ==
+                snn_require(html::encode_text_value(all, assume::is_utf8) ==
                             "&lt;\"&amp;'&gt;&nbsp;");
             }
 
@@ -198,15 +198,15 @@ namespace snn::app
                 snn_require(s.size() == 384);
 
                 snn_require(html::encode<strbuf>(s) == encode_ref(s));
-                snn_require(html::encode_attribute_value<strbuf>(s, promise::is_utf8) ==
+                snn_require(html::encode_attribute_value<strbuf>(s, assume::is_utf8) ==
                             encode_attribute_value_ref(s));
-                snn_require(html::encode_text_value<strbuf>(s, promise::is_utf8) ==
+                snn_require(html::encode_text_value<strbuf>(s, assume::is_utf8) ==
                             encode_text_value_ref(s));
 
                 snn_require(html::encode<strbuf>(s) != encode_attribute_value_ref(s));
-                snn_require(html::encode_attribute_value<strbuf>(s, promise::is_utf8) !=
+                snn_require(html::encode_attribute_value<strbuf>(s, assume::is_utf8) !=
                             encode_text_value_ref(s));
-                snn_require(html::encode_text_value<strbuf>(s, promise::is_utf8) != encode_ref(s));
+                snn_require(html::encode_text_value<strbuf>(s, assume::is_utf8) != encode_ref(s));
             }
 
             return true;
