@@ -191,13 +191,13 @@ namespace snn::detail::vec
             capacity_ = cap.get();
         }
 
-        void increment_count(promise::has_capacity_t) noexcept
+        void increment_count(assume::has_capacity_t) noexcept
         {
             snn_should(count_ < capacity_);
             ++count_;
         }
 
-        void set_count(const usize count, promise::has_capacity_t) noexcept
+        void set_count(const usize count, assume::has_capacity_t) noexcept
         {
             snn_should(count <= capacity_);
             count_ = count;
@@ -359,13 +359,13 @@ namespace snn::detail::vec
             capacity_ = cap.get();
         }
 
-        constexpr void increment_count(promise::has_capacity_t) noexcept
+        constexpr void increment_count(assume::has_capacity_t) noexcept
         {
             snn_should(count_ < capacity_);
             ++count_;
         }
 
-        constexpr void set_count(const usize count, promise::has_capacity_t) noexcept
+        constexpr void set_count(const usize count, assume::has_capacity_t) noexcept
         {
             snn_should(count <= capacity_);
             count_ = count;

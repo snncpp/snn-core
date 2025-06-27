@@ -21,7 +21,7 @@ namespace snn::ascii
         static_assert(sizeof(u64) == 8);
         while (rng.size() >= sizeof(u64))
         {
-            const array_view<const char, sizeof(u64)> v{rng.begin(), promise::has_capacity};
+            const array_view<const char, sizeof(u64)> v{rng.begin(), assume::has_capacity};
             const auto i = v.load<u64>();
             if ((i & 0x8080808080808080u) == 0) // 0x80 == 0b1000'0000
             {

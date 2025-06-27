@@ -264,20 +264,20 @@ namespace snn::app
                 snn_require(v.back().value() == 'o');
             }
 
-            // constexpr explicit array_view(const pointer data, promise::has_capacity_t) noexcept
+            // constexpr explicit array_view(const pointer data, assume::has_capacity_t) noexcept
             {
                 array arr{'a', 'b', 'c'};
-                array_view<char, 2> v{arr.begin(), promise::has_capacity};
+                array_view<char, 2> v{arr.begin(), assume::has_capacity};
                 snn_require(v.size() == 2);
                 snn_require(v.front().value() == 'a');
                 snn_require(v.back().value() == 'b');
             }
 
             // constexpr explicit array_view(const not_null<pointer> data,
-            //                               promise::has_capacity_t) noexcept
+            //                               assume::has_capacity_t) noexcept
             {
                 array arr{'a', 'b', 'c'};
-                array_view<const char, 2> v{arr.data(), promise::has_capacity};
+                array_view<const char, 2> v{arr.data(), assume::has_capacity};
                 snn_require(v.size() == 2);
                 snn_require(v.front().value() == 'a');
                 snn_require(v.back().value() == 'b');

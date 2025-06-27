@@ -300,13 +300,13 @@ namespace snn
         template <usize Pos = 0, usize C = constant::npos>
         [[nodiscard]] constexpr auto view() noexcept
         {
-            return array_view<T, Count>{priv_buf_, promise::has_capacity}.template view<Pos, C>();
+            return array_view<T, Count>{priv_buf_, assume::has_capacity}.template view<Pos, C>();
         }
 
         template <usize Pos = 0, usize C = constant::npos>
         [[nodiscard]] constexpr auto view() const noexcept
         {
-            return array_view<const T, Count>{priv_buf_, promise::has_capacity}
+            return array_view<const T, Count>{priv_buf_, assume::has_capacity}
                 .template view<Pos, C>();
         }
 
@@ -316,28 +316,28 @@ namespace snn
             requires(Pos <= Count && (Count - Pos) >= C)
         [[nodiscard]] constexpr auto view_exactly() noexcept
         {
-            return array_view<T, C>{priv_buf_ + Pos, promise::has_capacity};
+            return array_view<T, C>{priv_buf_ + Pos, assume::has_capacity};
         }
 
         template <usize Pos, usize C>
             requires(Pos <= Count && (Count - Pos) >= C)
         [[nodiscard]] constexpr auto view_exactly() const noexcept
         {
-            return array_view<const T, C>{priv_buf_ + Pos, promise::has_capacity};
+            return array_view<const T, C>{priv_buf_ + Pos, assume::has_capacity};
         }
 
         template <usize Pos, usize C>
         [[nodiscard]] constexpr auto view_exactly(promise::within_bounds_t) noexcept
         {
             static_assert(Pos <= Count && (Count - Pos) >= C);
-            return array_view<T, C>{priv_buf_ + Pos, promise::has_capacity};
+            return array_view<T, C>{priv_buf_ + Pos, assume::has_capacity};
         }
 
         template <usize Pos, usize C>
         [[nodiscard]] constexpr auto view_exactly(promise::within_bounds_t) const noexcept
         {
             static_assert(Pos <= Count && (Count - Pos) >= C);
-            return array_view<const T, C>{priv_buf_ + Pos, promise::has_capacity};
+            return array_view<const T, C>{priv_buf_ + Pos, assume::has_capacity};
         }
 
         // #### View offset - Dynamic count
@@ -359,14 +359,14 @@ namespace snn
         template <isize Pos, isize C = constant::limit<isize>::max>
         [[nodiscard]] constexpr auto view_offset() noexcept
         {
-            return array_view<T, Count>{priv_buf_, promise::has_capacity}
+            return array_view<T, Count>{priv_buf_, assume::has_capacity}
                 .template view_offset<Pos, C>();
         }
 
         template <isize Pos, isize C = constant::limit<isize>::max>
         [[nodiscard]] constexpr auto view_offset() const noexcept
         {
-            return array_view<const T, Count>{priv_buf_, promise::has_capacity}
+            return array_view<const T, Count>{priv_buf_, assume::has_capacity}
                 .template view_offset<Pos, C>();
         }
 

@@ -74,7 +74,7 @@ namespace snn
                 reserve(count);
                 mem::copy_construct(not_null{first}, not_null{last}, not_null{buf_.begin()},
                                     promise::no_overlap);
-                buf_.set_count(count, promise::has_capacity);
+                buf_.set_count(count, assume::has_capacity);
             }
         }
 
@@ -88,7 +88,7 @@ namespace snn
                 reserve(values.size());
                 mem::copy_construct(not_null{values.begin()}, not_null{values.end()},
                                     not_null{buf_.begin()}, promise::no_overlap);
-                buf_.set_count(values.size(), promise::has_capacity);
+                buf_.set_count(values.size(), assume::has_capacity);
             }
         }
 
@@ -290,7 +290,7 @@ namespace snn
                 buf_.grow(not_zero{check_capacity_(recommend_capacity_())}, promise::is_valid);
             }
             mem::construct(not_null{buf_.end()}, std::move(value));
-            buf_.increment_count(promise::has_capacity);
+            buf_.increment_count(assume::has_capacity);
         }
 
         template <typename... Args>
@@ -299,7 +299,7 @@ namespace snn
             if (buf_.count() < buf_.capacity()) [[likely]]
             {
                 mem::construct(not_null{buf_.end()}, std::forward<Args>(args)...);
-                buf_.increment_count(promise::has_capacity);
+                buf_.increment_count(assume::has_capacity);
             }
             else
             {
@@ -319,7 +319,7 @@ namespace snn
                 reserve_append(other.count());
                 mem::copy_construct(not_null{other.cbegin()}, not_null{other.cend()},
                                     not_null{buf_.end()}, promise::no_overlap);
-                buf_.set_count(buf_.count() + other.count(), promise::has_capacity);
+                buf_.set_count(buf_.count() + other.count(), assume::has_capacity);
             }
         }
 
@@ -452,7 +452,7 @@ namespace snn
 
                 SNN_DIAGNOSTIC_POP
 
-                buf_.increment_count(promise::has_capacity);
+                buf_.increment_count(assume::has_capacity);
             }
             else if (pos == buf_.count())
             {
@@ -573,14 +573,14 @@ namespace snn
 
                 SNN_DIAGNOSTIC_POP
 
-                buf_.set_count(buf_.count() - count, promise::has_capacity);
+                buf_.set_count(buf_.count() - count, assume::has_capacity);
             }
         }
 
         constexpr void drop_back_n_(usize count) noexcept
         {
             snn_should(count <= buf_.count());
-            buf_.set_count(buf_.count() - count, promise::has_capacity);
+            buf_.set_count(buf_.count() - count, assume::has_capacity);
             mem::destruct_n(buf_.end(), count);
         }
     };

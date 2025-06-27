@@ -458,7 +458,7 @@ namespace snn
         [[nodiscard]] constexpr auto append_for_overwrite()
         {
             return array_view<char, SizeIncrease>{buf_.append_for_overwrite(SizeIncrease).begin(),
-                                                  promise::has_capacity};
+                                                  assume::has_capacity};
         }
 
         [[nodiscard]] constexpr strview append_for_overwrite(const usize size_increase)

@@ -85,13 +85,13 @@ namespace snn
         {
         }
 
-        constexpr explicit array_view(const pointer data, promise::has_capacity_t) noexcept
+        constexpr explicit array_view(const pointer data, assume::has_capacity_t) noexcept
             : data_{data}
         {
         }
 
         constexpr explicit array_view(const not_null<pointer> data,
-                                      promise::has_capacity_t) noexcept
+                                      assume::has_capacity_t) noexcept
             : data_{data.get()}
         {
         }
@@ -397,7 +397,7 @@ namespace snn
         {
             constexpr usize FinalPos   = math::min(Pos, Count);
             constexpr usize FinalCount = math::min(C, Count - FinalPos);
-            return array_view<T, FinalCount>{data_ + FinalPos, promise::has_capacity};
+            return array_view<T, FinalCount>{data_ + FinalPos, assume::has_capacity};
         }
 
         template <usize Pos = 0, usize C = constant::npos>
@@ -405,7 +405,7 @@ namespace snn
         {
             constexpr usize FinalPos   = math::min(Pos, Count);
             constexpr usize FinalCount = math::min(C, Count - FinalPos);
-            return array_view<const T, FinalCount>{data_ + FinalPos, promise::has_capacity};
+            return array_view<const T, FinalCount>{data_ + FinalPos, assume::has_capacity};
         }
 
         // #### View exactly
@@ -414,28 +414,28 @@ namespace snn
             requires(Pos <= Count && (Count - Pos) >= C)
         [[nodiscard]] constexpr auto view_exactly() noexcept
         {
-            return array_view<T, C>{data_ + Pos, promise::has_capacity};
+            return array_view<T, C>{data_ + Pos, assume::has_capacity};
         }
 
         template <usize Pos, usize C>
             requires(Pos <= Count && (Count - Pos) >= C)
         [[nodiscard]] constexpr auto view_exactly() const noexcept
         {
-            return array_view<const T, C>{data_ + Pos, promise::has_capacity};
+            return array_view<const T, C>{data_ + Pos, assume::has_capacity};
         }
 
         template <usize Pos, usize C>
         [[nodiscard]] constexpr auto view_exactly(promise::within_bounds_t) noexcept
         {
             static_assert(Pos <= Count && (Count - Pos) >= C);
-            return array_view<T, C>{data_ + Pos, promise::has_capacity};
+            return array_view<T, C>{data_ + Pos, assume::has_capacity};
         }
 
         template <usize Pos, usize C>
         [[nodiscard]] constexpr auto view_exactly(promise::within_bounds_t) const noexcept
         {
             static_assert(Pos <= Count && (Count - Pos) >= C);
-            return array_view<const T, C>{data_ + Pos, promise::has_capacity};
+            return array_view<const T, C>{data_ + Pos, assume::has_capacity};
         }
 
         // #### View offset - Dynamic count
@@ -487,14 +487,14 @@ namespace snn
         {
             using byte_type = std::conditional_t<std::is_const_v<T>, const byte, byte>;
             return array_view<byte_type, byte_size().get()>{reinterpret_cast<byte_type*>(data_),
-                                                            promise::has_capacity};
+                                                            assume::has_capacity};
         }
 
         template <typename = void>
         [[nodiscard]] auto as_bytes() const noexcept
         {
             return array_view<const byte, byte_size().get()>{reinterpret_cast<const byte*>(data_),
-                                                             promise::has_capacity};
+                                                             assume::has_capacity};
         }
 
         // #### Range
@@ -1145,7 +1145,7 @@ namespace snn
         {
             static_assert(Count != constant::dynamic_count);
             snn_assert(Pos <= count_ && (count_ - Pos) >= Count);
-            return array_view<T, Count>{data_ + Pos, promise::has_capacity};
+            return array_view<T, Count>{data_ + Pos, assume::has_capacity};
         }
 
         template <usize Pos, usize Count>
@@ -1153,7 +1153,7 @@ namespace snn
         {
             static_assert(Count != constant::dynamic_count);
             snn_assert(Pos <= count_ && (count_ - Pos) >= Count);
-            return array_view<const T, Count>{data_ + Pos, promise::has_capacity};
+            return array_view<const T, Count>{data_ + Pos, assume::has_capacity};
         }
 
         // #### View offset
@@ -1601,7 +1601,7 @@ namespace snn
         {
             static_assert(Count != constant::dynamic_count);
             snn_assert(Pos <= count_ && (count_ - Pos) >= Count);
-            return array_view<const char, Count>{data_ + Pos, promise::has_capacity};
+            return array_view<const char, Count>{data_ + Pos, assume::has_capacity};
         }
 
         // #### View offset
@@ -2143,7 +2143,7 @@ namespace snn
         {
             static_assert(Count != constant::dynamic_count);
             snn_assert(Pos <= count_ && (count_ - Pos) >= Count);
-            return array_view<char, Count>{data_ + Pos, promise::has_capacity};
+            return array_view<char, Count>{data_ + Pos, assume::has_capacity};
         }
 
         template <usize Pos, usize Count>
@@ -2151,7 +2151,7 @@ namespace snn
         {
             static_assert(Count != constant::dynamic_count);
             snn_assert(Pos <= count_ && (count_ - Pos) >= Count);
-            return array_view<const char, Count>{data_ + Pos, promise::has_capacity};
+            return array_view<const char, Count>{data_ + Pos, assume::has_capacity};
         }
 
         // #### View offset
@@ -2485,7 +2485,7 @@ namespace snn
     {
         using byte_type = std::conditional_t<std::is_const_v<T>, const byte, byte>;
         return array_view<byte_type, sizeof(T)>{reinterpret_cast<byte_type*>(&ref.get()),
-                                                promise::has_capacity};
+                                                assume::has_capacity};
     }
 
     // ### get
