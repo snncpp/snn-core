@@ -2506,110 +2506,110 @@ namespace snn
             str append_to;
 
             append_to.clear();
-            f.format(123.456, "%g", ctx, append_to, promise::no_overlap);
+            f.format(123.456, "%g", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "123.456");
 
             append_to.clear();
-            f.format(123.456, "%f", ctx, append_to, promise::no_overlap);
+            f.format(123.456, "%f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "123.456000");
 
             append_to.clear();
-            f.format(123.456, "%.4f", ctx, append_to, promise::no_overlap);
+            f.format(123.456, "%.4f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "123.4560");
 
             append_to.clear();
-            f.format(123.456, "%e", ctx, append_to, promise::no_overlap);
+            f.format(123.456, "%e", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "1.234560e+02");
-            f.format(123.456, "%E", ctx, append_to, promise::no_overlap);
+            f.format(123.456, "%E", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "1.234560e+021.234560E+02");
 
             append_to.clear();
-            f.format(123.456, "%.5e", ctx, append_to, promise::no_overlap);
+            f.format(123.456, "%.5e", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "1.23456e+02");
 
             append_to.clear();
-            f.format(123.456, "%080.4f", ctx, append_to, promise::no_overlap);
+            f.format(123.456, "%080.4f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "0000000000000000000000000000000000000000"
                                      "00000000000000000000000000000000123.4560");
 
             // Around internal buffer size (currently 64 bytes).
             append_to.clear();
-            f.format(123.456, "%63.4f", ctx, append_to, promise::no_overlap);
+            f.format(123.456, "%63.4f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "                               "
                                      "                        123.4560");
             append_to.clear();
-            f.format(123.456, "%64.4f", ctx, append_to, promise::no_overlap);
+            f.format(123.456, "%64.4f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "                                "
                                      "                        123.4560");
             append_to.clear();
-            f.format(123.456, "%65.4f", ctx, append_to, promise::no_overlap);
+            f.format(123.456, "%65.4f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "                                "
                                      "                         123.4560");
 
             // Float
             append_to.clear();
-            f.format(1.30f, "%.2f", ctx, append_to, promise::no_overlap);
+            f.format(1.30f, "%.2f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "1.30");
 
             // Invalid
-            snn_require_throws_code(f.format(1.0, "", ctx, append_to, promise::no_overlap),
+            snn_require_throws_code(f.format(1.0, "", ctx, append_to, assume::no_overlap),
                                     fmt::error::invalid_printf_format_string);
-            snn_require_throws_code(f.format(1.0, "%", ctx, append_to, promise::no_overlap),
+            snn_require_throws_code(f.format(1.0, "%", ctx, append_to, assume::no_overlap),
                                     fmt::error::invalid_printf_format_string);
-            snn_require_throws_code(f.format(1.0, "%ee", ctx, append_to, promise::no_overlap),
+            snn_require_throws_code(f.format(1.0, "%ee", ctx, append_to, assume::no_overlap),
                                     fmt::error::invalid_printf_format_string);
             snn_require_throws_code(f.format(1.0, "%#0+- 99.99g", ctx, append_to,
-                                             promise::no_overlap),
+                                             assume::no_overlap),
                                     fmt::error::invalid_printf_format_string);
 
             // Negative zero (output).
 
             append_to.clear();
-            f.format(-0.0, "%.0f", ctx, append_to, promise::no_overlap);
+            f.format(-0.0, "%.0f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "-0");
 
             append_to.clear();
-            f.format(-0.0, "%.1f", ctx, append_to, promise::no_overlap);
+            f.format(-0.0, "%.1f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "-0.0");
 
             append_to.clear();
-            f.format(-0.0001, "%.0f", ctx, append_to, promise::no_overlap);
+            f.format(-0.0001, "%.0f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "-0");
 
             append_to.clear();
-            f.format(-0.0001, "%.1f", ctx, append_to, promise::no_overlap);
+            f.format(-0.0001, "%.1f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "-0.0");
 
             append_to.clear();
-            f.format(-0.0001, "%.2f", ctx, append_to, promise::no_overlap);
+            f.format(-0.0001, "%.2f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "-0.00");
 
             append_to.clear();
-            f.format(-0.0001, "%.3f", ctx, append_to, promise::no_overlap);
+            f.format(-0.0001, "%.3f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "-0.000");
 
             append_to.clear();
-            f.format(-0.0012, "%.0f", ctx, append_to, promise::no_overlap);
+            f.format(-0.0012, "%.0f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "-0");
 
             append_to.clear();
-            f.format(-0.0012, "%.1f", ctx, append_to, promise::no_overlap);
+            f.format(-0.0012, "%.1f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "-0.0");
 
             append_to.clear();
-            f.format(-0.0012, "%.2f", ctx, append_to, promise::no_overlap);
+            f.format(-0.0012, "%.2f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "-0.00");
 
             append_to.clear();
-            f.format(-0.0123, "%.0f", ctx, append_to, promise::no_overlap);
+            f.format(-0.0123, "%.0f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "-0");
 
             append_to.clear();
-            f.format(-0.0123, "%.1f", ctx, append_to, promise::no_overlap);
+            f.format(-0.0123, "%.1f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "-0.0");
 
             append_to.clear();
-            f.format(-0.1234, "%.0f", ctx, append_to, promise::no_overlap);
+            f.format(-0.1234, "%.0f", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "-0");
         }
 

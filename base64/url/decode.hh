@@ -21,9 +21,9 @@ namespace snn::base64::url
 
     template <typename Buf>
     [[nodiscard]] constexpr result<void> decode(const transient<cstrview> string,
-                                                strcore<Buf>& append_to, promise::no_overlap_t)
+                                                strcore<Buf>& append_to, assume::no_overlap_t)
     {
         return base64::decode(string, padding_optional, '=', table::decode::url, append_to,
-                              promise::no_overlap);
+                              assume::no_overlap);
     }
 }

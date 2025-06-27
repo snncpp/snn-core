@@ -34,9 +34,9 @@ namespace snn::app
         {
             {
                 strbuf s;
-                snn_require(hex::decode("c3a5", s, promise::no_overlap));
-                snn_require(hex::decode("c3a5c3a4", s, promise::no_overlap));
-                snn_require(hex::decode("c3a5c3a4c3b6", s, promise::no_overlap));
+                snn_require(hex::decode("c3a5", s, assume::no_overlap));
+                snn_require(hex::decode("c3a5c3a4", s, assume::no_overlap));
+                snn_require(hex::decode("c3a5c3a4c3b6", s, assume::no_overlap));
                 snn_require(s == "ååäåäö");
             }
 
@@ -68,14 +68,14 @@ namespace snn::app
                 snn_require(dest.capacity() == str::default_capacity());
 
                 str src{"c3a5c3a4c3b6"};
-                snn_require(hex::decode(src, dest, promise::no_overlap));
+                snn_require(hex::decode(src, dest, assume::no_overlap));
                 snn_require(dest == "One two three four?åäö");
                 snn_require(dest.size() == 25);
                 snn_require(dest.capacity() > str::default_capacity());
 
                 const cstrview invalid_tail{"c3a5c3a4c3b6_!"};
                 snn_require(invalid_tail.size() % 2 == 0);
-                snn_require(!hex::decode(invalid_tail, dest, promise::no_overlap));
+                snn_require(!hex::decode(invalid_tail, dest, assume::no_overlap));
                 snn_require(dest == "One two three four?åäö");
                 snn_require(dest.size() == 25);
             }

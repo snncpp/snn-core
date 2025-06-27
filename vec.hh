@@ -73,7 +73,7 @@ namespace snn
             {
                 reserve(count);
                 mem::copy_construct(not_null{first}, not_null{last}, not_null{buf_.begin()},
-                                    promise::no_overlap);
+                                    assume::no_overlap);
                 buf_.set_count(count, assume::has_capacity);
             }
         }
@@ -87,7 +87,7 @@ namespace snn
             {
                 reserve(values.size());
                 mem::copy_construct(not_null{values.begin()}, not_null{values.end()},
-                                    not_null{buf_.begin()}, promise::no_overlap);
+                                    not_null{buf_.begin()}, assume::no_overlap);
                 buf_.set_count(values.size(), assume::has_capacity);
             }
         }
@@ -318,7 +318,7 @@ namespace snn
             {
                 reserve_append(other.count());
                 mem::copy_construct(not_null{other.cbegin()}, not_null{other.cend()},
-                                    not_null{buf_.end()}, promise::no_overlap);
+                                    not_null{buf_.end()}, assume::no_overlap);
                 buf_.set_count(buf_.count() + other.count(), assume::has_capacity);
             }
         }

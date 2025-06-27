@@ -55,9 +55,9 @@ namespace snn::app
             snn_require(base64::encode("åäö") == "w6XDpMO2");
 
             strbuf s;
-            base64::encode("å", s, promise::no_overlap);
-            base64::encode(cstrview{"åä"}, s, promise::no_overlap);
-            base64::encode("åäö", s, promise::no_overlap);
+            base64::encode("å", s, assume::no_overlap);
+            base64::encode(cstrview{"åä"}, s, assume::no_overlap);
+            base64::encode("åäö", s, assume::no_overlap);
             snn_require(s == "w6U=w6XDpA==w6XDpMO2");
 
             // Random data where the output contains '/' and '+'.
@@ -81,7 +81,7 @@ namespace snn::app
             str dest{"One two three four?"};
             snn_require(dest.capacity() == str::default_capacity());
             str src{"åäö"};
-            base64::encode(src, dest, promise::no_overlap);
+            base64::encode(src, dest, assume::no_overlap);
             snn_require(dest == "One two three four?w6XDpMO2");
             snn_require(dest.capacity() > str::default_capacity());
 

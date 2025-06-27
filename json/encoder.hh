@@ -23,7 +23,7 @@ namespace snn::json
         static constexpr usize default_reserve_capacity = 256;
 
         template <typename Buf>
-        constexpr void encode(const document& doc, strcore<Buf>& append_to, promise::no_overlap_t)
+        constexpr void encode(const document& doc, strcore<Buf>& append_to, assume::no_overlap_t)
         {
             encode_(doc.root(), append_to);
         }
@@ -39,7 +39,7 @@ namespace snn::json
 
         template <typename Buf>
         constexpr void pretty_encode(const document& doc, strcore<Buf>& append_to,
-                                     promise::no_overlap_t)
+                                     assume::no_overlap_t)
         {
             constexpr usize depth = 0;
             pretty_encode_(doc.root(), append_to, depth);
@@ -91,7 +91,7 @@ namespace snn::json
                     break;
 
                 case type::string:
-                    json::encode(n.to<cstrview>(), options_, append_to, promise::no_overlap);
+                    json::encode(n.to<cstrview>(), options_, append_to, assume::no_overlap);
                     break;
 
                 case type::empty:
@@ -122,7 +122,7 @@ namespace snn::json
                     break;
 
                 case type::string:
-                    json::encode(n.to<cstrview>(), options_, append_to, promise::no_overlap);
+                    json::encode(n.to<cstrview>(), options_, append_to, assume::no_overlap);
                     break;
 
                 case type::empty:
@@ -198,7 +198,7 @@ namespace snn::json
                 rng.drop_front(promise::not_empty);
 
                 // Key
-                json::encode(node_first.to<cstrview>(), options_, append_to, promise::no_overlap);
+                json::encode(node_first.to<cstrview>(), options_, append_to, assume::no_overlap);
                 append_to << ':';
                 // Value
                 encode_(node_first.child(), append_to);
@@ -207,7 +207,7 @@ namespace snn::json
                 {
                     append_to << ',';
                     // Key
-                    json::encode(n.to<cstrview>(), options_, append_to, promise::no_overlap);
+                    json::encode(n.to<cstrview>(), options_, append_to, assume::no_overlap);
                     append_to << ':';
                     // Value
                     encode_(n.child(), append_to);
@@ -231,7 +231,7 @@ namespace snn::json
                 append_to.append_for_overwrite(2 * depth).fill(' ');
 
                 // Key
-                json::encode(node_first.to<cstrview>(), options_, append_to, promise::no_overlap);
+                json::encode(node_first.to<cstrview>(), options_, append_to, assume::no_overlap);
                 append_to << ": ";
                 // Value
                 pretty_encode_(node_first.child(), append_to, depth);
@@ -241,7 +241,7 @@ namespace snn::json
                     append_to << ",\n";
                     append_to.append_for_overwrite(2 * depth).fill(' ');
                     // Key
-                    json::encode(n.to<cstrview>(), options_, append_to, promise::no_overlap);
+                    json::encode(n.to<cstrview>(), options_, append_to, assume::no_overlap);
                     append_to << ": ";
                     // Value
                     pretty_encode_(n.child(), append_to, depth);

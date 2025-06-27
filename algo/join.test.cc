@@ -20,7 +20,7 @@ namespace snn::app
 
             array strings{"One", "Two", "Three"};
             strbuf buffer;
-            algo::join(strings.range(), ", ", buffer, promise::no_overlap);
+            algo::join(strings.range(), ", ", buffer, assume::no_overlap);
             snn_require(buffer == "One, Two, Three");
 
             return true;
@@ -28,20 +28,20 @@ namespace snn::app
 
         constexpr bool test_join()
         {
-            // void join(Rng rng, Container& append_to, promise::no_overlap_t)
+            // void join(Rng rng, Container& append_to, assume::no_overlap_t)
             {
                 strbuf s;
                 array strings{"One", "Two", "Three"};
-                algo::join(strings.range(), s, promise::no_overlap);
+                algo::join(strings.range(), s, assume::no_overlap);
                 snn_require(s == "OneTwoThree");
-                algo::join(strings.view_offset(-1).range(), s, promise::no_overlap);
+                algo::join(strings.view_offset(-1).range(), s, assume::no_overlap);
                 snn_require(s == "OneTwoThreeThree");
-                algo::join(strings.view(99).range(), s, promise::no_overlap);
+                algo::join(strings.view(99).range(), s, assume::no_overlap);
                 snn_require(s == "OneTwoThreeThree");
             }
             {
                 vec<i32> v;
-                algo::join(range::step{0, 5}, v, promise::no_overlap);
+                algo::join(range::step{0, 5}, v, assume::no_overlap);
                 snn_require(algo::is_equal(v.range(), {0, 1, 2, 3, 4}));
             }
 
@@ -55,18 +55,18 @@ namespace snn::app
                 snn_require(algo::is_equal(v.range(), {0, 1, 2, 3, 4}));
             }
 
-            // void join(Rng rng, const T& delimiter, Container& append_to, promise::no_overlap_t)
+            // void join(Rng rng, const T& delimiter, Container& append_to, assume::no_overlap_t)
             {
                 strbuf s;
                 array strings{"One", "Two", "Three"};
-                algo::join(strings.range(), ", ", s, promise::no_overlap);
+                algo::join(strings.range(), ", ", s, assume::no_overlap);
                 snn_require(s == "One, Two, Three");
-                algo::join(strings.range(), "", s, promise::no_overlap);
+                algo::join(strings.range(), "", s, assume::no_overlap);
                 snn_require(s == "One, Two, ThreeOneTwoThree");
             }
             {
                 vec<i32> v;
-                algo::join(range::step{0, 3}, 99, v, promise::no_overlap);
+                algo::join(range::step{0, 3}, 99, v, assume::no_overlap);
                 snn_require(algo::is_equal(v.range(), {0, 99, 1, 99, 2}));
             }
 

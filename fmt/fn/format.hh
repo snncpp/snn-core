@@ -28,7 +28,7 @@ namespace snn::fmt::fn
         }
 
         constexpr explicit format(const cstrview string, Str& append_to,
-                                  promise::no_overlap_t) noexcept
+                                  assume::no_overlap_t) noexcept
             : string_{string},
               append_to_{append_to}
         {
@@ -39,7 +39,7 @@ namespace snn::fmt::fn
         template <typename... Args>
         constexpr void operator()(const Args&... args) const
         {
-            fmt::format_append(string_, append_to_, promise::no_overlap, args...);
+            fmt::format_append(string_, append_to_, assume::no_overlap, args...);
         }
 
       private:

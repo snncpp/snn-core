@@ -114,7 +114,7 @@ namespace snn::stream
                 const cstrview chunk = res.value(promise::has_value);
                 snn_should(chunk.size() <= buffer.size());
                 mem::raw::copy(chunk.data(), buffer.writable(), chunk.byte_size(),
-                               promise::no_overlap);
+                               assume::no_overlap);
                 return chunk.size();
             }
             return res.error_code();

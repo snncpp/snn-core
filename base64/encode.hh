@@ -148,7 +148,7 @@ namespace snn::base64
 
     template <typename Buf>
     constexpr void encode(const transient<cstrview> string, strcore<Buf>& append_to,
-                          promise::no_overlap_t)
+                          assume::no_overlap_t)
     {
         snn_should(std::is_constant_evaluated() || !string.get().overlaps(append_to));
         detail::encode(string.get(), with_padding, '=', table::encode::standard, append_to);
@@ -159,7 +159,7 @@ namespace snn::base64
     template <typename Buf>
     constexpr void encode(const transient<cstrview> string, const encode_padding padding_policy,
                           const char pad_char, const array<char, 64>& table,
-                          strcore<Buf>& append_to, promise::no_overlap_t)
+                          strcore<Buf>& append_to, assume::no_overlap_t)
     {
         snn_should(std::is_constant_evaluated() || !string.get().overlaps(append_to));
         detail::encode(string.get(), padding_policy, pad_char, table, append_to);

@@ -79,7 +79,7 @@ namespace snn::hex
 
     template <typename Buf>
     [[nodiscard]] constexpr result<void> decode(const cstrview string, strcore<Buf>& append_to,
-                                                promise::no_overlap_t)
+                                                assume::no_overlap_t)
     {
         snn_should(std::is_constant_evaluated() || !string.overlaps(append_to));
         return detail::decode(string, append_to);

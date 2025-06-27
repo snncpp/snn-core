@@ -20,7 +20,7 @@ namespace snn::mem::raw
 
     template <typename From, typename To>
     constexpr void copy(const not_null<const From*> from, const not_null<To*> to,
-                        const byte_size<usize> size, promise::no_overlap_t) noexcept
+                        const byte_size<usize> size, assume::no_overlap_t) noexcept
     {
         static_assert(std::is_trivially_copyable_v<From>);
         static_assert(std::is_trivially_copyable_v<To>);
@@ -52,7 +52,7 @@ namespace snn::mem::raw
     template <usize ByteSize, typename From, typename To>
         requires(sizeof(From) == 1 && sizeof(To) == 1)
     constexpr void copy(const not_null<const From*> from, const not_null<To*> to,
-                        promise::no_overlap_t) noexcept
+                        assume::no_overlap_t) noexcept
     {
         static_assert(std::is_trivially_copyable_v<From>);
         static_assert(std::is_trivially_copyable_v<To>);

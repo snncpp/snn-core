@@ -35,15 +35,15 @@ namespace snn::app
         {
             {
                 strbuf s;
-                hex::encode("å", s, promise::no_overlap);
-                hex::encode("åä", s, promise::no_overlap);
-                hex::encode("åäö", s, promise::no_overlap);
+                hex::encode("å", s, assume::no_overlap);
+                hex::encode("åä", s, assume::no_overlap);
+                hex::encode("åäö", s, assume::no_overlap);
                 snn_require(s == "c3a5c3a5c3a4c3a5c3a4c3b6");
 
                 s.clear();
-                hex::encode("å", hex::table::upper, s, promise::no_overlap);
-                hex::encode("åä", hex::table::upper, s, promise::no_overlap);
-                hex::encode("åäö", hex::table::upper, s, promise::no_overlap);
+                hex::encode("å", hex::table::upper, s, assume::no_overlap);
+                hex::encode("åä", hex::table::upper, s, assume::no_overlap);
+                hex::encode("åäö", hex::table::upper, s, assume::no_overlap);
                 snn_require(s == "C3A5C3A5C3A4C3A5C3A4C3B6");
             }
 
@@ -72,7 +72,7 @@ namespace snn::app
                 str dest{"One two three?"};
                 snn_require(dest.capacity() == str::default_capacity());
                 str src{"åäö"};
-                hex::encode(src, dest, promise::no_overlap);
+                hex::encode(src, dest, assume::no_overlap);
                 snn_require(dest == "One two three?c3a5c3a4c3b6");
                 snn_require(dest.capacity() > str::default_capacity());
             }

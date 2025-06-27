@@ -63,7 +63,7 @@ namespace snn::hex
 
     template <typename Buf>
     constexpr void encode(const transient<cstrview> s, strcore<Buf>& append_to,
-                          promise::no_overlap_t)
+                          assume::no_overlap_t)
     {
         snn_should(std::is_constant_evaluated() || !s.get().overlaps(append_to));
         detail::encode(s.get(), table::lower, append_to);
@@ -73,7 +73,7 @@ namespace snn::hex
 
     template <typename Buf>
     constexpr void encode(const transient<cstrview> s, const array<char, 16>& table,
-                          strcore<Buf>& append_to, promise::no_overlap_t)
+                          strcore<Buf>& append_to, assume::no_overlap_t)
     {
         snn_should(std::is_constant_evaluated() || !s.get().overlaps(append_to));
         detail::encode(s.get(), table, append_to);

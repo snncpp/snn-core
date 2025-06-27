@@ -42,7 +42,7 @@ namespace snn
 
         template <typename Buf>
         constexpr void format(const error_code ec, cstrview, const fmt::context&,
-                              strcore<Buf>& append_to, promise::no_overlap_t)
+                              strcore<Buf>& append_to, assume::no_overlap_t)
         {
             fmt::error_code(ec, append_to);
         }

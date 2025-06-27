@@ -36,7 +36,7 @@ namespace snn::app
                 str dest{"One two three?"};
                 snn_require(dest.capacity() == str::default_capacity());
                 str src{"å ä ö"};
-                string::repeat(src, 2, dest, promise::no_overlap);
+                string::repeat(src, 2, dest, assume::no_overlap);
                 snn_require(dest == "One two three?å ä öå ä ö");
                 snn_require(dest.capacity() > str::default_capacity());
                 snn_require(src == "å ä ö");

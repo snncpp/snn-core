@@ -35,7 +35,7 @@ namespace snn::app
 
             {
                 str append_to = ", ";
-                json::encode("abc", json::option::none, append_to, promise::no_overlap);
+                json::encode("abc", json::option::none, append_to, assume::no_overlap);
                 snn_require(append_to == R"(, "abc")");
             }
 

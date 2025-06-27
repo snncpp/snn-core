@@ -119,23 +119,23 @@ namespace snn::app
             // [pad_inplace_string]:
             {
                 str s;
-                ascii::pad_inplace(s, 0, "x", promise::no_overlap);
+                ascii::pad_inplace(s, 0, "x", assume::no_overlap);
                 snn_require(s.is_empty());
 
-                ascii::pad_inplace(s, 3, "y", promise::no_overlap);
+                ascii::pad_inplace(s, 3, "y", assume::no_overlap);
                 snn_require(s.size() == 3);
                 snn_require(s == "yyy");
 
-                ascii::pad_inplace(s, 2, "zz", promise::no_overlap);
+                ascii::pad_inplace(s, 2, "zz", assume::no_overlap);
                 snn_require(s.size() == 3);
                 snn_require(s == "yyy");
 
-                ascii::pad_inplace(s, 6, "abc", promise::no_overlap);
+                ascii::pad_inplace(s, 6, "abc", assume::no_overlap);
                 snn_require(s.size() == 6);
                 snn_require(s == "ayyyab");
 
                 // Pad string must not be empty.
-                snn_require_throws_code(ascii::pad_inplace(s, 6, "", promise::no_overlap),
+                snn_require_throws_code(ascii::pad_inplace(s, 6, "", assume::no_overlap),
                                         ascii::error::pad_string_can_not_be_empty);
             }
             {
@@ -144,7 +144,7 @@ namespace snn::app
                 snn_require(s.size() == 18);
                 snn_require(utf8::count(s).value() == 15);
 
-                ascii::pad_inplace(s, 25, "-~", promise::no_overlap);
+                ascii::pad_inplace(s, 25, "-~", assume::no_overlap);
                 snn_require(s.size() == 25);
                 snn_require(s == "-~-UTF-8 with åäö.-~-~");
                 snn_require(utf8::count(s).value() == 22);
@@ -225,23 +225,23 @@ namespace snn::app
             // [pad_left_inplace_string]:
             {
                 str s;
-                ascii::pad_left_inplace(s, 0, "x", promise::no_overlap);
+                ascii::pad_left_inplace(s, 0, "x", assume::no_overlap);
                 snn_require(s.is_empty());
 
-                ascii::pad_left_inplace(s, 3, "y", promise::no_overlap);
+                ascii::pad_left_inplace(s, 3, "y", assume::no_overlap);
                 snn_require(s.size() == 3);
                 snn_require(s == "yyy");
 
-                ascii::pad_left_inplace(s, 2, "zz", promise::no_overlap);
+                ascii::pad_left_inplace(s, 2, "zz", assume::no_overlap);
                 snn_require(s.size() == 3);
                 snn_require(s == "yyy");
 
-                ascii::pad_left_inplace(s, 5, "abc", promise::no_overlap);
+                ascii::pad_left_inplace(s, 5, "abc", assume::no_overlap);
                 snn_require(s.size() == 5);
                 snn_require(s == "abyyy");
 
                 // Pad string must not be empty.
-                snn_require_throws_code(ascii::pad_left_inplace(s, 5, "", promise::no_overlap),
+                snn_require_throws_code(ascii::pad_left_inplace(s, 5, "", assume::no_overlap),
                                         ascii::error::pad_string_can_not_be_empty);
             }
             {
@@ -250,7 +250,7 @@ namespace snn::app
                 snn_require(s.size() == 18);
                 snn_require(utf8::count(s).value() == 15);
 
-                ascii::pad_left_inplace(s, 25, "-~", promise::no_overlap);
+                ascii::pad_left_inplace(s, 25, "-~", assume::no_overlap);
                 snn_require(s.size() == 25);
                 snn_require(s == "-~-~-~-UTF-8 with åäö.");
                 snn_require(utf8::count(s).value() == 22);
@@ -331,23 +331,23 @@ namespace snn::app
             // [pad_right_inplace_string]:
             {
                 str s;
-                ascii::pad_right_inplace(s, 0, "x", promise::no_overlap);
+                ascii::pad_right_inplace(s, 0, "x", assume::no_overlap);
                 snn_require(s.is_empty());
 
-                ascii::pad_right_inplace(s, 3, "y", promise::no_overlap);
+                ascii::pad_right_inplace(s, 3, "y", assume::no_overlap);
                 snn_require(s.size() == 3);
                 snn_require(s == "yyy");
 
-                ascii::pad_right_inplace(s, 2, "zz", promise::no_overlap);
+                ascii::pad_right_inplace(s, 2, "zz", assume::no_overlap);
                 snn_require(s.size() == 3);
                 snn_require(s == "yyy");
 
-                ascii::pad_right_inplace(s, 5, "abc", promise::no_overlap);
+                ascii::pad_right_inplace(s, 5, "abc", assume::no_overlap);
                 snn_require(s.size() == 5);
                 snn_require(s == "yyyab");
 
                 // Pad string must not be empty.
-                snn_require_throws_code(ascii::pad_right_inplace(s, 5, "", promise::no_overlap),
+                snn_require_throws_code(ascii::pad_right_inplace(s, 5, "", assume::no_overlap),
                                         ascii::error::pad_string_can_not_be_empty);
             }
             {
@@ -356,7 +356,7 @@ namespace snn::app
                 snn_require(s.size() == 18);
                 snn_require(utf8::count(s).value() == 15);
 
-                ascii::pad_right_inplace(s, 25, "-~", promise::no_overlap);
+                ascii::pad_right_inplace(s, 25, "-~", assume::no_overlap);
                 snn_require(s.size() == 25);
                 snn_require(s == "UTF-8 with åäö.-~-~-~-");
                 snn_require(utf8::count(s).value() == 22);

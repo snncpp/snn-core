@@ -35,14 +35,14 @@ namespace snn::app
             snn_require(base64::url::decode("w6XDpMO2").value() == "åäö");
 
             strbuf s;
-            snn_require(base64::url::decode("w6U", s, promise::no_overlap));
-            snn_require(base64::url::decode("w6XDpA", s, promise::no_overlap));
-            snn_require(base64::url::decode("w6XDpMO2", s, promise::no_overlap));
+            snn_require(base64::url::decode("w6U", s, assume::no_overlap));
+            snn_require(base64::url::decode("w6XDpA", s, assume::no_overlap));
+            snn_require(base64::url::decode("w6XDpMO2", s, assume::no_overlap));
             snn_require(s == "ååäåäö");
             s.clear();
-            snn_require(base64::url::decode("w6U=", s, promise::no_overlap));
-            snn_require(base64::url::decode("w6XDpA==", s, promise::no_overlap));
-            snn_require(base64::url::decode("w6XDpMO2", s, promise::no_overlap));
+            snn_require(base64::url::decode("w6U=", s, assume::no_overlap));
+            snn_require(base64::url::decode("w6XDpA==", s, assume::no_overlap));
+            snn_require(base64::url::decode("w6XDpMO2", s, assume::no_overlap));
             snn_require(s == "ååäåäö");
 
             // Random data where the output contains '-' and '_' ('+' and '/' in standard encoding).
@@ -58,7 +58,7 @@ namespace snn::app
             str dst{"One two three four?"};
             snn_require(dst.capacity() == str::default_capacity());
             str src{"HO_0-WjpWuI"};
-            snn_require(base64::url::decode(src, dst, promise::no_overlap));
+            snn_require(base64::url::decode(src, dst, assume::no_overlap));
             snn_require(dst == "One two three four?\x1c\xef\xf4\xf9\x68\xe9\x5a\xe2");
             snn_require(dst.capacity() > str::default_capacity());
 

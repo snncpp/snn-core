@@ -159,7 +159,7 @@ namespace snn
 
         template <typename Buf>
         constexpr void format(const byte_size<usize> bs, const cstrview format_string,
-                              const fmt::context&, strcore<Buf>& append_to, promise::no_overlap_t)
+                              const fmt::context&, strcore<Buf>& append_to, assume::no_overlap_t)
         {
             snn_should(std::is_constant_evaluated() || !format_string.overlaps(append_to));
 

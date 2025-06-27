@@ -30,7 +30,7 @@ namespace snn
 
         template <typename Buf>
         constexpr void format(const bool b, cstrview, const fmt::context&, strcore<Buf>& append_to,
-                              promise::no_overlap_t)
+                              assume::no_overlap_t)
         {
             if (b)
             {
@@ -50,7 +50,7 @@ namespace snn
 
         template <typename Buf>
         constexpr void format(const char c, cstrview, const fmt::context&, strcore<Buf>& append_to,
-                              promise::no_overlap_t)
+                              assume::no_overlap_t)
         {
             append_to.append(c);
         }
@@ -63,7 +63,7 @@ namespace snn
 
         template <typename Buf>
         constexpr void format(const cstrview s, cstrview, const fmt::context&,
-                              strcore<Buf>& append_to, promise::no_overlap_t)
+                              strcore<Buf>& append_to, assume::no_overlap_t)
         {
             append_to.append(s);
         }
@@ -92,7 +92,7 @@ namespace snn
         template <typename Buf>
         constexpr void format(const Tuple& tup, const cstrview format_string,
                               const fmt::context& ctx, strcore<Buf>& append_to,
-                              promise::no_overlap_t)
+                              assume::no_overlap_t)
         {
             append_to.append('(');
             format_<0>(tup, format_string, ctx, append_to);
@@ -107,7 +107,7 @@ namespace snn
             using element_type = std::tuple_element_t<Index, Tuple>;
 
             formatter_select_t<element_type> f;
-            f.format(get<Index>(tup), format_string, ctx, append_to, promise::no_overlap);
+            f.format(get<Index>(tup), format_string, ctx, append_to, assume::no_overlap);
 
             constexpr usize next_index = Index + 1;
             if constexpr (next_index < tuple_count)
@@ -224,48 +224,48 @@ namespace snn::fmt
             }
 
             constexpr void format(const cstrview format_string, const fmt::context& ctx,
-                                  strcore<Buf>& append_to, promise::no_overlap_t) const
+                                  strcore<Buf>& append_to, assume::no_overlap_t) const
             {
                 switch (type_)
                 {
                     case type::unsigned_integral:
                         format_(unsigned_integral_, format_string, ctx, append_to,
-                                promise::no_overlap);
+                                assume::no_overlap);
                         break;
 
                     case type::signed_integral:
                         format_(signed_integral_, format_string, ctx, append_to,
-                                promise::no_overlap);
+                                assume::no_overlap);
                         break;
 
 #if SNN_INT128_ENABLED
                     case type::unsigned_128bit_integral:
                         format_(unsigned_128bit_integral_, format_string, ctx, append_to,
-                                promise::no_overlap);
+                                assume::no_overlap);
                         break;
 
                     case type::signed_128bit_integral:
                         format_(signed_128bit_integral_, format_string, ctx, append_to,
-                                promise::no_overlap);
+                                assume::no_overlap);
                         break;
 #endif
 
                     case type::boolean:
                         format_(static_cast<bool>(character_), format_string, ctx, append_to,
-                                promise::no_overlap);
+                                assume::no_overlap);
                         break;
 
                     case type::character:
-                        format_(character_, format_string, ctx, append_to, promise::no_overlap);
+                        format_(character_, format_string, ctx, append_to, assume::no_overlap);
                         break;
 
                     case type::string:
-                        format_(string_, format_string, ctx, append_to, promise::no_overlap);
+                        format_(string_, format_string, ctx, append_to, assume::no_overlap);
                         break;
 
                     case type::other:
                         other_.format_func_ptr(other_.value_ptr, format_string, ctx, append_to,
-                                               promise::no_overlap);
+                                               assume::no_overlap);
                         break;
                 }
             }
@@ -310,7 +310,7 @@ namespace snn::fmt
             {
                 const void* value_ptr;
                 void (*format_func_ptr)(const void*, cstrview, const context&, strcore<Buf>&,
-                                        promise::no_overlap_t);
+                                        assume::no_overlap_t);
             };
 
             union
@@ -330,21 +330,21 @@ namespace snn::fmt
             template <typename T>
             static constexpr void format_(const T v, const cstrview format_string,
                                           const fmt::context& ctx, strcore<Buf>& append_to,
-                                          promise::no_overlap_t)
+                                          assume::no_overlap_t)
             {
                 formatter_select_t<T> f;
-                f.format(v, format_string, ctx, append_to, promise::no_overlap);
+                f.format(v, format_string, ctx, append_to, assume::no_overlap);
             }
 
             template <typename T>
             static constexpr void format_other_(const void* const value_ptr,
                                                 const cstrview format_string,
                                                 const fmt::context& ctx, strcore<Buf>& append_to,
-                                                promise::no_overlap_t)
+                                                assume::no_overlap_t)
             {
                 const T& v = *static_cast<const T*>(value_ptr);
                 formatter_select_t<T> f;
-                f.format(v, format_string, ctx, append_to, promise::no_overlap);
+                f.format(v, format_string, ctx, append_to, assume::no_overlap);
             }
         };
 
@@ -405,7 +405,7 @@ namespace snn::fmt
         constexpr void format_single(cstrrng& rng, usize& position_index,
                                      const array_view<const argument<Buf>> arguments,
                                      const context& ctx, strcore<Buf>& append_to,
-                                     promise::no_overlap_t)
+                                     assume::no_overlap_t)
         {
             // '{' has already been skipped.
 
@@ -527,13 +527,13 @@ namespace snn::fmt
 
                     if (width == 0)
                     {
-                        arg.format(format_string, ctx, append_to, promise::no_overlap);
+                        arg.format(format_string, ctx, append_to, assume::no_overlap);
                     }
                     else
                     {
                         strcore<Buf> align_buf;
 
-                        arg.format(format_string, ctx, align_buf, promise::no_overlap);
+                        arg.format(format_string, ctx, align_buf, assume::no_overlap);
 
                         if (fill_string.is_empty())
                         {
@@ -548,17 +548,17 @@ namespace snn::fmt
 
                             case alignment::left:
                                 utf8::pad_right_inplace(align_buf, width, fill_string,
-                                                        promise::no_overlap);
+                                                        assume::no_overlap);
                                 break;
 
                             case alignment::right:
                                 utf8::pad_left_inplace(align_buf, width, fill_string,
-                                                       promise::no_overlap);
+                                                       assume::no_overlap);
                                 break;
 
                             case alignment::center:
                                 utf8::pad_inplace(align_buf, width, fill_string,
-                                                  promise::no_overlap);
+                                                  assume::no_overlap);
                                 break;
                         }
 
@@ -587,7 +587,7 @@ namespace snn::fmt
         template <typename Buf>
         constexpr void format(const cstrview string,
                               const array_view<const argument<Buf>> arguments, const context& ctx,
-                              strcore<Buf>& append_to, promise::no_overlap_t)
+                              strcore<Buf>& append_to, assume::no_overlap_t)
         {
             usize position_index = 0;
 
@@ -605,7 +605,7 @@ namespace snn::fmt
                     if (position_index < arguments.count())
                     {
                         const auto& arg = arguments.at(position_index, promise::within_bounds);
-                        arg.format("", ctx, append_to, promise::no_overlap);
+                        arg.format("", ctx, append_to, assume::no_overlap);
                     }
                     else
                     {
@@ -624,7 +624,7 @@ namespace snn::fmt
                 else if (rng.drop_front('{'))
                 {
                     format_single(rng, position_index, arguments, ctx, append_to,
-                                  promise::no_overlap);
+                                  assume::no_overlap);
                 }
                 else if (!rng.is_empty())
                 {
@@ -645,7 +645,7 @@ namespace snn::fmt
         using argument_type = detail::argument<typename Str::buffer_type>;
         const array<argument_type, sizeof...(Args)> arguments{argument_type{args}...};
         context ctx;
-        detail::format(string.get(), arguments.view(), ctx, append_to, promise::no_overlap);
+        detail::format(string.get(), arguments.view(), ctx, append_to, assume::no_overlap);
         return append_to;
     }
 
@@ -653,12 +653,12 @@ namespace snn::fmt
 
     template <typename Buf, typename... Args>
     constexpr void format_append(const transient<cstrview> string, strcore<Buf>& append_to,
-                                 promise::no_overlap_t, const Args&... args)
+                                 assume::no_overlap_t, const Args&... args)
     {
         snn_should(std::is_constant_evaluated() || !string.get().overlaps(append_to));
         using argument_type = detail::argument<Buf>;
         const array<argument_type, sizeof...(Args)> arguments{argument_type{args}...};
         context ctx;
-        detail::format(string.get(), arguments.view(), ctx, append_to, promise::no_overlap);
+        detail::format(string.get(), arguments.view(), ctx, append_to, assume::no_overlap);
     }
 }

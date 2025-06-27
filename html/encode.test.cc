@@ -147,8 +147,8 @@ namespace snn::app
                 snn_require(html::encode("åäö") == "åäö");
 
                 strbuf s;
-                html::encode("abc", s, promise::no_overlap);
-                html::encode(cstrview{"åäö"}, s, promise::no_overlap);
+                html::encode("abc", s, assume::no_overlap);
+                html::encode(cstrview{"åäö"}, s, assume::no_overlap);
                 snn_require(s == "abcåäö");
 
                 snn_require(html::encode("&") == "&amp;");
@@ -173,7 +173,7 @@ namespace snn::app
                 str dest{"One two & three"};
                 snn_require(dest.capacity() == str::default_capacity());
                 const str src{"<åäö>"};
-                html::encode(src, dest, promise::no_overlap);
+                html::encode(src, dest, assume::no_overlap);
                 snn_require(dest == "One two & three&lt;åäö&gt;");
                 snn_require(dest.capacity() > str::default_capacity());
             }

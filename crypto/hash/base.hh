@@ -74,7 +74,7 @@ namespace snn::crypto::hash
         {
             array<char, OutputSize> digest;
             final(digest);
-            hex::encode(digest.view(), append_to, promise::no_overlap);
+            hex::encode(digest.view(), append_to, assume::no_overlap);
         }
 
         template <any_strcore Str = str>

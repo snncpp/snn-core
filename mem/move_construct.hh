@@ -20,7 +20,7 @@ namespace snn::mem
         requires(std::is_move_constructible_v<T>)
     constexpr void move_construct(const not_null<T*> first_move, const not_null<T*> last_move,
                                   const not_null<T*> first_uninitialized,
-                                  promise::no_overlap_t) noexcept
+                                  assume::no_overlap_t) noexcept
     {
         T* first        = first_move.get();
         T* last         = last_move.get();

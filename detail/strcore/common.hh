@@ -154,7 +154,7 @@ namespace snn::detail::strcore
             if (size)
             {
                 init_(size, not_zero{size});
-                mem::raw::copy(data, not_null{buf_}, byte_size{size}, promise::no_overlap);
+                mem::raw::copy(data, not_null{buf_}, byte_size{size}, assume::no_overlap);
             }
             else
             {
@@ -170,7 +170,7 @@ namespace snn::detail::strcore
                 if (s)
                 {
                     init_(s.size(), not_zero{s.size()});
-                    mem::raw::copy(s.data(), not_null{buf_}, s.byte_size(), promise::no_overlap);
+                    mem::raw::copy(s.data(), not_null{buf_}, s.byte_size(), assume::no_overlap);
                 }
                 else
                 {
@@ -180,7 +180,7 @@ namespace snn::detail::strcore
             else if constexpr (Count > 0)
             {
                 init_(Count, not_zero{Count});
-                mem::raw::copy<Count>(not_null{s.data()}, not_null{buf_}, promise::no_overlap);
+                mem::raw::copy<Count>(not_null{s.data()}, not_null{buf_}, assume::no_overlap);
             }
             else
             {
@@ -209,7 +209,7 @@ namespace snn::detail::strcore
                 const auto size = static_cast<usize>(last - first);
                 init_(size, not_zero{size});
                 mem::raw::copy(not_null{first}, not_null{buf_}, byte_size{size},
-                               promise::no_overlap);
+                               assume::no_overlap);
             }
             else
             {
@@ -249,7 +249,7 @@ namespace snn::detail::strcore
             const usize remaining_cap = cap_ - size_;
             if (size <= remaining_cap) [[likely]]
             {
-                mem::raw::copy(data, not_null{buf_ + size_}, byte_size{size}, promise::no_overlap);
+                mem::raw::copy(data, not_null{buf_ + size_}, byte_size{size}, assume::no_overlap);
                 size_ += size;
             }
             else
@@ -287,7 +287,7 @@ namespace snn::detail::strcore
             else
             {
                 grow_(not_zero{size});
-                mem::raw::copy(data, not_null{buf_}, byte_size{size}, promise::no_overlap);
+                mem::raw::copy(data, not_null{buf_}, byte_size{size}, assume::no_overlap);
             }
             size_ = size;
         }
@@ -559,11 +559,11 @@ namespace snn::detail::strcore
 
             // Copy contents from old buffer (if any).
             mem::raw::copy(not_null<const char*>{buf_}, not_null{buffer}, byte_size{size_},
-                           promise::no_overlap);
+                           assume::no_overlap);
 
             // Append new data (can point to old buffer).
             mem::raw::copy(append_data, not_null{buffer + size_}, byte_size{append_size.get()},
-                           promise::no_overlap);
+                           assume::no_overlap);
 
             // Free old buffer.
             if (cap_)
@@ -609,7 +609,7 @@ namespace snn::detail::strcore
 
         constexpr explicit sso(const not_null<const char*> data, const usize size)
         {
-            mem::raw::copy(data, init_(size), byte_size{size}, promise::no_overlap);
+            mem::raw::copy(data, init_(size), byte_size{size}, assume::no_overlap);
         }
 
         template <character Char, usize Count>
@@ -617,11 +617,11 @@ namespace snn::detail::strcore
         {
             if constexpr (Count == constant::dynamic_count)
             {
-                mem::raw::copy(s.data(), init_(s.size()), s.byte_size(), promise::no_overlap);
+                mem::raw::copy(s.data(), init_(s.size()), s.byte_size(), assume::no_overlap);
             }
             else if constexpr (Count > 0)
             {
-                mem::raw::copy<Count>(not_null{s.data()}, init_(Count), promise::no_overlap);
+                mem::raw::copy<Count>(not_null{s.data()}, init_(Count), assume::no_overlap);
             }
             else
             {
@@ -640,7 +640,7 @@ namespace snn::detail::strcore
             if (first != last)
             {
                 const auto size = static_cast<usize>(last - first);
-                mem::raw::copy(not_null{first}, init_(size), byte_size{size}, promise::no_overlap);
+                mem::raw::copy(not_null{first}, init_(size), byte_size{size}, assume::no_overlap);
             }
             else
             {
@@ -682,7 +682,7 @@ namespace snn::detail::strcore
                 if (size < rem_cap_incl_zero) [[likely]]
                 {
                     mem::raw::copy(data, not_null{storage_.small + cur_size}, byte_size{size},
-                                   promise::no_overlap);
+                                   assume::no_overlap);
                     set_small_size_and_term_(cur_size + size);
                 }
                 else
@@ -697,7 +697,7 @@ namespace snn::detail::strcore
                 if (size < rem_cap_incl_zero) [[likely]]
                 {
                     mem::raw::copy(data, not_null{storage_.large.data + cur_size}, byte_size{size},
-                                   promise::no_overlap);
+                                   assume::no_overlap);
                     set_large_size_and_term_(cur_size + size);
                 }
                 else
@@ -731,7 +731,7 @@ namespace snn::detail::strcore
                 {
                     grow_small_(not_zero{size});
                     mem::raw::copy(data, not_null{storage_.large.data}, byte_size{size},
-                                   promise::no_overlap);
+                                   assume::no_overlap);
                     set_large_size_and_term_(size);
                 }
             }
@@ -746,7 +746,7 @@ namespace snn::detail::strcore
                 {
                     grow_large_(not_zero{size});
                     mem::raw::copy(data, not_null{storage_.large.data}, byte_size{size},
-                                   promise::no_overlap);
+                                   assume::no_overlap);
                     set_large_size_and_term_(size);
                 }
             }
@@ -1249,11 +1249,11 @@ namespace snn::detail::strcore
 
             // Copy contents from old buffer (if any).
             mem::raw::copy(not_null<const char*>{storage_.large.data}, not_null{buf},
-                           byte_size{cur_size}, promise::no_overlap);
+                           byte_size{cur_size}, assume::no_overlap);
 
             // Append new data.
             mem::raw::copy(append_data, not_null{buf + cur_size}, byte_size{append_size.get()},
-                           promise::no_overlap);
+                           assume::no_overlap);
 
             // Free old buffer.
             alloc.deallocate(storage_.large.data, storage_.large.capacity_incl_zero());
@@ -1284,7 +1284,7 @@ namespace snn::detail::strcore
                 else
                 {
                     mem::raw::copy(not_null<const char*>{cur_data}, not_null{storage_.small},
-                                   byte_size{cur_size}, promise::no_overlap);
+                                   byte_size{cur_size}, assume::no_overlap);
                     set_small_size_and_term_(cur_size);
 
                     mem::trivial_allocator<char> alloc;
@@ -1324,7 +1324,7 @@ namespace snn::detail::strcore
 
             // Copy contents from local buffer (if any).
             mem::raw::copy(not_null<const char*>{storage_.small}, not_null{buf},
-                           byte_size{cur_size}, promise::no_overlap);
+                           byte_size{cur_size}, assume::no_overlap);
 
             set_large_(buf, cur_size, cap_incl_zero);
         }
@@ -1345,11 +1345,11 @@ namespace snn::detail::strcore
 
             // Copy contents from local buffer (if any).
             mem::raw::copy(not_null<const char*>{storage_.small}, not_null{buf},
-                           byte_size{cur_size}, promise::no_overlap);
+                           byte_size{cur_size}, assume::no_overlap);
 
             // Append new data.
             mem::raw::copy(append_data, not_null{buf + cur_size}, byte_size{append_size.get()},
-                           promise::no_overlap);
+                           assume::no_overlap);
 
             set_large_(buf, new_size, cap_incl_zero);
         }

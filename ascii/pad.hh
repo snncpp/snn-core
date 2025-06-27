@@ -87,7 +87,7 @@ namespace snn::ascii
 
     template <typename Buf>
     constexpr void pad_inplace(strcore<Buf>& string, const usize size,
-                               const transient<cstrview> pad_string, promise::no_overlap_t)
+                               const transient<cstrview> pad_string, assume::no_overlap_t)
     {
         const cstrview ps = pad_string.get();
 
@@ -164,7 +164,7 @@ namespace snn::ascii
 
     template <typename Buf>
     constexpr void pad_left_inplace(strcore<Buf>& string, const usize size,
-                                    const transient<cstrview> pad_string, promise::no_overlap_t)
+                                    const transient<cstrview> pad_string, assume::no_overlap_t)
     {
         const cstrview ps = pad_string.get();
 
@@ -237,7 +237,7 @@ namespace snn::ascii
 
     template <typename Buf>
     constexpr void pad_right_inplace(strcore<Buf>& string, const usize size,
-                                     const transient<cstrview> pad_string, promise::no_overlap_t)
+                                     const transient<cstrview> pad_string, assume::no_overlap_t)
     {
         const cstrview ps = pad_string.get();
 

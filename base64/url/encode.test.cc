@@ -36,8 +36,8 @@ namespace snn::app
 
             {
                 str s{"one two three"};
-                base64::url::encode("foob", s, promise::no_overlap);
-                base64::url::encode("\x1c\xef\xf4\xf9\x68\xe9\x5a\xe2", s, promise::no_overlap);
+                base64::url::encode("foob", s, assume::no_overlap);
+                base64::url::encode("\x1c\xef\xf4\xf9\x68\xe9\x5a\xe2", s, assume::no_overlap);
                 snn_require(s == "one two three"
                                  "Zm9vYg"
                                  "HO_0-WjpWuI");

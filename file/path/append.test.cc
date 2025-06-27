@@ -31,7 +31,7 @@ namespace snn::app
 
             path.clear();
 
-            file::path::append(cstrview{"abc"}, path, promise::no_overlap);
+            file::path::append(cstrview{"abc"}, path, assume::no_overlap);
             snn_require(path == "abc");
 
             path.clear();
@@ -45,7 +45,7 @@ namespace snn::app
             file::path::append(as_num(123), path);
             snn_require(path == "a/abc/123");
 
-            file::path::append(cstrview{"def"}, path, promise::no_overlap);
+            file::path::append(cstrview{"def"}, path, assume::no_overlap);
             snn_require(path == "a/abc/123/def");
 
             file::path::append("", path);
@@ -63,7 +63,7 @@ namespace snn::app
             file::path::append("/abc", path);
             snn_require(path == "/abc");
 
-            file::path::append(str{"/def"}, path, promise::no_overlap);
+            file::path::append(str{"/def"}, path, assume::no_overlap);
             snn_require(path == "/def");
 
             return true;

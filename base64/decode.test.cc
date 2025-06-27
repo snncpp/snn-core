@@ -31,9 +31,9 @@ namespace snn::app
             snn_require(base64::decode("w6XDpMO2").value() == "åäö");
 
             strbuf s;
-            snn_require(base64::decode("w6U=", s, promise::no_overlap));
-            snn_require(base64::decode("w6XDpA==", s, promise::no_overlap));
-            snn_require(base64::decode("w6XDpMO2", s, promise::no_overlap));
+            snn_require(base64::decode("w6U=", s, assume::no_overlap));
+            snn_require(base64::decode("w6XDpA==", s, assume::no_overlap));
+            snn_require(base64::decode("w6XDpMO2", s, assume::no_overlap));
             snn_require(s == "ååäåäö");
 
             // Random data where the output contains '/' and '+'.
@@ -48,13 +48,13 @@ namespace snn::app
             str dst{"One two three four?"};
             snn_require(dst.capacity() == str::default_capacity());
             str src{"HO/0+WjpWuI="};
-            snn_require(base64::decode(src, dst, promise::no_overlap));
+            snn_require(base64::decode(src, dst, assume::no_overlap));
             snn_require(dst == "One two three four?\x1c\xef\xf4\xf9\x68\xe9\x5a\xe2");
             snn_require(dst.capacity() > str::default_capacity());
 
             constexpr cstrview invalid_tail{"w6XDpMO,"};
             static_assert(invalid_tail.size() % 4 == 0);
-            snn_require(!base64::decode(invalid_tail, dst, promise::no_overlap));
+            snn_require(!base64::decode(invalid_tail, dst, assume::no_overlap));
             snn_require(dst == "One two three four?\x1c\xef\xf4\xf9\x68\xe9\x5a\xe2");
             snn_require(dst.size() == 27);
 

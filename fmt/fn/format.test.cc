@@ -21,7 +21,7 @@ namespace snn::app
             {
                 str out;
                 constexpr cstrview format_string{"{}: {}, "};
-                fmt::fn::format format{format_string, out, promise::no_overlap};
+                fmt::fn::format format{format_string, out, assume::no_overlap};
                 format('a', 'b');
                 format(7, 8);
                 snn_require(out == "a: b, 7: 8, ");

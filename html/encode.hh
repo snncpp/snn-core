@@ -124,7 +124,7 @@ namespace snn::html
 
     template <typename Buf>
     constexpr void encode(const transient<cstrview> s, strcore<Buf>& append_to,
-                          promise::no_overlap_t)
+                          assume::no_overlap_t)
     {
         snn_should(std::is_constant_evaluated() || !s.get().overlaps(append_to));
         detail::encode(s.get(), append_to, detail::encode_unreserved_lookup);
@@ -149,7 +149,7 @@ namespace snn::html
 
     template <typename Buf>
     constexpr void encode_attribute_value(const transient<cstrview> s, strcore<Buf>& append_to,
-                                          assume::is_utf8_t, promise::no_overlap_t)
+                                          assume::is_utf8_t, assume::no_overlap_t)
     {
         snn_should(std::is_constant_evaluated() || !s.get().overlaps(append_to));
         snn_should_if_not_fuzzing(utf8::is_valid(s));
@@ -172,7 +172,7 @@ namespace snn::html
 
     template <typename Buf>
     constexpr void encode_text_value(const transient<cstrview> s, strcore<Buf>& append_to,
-                                     assume::is_utf8_t, promise::no_overlap_t)
+                                     assume::is_utf8_t, assume::no_overlap_t)
     {
         snn_should(std::is_constant_evaluated() || !s.get().overlaps(append_to));
         snn_should_if_not_fuzzing(utf8::is_valid(s));

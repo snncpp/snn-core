@@ -85,7 +85,7 @@ namespace snn::crypto::mac
         {
             array<char, Hash::output_size> mac;
             final(mac);
-            hex::encode(mac.view(), append_to, promise::no_overlap);
+            hex::encode(mac.view(), append_to, assume::no_overlap);
         }
 
         template <any_strcore Str = str>

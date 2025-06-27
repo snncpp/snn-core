@@ -19,7 +19,7 @@ namespace snn::mem
         requires(std::is_copy_constructible_v<T>)
     constexpr void copy_construct(const not_null<const T*> first_copy,
                                   const not_null<const T*> last_copy,
-                                  const not_null<T*> first_uninitialized, promise::no_overlap_t)
+                                  const not_null<T*> first_uninitialized, assume::no_overlap_t)
         noexcept(std::is_nothrow_copy_constructible_v<T>)
     {
         const T* cur  = first_copy.get();
@@ -35,7 +35,7 @@ namespace snn::mem
             {
                 const auto count = static_cast<usize>(last - cur);
                 mem::raw::copy(first_copy, first_uninitialized, byte_size<usize>{count * sizeof(T)},
-                               promise::no_overlap);
+                               assume::no_overlap);
                 return;
             }
         }

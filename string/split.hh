@@ -33,7 +33,7 @@ namespace snn::string
     template <has_append_inplace Container>
     constexpr void split(const cstrview subject, const transient<cstrview> delimiter,
                          const empty_elements policy, const usize limit, Container& parts,
-                         promise::no_overlap_t)
+                         assume::no_overlap_t)
     {
         const usize subject_size   = subject.size();
         const usize delimiter_size = delimiter.get().size();
@@ -88,7 +88,7 @@ namespace snn::string
                                               const usize limit           = 0)
     {
         vec<String> parts;
-        split(subject, delimiter, policy, limit, parts, promise::no_overlap);
+        split(subject, delimiter, policy, limit, parts, assume::no_overlap);
         return parts;
     }
 
@@ -97,7 +97,7 @@ namespace snn::string
 
     template <has_append_inplace Container, character Char>
     constexpr void split(const cstrview subject, const Char delimiter, Container& parts,
-                         promise::no_overlap_t)
+                         assume::no_overlap_t)
     {
         if (subject)
         {
@@ -130,7 +130,7 @@ namespace snn::string
     [[nodiscard]] constexpr vec<String> split(const cstrview subject, const Char delimiter)
     {
         vec<String> parts;
-        split(subject, delimiter, parts, promise::no_overlap);
+        split(subject, delimiter, parts, assume::no_overlap);
         return parts;
     }
 }

@@ -322,23 +322,23 @@ namespace snn::time
 
         template <typename Buf>
         constexpr void format(const cstrview string, strcore<Buf>& append_to,
-                              promise::no_overlap_t) const
+                              assume::no_overlap_t) const
         {
             snn_should(std::is_constant_evaluated() || !string.overlaps(append_to));
-            format_(absolute_(), string, zone::offset::utc(), append_to, promise::no_overlap);
+            format_(absolute_(), string, zone::offset::utc(), append_to, assume::no_overlap);
         }
 
         template <usize N, typename Buf>
         constexpr void format(const char (&string)[N], strcore<Buf>& append_to) const
         {
-            format_(absolute_(), string, zone::offset::utc(), append_to, promise::no_overlap);
+            format_(absolute_(), string, zone::offset::utc(), append_to, assume::no_overlap);
         }
 
         template <any_strcore Str = str>
         [[nodiscard]] constexpr Str format(const cstrview string) const
         {
             Str append_to;
-            format_(absolute_(), string, zone::offset::utc(), append_to, promise::no_overlap);
+            format_(absolute_(), string, zone::offset::utc(), append_to, assume::no_overlap);
             return append_to;
         }
 
@@ -346,11 +346,11 @@ namespace snn::time
 
         template <typename Buf>
         constexpr void format(const cstrview string, zone::location& loc, strcore<Buf>& append_to,
-                              promise::no_overlap_t) const
+                              assume::no_overlap_t) const
         {
             snn_should(std::is_constant_evaluated() || !string.overlaps(append_to));
             const auto offs = offset(loc);
-            format_(absolute_(offs.seconds()), string, offs, append_to, promise::no_overlap);
+            format_(absolute_(offs.seconds()), string, offs, append_to, assume::no_overlap);
         }
 
         template <usize N, typename Buf>
@@ -358,7 +358,7 @@ namespace snn::time
                               strcore<Buf>& append_to) const
         {
             const auto offs = offset(loc);
-            format_(absolute_(offs.seconds()), string, offs, append_to, promise::no_overlap);
+            format_(absolute_(offs.seconds()), string, offs, append_to, assume::no_overlap);
         }
 
         template <any_strcore Str = str>
@@ -366,7 +366,7 @@ namespace snn::time
         {
             Str append_to;
             const auto offs = offset(loc);
-            format_(absolute_(offs.seconds()), string, offs, append_to, promise::no_overlap);
+            format_(absolute_(offs.seconds()), string, offs, append_to, assume::no_overlap);
             return append_to;
         }
 
@@ -588,7 +588,7 @@ namespace snn::time
 
         template <typename Buf>
         constexpr void format_(const u64 abs, const cstrview string, const zone::offset offs,
-                               strcore<Buf>& append_to, promise::no_overlap_t) const
+                               strcore<Buf>& append_to, assume::no_overlap_t) const
         {
             const auto ymd = date_(abs);
             const auto hms = time_(abs);
@@ -1346,7 +1346,7 @@ namespace snn
 
         template <typename Buf>
         constexpr void format(const time::point p, const cstrview format_string,
-                              const fmt::context&, strcore<Buf>& append_to, promise::no_overlap_t)
+                              const fmt::context&, strcore<Buf>& append_to, assume::no_overlap_t)
         {
             if (format_string.is_empty())
             {
@@ -1354,7 +1354,7 @@ namespace snn
             }
             else
             {
-                p.format(format_string, append_to, promise::no_overlap);
+                p.format(format_string, append_to, assume::no_overlap);
             }
         }
     };

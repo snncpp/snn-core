@@ -113,7 +113,7 @@ namespace snn::json::stream
     {
       public:
         // Promise up front that nothing added to this object will overlap the buffer.
-        constexpr explicit encoder(Str& s, promise::no_overlap_t) noexcept
+        constexpr explicit encoder(Str& s, assume::no_overlap_t) noexcept
             : append_to_{s}
         {
         }
@@ -150,13 +150,13 @@ namespace snn::json::stream
 
         constexpr encoder& operator<<(const cstrview s)
         {
-            json::encode(s, json::option::none, append_to_, promise::no_overlap);
+            json::encode(s, json::option::none, append_to_, assume::no_overlap);
             return *this;
         }
 
         constexpr encoder& operator<<(const same_as<char> auto c)
         {
-            json::encode(cstrview{as_ref(c)}, json::option::none, append_to_, promise::no_overlap);
+            json::encode(cstrview{as_ref(c)}, json::option::none, append_to_, assume::no_overlap);
             return *this;
         }
 

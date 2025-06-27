@@ -22,8 +22,8 @@ namespace snn::app
             snn_require(url::encode("~/this-and_that.txt") == "~%2Fthis-and_that.txt");
 
             str s;
-            url::encode("abc", s, promise::no_overlap);
-            url::encode("123åäö", s, promise::no_overlap);
+            url::encode("abc", s, assume::no_overlap);
+            url::encode("123åäö", s, assume::no_overlap);
             snn_require(s == "abc123%C3%A5%C3%A4%C3%B6");
 
             return true;
@@ -40,8 +40,8 @@ namespace snn::app
 
             {
                 str s;
-                url::encode("foo", s, promise::no_overlap);
-                url::encode(cstrview{"åäö"}, s, promise::no_overlap);
+                url::encode("foo", s, assume::no_overlap);
+                url::encode(cstrview{"åäö"}, s, assume::no_overlap);
                 snn_require(s == "foo%C3%A5%C3%A4%C3%B6");
             }
 
@@ -56,14 +56,14 @@ namespace snn::app
             {
                 str dest{"one"};
                 strbuf src{"fooåäö"};
-                url::encode(src, dest, promise::no_overlap);
+                url::encode(src, dest, assume::no_overlap);
                 snn_require(dest == "onefoo%C3%A5%C3%A4%C3%B6");
             }
 
             {
                 str dest{"one"};
                 strbuf src{"fooåäö"};
-                url::encode(src, hex::table::lower, dest, promise::no_overlap);
+                url::encode(src, hex::table::lower, dest, assume::no_overlap);
                 snn_require(dest == "onefoo%c3%a5%c3%a4%c3%b6");
             }
 
@@ -77,7 +77,7 @@ namespace snn::app
                 str dest{"One two & three"};
                 snn_require(dest.capacity() == str::default_capacity());
                 const cstrview src{"fooåäö"};
-                url::encode(src, dest, promise::no_overlap);
+                url::encode(src, dest, assume::no_overlap);
                 snn_require(dest == "One two & threefoo%C3%A5%C3%A4%C3%B6");
                 snn_require(dest.capacity() > str::default_capacity());
             }

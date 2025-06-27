@@ -2057,7 +2057,7 @@ namespace snn::app
             {
                 T s;
 
-                s.insert_at(0, cstrview{""}, promise::no_overlap);
+                s.insert_at(0, cstrview{""}, assume::no_overlap);
                 snn_require(size_eq(s, 0));
 
                 s.insert_at(0, "aaa");
@@ -2092,11 +2092,11 @@ namespace snn::app
                 snn_require(size_eq(s, 13));
 
                 T s2{"123456789012345678901234567890"};
-                s.insert_at(6, s2, promise::no_overlap);
+                s.insert_at(6, s2, assume::no_overlap);
                 snn_require(s == "ddceaf123456789012345678901234567890ffaabbb");
                 snn_require(size_eq(s, 43));
 
-                snn_require_throws_code(s.insert_at(44, s2, promise::no_overlap),
+                snn_require_throws_code(s.insert_at(44, s2, assume::no_overlap),
                                         generic::error::invalid_position_for_replace_or_insert);
                 snn_require_throws_code(s.insert_at(44, "abc"),
                                         generic::error::invalid_position_for_replace_or_insert);
@@ -2165,7 +2165,7 @@ namespace snn::app
                 snn_require(s.capacity() == min_capacity);
 
                 T tmp{init::fill, min_capacity, '1'};
-                s.replace_at(4, 3, tmp, promise::no_overlap);
+                s.replace_at(4, 3, tmp, assume::no_overlap);
                 snn_require(size_eq(s, min_capacity + 10));
                 snn_require(s.capacity() >= (min_capacity + 10));
                 snn_require(s.has_front("One "));
@@ -2733,7 +2733,7 @@ namespace snn::app
                 snn_require(s.capacity() == default_capacity);
 
                 mem::raw::copy<10>(not_null{"0123456789"}, s.resize_for_overwrite(10).writable(),
-                                   promise::no_overlap);
+                                   assume::no_overlap);
                 snn_require(size_eq(s, 10));
                 snn_require(s.capacity() == min_capacity);
                 snn_require(s == "0123456789");
@@ -2741,7 +2741,7 @@ namespace snn::app
                 cstrview tmp{
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ9876543210_-<>()"};
                 mem::raw::copy(tmp.data(), s.resize_for_overwrite(tmp.size()).writable(),
-                               tmp.byte_size(), promise::no_overlap);
+                               tmp.byte_size(), assume::no_overlap);
                 snn_require(size_eq(s, 68));
                 snn_require(s.capacity() >= 68);
                 snn_require(s == "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -2767,7 +2767,7 @@ namespace snn::app
 
                 strview buffer = s.append_for_overwrite(10);
                 snn_require(buffer.size() == 10);
-                mem::raw::copy<10>(not_null{"0123456789"}, buffer.writable(), promise::no_overlap);
+                mem::raw::copy<10>(not_null{"0123456789"}, buffer.writable(), assume::no_overlap);
                 snn_require(size_eq(s, 10));
                 snn_require(s.capacity() == min_capacity);
                 snn_require(s == "0123456789");
@@ -2775,7 +2775,7 @@ namespace snn::app
                 const cstrview tmp{"abcdefghijklmnopqrstuvwxyz!@ABCDEFGHIJKLMNOPQRSTUVWXYZ#$"};
                 buffer = s.append_for_overwrite(tmp.size());
                 snn_require(buffer.size() == tmp.size());
-                mem::raw::copy(tmp.data(), buffer.writable(), tmp.byte_size(), promise::no_overlap);
+                mem::raw::copy(tmp.data(), buffer.writable(), tmp.byte_size(), assume::no_overlap);
                 snn_require(size_eq(s, 66));
                 snn_require(s.capacity() >= 66);
                 snn_require(s == "0123456789abcdefghijklmnopqrstuvwxyz!@"
@@ -2844,7 +2844,7 @@ namespace snn::app
 
                 strview buf = s.insert_for_overwrite(0, 10);
                 snn_require(buf.size() == 10);
-                mem::raw::copy<10>(not_null{"0123456789"}, buf.writable(), promise::no_overlap);
+                mem::raw::copy<10>(not_null{"0123456789"}, buf.writable(), assume::no_overlap);
                 snn_require(size_eq(s, 10));
                 snn_require(s.capacity() == min_capacity);
                 snn_require(s == "0123456789");
@@ -2852,7 +2852,7 @@ namespace snn::app
                 const cstrview tmp{"abcdefghijklmnopqrstuvwxyz!@ABCDEFGHIJKLMNOPQRSTUVWXYZ#$"};
                 buf = s.insert_for_overwrite(5, tmp.size());
                 snn_require(buf.size() == tmp.size());
-                mem::raw::copy(tmp.data(), buf.writable(), tmp.byte_size(), promise::no_overlap);
+                mem::raw::copy(tmp.data(), buf.writable(), tmp.byte_size(), assume::no_overlap);
                 snn_require(size_eq(s, 66));
                 snn_require(s.capacity() >= 66);
                 snn_require(s == "01234abcdefghijklmnopqrstuvwxyz!@"
@@ -2880,7 +2880,7 @@ namespace snn::app
 
                 strview buf = s.replace_for_overwrite(0, 0, 10);
                 snn_require(buf.size() == 10);
-                mem::raw::copy<10>(not_null{"0123456789"}, buf.writable(), promise::no_overlap);
+                mem::raw::copy<10>(not_null{"0123456789"}, buf.writable(), assume::no_overlap);
                 snn_require(size_eq(s, 10));
                 snn_require(s.capacity() == min_capacity);
                 snn_require(s == "0123456789");
@@ -2888,7 +2888,7 @@ namespace snn::app
                 const cstrview tmp{"abcdefghijklmnopqrstuvwxyz!@ABCDEFGHIJKLMNOPQRSTUVWXYZ#$"};
                 buf = s.replace_for_overwrite(3, 4, tmp.size());
                 snn_require(buf.size() == tmp.size());
-                mem::raw::copy(tmp.data(), buf.writable(), tmp.byte_size(), promise::no_overlap);
+                mem::raw::copy(tmp.data(), buf.writable(), tmp.byte_size(), assume::no_overlap);
                 snn_require(size_eq(s, 62));
                 snn_require(s.capacity() >= 62);
                 snn_require(s == "012abcdefghijklmnopqrstuvwxyz!@"

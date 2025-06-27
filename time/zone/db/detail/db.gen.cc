@@ -172,7 +172,7 @@ namespace snn::app
         str make_relative_header_path(const vec<str>& identifiers)
         {
             str path;
-            identifiers.each([&](auto& s) { file::path::append(s, path, promise::no_overlap); });
+            identifiers.each([&](auto& s) { file::path::append(s, path, assume::no_overlap); });
             path.append(".hh");
             return path;
         }

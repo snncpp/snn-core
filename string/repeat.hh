@@ -16,7 +16,7 @@ namespace snn::string
 
     template <typename Buf>
     constexpr void repeat(const transient<cstrview> string, const usize times,
-                          strcore<Buf>& append_to, promise::no_overlap_t)
+                          strcore<Buf>& append_to, assume::no_overlap_t)
     {
         const cstrview s = string.get();
         snn_should(std::is_constant_evaluated() || !s.overlaps(append_to));
@@ -31,7 +31,7 @@ namespace snn::string
     [[nodiscard]] constexpr Str repeat(const transient<cstrview> string, const usize times)
     {
         Str append_to;
-        repeat(string, times, append_to, promise::no_overlap);
+        repeat(string, times, append_to, assume::no_overlap);
         return append_to;
     }
 }

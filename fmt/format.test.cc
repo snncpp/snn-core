@@ -181,10 +181,10 @@ namespace snn::app
         {
             str append_to;
 
-            fmt::format_append("{}", append_to, promise::no_overlap, "Hello");
+            fmt::format_append("{}", append_to, assume::no_overlap, "Hello");
             snn_require(append_to == "Hello");
 
-            fmt::format_append(", the answer is {} or {}.", append_to, promise::no_overlap, 42, 41);
+            fmt::format_append(", the answer is {} or {}.", append_to, assume::no_overlap, 42, 41);
             snn_require(append_to == "Hello, the answer is 42 or 41.");
 
             return true;

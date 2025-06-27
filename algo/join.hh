@@ -16,7 +16,7 @@ namespace snn::algo
     // Join without delimiter.
 
     template <input_range Rng, typename Container>
-    constexpr void join(Rng rng, Container& append_to, promise::no_overlap_t)
+    constexpr void join(Rng rng, Container& append_to, assume::no_overlap_t)
     {
         // Note: There is no easy way to check if rng overlap append_to.
         while (rng)
@@ -30,14 +30,14 @@ namespace snn::algo
     [[nodiscard]] constexpr Container join(Rng rng)
     {
         Container append_to;
-        join(std::move(rng), append_to, promise::no_overlap);
+        join(std::move(rng), append_to, assume::no_overlap);
         return append_to;
     }
 
     // Join with delimiter.
 
     template <input_range Rng, typename T, typename Container>
-    constexpr void join(Rng rng, const T& delimiter, Container& append_to, promise::no_overlap_t)
+    constexpr void join(Rng rng, const T& delimiter, Container& append_to, assume::no_overlap_t)
     {
         // Note: There is no easy way to check if rng or delimiter overlap append_to.
         if (rng)
@@ -57,7 +57,7 @@ namespace snn::algo
     [[nodiscard]] constexpr Container join(Rng rng, const T& delimiter)
     {
         Container append_to;
-        join(std::move(rng), delimiter, append_to, promise::no_overlap);
+        join(std::move(rng), delimiter, append_to, assume::no_overlap);
         return append_to;
     }
 }

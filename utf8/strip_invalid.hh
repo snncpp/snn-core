@@ -43,7 +43,7 @@ namespace snn::utf8
 
     template <typename Buf>
     constexpr void strip_invalid(const transient<cstrview> s, strcore<Buf>& append_to,
-                                 promise::no_overlap_t)
+                                 assume::no_overlap_t)
     {
         snn_should(std::is_constant_evaluated() || !s.get().overlaps(append_to));
         detail::strip_invalid(s.get(), append_to);

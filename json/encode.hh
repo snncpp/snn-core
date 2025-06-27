@@ -237,7 +237,7 @@ namespace snn::json
 
     template <typename Buf>
     constexpr void encode(const transient<cstrview> s, const option options,
-                          strcore<Buf>& append_to, promise::no_overlap_t)
+                          strcore<Buf>& append_to, assume::no_overlap_t)
     {
         snn_should(std::is_constant_evaluated() || !s.get().overlaps(append_to));
         detail::encode(s.get(), options, append_to);

@@ -98,7 +98,7 @@ namespace snn::fmt
     void floating_point(const double num, const num::bounded<u64, 0, 12> decimal_places,
                         const transient<cstrview> decimal_point,
                         const transient<cstrview> thousands_separator, strcore<Buf>& append_to,
-                        promise::no_overlap_t)
+                        assume::no_overlap_t)
     {
         snn_should(!decimal_point.get().overlaps(append_to));
         snn_should(!thousands_separator.get().overlaps(append_to));
@@ -127,7 +127,7 @@ namespace snn::fmt
 
         if (thousands_separator.get())
         {
-            fmt::integral(rounded, thousands_separator.get(), append_to, promise::no_overlap);
+            fmt::integral(rounded, thousands_separator.get(), append_to, assume::no_overlap);
         }
         else
         {
@@ -151,7 +151,7 @@ namespace snn::fmt
     {
         Str append_to;
         floating_point(num, decimal_places, decimal_point, thousands_separator, append_to,
-                       promise::no_overlap);
+                       assume::no_overlap);
         return append_to;
     }
 }
@@ -177,7 +177,7 @@ namespace snn
 
         template <typename Buf>
         void format(const double d, const cstrview format_string, const fmt::context&,
-                    strcore<Buf>& append_to, promise::no_overlap_t)
+                    strcore<Buf>& append_to, assume::no_overlap_t)
         {
             snn_should(!format_string.overlaps(append_to));
 
@@ -233,9 +233,9 @@ namespace snn
 
         template <typename Buf>
         void format(const float f, const cstrview format_string, const fmt::context& ctx,
-                    strcore<Buf>& append_to, promise::no_overlap_t)
+                    strcore<Buf>& append_to, assume::no_overlap_t)
         {
-            format(static_cast<double>(f), format_string, ctx, append_to, promise::no_overlap);
+            format(static_cast<double>(f), format_string, ctx, append_to, assume::no_overlap);
         }
 
         [[nodiscard]] static constexpr bool is_valid_printf_format(

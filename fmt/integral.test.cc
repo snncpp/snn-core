@@ -115,7 +115,7 @@ namespace snn::app
 
             {
                 strbuf append_to = "abcdefghijklmnopqrstuvwxyz";
-                fmt::integral(constant::limit<i32>::min, "..", append_to, promise::no_overlap);
+                fmt::integral(constant::limit<i32>::min, "..", append_to, assume::no_overlap);
                 snn_require(append_to == "abcdefghijklmnopqrstuvwxyz-2..147..483..648");
             }
 
@@ -154,7 +154,7 @@ namespace snn::app
             {
                 str append_to = "\\x";
                 fmt::integral<math::base::hex>(57610, "\\x", 2, 0, hex::table::upper, append_to,
-                                               promise::no_overlap);
+                                               assume::no_overlap);
                 snn_require(append_to == "\\xE1\\x0A");
             }
 

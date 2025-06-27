@@ -43,10 +43,10 @@ namespace snn
 
         template <typename Buf>
         void format(const exception& e, const cstrview format_string, const fmt::context& ctx,
-                    strcore<Buf>& append_to, promise::no_overlap_t)
+                    strcore<Buf>& append_to, assume::no_overlap_t)
         {
             formatter_select_t<error_code> f;
-            f.format(e.error_code(), format_string, ctx, append_to, promise::no_overlap);
+            f.format(e.error_code(), format_string, ctx, append_to, assume::no_overlap);
         }
     };
 
@@ -59,7 +59,7 @@ namespace snn
 
         template <typename Buf>
         void format(const std::exception& e, cstrview, const fmt::context&, strcore<Buf>& append_to,
-                    promise::no_overlap_t)
+                    assume::no_overlap_t)
         {
             fmt::exception(e, append_to);
         }

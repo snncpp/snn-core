@@ -229,10 +229,10 @@ namespace snn::app
 
             strbuf append_to;
 
-            f.format(time::duration{3599, 123456000}, "", ctx, append_to, promise::no_overlap);
+            f.format(time::duration{3599, 123456000}, "", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "59m59.123456s");
 
-            f.format(time::duration{-1, 999912300}, "", ctx, append_to, promise::no_overlap);
+            f.format(time::duration{-1, 999912300}, "", ctx, append_to, assume::no_overlap);
             snn_require(append_to == "59m59.123456s-87.7µs");
 
             return true;

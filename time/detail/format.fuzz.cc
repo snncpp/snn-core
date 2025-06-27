@@ -21,8 +21,8 @@ namespace snn::app
 
             try
             {
-                p.format(format_string, la, append_to, promise::no_overlap);
-                p.format(format_string, sthlm, append_to, promise::no_overlap);
+                p.format(format_string, la, append_to, assume::no_overlap);
+                p.format(format_string, sthlm, append_to, assume::no_overlap);
             }
             catch (exception& e)
             {

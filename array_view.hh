@@ -2291,7 +2291,7 @@ namespace snn
                 {
                     // Nth copy, is never 0 bytes and never overlaps.
                     bsize = snn::byte_size<usize>{math::min(dst_size, src_size)};
-                    mem::raw::copy(not_null{src}, not_null{dst}, bsize, promise::no_overlap);
+                    mem::raw::copy(not_null{src}, not_null{dst}, bsize, assume::no_overlap);
                     dst += bsize.get();
                     dst_size -= bsize.get();
                     src_size += bsize.get();

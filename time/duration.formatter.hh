@@ -25,7 +25,7 @@ namespace snn
 
         template <typename Buf>
         constexpr void format(const time::duration d, cstrview, const fmt::context&,
-                              strcore<Buf>& append_to, promise::no_overlap_t)
+                              strcore<Buf>& append_to, assume::no_overlap_t)
         {
             const i64 sec = d.seconds();
             u32 nano      = d.nanoseconds();

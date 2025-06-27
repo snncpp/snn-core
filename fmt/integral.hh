@@ -26,7 +26,7 @@ namespace snn::fmt
         constexpr void integral(UInt num, const cstrview group_separator,
                                 const usize digits_per_group, const usize min_digits,
                                 const array<char, 16>& hex_table, strcore<Buf>& append_to,
-                                promise::no_overlap_t)
+                                assume::no_overlap_t)
         {
             const usize digit_count = math::max(math::count_digits<Base>(num).get(), min_digits);
             usize combined_size     = digit_count;
@@ -60,7 +60,7 @@ namespace snn::fmt
                     {
                         cur -= group_separator.size();
                         mem::raw::copy(group_separator.data(), not_null{cur},
-                                       group_separator.byte_size(), promise::no_overlap);
+                                       group_separator.byte_size(), assume::no_overlap);
                     }
                     group_count = 0;
                 }
@@ -101,7 +101,7 @@ namespace snn::fmt
         constexpr void integral(const SInt num, const cstrview group_separator,
                                 const usize digits_per_group, const usize min_digits,
                                 const array<char, 16>& hex_table, strcore<Buf>& append_to,
-                                promise::no_overlap_t)
+                                assume::no_overlap_t)
         {
             auto u = force_unsigned(num);
             if (num < 0)
@@ -110,7 +110,7 @@ namespace snn::fmt
                 u = math::negate_with_overflow(u);
             }
             integral<Base>(u, group_separator, digits_per_group, min_digits, hex_table, append_to,
-                           promise::no_overlap);
+                           assume::no_overlap);
         }
     }
 
@@ -128,7 +128,7 @@ namespace snn::fmt
         // Promote to limit template instantiations.
         detail::integral<math::base::decimal>(promote<64>(num), group_separator, digits_per_group,
                                               min_digits, hex::table::lower, append_to,
-                                              promise::no_overlap);
+                                              assume::no_overlap);
     }
 
     template <any_strcore Str = str, strict_integral Int>
@@ -147,7 +147,7 @@ namespace snn::fmt
 
     template <strict_integral Int, typename Buf>
     constexpr void integral(const Int num, const transient<cstrview> thousands_separator,
-                            strcore<Buf>& append_to, promise::no_overlap_t)
+                            strcore<Buf>& append_to, assume::no_overlap_t)
     {
         snn_should(std::is_constant_evaluated() || !thousands_separator.get().overlaps(append_to));
         constexpr usize digits_per_group = 3;
@@ -155,7 +155,7 @@ namespace snn::fmt
         // Promote to limit template instantiations.
         detail::integral<math::base::decimal>(promote<64>(num), thousands_separator.get(),
                                               digits_per_group, min_digits, hex::table::lower,
-                                              append_to, promise::no_overlap);
+                                              append_to, assume::no_overlap);
     }
 
     template <any_strcore Str = str, strict_integral Int>
@@ -168,7 +168,7 @@ namespace snn::fmt
         // Promote to limit template instantiations.
         detail::integral<math::base::decimal>(promote<64>(num), thousands_separator.get(),
                                               digits_per_group, min_digits, hex::table::lower,
-                                              append_to, promise::no_overlap);
+                                              append_to, assume::no_overlap);
         return append_to;
     }
 
@@ -180,12 +180,12 @@ namespace snn::fmt
     constexpr void integral(const Int num, const transient<cstrview> group_separator,
                             const usize digits_per_group, const usize min_digits,
                             const array<char, 16>& hex_table, strcore<Buf>& append_to,
-                            promise::no_overlap_t)
+                            assume::no_overlap_t)
     {
         snn_should(std::is_constant_evaluated() || !group_separator.get().overlaps(append_to));
         // Promote to limit template instantiations.
         detail::integral<Base>(promote<64>(num), group_separator.get(), digits_per_group,
-                               min_digits, hex_table, append_to, promise::no_overlap);
+                               min_digits, hex_table, append_to, assume::no_overlap);
     }
 
     template <any_strcore Str = str, math::base Base = math::base::decimal, strict_integral Int>
@@ -196,7 +196,7 @@ namespace snn::fmt
         Str append_to;
         // Promote to limit template instantiations.
         detail::integral<Base>(promote<64>(num), group_separator.get(), digits_per_group,
-                               min_digits, hex_table, append_to, promise::no_overlap);
+                               min_digits, hex_table, append_to, assume::no_overlap);
         return append_to;
     }
 }
@@ -213,7 +213,7 @@ namespace snn
         template <strict_unsigned_integral UInt, typename Buf>
             requires(sizeof(UInt) >= 8)
         constexpr void format(const UInt i, const cstrview format_string, const fmt::context&,
-                              strcore<Buf>& append_to, promise::no_overlap_t)
+                              strcore<Buf>& append_to, assume::no_overlap_t)
         {
             if (format_string.is_empty()) [[likely]]
             {
@@ -323,33 +323,33 @@ namespace snn
                         fmt::detail::integral<math::base::decimal>(i, group_separator,
                                                                    digits_per_group, min_digits,
                                                                    hex::table::lower, append_to,
-                                                                   promise::no_overlap);
+                                                                   assume::no_overlap);
                         break;
 
                     case format_base::hex_lower:
                         fmt::detail::integral<math::base::hex>(i, group_separator, digits_per_group,
                                                                min_digits, hex::table::lower,
-                                                               append_to, promise::no_overlap);
+                                                               append_to, assume::no_overlap);
                         break;
 
                     case format_base::hex_upper:
                         fmt::detail::integral<math::base::hex>(i, group_separator, digits_per_group,
                                                                min_digits, hex::table::upper,
-                                                               append_to, promise::no_overlap);
+                                                               append_to, assume::no_overlap);
                         break;
 
                     case format_base::binary:
                         fmt::detail::integral<math::base::binary>(i, group_separator,
                                                                   digits_per_group, min_digits,
                                                                   hex::table::lower, append_to,
-                                                                  promise::no_overlap);
+                                                                  assume::no_overlap);
                         break;
 
                     case format_base::octal:
                         fmt::detail::integral<math::base::octal>(i, group_separator,
                                                                  digits_per_group, min_digits,
                                                                  hex::table::lower, append_to,
-                                                                 promise::no_overlap);
+                                                                 assume::no_overlap);
                         break;
                 }
             }
@@ -358,10 +358,10 @@ namespace snn
         template <strict_unsigned_integral UInt, typename Buf>
             requires(sizeof(UInt) < 8)
         constexpr void format(const UInt i, const cstrview format_string, const fmt::context& ctx,
-                              strcore<Buf>& append_to, promise::no_overlap_t)
+                              strcore<Buf>& append_to, assume::no_overlap_t)
         {
             // Promote to limit template instantiations.
-            format(promote<64>(i), format_string, ctx, append_to, promise::no_overlap);
+            format(promote<64>(i), format_string, ctx, append_to, assume::no_overlap);
         }
     };
 
@@ -391,7 +391,7 @@ namespace snn
         template <strict_signed_integral SInt, typename Buf>
             requires(sizeof(SInt) >= 8)
         constexpr void format(const SInt i, cstrview format_string, const fmt::context& ctx,
-                              strcore<Buf>& append_to, promise::no_overlap_t)
+                              strcore<Buf>& append_to, assume::no_overlap_t)
         {
             if (format_string.is_empty()) [[likely]]
             {
@@ -415,17 +415,17 @@ namespace snn
                 }
 
                 formatter<u64> f;
-                f.format(u, format_string, ctx, append_to, promise::no_overlap);
+                f.format(u, format_string, ctx, append_to, assume::no_overlap);
             }
         }
 
         template <strict_signed_integral SInt, typename Buf>
             requires(sizeof(SInt) < 8)
         constexpr void format(const SInt i, const cstrview format_string, const fmt::context& ctx,
-                              strcore<Buf>& append_to, promise::no_overlap_t)
+                              strcore<Buf>& append_to, assume::no_overlap_t)
         {
             // Promote to limit template instantiations.
-            format(promote<64>(i), format_string, ctx, append_to, promise::no_overlap);
+            format(promote<64>(i), format_string, ctx, append_to, assume::no_overlap);
         }
     };
 

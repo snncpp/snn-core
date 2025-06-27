@@ -18,7 +18,7 @@ namespace snn::app
             Str append_to;
             try
             {
-                f.format(d, format_string, ctx, append_to, promise::no_overlap);
+                f.format(d, format_string, ctx, append_to, assume::no_overlap);
                 snn_assert(append_to && append_to.size() <= 500); // Arbitrary
                 snn_assert(append_to.all(chr::is_ascii_printable));
             }

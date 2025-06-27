@@ -198,7 +198,7 @@ namespace snn::base64
 
     template <typename Buf>
     [[nodiscard]] constexpr result<void> decode(const transient<cstrview> string,
-                                                strcore<Buf>& append_to, promise::no_overlap_t)
+                                                strcore<Buf>& append_to, assume::no_overlap_t)
     {
         snn_should(std::is_constant_evaluated() || !string.get().overlaps(append_to));
         return detail::decode(string.get(), padding_required, '=', table::decode::standard,
@@ -211,7 +211,7 @@ namespace snn::base64
     [[nodiscard]] constexpr result<void> decode(const transient<cstrview> string,
                                                 const decode_padding padding_policy,
                                                 const char pad_char, const array<u8, 256>& table,
-                                                strcore<Buf>& append_to, promise::no_overlap_t)
+                                                strcore<Buf>& append_to, assume::no_overlap_t)
     {
         snn_should(std::is_constant_evaluated() || !string.get().overlaps(append_to));
         return detail::decode(string.get(), padding_policy, pad_char, table, append_to);

@@ -66,7 +66,7 @@ namespace snn::file::path
     }
 
     template <typename Buf>
-    constexpr void append(const transient<cstrview> part, strcore<Buf>& to, promise::no_overlap_t)
+    constexpr void append(const transient<cstrview> part, strcore<Buf>& to, assume::no_overlap_t)
     {
         snn_should(std::is_constant_evaluated() || !part.get().overlaps(to));
         detail::append::append(part.get(), to);

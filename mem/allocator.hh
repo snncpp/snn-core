@@ -234,7 +234,7 @@ namespace snn::mem
                 SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
 
                 mem::move_construct(not_null{old_ptr}, not_null{old_ptr + move_count},
-                                    not_null{new_ptr}, promise::no_overlap);
+                                    not_null{new_ptr}, assume::no_overlap);
 
                 SNN_DIAGNOSTIC_POP
 

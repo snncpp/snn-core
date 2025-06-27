@@ -17,7 +17,7 @@ namespace snn::app
             strbuf buf;
 
             // Promise up front that nothing added to this object will overlap the buffer.
-            js::encoder enc{buf, promise::no_overlap};
+            js::encoder enc{buf, assume::no_overlap};
 
             enc << js::object;
 
@@ -47,7 +47,7 @@ namespace snn::app
                 namespace js = json::stream;
 
                 strbuf buf;
-                js::encoder enc{buf, promise::no_overlap};
+                js::encoder enc{buf, assume::no_overlap};
 
                 enc << js::array << js::array_end;
 
@@ -59,7 +59,7 @@ namespace snn::app
                 namespace js = json::stream;
 
                 strbuf buf;
-                js::encoder enc{buf, promise::no_overlap};
+                js::encoder enc{buf, assume::no_overlap};
 
                 enc << js::object << js::object_end;
 
@@ -71,7 +71,7 @@ namespace snn::app
                 namespace js = json::stream;
 
                 strbuf buf;
-                js::encoder enc{buf, promise::no_overlap};
+                js::encoder enc{buf, assume::no_overlap};
 
                 enc << js::array;
                 for (auto i : {1, 2, 7, 28, 231})
@@ -89,7 +89,7 @@ namespace snn::app
                 namespace js = json::stream;
 
                 strbuf buf;
-                js::encoder enc{buf, promise::no_overlap};
+                js::encoder enc{buf, assume::no_overlap};
 
                 enc << js::object;
 
@@ -120,7 +120,7 @@ namespace snn::app
                 namespace js = json::stream;
 
                 strbuf buf;
-                js::encoder enc{buf, promise::no_overlap};
+                js::encoder enc{buf, assume::no_overlap};
 
                 enc << js::array;
 
@@ -146,7 +146,7 @@ namespace snn::app
                 namespace js = json::stream;
 
                 strbuf buf;
-                js::encoder enc{buf, promise::no_overlap};
+                js::encoder enc{buf, assume::no_overlap};
 
                 enc << js::array;
 

@@ -22,10 +22,10 @@ namespace snn::base64::url
 
     template <typename Buf>
     constexpr void encode(const transient<cstrview> string, strcore<Buf>& append_to,
-                          promise::no_overlap_t)
+                          assume::no_overlap_t)
     {
         constexpr char unused_pad_char{};
         base64::encode(string, without_padding, unused_pad_char, table::encode::url, append_to,
-                       promise::no_overlap);
+                       assume::no_overlap);
     }
 }
