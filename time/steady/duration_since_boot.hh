@@ -29,4 +29,38 @@ namespace snn::time::steady
 
         return time::duration{ts.tv_sec, static_cast<u32>(ts.tv_nsec), assume::is_valid};
     }
+
+    // ## Convenience functions
+
+    // ### `nanoseconds_since_boot`
+
+    [[nodiscard]] inline i64 nanoseconds_since_boot() noexcept
+    {
+        // This will not overflow for hundreds of years.
+        return duration_since_boot().to_nanoseconds<i64>(assume::not_negative);
+    }
+
+    // ### `microseconds_since_boot`
+
+    [[nodiscard]] inline i64 microseconds_since_boot() noexcept
+    {
+        // This will not overflow for thousands of years.
+        return duration_since_boot().to_microseconds<i64>(assume::not_negative);
+    }
+
+    // ### `milliseconds_since_boot`
+
+    [[nodiscard]] inline i64 milliseconds_since_boot() noexcept
+    {
+        // This will not overflow for millions of years.
+        return duration_since_boot().to_milliseconds<i64>(assume::not_negative);
+    }
+
+    // ### `seconds_since_boot`
+
+    [[nodiscard]] inline i64 seconds_since_boot() noexcept
+    {
+        // This will never overflow.
+        return duration_since_boot().to_seconds<i64>(assume::not_negative);
+    }
 }
