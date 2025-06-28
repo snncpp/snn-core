@@ -231,6 +231,12 @@ namespace snn
         };
         inline constexpr not_empty_t not_empty;
 
+        struct not_negative_t final
+        {
+            explicit not_negative_t() = default;
+        };
+        inline constexpr not_negative_t not_negative;
+
         struct null_terminated_t final
         {
             explicit null_terminated_t() = default;
