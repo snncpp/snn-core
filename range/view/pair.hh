@@ -44,8 +44,7 @@ namespace snn::range::view
                 using pair_type =
                     snn::pair::first_second<decltype(first_.front(assume::not_empty)),
                                             decltype(second_.front(assume::not_empty))>;
-                return pair_type{first_.front(assume::not_empty),
-                                 second_.front(assume::not_empty)};
+                return pair_type{first_.front(assume::not_empty), second_.front(assume::not_empty)};
             }
 
             [[nodiscard]] constexpr bool is_empty() const

@@ -900,8 +900,7 @@ namespace snn::app
                 snn_require(r);
                 snn_require(r.has_value());
                 snn_require(r.value() == "A long string, which goes on the heap.");
-                snn_require(r.value(assume::has_value) ==
-                            "A long string, which goes on the heap.");
+                snn_require(r.value(assume::has_value) == "A long string, which goes on the heap.");
                 snn_require(r.value(assume::has_value).size() == 38);
 
                 auto ec = r.error_code();

@@ -109,9 +109,9 @@ namespace snn::app
                 static_assert(a.capacity() == 2);
                 static_assert(a.count() == 2);
                 static_assert(a.byte_size().get() == 2);
-                static_assert(a.at(0).value() == '\0');                 // Value-initialized.
+                static_assert(a.at(0).value() == '\0');                // Value-initialized.
                 static_assert(a.at(0, assume::within_bounds) == '\0'); // Value-initialized.
-                static_assert(a.at(1).value() == '\0');                 // Value-initialized.
+                static_assert(a.at(1).value() == '\0');                // Value-initialized.
                 static_assert(a.at(1, assume::within_bounds) == '\0'); // Value-initialized.
             }
 

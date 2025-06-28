@@ -90,8 +90,7 @@ namespace snn
         {
         }
 
-        constexpr explicit array_view(const not_null<pointer> data,
-                                      assume::has_capacity_t) noexcept
+        constexpr explicit array_view(const not_null<pointer> data, assume::has_capacity_t) noexcept
             : data_{data.get()}
         {
         }
@@ -1396,8 +1395,7 @@ namespace snn
         {
         }
 
-        constexpr explicit array_view(const const_pointer first,
-                                      assume::null_terminated_t) noexcept
+        constexpr explicit array_view(const const_pointer first, assume::null_terminated_t) noexcept
             : data_{replace_if_nullptr_(first)},
               count_{string::size(first, assume::null_terminated)}
         {

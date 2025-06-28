@@ -151,8 +151,7 @@ namespace snn::detail::vec
         }
 
         template <typename... Args>
-        void grow_append_inplace(const not_zero<usize> capacity, assume::is_valid_t,
-                                 Args&&... args)
+        void grow_append_inplace(const not_zero<usize> capacity, assume::is_valid_t, Args&&... args)
         {
             snn_should(count_ == capacity_);
             snn_should(capacity.get() > capacity_ && capacity.get() <= vec::max_capacity<T>);

@@ -642,8 +642,7 @@ namespace snn
             }
         }
 
-        constexpr void insert_at(const usize pos, const transient<cstrview> s,
-                                 assume::no_overlap_t)
+        constexpr void insert_at(const usize pos, const transient<cstrview> s, assume::no_overlap_t)
         {
             const cstrview sv = s.get();
             snn_should(std::is_constant_evaluated() || !buf_.overlaps(sv));

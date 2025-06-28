@@ -42,8 +42,7 @@ namespace snn::time::zone
             }
         }
 
-        constexpr explicit abbreviation(const transient<cstrview> abbr,
-                                        assume::is_valid_t) noexcept
+        constexpr explicit abbreviation(const transient<cstrview> abbr, assume::is_valid_t) noexcept
             : buf_{},
               size_{0}
         {

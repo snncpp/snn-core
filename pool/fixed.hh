@@ -119,8 +119,7 @@ namespace snn::pool
             return data_[pos];
         }
 
-        [[nodiscard]] constexpr const T& at(const usize pos,
-                                            assume::within_bounds_t) const noexcept
+        [[nodiscard]] constexpr const T& at(const usize pos, assume::within_bounds_t) const noexcept
         {
             snn_assert(pos < count_);
             return data_[pos];

@@ -89,8 +89,8 @@ namespace snn::app
                 static_assert(!implicitly_default_constructible<
                               pair::first_second<assume::null_terminated_t, const char*>>);
 
-                static_assert(std::is_default_constructible_v<
-                              pair::first_second<assume::null_terminated_t>>);
+                static_assert(
+                    std::is_default_constructible_v<pair::first_second<assume::null_terminated_t>>);
                 static_assert(!implicitly_default_constructible<
                               pair::first_second<assume::null_terminated_t>>);
             }

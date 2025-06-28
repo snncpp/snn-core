@@ -120,9 +120,8 @@ namespace snn::utf8
             const usize left_count  = fill_count / 2;
             const usize right_count = fill_count - left_count;
 
-            const usize left_fill_size = detail::pad_fill_size(left_count, ps, assume::not_empty);
-            const usize right_fill_size =
-                detail::pad_fill_size(right_count, ps, assume::not_empty);
+            const usize left_fill_size  = detail::pad_fill_size(left_count, ps, assume::not_empty);
+            const usize right_fill_size = detail::pad_fill_size(right_count, ps, assume::not_empty);
 
             // An overflow here is harmless.
             s.reserve_append(left_fill_size + right_fill_size);
