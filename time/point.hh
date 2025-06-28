@@ -29,7 +29,7 @@
 #include "snn-core/time/duration.hh"
 #include "snn-core/time/error.hh"
 #include "snn-core/time/unit.hh"
-#include "snn-core/time/wall/since_epoch.hh"
+#include "snn-core/time/wall/duration_since_epoch.hh"
 #include "snn-core/time/zone/location.hh"
 
 namespace snn::time
@@ -1320,7 +1320,7 @@ namespace snn::time
 
     [[nodiscard]] inline point now() noexcept
     {
-        return point{time::wall::since_epoch()};
+        return point{time::wall::duration_since_epoch()};
     }
 
     // ### operator<<

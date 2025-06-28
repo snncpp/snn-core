@@ -1,7 +1,7 @@
 // Copyright (c) 2022 Mikael Simonsson <https://mikaelsimonsson.com>.
 // SPDX-License-Identifier: BSL-1.0
 
-// # Since boot
+// # Duration since boot
 
 #pragma once
 
@@ -12,9 +12,9 @@ namespace snn::time::steady
 {
     // ## Functions
 
-    // ### `since_boot`
+    // ### `duration_since_boot`
 
-    [[nodiscard]] inline time::duration since_boot() noexcept
+    [[nodiscard]] inline time::duration duration_since_boot() noexcept
     {
         struct timespec ts;
         const int ret = ::clock_gettime(CLOCK_BOOTTIME, &ts);

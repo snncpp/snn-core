@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "snn-core/time/steady/since_boot.hh"
+#include "snn-core/time/steady/duration_since_boot.hh"
 
 namespace snn::time
 {
@@ -17,13 +17,13 @@ namespace snn::time
     {
       public:
         explicit stopwatch() noexcept
-            : start_{time::steady::since_boot()}
+            : start_{time::steady::duration_since_boot()}
         {
         }
 
         [[nodiscard]] time::duration duration() const noexcept
         {
-            return time::steady::since_boot() - start_;
+            return time::steady::duration_since_boot() - start_;
         }
 
         [[nodiscard]] i64 microseconds() const noexcept
@@ -46,7 +46,7 @@ namespace snn::time
 
         void reset() noexcept
         {
-            start_ = time::steady::since_boot();
+            start_ = time::steady::duration_since_boot();
         }
 
       private:

@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "snn-core/time/steady/since_boot.hh"
+#include "snn-core/time/steady/duration_since_boot.hh"
 
 namespace snn::time::steady
 {
@@ -17,7 +17,7 @@ namespace snn::time::steady
     {
       public:
         explicit cache() noexcept
-            : d_{time::steady::since_boot()}
+            : d_{time::steady::duration_since_boot()}
         {
         }
 
@@ -39,7 +39,7 @@ namespace snn::time::steady
 
         void update() noexcept
         {
-            d_ = time::steady::since_boot();
+            d_ = time::steady::duration_since_boot();
         }
 
       private:

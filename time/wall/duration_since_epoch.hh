@@ -1,7 +1,7 @@
 // Copyright (c) 2022 Mikael Simonsson <https://mikaelsimonsson.com>.
 // SPDX-License-Identifier: BSL-1.0
 
-// # Since epoch
+// # Duration since epoch
 
 #pragma once
 
@@ -12,9 +12,9 @@ namespace snn::time::wall
 {
     // ## Functions
 
-    // ### `since_epoch`
+    // ### `duration_since_epoch`
 
-    [[nodiscard]] inline time::duration since_epoch() noexcept
+    [[nodiscard]] inline time::duration duration_since_epoch() noexcept
     {
         struct timespec ts;
         const int ret = ::clock_gettime(CLOCK_REALTIME, &ts);

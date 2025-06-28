@@ -999,7 +999,7 @@ namespace snn
             snn_require(p.year() >= 2022);
         }
         {
-            const time::duration d = time::wall::since_epoch();
+            const time::duration d = time::wall::duration_since_epoch();
             time::point p1         = time::now();
             time::point p2         = time::now();
             snn_require(p1.unix() == d.seconds_part() || p1.unix() == (d.seconds_part() + 1));

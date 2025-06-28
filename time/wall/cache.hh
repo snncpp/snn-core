@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "snn-core/time/wall/since_epoch.hh"
+#include "snn-core/time/wall/duration_since_epoch.hh"
 
 namespace snn::time::wall
 {
@@ -17,7 +17,7 @@ namespace snn::time::wall
     {
       public:
         explicit cache() noexcept
-            : d_{time::wall::since_epoch()}
+            : d_{time::wall::duration_since_epoch()}
         {
         }
 
@@ -39,7 +39,7 @@ namespace snn::time::wall
 
         void update() noexcept
         {
-            d_ = time::wall::since_epoch();
+            d_ = time::wall::duration_since_epoch();
         }
 
       private:
