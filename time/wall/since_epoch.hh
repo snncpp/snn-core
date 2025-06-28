@@ -12,7 +12,7 @@ namespace snn::time::wall
 {
     // ## Functions
 
-    // ### since_epoch
+    // ### `since_epoch`
 
     [[nodiscard]] inline time::duration since_epoch() noexcept
     {

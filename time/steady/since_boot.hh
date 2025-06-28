@@ -10,9 +10,9 @@
 
 namespace snn::time::steady
 {
-    // # Functions
+    // ## Functions
 
-    // ## since_boot
+    // ### `since_boot`
 
     [[nodiscard]] inline time::duration since_boot() noexcept
     {

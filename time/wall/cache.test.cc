@@ -15,9 +15,9 @@ namespace snn::app
             time::wall::cache cache;
 
             time::duration d1 = cache.get();
-            snn_require(d1.seconds() > 0);
+            snn_require(d1.seconds_part() > 0);
 
-            snn_require(cache.seconds() == d1.seconds());
+            snn_require(cache.seconds() == d1.seconds_part());
             snn_require(cache.milliseconds() == d1.to<time::milliseconds>().value());
 
             time::duration d2 = cache.get();

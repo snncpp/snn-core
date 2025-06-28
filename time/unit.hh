@@ -39,8 +39,8 @@ namespace snn::time
 
         constexpr explicit unit(const time::duration d) noexcept
         {
-            i64 sec  = d.seconds();
-            i64 nano = d.nanoseconds();
+            i64 sec  = d.seconds_part();
+            i64 nano = d.nanoseconds_part();
 
             // Convert/truncate negative durations correctly.
             if (sec < 0 && nano > 0)

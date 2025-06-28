@@ -15,11 +15,11 @@ namespace snn::thread
 {
     // ## Functions
 
-    // ### sleep_for
+    // ### `sleep_for`
 
     [[nodiscard]] inline result<void> sleep_for(const time::duration d) noexcept
     {
-        ::timespec ts{.tv_sec = d.seconds(), .tv_nsec = to_i32(d.nanoseconds())};
+        ::timespec ts{.tv_sec = d.seconds_part(), .tv_nsec = to_i32(d.nanoseconds_part())};
         while (true)
         {
             // `clock_nanosleep()` does not use errno, it returns the error (if any) directly.

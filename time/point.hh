@@ -87,8 +87,8 @@ namespace snn::time
         }
 
         constexpr explicit point(const time::duration d) noexcept
-            : sec_{d.seconds() + unix_to_internal_},
-              nano_{d.nanoseconds()}
+            : sec_{d.seconds_part() + unix_to_internal_},
+              nano_{d.nanoseconds_part()}
         {
         }
 
@@ -389,8 +389,8 @@ namespace snn::time
         {
             time::duration tmp{sec_, nano_, assume::is_valid};
             tmp.add(d);
-            sec_  = tmp.seconds();
-            nano_ = tmp.nanoseconds();
+            sec_  = tmp.seconds_part();
+            nano_ = tmp.nanoseconds_part();
             return *this;
         }
 
@@ -432,8 +432,8 @@ namespace snn::time
         {
             time::duration tmp{sec_, nano_, assume::is_valid};
             tmp.subtract(d);
-            sec_  = tmp.seconds();
-            nano_ = tmp.nanoseconds();
+            sec_  = tmp.seconds_part();
+            nano_ = tmp.nanoseconds_part();
             return *this;
         }
 

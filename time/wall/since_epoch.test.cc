@@ -13,15 +13,15 @@ namespace snn::app
         bool example()
         {
             const time::duration d = time::wall::since_epoch();
-            snn_require(d.seconds() > 0);
+            snn_require(d.seconds_part() > 1'000'000'000); // 2021
 
             return true;
         }
 
         i64 std_chrono_system_seconds()
         {
-            using namespace std::chrono;
-            return duration_cast<seconds>(system_clock::now().time_since_epoch()).count();
+            namespace c = std::chrono;
+            return c::duration_cast<c::seconds>(c::system_clock::now().time_since_epoch()).count();
         }
     }
 }
@@ -39,6 +39,6 @@ namespace snn
 
         // These can fail if the wall time was changed between calls:
         snn_require(d2 > d1);
-        snn_require(d1.seconds() == sec || d1.seconds() == (sec + 1));
+        snn_require(d1.seconds_part() == sec || d1.seconds_part() == (sec + 1));
     }
 }

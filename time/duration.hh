@@ -5,13 +5,14 @@
 
 // Supports +/- billions (10^9) of years with nanosecond precision.
 
-// Has a signed `seconds()` member (i64) and an unsigned `nanoseconds()` member (u32). The
+// Has a signed `seconds_part()` member (i64) and an unsigned `nanoseconds_part()` member (u32). The
 // nanoseconds member is always less than 1'000'000'000 nanoseconds (1 second).
 
 // Note that `time::duration{-3, 999'999'999}` is not -3.999999999 seconds,
 // it's -3 seconds + 0.999999999 seconds, i.e. -2.000000001 seconds.
 
-// Duration math does not protect against integer overflows.
+// Duration arithmetic/conversion does not protect against integer overflows nor precision loss. Use
+// `time::unit` for safe arithmetic/conversion.
 
 #pragma once
 
@@ -63,12 +64,12 @@ namespace snn::time
 
         // #### Values
 
-        [[nodiscard]] constexpr i64 seconds() const noexcept
+        [[nodiscard]] constexpr i64 seconds_part() const noexcept
         {
             return sec_;
         }
 
-        [[nodiscard]] constexpr u32 nanoseconds() const noexcept
+        [[nodiscard]] constexpr u32 nanoseconds_part() const noexcept
         {
             return nano_;
         }
@@ -121,12 +122,168 @@ namespace snn::time
             return duration{*this}.subtract(other);
         }
 
-        // #### Conversion
+        // #### Safe conversion
 
         template <any_unit Unit>
         [[nodiscard]] constexpr Unit to() const noexcept
         {
             return Unit{*this};
+        }
+
+        // #### Unsafe conversion
+
+        // Unsafe or imprecise conversion (risk of overflow or precision loss).
+
+        // ##### To nanoseconds
+
+        template <floating_point Fp>
+        [[nodiscard]] constexpr Fp to_nanoseconds() const noexcept
+        {
+            return (static_cast<Fp>(sec_) * Fp{1'000'000'000}) + static_cast<Fp>(nano_);
+        }
+
+        template <strict_signed_integral_min<64> Int>
+        [[nodiscard]] constexpr Int to_nanoseconds() const noexcept
+        {
+            // Note: `Int` can be `i128`.
+            return (Int{sec_} * Int{1'000'000'000}) + Int{nano_};
+        }
+
+        template <strict_signed_integral_min<64> Int>
+        [[nodiscard]] constexpr Int to_nanoseconds(assume::not_negative_t) const noexcept
+        {
+            snn_should(sec_ >= 0);
+            return to_nanoseconds<Int>();
+        }
+
+        // ##### To microseconds
+
+        template <floating_point Fp>
+        [[nodiscard]] constexpr Fp to_microseconds() const noexcept
+        {
+            return (static_cast<Fp>(sec_) * Fp{1'000'000}) + (static_cast<Fp>(nano_) / Fp{1'000});
+        }
+
+        template <strict_signed_integral_min<64> Int>
+        [[nodiscard]] constexpr Int to_microseconds() const noexcept
+        {
+            const auto [sec, nano] = normalize_for_conv_();
+            // Note: `Int` can be `i128`.
+            return (Int{sec} * Int{1'000'000}) + (Int{nano} / Int{1'000});
+        }
+
+        template <strict_signed_integral_min<64> Int>
+        [[nodiscard]] constexpr Int to_microseconds(assume::not_negative_t) const noexcept
+        {
+            snn_should(sec_ >= 0);
+            // Note: `Int` can be `i128`.
+            return (Int{sec_} * Int{1'000'000}) + (Int{nano_} / Int{1'000});
+        }
+
+        // ##### To milliseconds
+
+        template <floating_point Fp>
+        [[nodiscard]] constexpr Fp to_milliseconds() const noexcept
+        {
+            return (static_cast<Fp>(sec_) * Fp{1'000}) + (static_cast<Fp>(nano_) / Fp{1'000'000});
+        }
+
+        template <strict_signed_integral_min<64> Int>
+        [[nodiscard]] constexpr Int to_milliseconds() const noexcept
+        {
+            const auto [sec, nano] = normalize_for_conv_();
+            // Note: `Int` can be `i128`.
+            return (Int{sec} * Int{1'000}) + (Int{nano} / Int{1'000'000});
+        }
+
+        template <strict_signed_integral_min<64> Int>
+        [[nodiscard]] constexpr Int to_milliseconds(assume::not_negative_t) const noexcept
+        {
+            snn_should(sec_ >= 0);
+            // Note: `Int` can be `i128`.
+            return (Int{sec_} * Int{1'000}) + (Int{nano_} / Int{1'000'000});
+        }
+
+        // ##### To seconds
+
+        template <floating_point Fp>
+        [[nodiscard]] constexpr Fp to_seconds() const noexcept
+        {
+            return static_cast<Fp>(sec_) + (static_cast<Fp>(nano_) / Fp{1'000'000'000});
+        }
+
+        template <strict_signed_integral_min<64> Int>
+        [[nodiscard]] constexpr Int to_seconds() const noexcept
+        {
+            const auto [sec, _] = normalize_for_conv_();
+            return sec;
+        }
+
+        template <strict_signed_integral_min<64> Int>
+        [[nodiscard]] constexpr Int to_seconds(assume::not_negative_t) const noexcept
+        {
+            snn_should(sec_ >= 0);
+            return sec_;
+        }
+
+        // ##### To minutes
+
+        template <floating_point Fp>
+        [[nodiscard]] constexpr Fp to_minutes() const noexcept
+        {
+            return to_seconds<Fp>() / Fp{60};
+        }
+
+        template <strict_signed_integral_min<64> Int>
+        [[nodiscard]] constexpr Int to_minutes() const noexcept
+        {
+            return to_seconds<Int>() / Int{60};
+        }
+
+        template <strict_signed_integral_min<64> Int>
+        [[nodiscard]] constexpr Int to_minutes(assume::not_negative_t) const noexcept
+        {
+            return to_seconds<Int>(assume::not_negative) / Int{60};
+        }
+
+        // ##### To hours
+
+        template <floating_point Fp>
+        [[nodiscard]] constexpr Fp to_hours() const noexcept
+        {
+            return to_seconds<Fp>() / Fp{3'600};
+        }
+
+        template <strict_signed_integral_min<64> Int>
+        [[nodiscard]] constexpr Int to_hours() const noexcept
+        {
+            return to_seconds<Int>() / Int{3'600};
+        }
+
+        template <strict_signed_integral_min<64> Int>
+        [[nodiscard]] constexpr Int to_hours(assume::not_negative_t) const noexcept
+        {
+            return to_seconds<Int>(assume::not_negative) / Int{3'600};
+        }
+
+        // ##### To days
+
+        template <floating_point Fp>
+        [[nodiscard]] constexpr Fp to_days() const noexcept
+        {
+            return to_seconds<Fp>() / Fp{86'400};
+        }
+
+        template <strict_signed_integral_min<64> Int>
+        [[nodiscard]] constexpr Int to_days() const noexcept
+        {
+            return to_seconds<Int>() / Int{86'400};
+        }
+
+        template <strict_signed_integral_min<64> Int>
+        [[nodiscard]] constexpr Int to_days(assume::not_negative_t) const noexcept
+        {
+            return to_seconds<Int>(assume::not_negative) / Int{86'400};
         }
 
         // #### Comparison
@@ -136,5 +293,20 @@ namespace snn::time
       private:
         i64 sec_{0};  // Seconds
         u32 nano_{0}; // Nanoseconds, 0-999'999'999.
+
+        constexpr time::normalized<i64> normalize_for_conv_() const noexcept
+        {
+            i64 sec{sec_};
+            i64 nano{nano_};
+
+            // Convert/truncate negative durations correctly.
+            if (sec < 0 && nano > 0)
+            {
+                ++sec;
+                nano -= 1'000'000'000;
+            }
+
+            return time::normalized<i64>{sec, nano};
+        }
     };
 }

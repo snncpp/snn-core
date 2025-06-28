@@ -11,7 +11,7 @@ namespace snn::time
 {
     // ## Classes
 
-    // ### stopwatch
+    // ### `stopwatch`
 
     class stopwatch final
     {
@@ -28,18 +28,20 @@ namespace snn::time
 
         [[nodiscard]] i64 microseconds() const noexcept
         {
-            return nanoseconds() / 1'000;
+            // This will not overflow for thousands of years.
+            return duration().to_microseconds<i64>(assume::not_negative);
         }
 
         [[nodiscard]] i64 milliseconds() const noexcept
         {
-            return nanoseconds() / 1'000'000;
+            // This will not overflow for millions of years.
+            return duration().to_milliseconds<i64>(assume::not_negative);
         }
 
         [[nodiscard]] i64 nanoseconds() const noexcept
         {
-            const auto d = duration();
-            return (d.seconds() * 1'000'000'000) + d.nanoseconds();
+            // This will not overflow for hundreds of years.
+            return duration().to_nanoseconds<i64>(assume::not_negative);
         }
 
         void reset() noexcept

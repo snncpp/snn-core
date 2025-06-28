@@ -18,8 +18,8 @@ namespace snn::app
             thread::sleep_for(time::milliseconds{2}.duration().value()).or_throw();
 
             const time::duration d1 = stopwatch.duration();
-            snn_require(d1.seconds() == 0);
-            snn_require(d1.nanoseconds() >= 2'000'000 && d1.nanoseconds() < 2'900'000);
+            snn_require(d1.seconds_part() == 0);
+            snn_require(d1.nanoseconds_part() >= 2'000'000 && d1.nanoseconds_part() < 2'900'000);
 
             // The stopwatch keeps running.
 

@@ -107,8 +107,8 @@ namespace snn::app
 
                 decltype(auto) d = p.duration();
                 static_assert(std::is_same_v<decltype(d), time::duration>);
-                snn_require(d.seconds() == 1396139955);
-                snn_require(d.nanoseconds() == 500'000'000);
+                snn_require(d.seconds_part() == 1396139955);
+                snn_require(d.nanoseconds_part() == 500'000'000);
             }
 
             // point{y, mon, d}
@@ -1002,7 +1002,7 @@ namespace snn
             const time::duration d = time::wall::since_epoch();
             time::point p1         = time::now();
             time::point p2         = time::now();
-            snn_require(p1.unix() == d.seconds() || p1.unix() == (d.seconds() + 1));
+            snn_require(p1.unix() == d.seconds_part() || p1.unix() == (d.seconds_part() + 1));
             snn_require(p2 > p1);
         }
 

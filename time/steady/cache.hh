@@ -11,7 +11,7 @@ namespace snn::time::steady
 {
     // ## Classes
 
-    // ### cache
+    // ### `cache`
 
     class cache final
     {
@@ -29,12 +29,12 @@ namespace snn::time::steady
         [[nodiscard]] i64 milliseconds() const noexcept
         {
             // This will not overflow for millions of years.
-            return (d_.seconds() * 1'000) + (d_.nanoseconds() / 1'000'000);
+            return d_.to_milliseconds<i64>(assume::not_negative);
         }
 
         [[nodiscard]] i64 seconds() const noexcept
         {
-            return d_.seconds();
+            return d_.to_seconds<i64>(assume::not_negative);
         }
 
         void update() noexcept

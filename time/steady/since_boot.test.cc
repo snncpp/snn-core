@@ -13,7 +13,7 @@ namespace snn::app
         bool example()
         {
             const time::duration d = time::steady::since_boot();
-            snn_require(d.seconds() > 0);
+            snn_require(d.seconds_part() > 0);
 
             return true;
         }
@@ -38,6 +38,6 @@ namespace snn
         const time::duration d2 = time::steady::since_boot();
 
         snn_require(d2 > d1);
-        snn_require(d1.seconds() == sec || d1.seconds() == (sec + 1));
+        snn_require(d1.seconds_part() == sec || d1.seconds_part() == (sec + 1));
     }
 }
