@@ -171,6 +171,11 @@ namespace snn::chr
         return static_cast<byte>(to_byte(c) - '0') <= ('9' - '0');
     }
 
+    [[nodiscard]] constexpr bool is_nonzero_digit(const char c) noexcept
+    {
+        return static_cast<byte>(to_byte(c) - '1') <= ('9' - '1');
+    }
+
     [[nodiscard]] constexpr bool is_hex(const char c) noexcept
     {
         return detail::hex_lookup.at(to_byte(c), assume::within_bounds) != chr::invalid;

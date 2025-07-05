@@ -145,6 +145,16 @@ namespace snn::app
                     }
                 }
 
+                // Non-zero digit (decimal).
+                if (c >= '1' && c <= '9')
+                {
+                    snn_require(chr::is_nonzero_digit(c));
+                }
+                else
+                {
+                    snn_require(!chr::is_nonzero_digit(c));
+                }
+
                 // Hex
                 if (c >= 'A' && c <= 'F')
                 {
