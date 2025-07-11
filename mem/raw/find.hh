@@ -13,6 +13,34 @@ namespace snn::mem::raw
 
     // ### `find`
 
+    namespace detail
+    {
+        template <typename T, octet Octet>
+            requires same_as<const T, const Octet>
+        constexpr T* find_slow(const not_null<T*> haystack_data,
+                               const byte_size<usize> haystack_size, const Octet needle) noexcept
+        {
+            // This is up to 14 times slower than the SIMD (SSE2) optimized `memchr` on FreeBSD 14.
+
+            T* const data    = haystack_data.get();
+            const usize size = haystack_size.get();
+            for (usize i = 0; i < size; ++i)
+            {
+                SNN_DIAGNOSTIC_PUSH
+                SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
+                if (data[i] == needle)
+                {
+                    return &data[i];
+                }
+
+                SNN_DIAGNOSTIC_POP
+            }
+
+            return nullptr;
+        }
+    }
+
     template <typename T, octet Octet>
         requires same_as<const T, const Octet>
     [[nodiscard]] constexpr T* find(const not_null<T*> haystack_data,
@@ -28,23 +56,7 @@ namespace snn::mem::raw
                                              haystack_size.get());
             }
 #endif
-
-            T* const data    = haystack_data.get();
-            const usize size = haystack_size.get();
-            for (usize i = 0; i < size; ++i)
-            {
-                SNN_DIAGNOSTIC_PUSH
-                SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
-
-                if (data[i] == needle)
-                {
-                    return data + i;
-                }
-
-                SNN_DIAGNOSTIC_POP
-            }
-
-            return nullptr;
+            return detail::find_slow(haystack_data, haystack_size, needle);
         }
         else
         {

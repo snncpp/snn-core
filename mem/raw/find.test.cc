@@ -15,13 +15,17 @@ namespace snn::app
     {
         constexpr bool example()
         {
-            {
-                const array<byte, 4> a{182, 0, 34, 182};
-                snn_require(mem::raw::find(a.data(), a.byte_size(), byte{1}) == nullptr);
-                snn_require(mem::raw::find(a.data(), a.byte_size(), byte{182}) == &a.get<0>());
-                snn_require(mem::raw::find(a.data(), a.byte_size(), byte{0}) == &a.get<1>());
-                snn_require(mem::raw::find(a.data(), a.byte_size(), byte{34}) == &a.get<2>());
-            }
+            const array<byte, 4> a{182, 0, 34, 182};
+            snn_require(mem::raw::find(a.data(), a.byte_size(), byte{1}) == nullptr);
+            snn_require(mem::raw::find(a.data(), a.byte_size(), byte{182}) == &a.get<0>());
+            snn_require(mem::raw::find(a.data(), a.byte_size(), byte{0}) == &a.get<1>());
+            snn_require(mem::raw::find(a.data(), a.byte_size(), byte{34}) == &a.get<2>());
+
+            return true;
+        }
+
+        constexpr bool test_find()
+        {
             {
                 array<i8, 4> a{-128, 0, 34, -128};
                 snn_require(mem::raw::find(a.writable(), a.byte_size(), i8{1}) == nullptr);
@@ -41,7 +45,7 @@ namespace snn::app
             return true;
         }
 
-        bool test_find()
+        bool test_find_rnd()
         {
             for (loop::count lc{100}; lc--;)
             {
@@ -50,22 +54,37 @@ namespace snn::app
                 if (haystack)
                 {
                     const char needle = haystack.back(assume::not_empty);
-                    const char* const p =
-                        mem::raw::find(haystack.data(), haystack.byte_size(), needle);
+
+                    auto* p = static_cast<const char*>(
+                        std::memchr(haystack.begin(), to_byte(needle), haystack.size()));
                     snn_require(p != nullptr);
-                    snn_require(p == static_cast<const char*>(std::memchr(
-                                         haystack.begin(), to_byte(needle), haystack.size())));
+                    snn_require(mem::raw::find(haystack.data(), haystack.byte_size(), needle) == p);
+                    snn_require(mem::raw::detail::find_slow(haystack.data(), haystack.byte_size(),
+                                                            needle) == p);
                 }
 
-                snn_require(mem::raw::find(haystack.data(), haystack.byte_size(), '\n') ==
-                            static_cast<const char*>(std::memchr(haystack.begin(), '\n',
-                                                                 haystack.size())));
-                snn_require(mem::raw::find(haystack.data(), haystack.byte_size(), '\0') ==
-                            static_cast<const char*>(std::memchr(haystack.begin(), '\0',
-                                                                 haystack.size())));
-                snn_require(mem::raw::find(haystack.data(), haystack.byte_size(), to_char(0xFF)) ==
-                            static_cast<const char*>(std::memchr(haystack.begin(), 0xFF,
-                                                                 haystack.size())));
+                {
+                    auto* p = static_cast<const char*>(std::memchr(haystack.begin(), '\n',
+                                                                   haystack.size()));
+                    snn_require(mem::raw::find(haystack.data(), haystack.byte_size(), '\n') == p);
+                    snn_require(mem::raw::detail::find_slow(haystack.data(), haystack.byte_size(),
+                                                            '\n') == p);
+                }
+                {
+                    auto* p = static_cast<const char*>(std::memchr(haystack.begin(), '\0',
+                                                                   haystack.size()));
+                    snn_require(mem::raw::find(haystack.data(), haystack.byte_size(), '\0') == p);
+                    snn_require(mem::raw::detail::find_slow(haystack.data(), haystack.byte_size(),
+                                                            '\0') == p);
+                }
+                {
+                    auto* p = static_cast<const char*>(std::memchr(haystack.begin(), 0xFF,
+                                                                   haystack.size()));
+                    snn_require(mem::raw::find(haystack.data(), haystack.byte_size(),
+                                               to_char(0xFF)) == p);
+                    snn_require(mem::raw::detail::find_slow(haystack.data(), haystack.byte_size(),
+                                                            to_char(0xFF)) == p);
+                }
             }
 
             return true;
@@ -78,6 +97,7 @@ namespace snn
     void unittest()
     {
         snn_static_require(app::example());
-        snn_require(app::test_find());
+        snn_static_require(app::test_find());
+        snn_require(app::test_find_rnd());
     }
 }
