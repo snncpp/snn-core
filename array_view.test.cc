@@ -121,11 +121,8 @@ namespace snn::app
                 snn_require(p == "abc");
                 snn_require(p.data().get() == src.data().get());
 
-                if (!std::is_constant_evaluated())
-                {
-                    snn_require(p.overlaps(src));
-                    snn_require(src.overlaps(p));
-                }
+                snn_require(p.overlaps(src));
+                snn_require(src.overlaps(p));
 
                 src.append("... trigger an allocation.");
                 snn_require(src.size() == 29);
@@ -861,11 +858,6 @@ namespace snn::app
                 snn_require(v.at(0).value() == 3);
                 snn_require(v.at(1).value() == 8);
                 snn_require(v.at(2).value() == 2);
-
-                if (!std::is_constant_evaluated())
-                {
-                    snn_require(v.overlaps(cpy));
-                }
             }
             {
                 array<int, 3> arr{3, 8, 2};
@@ -1394,6 +1386,82 @@ namespace snn::app
                 snn_require(arr.view().count("aBc") == 0);
                 snn_require(arr.view().count("abcd") == 0);
                 snn_require(arr.view().count("abc\0") == 0);
+            }
+
+            // overlaps
+            {
+                array<int, 4> a{3, 8, 2, 4};
+
+                snn_require(a.view().overlaps(a.view()));
+                snn_require(a.view().overlaps(a.view<>()));
+                snn_require(a.view().overlaps(std::as_const(a).view()));
+                snn_require(a.view().overlaps(std::as_const(a).view<>()));
+                snn_require(std::as_const(a).view().overlaps(a.view()));
+                snn_require(std::as_const(a).view().overlaps(a.view<>()));
+                snn_require(std::as_const(a).view().overlaps(std::as_const(a).view()));
+                snn_require(std::as_const(a).view().overlaps(std::as_const(a).view<>()));
+                static_assert(std::is_same_v<decltype(a.view()), array_view<int>>);
+                static_assert(
+                    std::is_same_v<decltype(std::as_const(a).view()), array_view<const int>>);
+
+                snn_require(a.view<>().overlaps(a.view()));
+                snn_require(a.view<>().overlaps(a.view<>()));
+                snn_require(a.view<>().overlaps(std::as_const(a).view()));
+                snn_require(a.view<>().overlaps(std::as_const(a).view<>()));
+                snn_require(std::as_const(a).view<>().overlaps(a.view()));
+                snn_require(std::as_const(a).view<>().overlaps(a.view<>()));
+                snn_require(std::as_const(a).view<>().overlaps(std::as_const(a).view()));
+                snn_require(std::as_const(a).view<>().overlaps(std::as_const(a).view<>()));
+                static_assert(std::is_same_v<decltype(a.view<>()), array_view<int, 4>>);
+                static_assert(
+                    std::is_same_v<decltype(std::as_const(a).view<>()), array_view<const int, 4>>);
+
+                if (!std::is_constant_evaluated())
+                {
+                    array<int, 4> b{3, 8, 2, 4};
+
+                    snn_require(!a.view().overlaps(b.view()));
+                    snn_require(!a.view().overlaps(b.view<>()));
+                    snn_require(!a.view().overlaps(std::as_const(b).view()));
+                    snn_require(!a.view().overlaps(std::as_const(b).view<>()));
+                    snn_require(!std::as_const(a).view().overlaps(b.view()));
+                    snn_require(!std::as_const(a).view().overlaps(b.view<>()));
+                    snn_require(!std::as_const(a).view().overlaps(std::as_const(b).view()));
+                    snn_require(!std::as_const(a).view().overlaps(std::as_const(b).view<>()));
+
+                    snn_require(!a.view<>().overlaps(b.view()));
+                    snn_require(!a.view<>().overlaps(b.view<>()));
+                    snn_require(!a.view<>().overlaps(std::as_const(b).view()));
+                    snn_require(!a.view<>().overlaps(std::as_const(b).view<>()));
+                    snn_require(!std::as_const(a).view<>().overlaps(b.view()));
+                    snn_require(!std::as_const(a).view<>().overlaps(b.view<>()));
+                    snn_require(!std::as_const(a).view<>().overlaps(std::as_const(b).view()));
+                    snn_require(!std::as_const(a).view<>().overlaps(std::as_const(b).view<>()));
+                }
+            }
+            {
+                strbuf a = "abc";
+                snn_require(a.overlaps(a));
+                snn_require(a.view().overlaps(a));
+                snn_require(a.view().overlaps(a.view()));
+                snn_require(a.view().overlaps(std::as_const(a).view()));
+                snn_require(std::as_const(a).view().overlaps(a));
+                snn_require(std::as_const(a).view().overlaps(a.view()));
+                snn_require(std::as_const(a).view().overlaps(std::as_const(a).view()));
+                static_assert(std::is_same_v<decltype(a.view()), strview>);
+                static_assert(std::is_same_v<decltype(std::as_const(a).view()), cstrview>);
+
+                if (!std::is_constant_evaluated())
+                {
+                    strbuf b = "abc";
+                    snn_require(!a.overlaps(b));
+                    snn_require(!a.view().overlaps(b));
+                    snn_require(!a.view().overlaps(b.view()));
+                    snn_require(!a.view().overlaps(std::as_const(b).view()));
+                    snn_require(!std::as_const(a).view().overlaps(b));
+                    snn_require(!std::as_const(a).view().overlaps(b.view()));
+                    snn_require(!std::as_const(a).view().overlaps(std::as_const(b).view()));
+                }
             }
 
             // transform

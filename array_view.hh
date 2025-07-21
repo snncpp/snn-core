@@ -665,8 +665,9 @@ namespace snn
 
         // #### Overlaps
 
-        template <usize C>
-        [[nodiscard]] constexpr bool overlaps(const array_view<const T, C> v) const noexcept
+        template <typename U, usize C>
+            requires same_as<const U, const T>
+        [[nodiscard]] constexpr bool overlaps(const array_view<U, C> v) const noexcept
         {
             return mem::raw::is_overlapping(v.begin(), v.end(), begin(), end());
         }
@@ -1300,9 +1301,11 @@ namespace snn
 
         // #### Overlaps
 
-        [[nodiscard]] constexpr bool overlaps(const array_view<const T> v) const noexcept
+        template <typename U, usize C>
+            requires same_as<const U, const T>
+        [[nodiscard]] constexpr bool overlaps(const array_view<U, C> v) const noexcept
         {
-            return mem::raw::is_overlapping(v.cbegin(), v.cend(), cbegin(), cend());
+            return mem::raw::is_overlapping(v.begin(), v.end(), begin(), end());
         }
 
         // #### Contiguous interface
@@ -1758,12 +1761,12 @@ namespace snn
             return count_ != 0 && data_[0] == c;
         }
 
-        [[nodiscard]] constexpr bool has_front(const transient<cstrview> s) const noexcept
+        [[nodiscard]] constexpr bool has_front(const transient<cstrview> prefix) const noexcept
         {
-            const cstrview sv = s.get();
-            if (sv.count() <= count_)
+            const cstrview s = prefix.get();
+            if (s.count() <= count_)
             {
-                return mem::raw::is_equal(data(), sv.data(), sv.byte_size());
+                return mem::raw::is_equal(data(), s.data(), s.byte_size());
             }
             return false;
         }
@@ -1773,13 +1776,13 @@ namespace snn
             return count_ != 0 && data_[count_ - 1] == c;
         }
 
-        [[nodiscard]] constexpr bool has_back(const transient<cstrview> s) const noexcept
+        [[nodiscard]] constexpr bool has_back(const transient<cstrview> suffix) const noexcept
         {
-            const cstrview sv = s.get();
-            if (sv.count() <= count_)
+            const cstrview s = suffix.get();
+            if (s.count() <= count_)
             {
-                const usize pos = count_ - sv.count();
-                return mem::raw::is_equal(not_null{data_ + pos}, sv.data(), sv.byte_size());
+                const usize pos = count_ - s.count();
+                return mem::raw::is_equal(not_null{data_ + pos}, s.data(), s.byte_size());
             }
             return false;
         }
@@ -1788,8 +1791,8 @@ namespace snn
 
         [[nodiscard]] constexpr bool overlaps(const transient<cstrview> s) const noexcept
         {
-            const cstrview sv = s.get();
-            return mem::raw::is_overlapping(sv.cbegin(), sv.cend(), cbegin(), cend());
+            const cstrview other = s.get();
+            return mem::raw::is_overlapping(other.cbegin(), other.cend(), cbegin(), cend());
         }
 
         template <typename Buf>
@@ -2269,15 +2272,15 @@ namespace snn
 
         constexpr void fill(const transient<cstrview> s) noexcept
         {
-            const cstrview sv = s.get();
-            if (sv.count() >= 2)
+            const cstrview contents = s.get();
+            if (contents.size() >= 2)
             {
                 char* dst      = data_;
                 usize dst_size = count_;
 
                 // First copy, might be 0 bytes and can overlap.
-                snn::byte_size<usize> bsize{math::min(dst_size, sv.size())};
-                mem::raw::move(sv.data(), not_null{dst}, bsize);
+                snn::byte_size<usize> bsize{math::min(dst_size, contents.size())};
+                mem::raw::move(contents.data(), not_null{dst}, bsize);
 
                 const char* src = dst;
                 usize src_size  = bsize.get();
@@ -2295,9 +2298,9 @@ namespace snn
                     src_size += bsize.get();
                 }
             }
-            else if (sv)
+            else if (contents)
             {
-                fill(sv.front(assume::not_empty));
+                fill(contents.front(assume::not_empty));
             }
         }
 
@@ -2312,8 +2315,7 @@ namespace snn
 
         [[nodiscard]] constexpr bool overlaps(const transient<cstrview> s) const noexcept
         {
-            const cstrview sv = s.get();
-            return mem::raw::is_overlapping(sv.cbegin(), sv.cend(), cbegin(), cend());
+            return s.get().overlaps(view());
         }
 
         template <typename Buf>

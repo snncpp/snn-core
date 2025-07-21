@@ -626,28 +626,29 @@ namespace snn
 
         constexpr void insert_at(const usize pos, const transient<cstrview> s)
         {
-            const cstrview sv = s.get();
-            if (!std::is_constant_evaluated() && !buf_.overlaps(sv)) [[likely]]
+            const cstrview src = s.get();
+            if (!std::is_constant_evaluated() && !buf_.overlaps(src)) [[likely]]
             {
-                mem::raw::copy(sv.data(), buf_.replace_for_overwrite(pos, 0, sv.size()).writable(),
-                               sv.byte_size(), assume::no_overlap);
+                mem::raw::copy(src.data(),
+                               buf_.replace_for_overwrite(pos, 0, src.size()).writable(),
+                               src.byte_size(), assume::no_overlap);
             }
             else
             {
                 // This could be optimized, but it's currently not worth the complexity.
                 Buffer tmp{buf_.view()};
-                mem::raw::copy(sv.data(), tmp.replace_for_overwrite(pos, 0, sv.size()).writable(),
-                               sv.byte_size(), assume::no_overlap);
+                mem::raw::copy(src.data(), tmp.replace_for_overwrite(pos, 0, src.size()).writable(),
+                               src.byte_size(), assume::no_overlap);
                 buf_.swap(tmp);
             }
         }
 
         constexpr void insert_at(const usize pos, const transient<cstrview> s, assume::no_overlap_t)
         {
-            const cstrview sv = s.get();
-            snn_should(std::is_constant_evaluated() || !buf_.overlaps(sv));
-            mem::raw::copy(sv.data(), buf_.replace_for_overwrite(pos, 0, sv.size()).writable(),
-                           sv.byte_size(), assume::no_overlap);
+            const cstrview src = s.get();
+            snn_should(std::is_constant_evaluated() || !buf_.overlaps(src));
+            mem::raw::copy(src.data(), buf_.replace_for_overwrite(pos, 0, src.size()).writable(),
+                           src.byte_size(), assume::no_overlap);
         }
 
         template <same_as<const char> ConstChar, usize N>
@@ -884,9 +885,9 @@ namespace snn
 
         // #### Overlaps
 
-        [[nodiscard]] constexpr bool overlaps(const cstrview s) const noexcept
+        [[nodiscard]] constexpr bool overlaps(const transient<cstrview> s) const noexcept
         {
-            return buf_.overlaps(s);
+            return buf_.overlaps(s.get());
         }
 
         // #### Contiguous interface
@@ -986,7 +987,7 @@ namespace snn
             {
                 const usize diff =
                     replacement.size() - math::min(needle.size(), replacement.size());
-                // Reserve for one replacement and an overflow here can't do any harm.
+                // Reserve for one replacement, can't overflow (57-bit-virtual-address-space).
                 strcore tmp{init::reserve, subject.size() + diff};
 
                 usize last_pos = 0;

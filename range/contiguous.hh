@@ -824,11 +824,11 @@ namespace snn::range
         }
 
         template <u16 Offset = 0>
-        [[nodiscard]] constexpr bool has_front(const transient<cstrview> s) const noexcept
+        [[nodiscard]] constexpr bool has_front(const transient<cstrview> prefix) const noexcept
         {
-            const cstrview sv = s.get();
-            return count() >= (Offset + sv.size()) &&
-                   mem::raw::is_equal(not_null{first_ + Offset}, sv.data(), sv.byte_size());
+            const cstrview s = prefix.get();
+            return count() >= (Offset + s.size()) &&
+                   mem::raw::is_equal(not_null{first_ + Offset}, s.data(), s.byte_size());
         }
 
         template <predicate<char> OneArgPred>
@@ -848,13 +848,13 @@ namespace snn::range
             return first_ != last_ && *(last_ - 1) == c;
         }
 
-        [[nodiscard]] constexpr bool has_back(const transient<cstrview> s) const noexcept
+        [[nodiscard]] constexpr bool has_back(const transient<cstrview> suffix) const noexcept
         {
-            const cstrview sv = s.get();
-            if (sv.size() <= count())
+            const cstrview s = suffix.get();
+            if (s.size() <= count())
             {
-                const usize pos = count() - sv.size();
-                return mem::raw::is_equal(not_null{first_ + pos}, sv.data(), sv.byte_size());
+                const usize pos = count() - s.size();
+                return mem::raw::is_equal(not_null{first_ + pos}, s.data(), s.byte_size());
             }
             return false;
         }
@@ -1399,11 +1399,11 @@ namespace snn::range
         }
 
         template <u16 Offset = 0>
-        [[nodiscard]] constexpr bool has_front(const transient<cstrview> s) const noexcept
+        [[nodiscard]] constexpr bool has_front(const transient<cstrview> prefix) const noexcept
         {
-            const cstrview sv = s.get();
-            return count() >= (Offset + sv.size()) &&
-                   mem::raw::is_equal(not_null{first_ + Offset}, sv.data(), sv.byte_size());
+            const cstrview s = prefix.get();
+            return count() >= (Offset + s.size()) &&
+                   mem::raw::is_equal(not_null{first_ + Offset}, s.data(), s.byte_size());
         }
 
         template <predicate<char> OneArgPred>
@@ -1423,13 +1423,13 @@ namespace snn::range
             return first_ != last_ && *(last_ - 1) == c;
         }
 
-        [[nodiscard]] constexpr bool has_back(const transient<cstrview> s) const noexcept
+        [[nodiscard]] constexpr bool has_back(const transient<cstrview> suffix) const noexcept
         {
-            const cstrview sv = s.get();
-            if (sv.size() <= count())
+            const cstrview s = suffix.get();
+            if (s.size() <= count())
             {
-                const usize pos = count() - sv.size();
-                return mem::raw::is_equal(not_null{first_ + pos}, sv.data(), sv.byte_size());
+                const usize pos = count() - s.size();
+                return mem::raw::is_equal(not_null{first_ + pos}, s.data(), s.byte_size());
             }
             return false;
         }
