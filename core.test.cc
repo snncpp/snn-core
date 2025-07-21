@@ -1176,6 +1176,21 @@ namespace snn::app
             static_assert(a > c);
             static_assert(!(c > a));
 
+            // Can hold another integral wrapper.
+
+            static_assert(detail::wrapper<byte_size<usize>>);
+            static_assert(detail::wrapper_of_kind<byte_size<usize>, std::is_integral>);
+
+            constexpr not_zero bs{byte_size{123}};
+            static_assert(std::is_same_v<decltype(bs), const not_zero<byte_size<usize>>>);
+            static_assert(bs.get().get() == 123);
+
+            static_assert(detail::wrapper<not_zero<usize>>);
+            static_assert(detail::wrapper_of_kind<not_zero<usize>, std::is_integral>);
+
+            static_assert(detail::wrapper<not_zero<byte_size<usize>>>);
+            static_assert(!detail::wrapper_of_kind<not_zero<byte_size<usize>>, std::is_integral>);
+
             return true;
         }
 

@@ -1209,12 +1209,25 @@ namespace snn
 
     // ## Wrappers
 
+    namespace detail
+    {
+        template <typename T>
+        concept wrapper = requires { typename T::wrapped_type; };
+
+        template <typename T, template <typename> typename Is>
+        concept wrapper_of_kind = wrapper<T> && Is<typename T::wrapped_type>::value;
+    }
+
     // ### byte_size
 
     template <strict_unsigned_integral UInt>
     class byte_size final
     {
       public:
+        // #### Types
+
+        using wrapped_type = UInt;
+
         // #### Explicit constructors
 
         constexpr explicit byte_size(const not_deduced_t<UInt> size) noexcept
@@ -1264,6 +1277,12 @@ namespace snn
     class not_null final
     {
       public:
+        // #### Types
+
+        using wrapped_type = Ptr;
+
+        // #### Explicit constructors
+
         constexpr explicit not_null(const Ptr ptr) noexcept
             : ptr_{ptr}
         {
@@ -1272,11 +1291,15 @@ namespace snn
 
         explicit not_null(std::nullptr_t) = delete;
 
+        // #### Converting constructors
+
         template <convertible_to<Ptr> P>
         constexpr not_null(const not_null<P> other) noexcept
             : ptr_{other.get()}
         {
         }
+
+        // #### Value
 
         [[nodiscard]] constexpr Ptr get() const noexcept
         {
@@ -1289,25 +1312,43 @@ namespace snn
 
     // ### not_zero
 
-    template <integral Int>
+    template <typename T>
+        requires integral<T> || detail::wrapper_of_kind<T, std::is_integral>
     class not_zero final
     {
       public:
-        constexpr explicit not_zero(const Int value) noexcept
+        // #### Types
+
+        using wrapped_type = T;
+
+        // #### Explicit constructors
+
+        constexpr explicit not_zero(const T value) noexcept
             : value_{value}
         {
-            snn_should(value_ != 0);
+            if constexpr (std::is_integral_v<T>)
+            {
+                snn_should(value_ != 0);
+            }
+            else
+            {
+                snn_should(value_.get() != 0);
+            }
         }
 
-        [[nodiscard]] constexpr Int get() const noexcept
+        // #### Value
+
+        [[nodiscard]] constexpr T get() const noexcept
         {
             return value_;
         }
 
+        // #### Comparison operators
+
         constexpr auto operator<=>(const not_zero&) const noexcept = default;
 
       private:
-        Int value_;
+        T value_;
     };
 
     // ### numeric
@@ -1316,6 +1357,10 @@ namespace snn
     class numeric final
     {
       public:
+        // #### Types
+
+        using wrapped_type = Num;
+
         // #### Explicit constructors
 
         constexpr explicit numeric(const Num value) noexcept
@@ -1360,6 +1405,10 @@ namespace snn
     class semi_const final
     {
       public:
+        // #### Types
+
+        using wrapped_type = T;
+
         // #### Converting constructor
 
         constexpr semi_const(T value) noexcept
@@ -1408,6 +1457,10 @@ namespace snn
     class transient final
     {
       public:
+        // #### Types
+
+        using wrapped_type = T;
+
         // #### Converting constructor
 
         template <typename U>
