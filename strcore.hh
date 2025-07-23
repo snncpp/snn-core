@@ -602,6 +602,18 @@ namespace snn
 
         // #### To
 
+        template <brace_constructible_from<pointer, usize> T>
+        [[nodiscard]] constexpr T to() noexcept(noexcept(T{pointer{}, usize{}}))
+        {
+            return buf_.view().template to<T>();
+        }
+
+        template <brace_constructible_from<const_pointer, usize> T>
+        [[nodiscard]] constexpr T to() const noexcept(noexcept(T{const_pointer{}, usize{}}))
+        {
+            return buf_.view().template to<T>();
+        }
+
         template <strict_integral Int, math::base Base = math::base::decimal>
         [[nodiscard]] constexpr optional<Int> to() const noexcept
         {

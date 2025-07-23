@@ -2411,6 +2411,26 @@ namespace snn::app
                 snn_require(s1 == "abcdefghijklmnopqrstuvwxyz");
             }
 
+            // to<T>
+            {
+                T s{"abc"};
+                auto p = s.template to<pair::value_count<char*, usize>>();
+                snn_require(p.value == s.begin());
+                snn_require(p.count == s.size());
+            }
+            {
+                T s{"abc"};
+                auto p = s.template to<pair::value_count<const char*, usize>>();
+                snn_require(p.value == s.begin());
+                snn_require(p.count == s.size());
+            }
+            {
+                const T s{"abc"};
+                auto p = s.template to<pair::value_count<const char*, usize>>();
+                snn_require(p.value == s.begin());
+                snn_require(p.count == s.size());
+            }
+
             // each
             {
                 T s{"One Two Three"};
