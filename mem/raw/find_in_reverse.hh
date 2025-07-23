@@ -1,10 +1,11 @@
 // Copyright (c) 2025 Mikael Simonsson <https://mikaelsimonsson.com>.
 // SPDX-License-Identifier: BSL-1.0
 
-// # Find in reverse (`memrchr`)
+// # Find in reverse (`memrchr` & reverse `memmem`)
 
 #pragma once
 
+#include "snn-core/mem/raw/is_equal.hh"
 #include "snn-core/mem/raw/load.hh"
 #include <string.h> // memrchr
 
@@ -95,5 +96,43 @@ namespace snn::mem::raw
 #endif
 
         return detail::find_in_reverse(haystack_data, haystack_size, needle);
+    }
+
+    template <octet T, octet U>
+        requires same_as<const T, const U>
+    [[nodiscard]] constexpr T* find_in_reverse(
+        const not_null<T*> haystack_data, const byte_size<usize> haystack_size,
+        const not_null<U*> needle_data, const not_zero<byte_size<usize>> needle_size) noexcept
+    {
+        if (haystack_size.get() < needle_size.get().get())
+        {
+            return nullptr;
+        }
+
+        SNN_DIAGNOSTIC_PUSH
+        SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
+
+        const auto needle_prefix = needle_data.get()[0];
+        auto* const first        = haystack_data.get();
+        auto* last               = first + (haystack_size.get() - needle_size.get().get() + 1);
+        snn_should(first < last);
+        do
+        {
+            last = mem::raw::find_in_reverse(not_null{first}, byte_size{to_usize(last - first)},
+                                             needle_prefix);
+            if (last == nullptr)
+            {
+                return nullptr;
+            }
+
+            if (mem::raw::is_equal(not_null{last}, needle_data, needle_size.get()))
+            {
+                return last;
+            }
+        } while (first < last);
+
+        SNN_DIAGNOSTIC_POP
+
+        return nullptr;
     }
 }

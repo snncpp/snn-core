@@ -1,7 +1,7 @@
 // Copyright (c) 2025 Mikael Simonsson <https://mikaelsimonsson.com>.
 // SPDX-License-Identifier: BSL-1.0
 
-// # Find (`memchr`, `memmem`)
+// # Find (`memchr` & `memmem`)
 
 #pragma once
 
