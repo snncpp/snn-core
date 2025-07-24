@@ -513,6 +513,26 @@ namespace snn::app
                 snn_require(s.count("abcd") == 0);
                 snn_require(s.count("abc\0") == 0);
             }
+            {
+                T s{"aaaaaaaa"};
+
+                snn_require(s.count('a') == 8);
+                snn_require(s.count("") == 9);
+                snn_require(s.count("a") == 8);
+                snn_require(s.count("aaa") == 2);     // Non-overlapping.
+                snn_require(s.count("aaaa") == 2);    // Non-overlapping.
+                snn_require(s.count("aaaaa") == 1);   // Non-overlapping.
+                snn_require(s.count("aaaaaa") == 1);  // Non-overlapping.
+                snn_require(s.count("aaaaaaa") == 1); // Non-overlapping.
+                snn_require(s.count("aaaaaaaa") == 1);
+
+                snn_require(s.count('b') == 0);
+                snn_require(s.count("b") == 0);
+                snn_require(s.count("aab") == 0);
+                snn_require(s.count("aaa\0") == 0);
+                snn_require(s.count("aaa\0") == 0);
+                snn_require(s.count("aaaaaaaaa") == 0);
+            }
 
             // find
             {
@@ -2178,7 +2198,7 @@ namespace snn::app
                 T s{"One Two Three"};
                 snn_require(size_eq(s, 13));
 
-                snn_require(s.replace("", "") == 0);
+                snn_require(s.replace("", "") == 14);
                 snn_require(s == "One Two Three");
                 snn_require(size_eq(s, 13));
 
@@ -2219,6 +2239,9 @@ namespace snn::app
                 snn_require(s.replace('a', 'b') == 7);
                 snn_require(s == "bbbbbbb");
                 snn_require(size_eq(s, 7));
+                snn_require(s.replace("bbb", "abb") == 2); // Non-overlapping.
+                snn_require(s == "abbabbb");
+                snn_require(size_eq(s, 7));
 
                 s.clear();
                 snn_require(s.replace("ab", "cd") == 0);
@@ -2256,6 +2279,90 @@ namespace snn::app
                 snn_require(s.replace(s.view_offset(-5), "Four", 1) == 3);
                 snn_require(s == "ThreeFourFourFour");
                 snn_require(size_eq(s, 17));
+
+                // Empty needle.
+
+                s = "One";
+                snn_require(s.replace("", "_", constant::npos) == 0);
+                snn_require(s == "One");
+                snn_require(size_eq(s, 3));
+
+                s = "One";
+                snn_require(s.replace("", "_", 4) == 0);
+                snn_require(s == "One");
+                snn_require(size_eq(s, 3));
+
+                s = "One";
+                snn_require(s.replace("", "_", 3) == 1);
+                snn_require(s == "One_");
+                snn_require(size_eq(s, 4));
+
+                s = "One";
+                snn_require(s.replace("", "_", 2) == 2);
+                snn_require(s == "On_e_");
+                snn_require(size_eq(s, 5));
+
+                s = "One";
+                snn_require(s.replace("", "_", 1) == 3);
+                snn_require(s == "O_n_e_");
+                snn_require(size_eq(s, 6));
+
+                s = "One";
+                snn_require(s.replace("", "_") == 4);
+                snn_require(s == "_O_n_e_");
+                snn_require(size_eq(s, 7));
+
+                s = "abcdefghijklmnopqrstuvwxyz";
+                snn_require(s.replace("", "~-", 23) == 4);
+                snn_require(s == "abcdefghijklmnopqrstuvw~-x~-y~-z~-");
+                snn_require(size_eq(s, 34));
+
+                s.clear();
+                snn_require(s.replace("", "_") == 1);
+                snn_require(s == "_");
+                snn_require(size_eq(s, 1));
+
+                // Empty needle, empty replacement.
+
+                s = "One";
+                snn_require(s.replace("", "", constant::npos) == 0);
+                snn_require(s == "One");
+                snn_require(size_eq(s, 3));
+
+                s = "One";
+                snn_require(s.replace("", "", 4) == 0);
+                snn_require(s == "One");
+                snn_require(size_eq(s, 3));
+
+                s = "One";
+                snn_require(s.replace("", "", 3) == 1);
+                snn_require(s == "One");
+                snn_require(size_eq(s, 3));
+
+                s = "One";
+                snn_require(s.replace("", "", 2) == 2);
+                snn_require(s == "One");
+                snn_require(size_eq(s, 3));
+
+                s = "One";
+                snn_require(s.replace("", "", 1) == 3);
+                snn_require(s == "One");
+                snn_require(size_eq(s, 3));
+
+                s = "One";
+                snn_require(s.replace("", "") == 4);
+                snn_require(s == "One");
+                snn_require(size_eq(s, 3));
+
+                s = "abcdefghijklmnopqrstuvwxyz";
+                snn_require(s.replace("", "", 23) == 4);
+                snn_require(s == "abcdefghijklmnopqrstuvwxyz");
+                snn_require(size_eq(s, 26));
+
+                s.clear();
+                snn_require(s.replace("", "") == 1);
+                snn_require(s == "");
+                snn_require(size_eq(s, 0));
             }
 
             // remove
@@ -2271,7 +2378,7 @@ namespace snn::app
                 snn_require(s == "TwoThree");
                 snn_require(size_eq(s, 8));
 
-                snn_require(s.remove("") == 0);
+                snn_require(s.remove("") == 9);
                 snn_require(s == "TwoThree");
                 snn_require(size_eq(s, 8));
 

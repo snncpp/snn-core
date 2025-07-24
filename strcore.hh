@@ -980,9 +980,9 @@ namespace snn
         constexpr usize replace_(const cstrview needle, const cstrview replacement,
                                  const usize start_pos)
         {
-            if (needle.is_empty())
+            if (needle.is_empty()) [[unlikely]]
             {
-                return 0;
+                return replace_with_empty_needle_(replacement, start_pos);
             }
 
             strview subject = view();
@@ -1090,6 +1090,46 @@ namespace snn
             }
 
             return replace_count;
+        }
+
+        constexpr usize replace_with_empty_needle_(const cstrview replacement,
+                                                   const usize start_pos)
+        {
+            strview subject = view();
+
+            if (start_pos > subject.size())
+            {
+                return 0;
+            }
+
+            if (start_pos == subject.size())
+            {
+                append(replacement);
+                return 1;
+            }
+
+            const usize replacement_count = subject.size() - start_pos + 1;
+
+            if (replacement.is_empty())
+            {
+                return replacement_count;
+            }
+
+            // This could technically overflow and reserve less than needed (only delays exception).
+            strcore tmp{init::reserve, subject.size() + (replacement_count * replacement.size())};
+
+            tmp.append(subject.view(0, start_pos));
+            tmp.append(replacement);
+
+            for (const auto c : subject.view(start_pos))
+            {
+                tmp.append(c);
+                tmp.append(replacement);
+            }
+
+            swap(tmp);
+
+            return replacement_count;
         }
     };
 
