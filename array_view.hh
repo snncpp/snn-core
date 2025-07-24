@@ -26,12 +26,13 @@
 #include "snn-core/algo/sort.fwd.hh"
 #include "snn-core/ascii/to_integral.hh"
 #include "snn-core/ascii/to_integral_prefix.hh"
-#include "snn-core/detail/array_view/common.hh"
 #include "snn-core/detail/cityhash64/hash.hh"
 #include "snn-core/math/common.hh"
 #include "snn-core/mem/raw/compare.hh"
 #include "snn-core/mem/raw/copy.hh"
 #include "snn-core/mem/raw/fill.hh"
+#include "snn-core/mem/raw/find.hh"
+#include "snn-core/mem/raw/find_in_reverse.hh"
 #include "snn-core/mem/raw/is_equal.hh"
 #include "snn-core/mem/raw/is_overlapping.hh"
 #include "snn-core/mem/raw/load.hh"
@@ -44,6 +45,62 @@
 
 namespace snn
 {
+namespace detail::array_view
+{
+    // For `array_view<[const] char>` specializations that never hold null pointers.
+    inline char single_char = '\xFF'; // Not null-terminated.
+
+    struct position_count final
+    {
+        usize position;
+        usize count;
+    };
+
+    constexpr position_count from_offset(const usize current_count, const isize pos,
+                                         const isize count) noexcept
+    {
+        // This code is branchless (using conditional moves), don't change it without checking
+        // the generated assembly. Tested with Clang 13.
+
+        // The largest addressable memory block is always less than max(usize) / 2.
+        const isize signed_count = to_isize(current_count);
+
+        // Start position when pos is zero or positive.
+        isize start_pos = pos;
+
+        // Start position when pos is negative.
+        if (pos < 0)
+        {
+            start_pos = signed_count + pos; // This can never overflow.
+        }
+
+        // End position when count is zero or positive.
+        isize end_pos = 0;
+        if (__builtin_add_overflow(start_pos, count, &end_pos))
+        {
+            end_pos = signed_count;
+        }
+
+        // End position when count is negative.
+        if (count < 0)
+        {
+            end_pos = signed_count + count; // This can never overflow.
+        }
+
+        start_pos = math::max(start_pos, 0);
+
+        isize diff = 0;
+        if (__builtin_sub_overflow(end_pos, start_pos, &diff))
+        {
+            diff = 0;
+        }
+        diff = math::max(diff, 0);
+
+        // Unsigned position and count (can still be invalid).
+        return {to_usize(start_pos), to_usize(diff)};
+    }
+}
+
     SNN_DIAGNOSTIC_PUSH
     SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
 
@@ -1439,6 +1496,7 @@ namespace snn
             {
                 data_ = replace_if_nullptr_(data_);
             }
+            snn_should(data_ != nullptr);
         }
 
         template <usize Count>
@@ -1684,67 +1742,138 @@ namespace snn
         [[nodiscard]] constexpr usize count(const same_as<char> auto needle) const noexcept
         {
             usize needle_count = 0;
-            for (usize i = 0; i < count_; ++i)
+
+            const char* cur        = data_;
+            const char* const last = cur + count_;
+            do
             {
-                if (data_[i] == needle)
+                cur = mem::raw::find(not_null{cur}, snn::byte_size{to_usize(last - cur)}, needle);
+                if (cur == nullptr)
                 {
-                    ++needle_count;
+                    break;
                 }
-            }
+                ++cur;
+                ++needle_count;
+            } while (cur < last);
+
             return needle_count;
         }
 
         [[nodiscard]] constexpr usize count(const transient<cstrview> needle) const noexcept
         {
-            const cstrview ndl = needle.get();
+            const cstrview n = needle.get();
 
-            if (ndl.is_empty())
+            if (n.is_empty())
             {
                 return count_ + 1;
             }
 
             usize needle_count = 0;
-            usize start_pos    = 0;
-            while (true)
+
+            const char* cur        = data_;
+            const char* const last = cur + count_;
+            do
             {
-                start_pos =
-                    detail::array_view::find(data_, count_, ndl.data_, ndl.count_, start_pos)
-                        .value_or_npos();
-                if (start_pos == constant::npos)
+                cur = mem::raw::find(not_null{cur}, snn::byte_size{to_usize(last - cur)}, n.data(),
+                                     not_zero{n.byte_size()});
+                if (cur == nullptr)
                 {
                     break;
                 }
-                start_pos += ndl.count();
+                cur += n.size();
                 ++needle_count;
-            }
+            } while (cur < last);
+
             return needle_count;
         }
 
         [[nodiscard]] constexpr optional_index find(const same_as<char> auto c,
                                                     const usize start_pos = 0) const noexcept
         {
-            return detail::array_view::find(data_, count_, c, start_pos);
+            if (start_pos < count_)
+            {
+                const char* const p = mem::raw::find(not_null{data_ + start_pos},
+                                                     snn::byte_size{count_ - start_pos}, c);
+                if (p != nullptr)
+                {
+                    return to_usize(p - data_);
+                }
+            }
+            return constant::npos;
         }
 
         [[nodiscard]] constexpr optional_index find(const transient<cstrview> needle,
                                                     const usize start_pos = 0) const noexcept
         {
-            const cstrview ndl = needle.get();
-            return detail::array_view::find(data_, count_, ndl.data_, ndl.count_, start_pos);
+            if (start_pos > count_)
+            {
+                return constant::npos;
+            }
+
+            const cstrview n = needle.get();
+
+            if (n.is_empty())
+            {
+                return start_pos;
+            }
+
+            const char* const p = mem::raw::find(not_null{data_ + start_pos},        //
+                                                 snn::byte_size{count_ - start_pos}, //
+                                                 n.data(), not_zero{n.byte_size()});
+            if (p != nullptr)
+            {
+                return to_usize(p - data_);
+            }
+            return constant::npos;
         }
 
         [[nodiscard]] constexpr optional_index find_in_reverse(
             const same_as<char> auto c, const usize start_pos = constant::npos) const noexcept
         {
-            return detail::array_view::find_in_reverse(data_, count_, c, start_pos);
+            usize data_size = count_;
+
+            if (start_pos < data_size)
+            {
+                data_size = start_pos + 1;
+            }
+
+            const char* const p =
+                mem::raw::find_in_reverse(not_null{data_}, snn::byte_size{data_size}, c);
+            if (p != nullptr)
+            {
+                return to_usize(p - data_);
+            }
+
+            return constant::npos;
         }
 
         [[nodiscard]] constexpr optional_index find_in_reverse(
             const transient<cstrview> needle, const usize start_pos = constant::npos) const noexcept
         {
-            const cstrview ndl = needle.get();
-            return detail::array_view::find_in_reverse(data_, count_, ndl.data_, ndl.count_,
-                                                       start_pos);
+            const cstrview n = needle.get();
+
+            if (n.is_empty())
+            {
+                return math::min(count_, start_pos);
+            }
+
+            usize data_size = count_;
+
+            if (start_pos < data_size)
+            {
+                // This can't overflow (57-bit-virtual-address-space).
+                data_size = math::min(count_, start_pos + n.size());
+            }
+
+            const char* const p = mem::raw::find_in_reverse(not_null{data_},           //
+                                                            snn::byte_size{data_size}, //
+                                                            n.data(), not_zero{n.byte_size()});
+            if (p != nullptr)
+            {
+                return to_usize(p - data_);
+            }
+
+            return constant::npos;
         }
 
         // #### Hash
@@ -1922,6 +2051,7 @@ namespace snn
             {
                 data_ = replace_if_nullptr_(data_);
             }
+            snn_should(data_ != nullptr);
         }
 
         template <usize Count>
