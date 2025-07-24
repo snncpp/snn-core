@@ -60,28 +60,28 @@ namespace snn
                                              const isize count) noexcept
         {
             // This code is branchless (using conditional moves), don't change it without checking
-            // the generated assembly. Tested with Clang 13.
+            // the generated assembly.
 
-            // The largest addressable memory block is always less than max(usize) / 2.
+            // This cannot overflow (57-bit-virtual-address-space).
             const isize signed_count = to_isize(current_count);
 
-            // Start position when pos is zero or positive.
+            // Start position when `pos` is zero or positive.
             isize start_pos = pos;
 
-            // Start position when pos is negative.
+            // Start position when `pos` is negative.
             if (pos < 0)
             {
                 start_pos = signed_count + pos; // This can never overflow.
             }
 
-            // End position when count is zero or positive.
+            // End position when `count` is zero or positive.
             isize end_pos = 0;
             if (__builtin_add_overflow(start_pos, count, &end_pos))
             {
                 end_pos = signed_count;
             }
 
-            // End position when count is negative.
+            // End position when `count` is negative.
             if (count < 0)
             {
                 end_pos = signed_count + count; // This can never overflow.
