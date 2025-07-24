@@ -45,61 +45,61 @@
 
 namespace snn
 {
-namespace detail::array_view
-{
-    // For `array_view<[const] char>` specializations that never hold null pointers.
-    inline char single_char = '\xFF'; // Not null-terminated.
-
-    struct position_count final
+    namespace detail::array_view
     {
-        usize position;
-        usize count;
-    };
+        // For `array_view<[const] char>` specializations that never hold null pointers.
+        inline char single_char = '\xFF'; // Not null-terminated.
 
-    constexpr position_count from_offset(const usize current_count, const isize pos,
-                                         const isize count) noexcept
-    {
-        // This code is branchless (using conditional moves), don't change it without checking
-        // the generated assembly. Tested with Clang 13.
-
-        // The largest addressable memory block is always less than max(usize) / 2.
-        const isize signed_count = to_isize(current_count);
-
-        // Start position when pos is zero or positive.
-        isize start_pos = pos;
-
-        // Start position when pos is negative.
-        if (pos < 0)
+        struct position_count final
         {
-            start_pos = signed_count + pos; // This can never overflow.
-        }
+            usize position;
+            usize count;
+        };
 
-        // End position when count is zero or positive.
-        isize end_pos = 0;
-        if (__builtin_add_overflow(start_pos, count, &end_pos))
+        constexpr position_count from_offset(const usize current_count, const isize pos,
+                                             const isize count) noexcept
         {
-            end_pos = signed_count;
+            // This code is branchless (using conditional moves), don't change it without checking
+            // the generated assembly. Tested with Clang 13.
+
+            // The largest addressable memory block is always less than max(usize) / 2.
+            const isize signed_count = to_isize(current_count);
+
+            // Start position when pos is zero or positive.
+            isize start_pos = pos;
+
+            // Start position when pos is negative.
+            if (pos < 0)
+            {
+                start_pos = signed_count + pos; // This can never overflow.
+            }
+
+            // End position when count is zero or positive.
+            isize end_pos = 0;
+            if (__builtin_add_overflow(start_pos, count, &end_pos))
+            {
+                end_pos = signed_count;
+            }
+
+            // End position when count is negative.
+            if (count < 0)
+            {
+                end_pos = signed_count + count; // This can never overflow.
+            }
+
+            start_pos = math::max(start_pos, 0);
+
+            isize diff = 0;
+            if (__builtin_sub_overflow(end_pos, start_pos, &diff))
+            {
+                diff = 0;
+            }
+            diff = math::max(diff, 0);
+
+            // Unsigned position and count (can still be invalid).
+            return {to_usize(start_pos), to_usize(diff)};
         }
-
-        // End position when count is negative.
-        if (count < 0)
-        {
-            end_pos = signed_count + count; // This can never overflow.
-        }
-
-        start_pos = math::max(start_pos, 0);
-
-        isize diff = 0;
-        if (__builtin_sub_overflow(end_pos, start_pos, &diff))
-        {
-            diff = 0;
-        }
-        diff = math::max(diff, 0);
-
-        // Unsigned position and count (can still be invalid).
-        return {to_usize(start_pos), to_usize(diff)};
     }
-}
 
     SNN_DIAGNOSTIC_PUSH
     SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
