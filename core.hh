@@ -96,6 +96,16 @@ static_assert(std::is_same_v<std::uint8_t, unsigned char>, "std::uint8_t must be
     #define snn_should_if_not_fuzzing(e) snn_should(e)
 #endif
 
+// ### snn_assume
+
+#if defined(__clang__)
+    #define snn_assume(e) __builtin_assume(e)
+#elif defined(__GNUC__) && __GNUC__ >= 13
+    #define snn_assume(e) __attribute__((assume(e)))
+#else
+    #define snn_assume(e) ((void)0)
+#endif
+
 // ### SNN_DIAGNOSTIC_[...]
 
 #if defined(__clang__)
@@ -1303,6 +1313,7 @@ namespace snn
 
         [[nodiscard]] constexpr Ptr get() const noexcept
         {
+            snn_assume(ptr_ != nullptr);
             return ptr_;
         }
 
