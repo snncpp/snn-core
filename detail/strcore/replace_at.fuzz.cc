@@ -16,11 +16,6 @@ namespace snn::app
             return s.substr(math::min(s.size(), pos), size);
         }
 
-        [[nodiscard]] std::string_view std_view(const cstrview s)
-        {
-            return std::string_view{s.cbegin(), s.size()};
-        }
-
         template <typename Str>
         void fuzz_replace(const cstrview subject, const usize pos, const usize size,
                           const cstrview replacement)
@@ -37,12 +32,12 @@ namespace snn::app
                 exception1 = true;
             }
 
-            std::string s2{app::std_view(subject)};
+            std::string s2{subject.to<std::string_view>()};
 
             bool exception2 = false;
             try
             {
-                s2.replace(pos, size, app::std_view(replacement));
+                s2.replace(pos, size, replacement.to<std::string_view>());
             }
             catch (const std::out_of_range&)
             {
@@ -50,7 +45,7 @@ namespace snn::app
             }
 
             snn_assert(exception1 == exception2);
-            snn_assert(app::std_view(s1) == std::string_view{s2});
+            snn_assert(s1.template to<std::string_view>() == std::string_view{s2});
         }
 
         template <typename Str>
@@ -70,7 +65,7 @@ namespace snn::app
                 exception1 = true;
             }
 
-            std::string s2{app::std_view(subject)};
+            std::string s2{subject.to<std::string_view>()};
 
             const std::string_view replacement2 =
                 app::std_sub_view(s2, replacement_pos, replacement_size);
@@ -86,7 +81,7 @@ namespace snn::app
             }
 
             snn_assert(exception1 == exception2);
-            snn_assert(app::std_view(s1) == std::string_view{s2});
+            snn_assert(s1.template to<std::string_view>() == std::string_view{s2});
         }
     }
 }

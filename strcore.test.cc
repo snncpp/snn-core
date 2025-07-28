@@ -2202,6 +2202,14 @@ namespace snn::app
                 snn_require(s == "One Two Three");
                 snn_require(size_eq(s, 13));
 
+                snn_require(s.replace('e', '_', 13) == 0);
+                snn_require(s == "One Two Three");
+                snn_require(size_eq(s, 13));
+
+                snn_require(s.replace('e', '_', constant::npos) == 0);
+                snn_require(s == "One Two Three");
+                snn_require(size_eq(s, 13));
+
                 snn_require(s.replace('e', '_', 8) == 2);
                 snn_require(s == "One Two Thr__");
                 snn_require(size_eq(s, 13));

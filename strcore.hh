@@ -703,19 +703,7 @@ namespace snn
                                 const same_as<char> auto replacement,
                                 const usize start_pos = 0) noexcept
         {
-            strview s           = buf_.view();
-            char* const data    = s.writable().get();
-            const usize size    = s.size();
-            usize replace_count = 0;
-            for (usize i = start_pos; i < size; ++i)
-            {
-                if (data[i] == needle)
-                {
-                    data[i] = replacement;
-                    ++replace_count;
-                }
-            }
-            return replace_count;
+            return buf_.view().replace(needle, replacement, start_pos);
         }
 
         // Replace all occurrences of `needle` with `replacement`.

@@ -2434,6 +2434,35 @@ namespace snn
             }
         }
 
+        constexpr usize replace(const same_as<char> auto needle,
+                                const same_as<char> auto replacement,
+                                const usize start_pos = 0) noexcept
+        {
+            if (start_pos >= count_)
+            {
+                return 0;
+            }
+
+            usize replace_count = 0;
+
+            char* cur              = data_ + start_pos;
+            const char* const last = cur + (count_ - start_pos);
+            snn_should(cur < last);
+            do
+            {
+                cur = mem::raw::find(not_null{cur}, snn::byte_size{to_usize(last - cur)}, needle);
+                if (cur == nullptr)
+                {
+                    break;
+                }
+                *cur = replacement;
+                ++cur;
+                ++replace_count;
+            } while (cur < last);
+
+            return replace_count;
+        }
+
         // #### Hash
 
         [[nodiscard]] constexpr usize hash() const noexcept
