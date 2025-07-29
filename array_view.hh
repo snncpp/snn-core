@@ -191,7 +191,7 @@ namespace snn
 
         constexpr explicit operator bool() const noexcept
         {
-            return !is_empty();
+            return Count != 0;
         }
 
         // #### Iterators
