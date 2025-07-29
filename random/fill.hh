@@ -1,7 +1,7 @@
 // Copyright (c) 2022 Mikael Simonsson <https://mikaelsimonsson.com>.
 // SPDX-License-Identifier: BSL-1.0
 
-// # Fill string view with random data
+// # Fill octet view with random data
 
 #pragma once
 
@@ -14,11 +14,9 @@ namespace snn::random
 
     // ### fill
 
-    inline void fill(strview buffer)
+    template <octet Octet, usize Count>
+    void fill(array_view<Octet, Count> buffer)
     {
-        if (buffer)
-        {
-            random::detail::source::fill(buffer);
-        }
+        random::detail::source::fill(buffer);
     }
 }

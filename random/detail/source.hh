@@ -12,9 +12,13 @@ namespace snn::random::detail
 {
     struct source final
     {
-        static void fill(strview buffer)
+        template <octet Octet, usize Count>
+        static void fill(array_view<Octet, Count> buffer)
         {
-            ::arc4random_buf(buffer.writable().get(), buffer.size());
+            if (buffer)
+            {
+                ::arc4random_buf(buffer.begin(), buffer.size());
+            }
         }
 
         static u32 number()

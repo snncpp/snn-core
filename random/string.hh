@@ -17,10 +17,7 @@ namespace snn::random
     template <typename Buf>
     void string(const usize size, strcore<Buf>& append_to)
     {
-        if (size > 0)
-        {
-            random::detail::source::fill(append_to.append_for_overwrite(size));
-        }
+        random::detail::source::fill(append_to.append_for_overwrite(size));
     }
 
     template <any_strcore Str = str>

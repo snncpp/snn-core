@@ -26,7 +26,7 @@ namespace snn::random
         else
         {
             Int n = 0;
-            random::detail::source::fill(strview{not_null{reinterpret_cast<char*>(&n)}, sizeof(n)});
+            random::detail::source::fill(as_bytes(as_ref(n)));
             return n;
         }
     }
