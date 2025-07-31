@@ -145,15 +145,16 @@ namespace snn::time
         template <strict_signed_integral_min<64> Int>
         [[nodiscard]] constexpr Int to_nanoseconds() const noexcept
         {
-            // Note: `Int` can be `i128`.
+            // Note: `Int` can be 128-bit.
             return (Int{sec_} * Int{1'000'000'000}) + Int{nano_};
         }
 
-        template <strict_signed_integral_min<64> Int>
+        template <strict_integral_min<64> Int>
         [[nodiscard]] constexpr Int to_nanoseconds(assume::not_negative_t) const noexcept
         {
             snn_should(sec_ >= 0);
-            return to_nanoseconds<Int>();
+            // Note: `Int` can be 128-bit.
+            return (static_cast<Int>(sec_) * Int{1'000'000'000}) + Int{nano_};
         }
 
         // ##### To microseconds
@@ -168,16 +169,16 @@ namespace snn::time
         [[nodiscard]] constexpr Int to_microseconds() const noexcept
         {
             const auto [sec, nano] = normalize_for_conv_();
-            // Note: `Int` can be `i128`.
+            // Note: `Int` can be 128-bit.
             return (Int{sec} * Int{1'000'000}) + (Int{nano} / Int{1'000});
         }
 
-        template <strict_signed_integral_min<64> Int>
+        template <strict_integral_min<64> Int>
         [[nodiscard]] constexpr Int to_microseconds(assume::not_negative_t) const noexcept
         {
             snn_should(sec_ >= 0);
-            // Note: `Int` can be `i128`.
-            return (Int{sec_} * Int{1'000'000}) + (Int{nano_} / Int{1'000});
+            // Note: `Int` can be 128-bit.
+            return (static_cast<Int>(sec_) * Int{1'000'000}) + (Int{nano_} / Int{1'000});
         }
 
         // ##### To milliseconds
@@ -192,16 +193,16 @@ namespace snn::time
         [[nodiscard]] constexpr Int to_milliseconds() const noexcept
         {
             const auto [sec, nano] = normalize_for_conv_();
-            // Note: `Int` can be `i128`.
+            // Note: `Int` can be 128-bit.
             return (Int{sec} * Int{1'000}) + (Int{nano} / Int{1'000'000});
         }
 
-        template <strict_signed_integral_min<64> Int>
+        template <strict_integral_min<64> Int>
         [[nodiscard]] constexpr Int to_milliseconds(assume::not_negative_t) const noexcept
         {
             snn_should(sec_ >= 0);
-            // Note: `Int` can be `i128`.
-            return (Int{sec_} * Int{1'000}) + (Int{nano_} / Int{1'000'000});
+            // Note: `Int` can be 128-bit.
+            return (static_cast<Int>(sec_) * Int{1'000}) + (Int{nano_} / Int{1'000'000});
         }
 
         // ##### To seconds
@@ -219,11 +220,11 @@ namespace snn::time
             return sec;
         }
 
-        template <strict_signed_integral_min<64> Int>
+        template <strict_integral_min<64> Int>
         [[nodiscard]] constexpr Int to_seconds(assume::not_negative_t) const noexcept
         {
             snn_should(sec_ >= 0);
-            return sec_;
+            return static_cast<Int>(sec_);
         }
 
         // ##### To minutes
@@ -240,7 +241,7 @@ namespace snn::time
             return to_seconds<Int>() / Int{60};
         }
 
-        template <strict_signed_integral_min<64> Int>
+        template <strict_integral_min<64> Int>
         [[nodiscard]] constexpr Int to_minutes(assume::not_negative_t) const noexcept
         {
             return to_seconds<Int>(assume::not_negative) / Int{60};
@@ -260,7 +261,7 @@ namespace snn::time
             return to_seconds<Int>() / Int{3'600};
         }
 
-        template <strict_signed_integral_min<64> Int>
+        template <strict_integral_min<64> Int>
         [[nodiscard]] constexpr Int to_hours(assume::not_negative_t) const noexcept
         {
             return to_seconds<Int>(assume::not_negative) / Int{3'600};
@@ -280,7 +281,7 @@ namespace snn::time
             return to_seconds<Int>() / Int{86'400};
         }
 
-        template <strict_signed_integral_min<64> Int>
+        template <strict_integral_min<64> Int>
         [[nodiscard]] constexpr Int to_days(assume::not_negative_t) const noexcept
         {
             return to_seconds<Int>(assume::not_negative) / Int{86'400};

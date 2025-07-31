@@ -274,13 +274,13 @@ namespace snn
         static_assert(time::duration{2, 999'999'999}.to_seconds<i64>() == 2);
         static_assert(time::duration{-2, 999'999'999}.to_seconds<i64>() == -1);
 
-        static_assert(time::duration{2, 999'999'999}.to_nanoseconds<i64>(assume::not_negative) ==
+        static_assert(time::duration{2, 999'999'999}.to_nanoseconds<u64>(assume::not_negative) ==
                       2'999'999'999);
-        static_assert(time::duration{2, 999'999'999}.to_microseconds<i64>(assume::not_negative) ==
+        static_assert(time::duration{2, 999'999'999}.to_microseconds<u64>(assume::not_negative) ==
                       2'999'999);
-        static_assert(time::duration{2, 999'999'999}.to_milliseconds<i64>(assume::not_negative) ==
+        static_assert(time::duration{2, 999'999'999}.to_milliseconds<u64>(assume::not_negative) ==
                       2'999);
-        static_assert(time::duration{2, 999'999'999}.to_seconds<i64>(assume::not_negative) == 2);
+        static_assert(time::duration{2, 999'999'999}.to_seconds<u64>(assume::not_negative) == 2);
 
         static_assert(time::duration{3'678}.to_seconds<i64>() == 3'678);
         static_assert(time::duration{3'678}.to_minutes<i64>() == 61);
@@ -315,10 +315,10 @@ namespace snn
         static_assert(time::duration{129'600, 999'999'999}.to_hours<i64>() == 36);
         static_assert(time::duration{129'600, 999'999'999}.to_days<i64>() == 1);
 
-        static_assert(time::duration{129'600}.to_seconds<i64>(assume::not_negative) == 129'600);
-        static_assert(time::duration{129'600}.to_minutes<i64>(assume::not_negative) == 2'160);
-        static_assert(time::duration{129'600}.to_hours<i64>(assume::not_negative) == 36);
-        static_assert(time::duration{129'600}.to_days<i64>(assume::not_negative) == 1);
+        static_assert(time::duration{129'600}.to_seconds<u64>(assume::not_negative) == 129'600);
+        static_assert(time::duration{129'600}.to_minutes<u64>(assume::not_negative) == 2'160);
+        static_assert(time::duration{129'600}.to_hours<u64>(assume::not_negative) == 36);
+        static_assert(time::duration{129'600}.to_days<u64>(assume::not_negative) == 1);
 
         static_assert(time::duration{-129'600}.to_seconds<i64>() == -129'600);
         static_assert(time::duration{-129'600}.to_minutes<i64>() == -2'160);
