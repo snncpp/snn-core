@@ -12,6 +12,8 @@ namespace snn::app
     {
         constexpr bool example()
         {
+            // String
+
             snn_require(hex::encode("") == "");
             snn_require(hex::encode("f") == "66");
             snn_require(hex::encode("fo") == "666f");
@@ -28,11 +30,39 @@ namespace snn::app
 
             snn_require(hex::encode("åäö", hex::table::upper) == "C3A5C3A4C3B6");
 
+            snn_require(hex::encode("\na~") == "0a617e");
+            snn_require(hex::encode("\na~", hex::table::upper) == "0A617E");
+
+            // Character
+
+            snn_require(hex::encode('\n') == array{'0', 'a'});
+            snn_require(hex::encode('\n', hex::table::upper) == array{'0', 'A'});
+
+            snn_require(hex::encode('a') == array{'6', '1'});
+            snn_require(hex::encode('a', hex::table::upper) == array{'6', '1'});
+
+            snn_require(hex::encode('~') == array{'7', 'e'});
+            snn_require(hex::encode('~', hex::table::upper) == array{'7', 'E'});
+
             return true;
         }
 
         constexpr bool test_encode()
         {
+            {
+                decltype(auto) buffer = hex::encode('~');
+                static_assert(std::is_same_v<decltype(buffer), array<char, 2>>);
+                snn_require(buffer.get<0>() == '7');
+                snn_require(buffer.get<1>() == 'e');
+            }
+
+            {
+                decltype(auto) buffer = hex::encode('~', hex::table::upper);
+                static_assert(std::is_same_v<decltype(buffer), array<char, 2>>);
+                snn_require(buffer.get<0>() == '7');
+                snn_require(buffer.get<1>() == 'E');
+            }
+
             {
                 strbuf s;
                 hex::encode("å", s, assume::no_overlap);

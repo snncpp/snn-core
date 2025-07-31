@@ -13,6 +13,15 @@ namespace snn::hex
 {
     namespace detail
     {
+        constexpr array<char, 2> encode(const char c, const array<char, 16>& table)
+        {
+            array<char, 2> buffer;
+            const auto b    = to_byte(c);
+            buffer.get<0>() = table.at(b >> 4u, bounds::mask); // High bits.
+            buffer.get<1>() = table.at(b, bounds::mask);       // Low bits.
+            return buffer;
+        }
+
         SNN_DIAGNOSTIC_PUSH
         SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
 
@@ -38,6 +47,22 @@ namespace snn::hex
     // ## Functions
 
     // ### encode
+
+    // Encode a single character.
+
+    template <character Char>
+    [[nodiscard]] constexpr array<char, 2> encode(const Char c)
+    {
+        return detail::encode(c, table::lower);
+    }
+
+    // Encode a single character (extended).
+
+    template <character Char>
+    [[nodiscard]] constexpr array<char, 2> encode(const Char c, const array<char, 16>& table)
+    {
+        return detail::encode(c, table);
+    }
 
     // Encode and return the encoded string.
 
