@@ -1311,9 +1311,8 @@ namespace snn
 
         // #### Value
 
-        [[nodiscard]] constexpr Ptr get() const noexcept
+        [[nodiscard]] __attribute__((returns_nonnull)) constexpr auto* get() const noexcept
         {
-            snn_assume(ptr_ != nullptr);
             return ptr_;
         }
 

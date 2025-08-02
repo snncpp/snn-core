@@ -422,7 +422,6 @@ namespace snn::app
             // cstrview()
             {
                 cstrview s{};
-                snn_require(s.data().get() != nullptr);
                 snn_require(s.count() == 0);
                 snn_require(s.size() == 0);
                 snn_require(s.byte_size().get() == 0);
@@ -474,7 +473,6 @@ namespace snn::app
             // cstrview(U&)
             {
                 strview s{};
-                snn_require(s.data().get() != nullptr);
                 snn_require(s.count() == 0);
                 snn_require(s.size() == 0);
                 snn_require(s.byte_size().get() == 0);
@@ -483,7 +481,6 @@ namespace snn::app
 
                 // strview is implicitly convertible to cstrview.
                 cstrview cpy = s;
-                snn_require(cpy.data().get() != nullptr);
                 snn_require(cpy.data().get() == s.data().get());
                 snn_require(cpy.count() == 0);
                 snn_require(cpy.size() == 0);
@@ -511,7 +508,6 @@ namespace snn::app
             // cstrview(const char (&)[N])
             {
                 cstrview s{"Hello"};
-                snn_require(s.data().get() != nullptr);
                 snn_require(s.count() == 5);
                 snn_require(s.size() == 5);
                 snn_require(s.byte_size().get() == 5);
@@ -527,7 +523,7 @@ namespace snn::app
                 snn_require(s != "Helloo");
 
                 cstrview cpy{s};
-                snn_require(cpy.data().get() != nullptr);
+                snn_require(cpy.data().get() == s.data().get());
                 snn_require(cpy.count() == 5);
                 snn_require(cpy.size() == 5);
                 snn_require(cpy.byte_size().get() == 5);
@@ -559,7 +555,7 @@ namespace snn::app
             {
                 array<char, 3> arr{97, 98, 99};
                 strview s{arr.writable(), 3};
-                snn_require(s.data().get() != nullptr);
+                snn_require(s.data().get() == &arr.get<0>());
                 snn_require(s.count() == 3);
                 snn_require(s.size() == 3);
                 snn_require(s.byte_size().get() == 3);
@@ -585,7 +581,7 @@ namespace snn::app
                 cstrview s{nullptr, assume::null_terminated};
                 snn_require(!s);
                 snn_require(s.size() == 0);
-                snn_require(s.data().get() != nullptr);
+                snn_require(s.data().get() == cstrview{}.data().get()); // Never holds `nullptr`.
                 snn_require(s == "");
             }
 
@@ -609,7 +605,7 @@ namespace snn::app
                 cstrview s{not_null{c_string}, assume::null_terminated};
                 snn_require(!s);
                 snn_require(s.size() == 0);
-                snn_require(s.data().get() != nullptr);
+                snn_require(s.data().get() == c_string);
                 snn_require(s == "");
             }
 
@@ -655,7 +651,7 @@ namespace snn::app
                 strview s{nullptr, assume::null_terminated};
                 snn_require(!s);
                 snn_require(s.size() == 0);
-                snn_require(s.data().get() != nullptr);
+                snn_require(s.data().get() == strview{}.data().get()); // Never holds `nullptr`.
                 snn_require(s == "");
             }
 
@@ -753,13 +749,13 @@ namespace snn::app
             {
                 char* const data = nullptr;
                 strview s{init::from, data, data};
-                snn_require(s.data().get() != nullptr);
+                snn_require(s.data().get() == strview{}.data().get()); // Never holds `nullptr`.
                 snn_require(s.count() == 0);
             }
             {
                 array<char, 3> arr{97, 98, 99};
                 strview s = arr.view(1, 1);
-                snn_require(s.data().get() != nullptr);
+                snn_require(s.data().get() == &arr.get<1>());
                 snn_require(s.count() == 1);
                 snn_require(!s.is_empty());
                 snn_require(s);
@@ -770,13 +766,13 @@ namespace snn::app
             {
                 const char* const data = nullptr;
                 cstrview s{init::from, data, data};
-                snn_require(s.data().get() != nullptr);
+                snn_require(s.data().get() == cstrview{}.data().get()); // Never holds `nullptr`.
                 snn_require(s.count() == 0);
             }
             {
                 const array<char, 3> arr{97, 98, 99};
                 cstrview s = arr.view(1, 1);
-                snn_require(s.data().get() != nullptr);
+                snn_require(s.data().get() == &arr.get<1>());
                 snn_require(s.count() == 1);
                 snn_require(s == "b");
             }

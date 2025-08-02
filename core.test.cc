@@ -193,7 +193,7 @@ namespace snn::app
             snn_require(bs.get() == 123);
 
             not_null nn{&bs};
-            snn_require(nn.get() != nullptr);
+            snn_require(nn.get() == &bs);
 
             not_zero nz{456};
             snn_require(nz.get() == 456);
@@ -1136,11 +1136,13 @@ namespace snn::app
             static_assert(std::is_same_v<decltype(src), array<char, 5>>);
 
             const not_null<char*> a{src.begin()};
+            static_assert(std::is_same_v<decltype(a.get()), char*>);
             snn_require(a.get() == src.begin());
 
             // Conversion
 
             const not_null<const char*> b{a};
+            static_assert(std::is_same_v<decltype(b.get()), const char*>);
             snn_require(b.get() == src.begin());
 
             // Deduction

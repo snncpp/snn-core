@@ -193,7 +193,7 @@ namespace snn::app
             SNN_DIAGNOSTIC_PUSH
             SNN_DIAGNOSTIC_IGNORE_UNSAFE_BUFFER_USAGE
 
-            snn_require(s.data().get() != nullptr);
+            snn_require(s.data().get() == s.begin()); // Never holds `nullptr`.
             if (s.size() == size && s.count() == size && s.byte_size().get() == size &&
                 s.capacity() >= size && s.data().get()[size] == 0)
             {
@@ -210,7 +210,7 @@ namespace snn::app
 
         constexpr bool size_eq(const strbuf& s, const usize size)
         {
-            snn_require(s.data().get() != nullptr);
+            snn_require(s.data().get() == s.begin()); // Never holds `nullptr`.
             if (s.size() == size && s.count() == size && s.byte_size().get() == size &&
                 s.capacity() >= size)
             {
@@ -226,7 +226,7 @@ namespace snn::app
         template <character Char>
         constexpr bool size_eq(const array_view<Char> s, const usize size)
         {
-            snn_require(s.data().get() != nullptr);
+            snn_require(s.data().get() == s.begin()); // Never holds `nullptr`.
             if (s.size() == size && s.count() == size && s.byte_size().get() == size)
             {
                 if ((size == 0 && s.is_empty() && s == "" && !s) ||
