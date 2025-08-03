@@ -25,7 +25,7 @@ namespace snn::algo
         const auto lower = std::lower_bound(first, last, value, std::move(is_less));
         if (lower != last)
         {
-            return to_usize(lower - first);
+            return optional_index{to_usize(lower - first), assume::within_bounds};
         }
         return constant::npos;
     }

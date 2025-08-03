@@ -26,7 +26,7 @@ namespace snn::algo
         const auto upper = std::upper_bound(first, last, value, std::move(is_less));
         if (upper != last)
         {
-            return to_usize(upper - first);
+            return optional_index{to_usize(upper - first), assume::within_bounds};
         }
         return constant::npos;
     }

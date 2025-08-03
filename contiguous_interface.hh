@@ -130,7 +130,7 @@ namespace snn
             {
                 if (p(std::as_const(data[i])))
                 {
-                    return i;
+                    return optional_index{i, assume::within_bounds};
                 }
             }
             return constant::npos;
@@ -159,7 +159,7 @@ namespace snn
                 --i;
                 if (p(std::as_const(data[i])))
                 {
-                    return i;
+                    return optional_index{i, assume::within_bounds};
                 }
             }
             return constant::npos;

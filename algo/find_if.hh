@@ -22,7 +22,7 @@ namespace snn::algo
             const auto& e = rng.front(assume::not_empty);
             if (p(e))
             {
-                return index;
+                return optional_index{index, assume::within_bounds};
             }
             rng.drop_front(assume::not_empty);
             ++index;

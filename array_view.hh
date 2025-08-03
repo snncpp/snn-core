@@ -646,7 +646,7 @@ namespace snn
             {
                 if (data_[i] == value)
                 {
-                    return i;
+                    return optional_index{i, assume::within_bounds};
                 }
             }
             return constant::npos;
@@ -660,7 +660,7 @@ namespace snn
             {
                 if (p(std::as_const(data_[i])))
                 {
-                    return i;
+                    return optional_index{i, assume::within_bounds};
                 }
             }
             return constant::npos;
@@ -680,7 +680,7 @@ namespace snn
                 --i;
                 if (data_[i] == value)
                 {
-                    return i;
+                    return optional_index{i, assume::within_bounds};
                 }
             }
             return constant::npos;
@@ -700,7 +700,7 @@ namespace snn
                 --i;
                 if (p(std::as_const(data_[i])))
                 {
-                    return i;
+                    return optional_index{i, assume::within_bounds};
                 }
             }
             return constant::npos;
@@ -1316,7 +1316,7 @@ namespace snn
             {
                 if (data_[i] == value)
                 {
-                    return i;
+                    return optional_index{i, assume::within_bounds};
                 }
             }
             return constant::npos;
@@ -1336,7 +1336,7 @@ namespace snn
                 --i;
                 if (data_[i] == value)
                 {
-                    return i;
+                    return optional_index{i, assume::within_bounds};
                 }
             }
             return constant::npos;
@@ -1796,7 +1796,7 @@ namespace snn
                                                      snn::byte_size{count_ - start_pos}, c);
                 if (p != nullptr)
                 {
-                    return to_usize(p - data_);
+                    return optional_index{to_usize(p - data_), assume::within_bounds};
                 }
             }
             return constant::npos;
@@ -1814,7 +1814,7 @@ namespace snn
 
             if (n.is_empty())
             {
-                return start_pos;
+                return optional_index{start_pos, assume::within_bounds};
             }
 
             const char* const p = mem::raw::find(not_null{data_ + start_pos},        //
@@ -1822,7 +1822,7 @@ namespace snn
                                                  n.data(), not_zero{n.byte_size()});
             if (p != nullptr)
             {
-                return to_usize(p - data_);
+                return optional_index{to_usize(p - data_), assume::within_bounds};
             }
             return constant::npos;
         }
@@ -1841,7 +1841,7 @@ namespace snn
                 mem::raw::find_in_reverse(not_null{data_}, snn::byte_size{data_size}, c);
             if (p != nullptr)
             {
-                return to_usize(p - data_);
+                return optional_index{to_usize(p - data_), assume::within_bounds};
             }
 
             return constant::npos;
@@ -1854,7 +1854,7 @@ namespace snn
 
             if (n.is_empty())
             {
-                return math::min(count_, start_pos);
+                return optional_index{math::min(count_, start_pos), assume::within_bounds};
             }
 
             usize data_size = count_;
@@ -1870,7 +1870,7 @@ namespace snn
                                                             n.data(), not_zero{n.byte_size()});
             if (p != nullptr)
             {
-                return to_usize(p - data_);
+                return optional_index{to_usize(p - data_), assume::within_bounds};
             }
 
             return constant::npos;

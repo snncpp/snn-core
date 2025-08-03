@@ -17,6 +17,13 @@ namespace snn
     class optional_index final
     {
       public:
+        constexpr explicit optional_index(const usize index, assume::within_bounds_t) noexcept
+            : index_{index}
+        {
+            // Let the optimizer know that we're not holding a `constant::npos`.
+            snn_assume(index_ != constant::npos);
+        }
+
         constexpr optional_index(const usize index) noexcept
             : index_{index}
         {

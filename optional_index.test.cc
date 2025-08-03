@@ -28,6 +28,17 @@ namespace snn::app
                 snn_require(idx.value_or(99) == 99);
                 snn_require(idx.value_or_npos() == constant::npos);
             }
+            {
+                // Explicitly create an `optional_index` that doesn't hold `constant::npos`.
+                // Using this constructor can help the optimizer in certain cases.
+                optional_index idx{456, assume::within_bounds};
+                snn_require(idx); // Has value.
+                snn_require(idx.has_value());
+                snn_require(idx.value() == 456);
+                snn_require(idx.value(assume::has_value) == 456);
+                snn_require(idx.value_or(99) == 456);
+                snn_require(idx.value_or_npos() == 456);
+            }
 
             return true;
         }
